@@ -1,9 +1,7 @@
-package com.wooHyo.project.di
+package com.gumibom.travelmaker.di
 
 
-import com.wooHyo.project.ApplicationClass
-import com.wooHyo.project.data.api.PartnerService
-import com.wooHyo.project.data.api.UserService
+import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,16 +48,4 @@ class NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(gsonConverterFactory)
         .build()
-
-    @Provides
-    @Singleton
-    fun provideUserService(retrofit: Retrofit) : UserService {
-        return retrofit.create(UserService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun providePartnerService(retrofit: Retrofit) : PartnerService {
-        return retrofit.create(PartnerService::class.java)
-    }
 }
