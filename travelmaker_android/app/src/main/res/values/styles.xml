@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <style name="Text.Regular" parent="android:TextAppearance">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+
+    <!-- EditText에 입력될 값-->
+    <style name="Text.Input" parent="android:TextAppearance">
+        <item name="android:textStyle">normal</item>
+        <item name="android:hint" />
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="Text.Support" parent="android:TextAppearance">
+        <item name="android:textStyle">normal</item>
+        <item name="android:hint" />
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Support.Color" parent="android:TextAppearance">
+        <item name="android:textStyle">normal</item>
+        <item name="android:hint" />
+        <item name="android:textColor">@color/text_main_color</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>
