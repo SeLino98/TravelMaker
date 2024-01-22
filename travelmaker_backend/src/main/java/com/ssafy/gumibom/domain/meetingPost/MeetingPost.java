@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meetingPost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.embedded.Category;
+import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

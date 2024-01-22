@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.embedded;
+package com.ssafy.gumibom.global.common;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Immutable;
