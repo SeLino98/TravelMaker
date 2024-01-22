@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn
 @NoArgsConstructor
 @AllArgsConstructor
 public class Record {
