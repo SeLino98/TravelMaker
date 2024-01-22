@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.record.entity;
 
+import com.ssafy.gumibom.global.common.Emoji;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +25,7 @@ public class Record {
     private String imgUrl;
     private String text;
     private String videoUrl;
+
+    @Embedded
+    private Emoji emoji;
 }
