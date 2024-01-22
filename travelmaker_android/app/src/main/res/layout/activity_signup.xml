@@ -18,6 +18,7 @@
 
 
     <ProgressBar
+
         android:id="@+id/pb_signup"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
