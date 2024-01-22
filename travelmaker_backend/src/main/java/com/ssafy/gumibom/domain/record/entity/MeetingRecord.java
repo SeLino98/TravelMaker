@@ -1,6 +1,7 @@
 package com.ssafy.gumibom.domain.record.entity;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.MeetingPamphlet;
+import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,5 +12,7 @@ public class MeetingRecord extends Record {
     @JoinColumn(name = "mpamphlet_id")
     private MeetingPamphlet meetingPamphlet;
 
-    private long userId; // 임시 데이터 타입
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn("user_id")
+    private User user; // 임시 데이터 타입
 }

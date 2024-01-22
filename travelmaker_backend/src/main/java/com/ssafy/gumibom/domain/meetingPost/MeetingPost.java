@@ -22,8 +22,9 @@ public class MeetingPost {
     @Column(name = "meeting_post_id")
     private Long id;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "meeting_post")
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "meeting_post")
+    @ElementCollection
     private List<Category> categories = new ArrayList<>();
 
     private String title;
