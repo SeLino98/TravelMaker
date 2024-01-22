@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain;
+package com.ssafy.gumibom.domain.embedded;
 
 import jakarta.persistence.*;
 

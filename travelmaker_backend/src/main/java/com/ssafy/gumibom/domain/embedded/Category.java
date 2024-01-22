@@ -1,18 +1,15 @@
-package com.ssafy.gumibom.entity;
+package com.ssafy.gumibom.domain.embedded;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.annotation.Immutable;
 
-@Entity
-@Getter @Setter
 @Embeddable
 public class Category {
-
     @Id @GeneratedValue
     @Column(name = "category_id")
-    private Long id;
+    private int id;
 
     private String name;
     private String color;
+
 }

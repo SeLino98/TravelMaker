@@ -1,8 +1,8 @@
-package com.ssafy.gumibom.meetingPost;
+package com.ssafy.gumibom.domain.meetingPost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.entity.Category;
-import com.ssafy.gumibom.entity.User;
+import com.ssafy.gumibom.domain.embedded.Category;
+import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +11,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity

@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.meetingPost;
+package com.ssafy.gumibom.domain.meetingPost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.entity.User;

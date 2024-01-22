@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.user;
 
-import com.ssafy.gumibom.domain.Category;
-import com.ssafy.gumibom.domain.Nation;
+import com.ssafy.gumibom.domain.embedded.Category;
+import com.ssafy.gumibom.domain.embedded.Nation;
 import jakarta.persistence.*;
 import lombok.Getter;
 
