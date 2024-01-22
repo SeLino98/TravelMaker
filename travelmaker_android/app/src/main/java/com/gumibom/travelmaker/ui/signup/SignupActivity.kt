@@ -9,7 +9,7 @@ import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.ActivitySignupBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-//@AndroidEntryPoint\
+@AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
     private lateinit var navController : NavController
