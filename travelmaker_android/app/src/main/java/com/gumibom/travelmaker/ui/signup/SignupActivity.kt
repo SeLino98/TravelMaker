@@ -23,6 +23,7 @@ class SignupActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
+
         // 프로그레스바 진행률 설정
         setProgressBar(20)
     }
