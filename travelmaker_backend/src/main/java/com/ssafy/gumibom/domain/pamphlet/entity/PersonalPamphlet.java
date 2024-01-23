@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
-import com.ssafy.gumibom.domain.user.User;
+import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -30,7 +30,7 @@ public class PersonalPamphlet {
 
     private LocalDateTime createDate;
     private String title;
-    private int like;
+    private int love;
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();

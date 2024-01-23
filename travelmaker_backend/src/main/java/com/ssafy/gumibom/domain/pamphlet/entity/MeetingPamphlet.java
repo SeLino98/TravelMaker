@@ -23,5 +23,5 @@ public class MeetingPamphlet {
 
     private LocalDateTime createDate;
     private String title;
-    private int like;
+    private int love;
 }
