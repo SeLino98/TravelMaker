@@ -1,8 +1,8 @@
-package com.ssafy.gumibom.meetingPost;
+package com.ssafy.gumibom.domain.meetingPost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.entity.Category;
-import com.ssafy.gumibom.entity.User;
+import com.ssafy.gumibom.global.common.Category;
+import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +11,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,8 +22,9 @@ public class MeetingPost {
     @Column(name = "meeting_post_id")
     private Long id;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "meeting_post")
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "meeting_post")
+    @ElementCollection
     private List<Category> categories = new ArrayList<>();
 
     private String title;

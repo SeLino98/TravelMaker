@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain;
+package com.ssafy.gumibom.global.common;
 
 import jakarta.persistence.*;
 
