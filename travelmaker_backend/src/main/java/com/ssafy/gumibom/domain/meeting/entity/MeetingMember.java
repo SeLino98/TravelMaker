@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meeting;
+package com.ssafy.gumibom.domain.meeting.entity;
 
 
 import com.ssafy.gumibom.domain.user.User;
@@ -17,9 +17,13 @@ public class MeetingMember {
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     private boolean isNative;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

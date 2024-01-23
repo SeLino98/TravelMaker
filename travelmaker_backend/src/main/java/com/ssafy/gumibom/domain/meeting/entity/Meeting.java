@@ -1,6 +1,7 @@
-package com.ssafy.gumibom.domain.meeting;
+package com.ssafy.gumibom.domain.meeting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.gumibom.domain.pamphlet.entity.MeetingPamphlet;
 import com.ssafy.gumibom.global.common.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,4 +32,8 @@ public class Meeting {
     @JsonIgnore
     @OneToMany(mappedBy = "meeting")
     private List<MeetingMember> meetingMembers;
+
+    @OneToOne
+    @JoinColumn(name = "pamphlet_id")
+    private MeetingPamphlet meetingPamphlet;
 }
