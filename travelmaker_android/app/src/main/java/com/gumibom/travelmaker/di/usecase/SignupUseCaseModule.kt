@@ -1,8 +1,10 @@
-package com.gumibom.travelmaker.di
+package com.gumibom.travelmaker.di.usecase
 
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
+import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
+import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
 import dagger.Module
 import dagger.Provides
@@ -18,5 +20,11 @@ class SignupUseCaseModule {
     @Provides
     fun provideGetNaverLocationUseCase(naverLocationRepository: NaverLocationRepository) : GetNaverLocationUseCase {
         return GetNaverLocationUseCase(naverLocationRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetGoogleLocationUseCase(googleLocationRepository: GoogleLocationRepository) : GetGoogleLocationUseCase {
+        return GetGoogleLocationUseCase(googleLocationRepository)
     }
 }

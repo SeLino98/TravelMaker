@@ -1,6 +1,6 @@
-package com.gumibom.travelmaker.data.api
+package com.gumibom.travelmaker.data.api.naver
 
-import com.gumibom.travelmaker.data.dto.NaverLocationDTO
+import com.gumibom.travelmaker.data.dto.naver.NaverLocationDTO
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

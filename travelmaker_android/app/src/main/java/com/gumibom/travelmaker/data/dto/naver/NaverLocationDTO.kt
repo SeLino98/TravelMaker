@@ -1,6 +1,6 @@
-package com.gumibom.travelmaker.data.dto
+package com.gumibom.travelmaker.data.dto.naver
 
-import java.util.Date
+import com.gumibom.travelmaker.data.dto.naver.AddressDTO
 
 data class NaverLocationDTO(
     val lastBuildDate : String?,

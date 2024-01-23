@@ -1,10 +1,11 @@
 package com.gumibom.travelmaker.data.datasource.naver
 
-import com.gumibom.travelmaker.data.api.NaverLocationSearchService
-import com.gumibom.travelmaker.data.dto.NaverLocationDTO
+import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
+import com.gumibom.travelmaker.data.dto.naver.NaverLocationDTO
 import retrofit2.Response
 import javax.inject.Inject
 
+private const val TAG = "NaverLocationRemoteData_싸피"
 class NaverLocationRemoteDataSourceImpl @Inject constructor(
     private val naverLocationService : NaverLocationSearchService
 ) : NaverLocationRemoteDataSource {

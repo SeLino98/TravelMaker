@@ -1,13 +1,9 @@
 package com.gumibom.travelmaker.domain.signup
 
-import android.util.Log
-import com.gumibom.travelmaker.constant.KOREAN_PATTERN
-import com.gumibom.travelmaker.data.dto.AddressDTO
-import com.gumibom.travelmaker.data.dto.NaverLocationDTO
+import com.gumibom.travelmaker.data.dto.naver.AddressDTO
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
-import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
+import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.NaverAddress
-import retrofit2.Response
 import javax.inject.Inject
 
 private const val TAG = "GetNaverLocationUseCase_싸피"
@@ -19,13 +15,14 @@ class GetNaverLocationUseCase @Inject constructor(
         idKey : String,
         secretKey : String,
         location : String,
-        display : Int) : MutableList<NaverAddress> {
+        display : Int) : MutableList<Address> {
+
         // 여기서 DTO null 체크를 하고 model로 데이터 변환
 
         val response = naverLocationRepositoryImpl.findNaverLocationSearch(idKey, secretKey, location, display)
 
         var items = mutableListOf<AddressDTO>()
-        var result = mutableListOf<NaverAddress>()
+        var result = mutableListOf<Address>()
 
         // ResponseBody가 null일 경우 빈 리스트 반환
         if (response.isSuccessful && response.body() != null) {
@@ -38,7 +35,7 @@ class GetNaverLocationUseCase @Inject constructor(
                 val title = removeHtmlTags(item.title)
                 val address = item.address
 
-                result.add(NaverAddress(
+                result.add(Address(
                         title,
                         address
                     )
