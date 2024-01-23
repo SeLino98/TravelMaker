@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meetingPost;
+package com.ssafy.gumibom.domain.meetingPost.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.user.User;
@@ -26,4 +26,15 @@ public class MeetingApplier {
 
     private Boolean isNative;
     private Boolean isHead;
+
+    public static MeetingApplier createMeetingApplier(User user, Boolean isHead, MeetingPost meetingPost) {
+        MeetingApplier meetingApplier = new MeetingApplier();
+        meetingApplier.setUser(user);
+        meetingApplier.setIsHead(isHead);
+//        meetingApplier.setIsNative(user.getTown());
+//        user isNative 어떻게 잘 판별하는 함수 만들어서 넣기~
+        meetingApplier.setMeetingPost(meetingPost);
+
+        return meetingApplier;
+    }
 }

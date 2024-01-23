@@ -9,12 +9,12 @@ import lombok.Getter;
 public class Emoji {
 
     private String emotion;
-    private String imgUrl;
+    private String img;
 
     protected Emoji() {}
 
-    public Emoji(String emotion, String imgUrl) {
+    public Emoji(String emotion, String img) {
         this.emotion = emotion;
-        this.imgUrl = imgUrl;
+        this.img = img;
     }
 }
