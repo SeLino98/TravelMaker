@@ -1,8 +1,9 @@
-package com.gumibom.travelmaker.di
+package com.gumibom.travelmaker.di.repository
 
-import com.gumibom.travelmaker.data.api.NaverLocationSearchService
+import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
-import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
+import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepositoryImpl
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
 import dagger.Module
@@ -20,5 +21,11 @@ class RepositoryModule {
     @Provides
     fun provideNaverLocationRepository(naverLocationRemoteDataSource: NaverLocationRemoteDataSource) : NaverLocationRepository {
         return NaverLocationRepositoryImpl(naverLocationRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGoogleLocationRepository(googleLocationRemoteDataSource: GoogleLocationRemoteDataSource) : GoogleLocationRepository {
+        return GoogleLocationRepositoryImpl(googleLocationRemoteDataSource)
     }
 }

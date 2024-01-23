@@ -1,8 +1,7 @@
 package com.gumibom.travelmaker.data.repository.naver
 
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
-import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
-import com.gumibom.travelmaker.data.dto.NaverLocationDTO
+import com.gumibom.travelmaker.data.dto.naver.NaverLocationDTO
 import retrofit2.Response
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.gumibom.travelmaker.data.dto
+package com.gumibom.travelmaker.data.dto.naver
 
 import com.google.gson.annotations.SerializedName
 

@@ -45,6 +45,8 @@
         android:layout_height="25dp"
         android:layout_margin="15dp"
         android:src="@drawable/ic_location_search"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="@id/et_signup_location"
         app:layout_constraintTop_toTopOf="@id/et_signup_location" />
 
