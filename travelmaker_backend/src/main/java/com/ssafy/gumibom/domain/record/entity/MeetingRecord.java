@@ -12,7 +12,7 @@ public class MeetingRecord extends Record {
     @JoinColumn(name = "mpamphlet_id")
     private MeetingPamphlet meetingPamphlet;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn("user_id")
-    private User user; // 임시 데이터 타입
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn("user_id")
+//    private User user; // 임시 데이터 타입
 }

@@ -39,8 +39,8 @@ public class MeetingPost {
     private LocalDateTime deadline;
     private String imgUrl;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "meeting_post")
-    private List<User> appliers = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "meeting_post")
+//    private List<User> appliers = new ArrayList<>();
 
 }
