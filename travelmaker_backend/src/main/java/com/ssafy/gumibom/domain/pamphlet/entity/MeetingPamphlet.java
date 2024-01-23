@@ -1,27 +1,20 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.ssafy.gumibom.domain.record.entity.MeetingRecord;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MeetingPamphlet {
-
-    @Id @GeneratedValue
-    @Column(name = "mpamphlet_id")
-    private long id;
+@DiscriminatorValue(value = "M")
+public class MeetingPamphlet extends Pamphlet {
 
     private long meetingId; // 임시 데이터 타입
 
-    private LocalDateTime createDate;
-    private String title;
-    private int like;
+    @OneToMany(mappedBy = "meetingPamphlet")
+    private List<MeetingRecord> meetingRecords;
 }

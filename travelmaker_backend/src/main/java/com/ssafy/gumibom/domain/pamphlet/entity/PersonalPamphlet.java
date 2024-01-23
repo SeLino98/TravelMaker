@@ -13,13 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PersonalPamphlet {
-
-    @Id @GeneratedValue
-    @Column(name = "ppamphlet_id")
-    private long id;
+@DiscriminatorValue(value = "P")
+public class PersonalPamphlet extends Pamphlet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -27,10 +22,6 @@ public class PersonalPamphlet {
 
     @ElementCollection
     private List<Category> categories;
-
-    private LocalDateTime createDate;
-    private String title;
-    private int like;
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
