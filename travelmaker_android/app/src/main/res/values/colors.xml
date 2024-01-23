@@ -8,5 +8,6 @@
     <color name="progress_main_color">#1E80FF</color>
     <color name="button_main_color">#C3DAF8</color>
     <color name="light_gray">#808080</color>
+    <color name="gray_a25">#CCCCCC</color>
 
 </resources>

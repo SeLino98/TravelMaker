@@ -5,6 +5,6 @@
     app:startDestination="@id/signupLocationFragment">
     <fragment
         android:id="@+id/signupLocationFragment"
-        android:name="com.gumibom.travelmaker.ui.signup.SignupLocationFragment"
+        android:name="com.gumibom.travelmaker.ui.signup.location.SignupLocationFragment"
         android:label="SignupLocationFragment" />
 </navigation>

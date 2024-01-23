@@ -1,14 +1,17 @@
 package com.gumibom.travelmaker.ui.signup
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.gumibom.travelmaker.BuildConfig
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.ActivitySignupBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "SignupActivity_싸피"
 @AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding

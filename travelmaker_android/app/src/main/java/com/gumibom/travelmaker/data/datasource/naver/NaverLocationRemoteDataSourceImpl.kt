@@ -11,9 +11,11 @@ class NaverLocationRemoteDataSourceImpl @Inject constructor(
 
     // 네이버 위치 검색
     override suspend fun findNaverLocationSearch(
+        idKey: String,
+        secretKey: String,
         location: String,
         display: Int
     ): Response<NaverLocationDTO> {
-        return naverLocationService.findNaverLocationSearch(location, display)
+        return naverLocationService.findNaverLocationSearch(idKey, secretKey, location, display)
     }
 }

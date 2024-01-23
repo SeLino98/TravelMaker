@@ -4,5 +4,9 @@ import com.gumibom.travelmaker.data.dto.NaverLocationDTO
 import retrofit2.Response
 
 interface NaverLocationRemoteDataSource {
-    suspend fun findNaverLocationSearch(location : String, display : Int) : Response<NaverLocationDTO>
+    suspend fun findNaverLocationSearch(
+        idKey : String,
+        secretKey: String,
+        location : String,
+        display : Int) : Response<NaverLocationDTO>
 }

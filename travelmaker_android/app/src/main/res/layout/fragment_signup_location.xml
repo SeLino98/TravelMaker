@@ -57,6 +57,7 @@
         app:layout_constraintTop_toBottomOf="@id/iv_signup_location_search" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_location_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
