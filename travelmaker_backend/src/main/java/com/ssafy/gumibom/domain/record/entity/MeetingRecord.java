@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class MeetingRecord extends Record {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mpamphlet_id")
+    @JoinColumn(name = "pamphlet_id")
     private MeetingPamphlet meetingPamphlet;
 
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

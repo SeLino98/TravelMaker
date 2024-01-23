@@ -8,6 +8,6 @@ import jakarta.persistence.*;
 public class PersonalRecord extends Record {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ppamphlet_id")
+    @JoinColumn(name = "pamphlet_id")
     private PersonalPamphlet personalPamphlet;
 }
