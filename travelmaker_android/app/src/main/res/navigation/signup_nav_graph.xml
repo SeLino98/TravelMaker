@@ -2,9 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/signup_nav_graph"
-    app:startDestination="@id/signupLocationFragment">
+    app:startDestination="@id/signupProfileFragment">
     <fragment
         android:id="@+id/signupLocationFragment"
         android:name="com.gumibom.travelmaker.ui.signup.location.SignupLocationFragment"
         android:label="SignupLocationFragment" />
+    <fragment
+        android:id="@+id/signupProfileFragment"
+        android:name="com.gumibom.travelmaker.ui.signup.SignupProfileFragment"
+        android:label="SignupProfileFragment" />
 </navigation>

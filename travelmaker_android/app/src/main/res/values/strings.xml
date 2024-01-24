@@ -4,5 +4,22 @@
     <string name="signup_next">다음</string>
     <string name="signup_title">동네인증을 해주세요!</string>
     <string name="signup_title2">본인이 살고 있는 곳을 검색해\n입력해주세요.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- 회원가입 6 프로필 String -->
+    <string name="sign_profile_guide">프로필 사진과\n나의 여행 관심사를 선택해주세요</string>
+    <string name="sign_category_guide">나의 카테고리 선택</string>
+    <string name="sign_profile_name">닉네임</string>
+    <!-- chip-->
+    <string name="sign_chip_active">활동</string>
+    <string name="sign_chip_nature">자연</string>
+    <string name="sign_chip_healing">힐링</string>
+    <string name="sign_chip_picture">사진</string>
+    <string name="sign_chip_culture">문화</string>
+    <string name="sign_chip_taste">맛집</string>
+    <!-- END -->
+
 
 </resources>
