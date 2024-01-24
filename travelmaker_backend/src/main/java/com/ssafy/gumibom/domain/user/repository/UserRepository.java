@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
@@ -24,6 +26,12 @@ public class UserRepository {
 
     public void remove(User user){
         em.remove(user);
+    }
+
+    public List<User> findByUsername(String username){
+        return em.createQuery("select  u from User u where u.username = :username", User.class)
+                .setParameter("username", username)
+                .getResultList();
     }
 
 //    public void update(User user) {
