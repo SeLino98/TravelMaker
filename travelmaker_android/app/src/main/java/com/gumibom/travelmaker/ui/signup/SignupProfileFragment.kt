@@ -64,22 +64,22 @@ class SignupProfileFragment : Fragment() {
     private fun selectCategory(){
         val chipGroup = binding.chipGroup;
         Log.d(TAG, "selectCategory:1")
-        chipGroup.setOnCheckedStateChangeListener {
-            group, checkId ->
-            val selectedChip: List<Int> = checkId;
-            Log.d(TAG, "selectCategory: ${selectedChip}")
-            if (selectedChip != null) {
-                for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
-                    val selectedChipId = token ///
-                    val selctedName = group.findViewById<Chip>(selectedChipId)
-//                val selectedChipText = selectedChip.text.toString()
-                    Log.d("ChipSelection", "Selected Chip ID: $selectedChipId, Text: $selectedChip")
-                    Log.d("selctedName", "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}")
-
-                }
-            }
-            //모든 칩들의 공통 특성 선택
-        }
+//        chipGroup.setOnCheckedStateChangeListener {
+//            group, checkId ->
+//            val selectedChip: List<Int> = checkId;
+//            Log.d(TAG, "selectCategory: ${selectedChip}")
+//            if (selectedChip != null) {
+//                for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
+//                    val selectedChipId = token ///
+//                    val selctedName = group.findViewById<Chip>(selectedChipId)
+////                val selectedChipText = selectedChip.text.toString()
+//                    Log.d("ChipSelection", "Selected Chip ID: $selectedChipId, Text: $selectedChip")
+//                    Log.d("selctedName", "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}")
+//
+//                }
+//            }
+//            //모든 칩들의 공통 특성 선택
+//        }
         Log.d(TAG, "selectCategory:2")
     }
 

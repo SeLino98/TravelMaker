@@ -19,6 +19,9 @@
     <string name="sign_chip_picture">사진</string>
     <string name="sign_chip_culture">문화</string>
     <string name="sign_chip_taste">맛집</string>
+    <string name="signup_phone_title">휴대전화 번호를 입력하세요.</string>
+    <string name="signup_hint_phone_number">전화번호</string>
+    <string name="signup_button_number">인증번호 발송</string>
     <!-- END -->
 
 
