@@ -77,6 +77,7 @@ class SignupViewModel @Inject constructor(
         Log.d(TAG, "setAddress: $_address")
     }
 
+    // TODO UseCase 주입 받아서 번호 인증 로직 구현하기
 
     // 우건
 

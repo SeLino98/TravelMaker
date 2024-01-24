@@ -3,6 +3,7 @@ package com.gumibom.travelmaker.di
 
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
+import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.Module
 import dagger.Provides
@@ -102,4 +103,9 @@ class NetworkModule {
         return retrofit.create(GoogleLocationSearchService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideSignupService(@MainRetrofit retrofit : Retrofit) : SignupService {
+        return retrofit.create(SignupService::class.java)
+    }
 }

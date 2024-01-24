@@ -2,10 +2,13 @@ package com.gumibom.travelmaker.di.datasource
 
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
+import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +29,12 @@ class RemoteDataSourceModule {
     @Provides
     fun provideGoogleLocationRemoteDataSource(googleLocationSearchService: GoogleLocationSearchService) : GoogleLocationRemoteDataSource {
         return GoogleLocationRemoteDataSourceImpl(googleLocationSearchService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSignupRemoteDataSource(signupService : SignupService) : SignupRemoteDataSource {
+        return SignupRemoteDataSourceImpl(signupService)
     }
 
 }
