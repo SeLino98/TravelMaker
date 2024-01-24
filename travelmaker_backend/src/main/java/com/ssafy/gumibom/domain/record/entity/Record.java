@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.record.entity;
 
+import com.ssafy.gumibom.domain.pamphlet.entity.Pamphlet;
 import com.ssafy.gumibom.global.common.Emoji;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @DiscriminatorColumn
 @NoArgsConstructor
 @AllArgsConstructor
-public class Record {
+public abstract class Record {
 
     @Id @GeneratedValue
     @Column(name = "record_id")
@@ -28,4 +29,6 @@ public class Record {
 
     @Embedded
     private Emoji emoji;
+
+    public abstract void setPamphlet(Pamphlet pamphlet);
 }
