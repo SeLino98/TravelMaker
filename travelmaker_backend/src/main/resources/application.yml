@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ENC(P5J7Ioi0OprueUrt3fFv2A==)
+    password: ENC(eCb5NnNqDSeixJJVCqt0Cw==)
+    url: ENC(FfK3luDDW5RcfTf1Y1ANsU5fbfTK71q6ycvpGMufvdnRfihWWrBlpm6NV6l0liIOGAiXlQhyAK5JQJYcYhrKIzWfyKBYBLbB1hNl4kPyA64=)
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -13,3 +13,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+#jasypt:
+#  encryptor:
+#    bean: jasyptStringEncryptor
