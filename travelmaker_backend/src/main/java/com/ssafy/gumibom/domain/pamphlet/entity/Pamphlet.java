@@ -1,5 +1,7 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
+import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
+import com.ssafy.gumibom.domain.record.entity.Record;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @DiscriminatorColumn
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pamphlet {
+public abstract class Pamphlet {
 
     @Id @GeneratedValue
     @Column(name = "pamphlet_id")
@@ -22,4 +24,7 @@ public class Pamphlet {
     private String title;
     private int love;
     private LocalDateTime createTime;
+
+    public abstract void addRecord(Record record);
+    public abstract void removeRecord(Record record);
 }
