@@ -23,10 +23,11 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="269dp"
-        app:helperText="아이디 생성규칙"
+        app:helperText="add 아이디 생성규칙"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="@color/hint_color"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -40,16 +41,20 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_signup_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         app:layout_constraintEnd_toEndOf="@+id/til_signup_id"
         app:layout_constraintTop_toTopOf="@+id/til_signup_id"
         app:layout_constraintBottom_toBottomOf="@+id/til_signup_id"
-        android:layout_marginBottom="18dp"
+
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
+
         android:text="중복확인"
+        android:background="@drawable/btn_duplicate_check"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -57,10 +62,11 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        app:helperText="비밀번호 생성규칙"
+        app:helperText="add 비밀번호 생성규칙"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_signup_id"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="@color/hint_color"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -96,6 +102,7 @@
         android:layout_marginEnd="26dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="99dp"
+        style="@style/Text.Regular20.gray"
         />
 
 
