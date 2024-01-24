@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.api.signup
 
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -14,4 +15,7 @@ interface SignupService {
 
     @GET("/users/join/auth")
     fun isCertificationNumber(@Query("number") secretNumber : String) : Response<Boolean>
+
+    @POST("/users/join/fill/check-id-dup")
+    fun checkDuplicatedId(@Body id : String) : Response<Boolean>
 }

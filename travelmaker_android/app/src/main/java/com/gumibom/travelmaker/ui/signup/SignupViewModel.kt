@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
 import com.gumibom.travelmaker.model.Address
@@ -18,11 +19,11 @@ private const val TAG = "SignupViewModel_싸피"
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val getNaverLocationUseCase: GetNaverLocationUseCase,
-    private val getGoogleLocationUseCase: GetGoogleLocationUseCase
+    private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
+    private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase
 ) : ViewModel() {
     /*
         변수 사용하는 공간
-
      */
 
     // 우건
@@ -36,14 +37,15 @@ class SignupViewModel @Inject constructor(
 
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
-
-
     // 우건
 
+    // 지원
+    private val _isDuplicatedId = MutableLiveData<Boolean>()
+    val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
+    // 지원
 
-
-
-
+    // 인호
+    // 인호
 
     /*
         함수 사용하는 공간
@@ -81,4 +83,14 @@ class SignupViewModel @Inject constructor(
 
     // 우건
 
+    // 지원
+    fun checkId(id: String) {
+        viewModelScope.launch {
+//            val isCheckId = checkDuplicatedIdUseCase.checkDuplicatedId(id)!!
+//            _isDuplicatedId.value = isCheckId
+            _isDuplicatedId.value = false
+        }
+    }
+
+    // 지원
 }
