@@ -18,4 +18,6 @@ public class Position { // 모임 장소
 
     private Double latitude;
     private Double longitude;
+
+    private String town;
 }

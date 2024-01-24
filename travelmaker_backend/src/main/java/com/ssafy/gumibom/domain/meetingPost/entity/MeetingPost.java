@@ -3,6 +3,7 @@ package com.ssafy.gumibom.domain.meetingPost.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.user.User;
 import com.ssafy.gumibom.global.common.Category;
+import com.ssafy.gumibom.global.common.Position;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -43,22 +44,43 @@ public class MeetingPost {
     @OneToMany(mappedBy = "meeting_post", cascade = CascadeType.ALL)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
-    public void addApplier(MeetingApplier meetingApplier) {
-        appliers.add(meetingApplier);
+    @JsonIgnore
+    @OneToOne(mappedBy = "meeting_post", cascade = CascadeType.ALL)
+    private Position position;
+
+    public void addApplier(User user, Boolean isHead, Position position) {
+        MeetingApplier meetingApplier = new MeetingApplier();
+        meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
+        meetingApplier.setIsNative(position.getTown() == user.getTown());
+        meetingApplier.setIsHead(isHead);
+        appliers.add(meetingApplier);
     }
-
-
 
     public static MeetingPost writeMeetingPost(User author, String title, String content, LocalDateTime authDate,
                                                Integer nativeMin, Integer travelerMin, Integer memberMax,
-                                               LocalDateTime startDate, LocalDateTime endDate,
+                                               LocalDateTime startDate, LocalDateTime endDate, Position position,
                                                LocalDateTime deadline, String imgUrl, List<Category> categories) {
 
         MeetingPost meetingPost = new MeetingPost();
-        MeetingApplier meetingApplier = MeetingApplier.createMeetingApplier(author, Boolean.TRUE, this);
 
-        meetingPost.appliers.add(meetingApplier);
+        meetingPost.addApplier(author, true, position);
+
+        meetingPost.setTitle(title);
+        meetingPost.setContent(content);
+        meetingPost.setAuthDate(authDate);
+        meetingPost.setNativeMin(nativeMin);
+        meetingPost.setTravelerMin(travelerMin);
+        meetingPost.setMemberMax(memberMax);
+        meetingPost.setStartDate(startDate);
+        meetingPost.setEndDate(endDate);
+        meetingPost.setPosition(position);
+        meetingPost.setDeadline(deadline);
+        meetingPost.setImgUrl(imgUrl);
+        meetingPost.setCategories(categories);
+
+        return meetingPost;
     }
+
 
 }
