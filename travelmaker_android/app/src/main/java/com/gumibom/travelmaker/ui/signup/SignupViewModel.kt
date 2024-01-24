@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
+import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.NaverAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +20,8 @@ private const val TAG = "SignupViewModel_싸피"
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val getNaverLocationUseCase: GetNaverLocationUseCase,
-    private val getGoogleLocationUseCase: GetGoogleLocationUseCase
+    private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
+    private val sendPhoneNumberUseCase: SendPhoneNumberUseCase
 ) : ViewModel() {
     /*
         변수 사용하는 공간
@@ -77,8 +80,12 @@ class SignupViewModel @Inject constructor(
         Log.d(TAG, "setAddress: $_address")
     }
 
-    // TODO UseCase 주입 받아서 번호 인증 로직 구현하기
+    // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
+    fun sendPhoneNumber(phoneNumber : String) {
+        viewModelScope.launch {
 
+        }
+    }
     // 우건
 
 }

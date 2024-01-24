@@ -9,13 +9,16 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputEditText
 import com.gumibom.travelmaker.databinding.FragmentSignupPhoneBinding
+import com.gumibom.travelmaker.ui.signup.SignupViewModel
 
 class SignupPhoneFragment : Fragment() {
 
     private var _binding : FragmentSignupPhoneBinding? = null
     private val binding get() = _binding!!
+    private val signupViewModel : SignupViewModel by activityViewModels()
 
     private lateinit var phoneEditText : TextInputEditText
     private lateinit var certificationEditText : TextInputEditText
@@ -35,6 +38,15 @@ class SignupPhoneFragment : Fragment() {
         phoneEditText = binding.tieSignupPhone
         certificationEditText = binding.tieSignupCertificationNumber
 
+        getCertificationNumber()
+
+    }
+
+    private fun getCertificationNumber() {
+        binding.btnSignupCertificationPhone.setOnClickListener {
+            val phoneNumber = binding.btnSignupCertificationPhone.text.toString()
+            signupViewModel.sendPhoneNumber(phoneNumber)
+        }
     }
 
     // 뒤로 가기 버튼 클릭 시 EditText의 focus를 없애는 콜백 함수

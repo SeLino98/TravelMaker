@@ -75,7 +75,6 @@
         android:layout_marginTop="380dp"
         android:layout_marginEnd="32dp"
         android:src="@drawable/ic_calendar_"
-        android:background="null"
         />
 
     <TextView

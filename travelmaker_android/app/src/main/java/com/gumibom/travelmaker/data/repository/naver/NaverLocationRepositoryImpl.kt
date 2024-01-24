@@ -19,3 +19,5 @@ class NaverLocationRepositoryImpl @Inject constructor(
         return naverLocationRemoteDataSourceImpl.findNaverLocationSearch(idKey, secretKey, location, display)
     }
 }
+
+

@@ -7,4 +7,5 @@ import javax.inject.Inject
 class CheckSecretNumberUseCase @Inject constructor(
     private val signupRepositoryImpl: SignupRepository
 ) {
+
 }
