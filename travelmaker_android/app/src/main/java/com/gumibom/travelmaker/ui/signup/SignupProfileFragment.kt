@@ -1,11 +1,18 @@
 package com.gumibom.travelmaker.ui.signup
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
@@ -31,8 +38,29 @@ class SignupProfileFragment : Fragment() {
         binding.ivProfileAdd.setOnClickListener {
             //사진 엘범이 열려야 됨,
             //권한 체크
+            Log.d(TAG, "selectPicture: GHDGDG")
+            dispatchTakePicture()
+            Log.d(TAG, "selectPicture: GHDGDG2222")
         }
+
     }
+    private val takePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageBitmap = result.data?.extras?.get("data") as Bitmap?
+            binding.ivProfile.setImageBitmap(imageBitmap)
+        }
+        Log.d(TAG, "selectPicture: 12#!@#")
+    }
+    private fun dispatchTakePicture() {
+        Log.d(TAG, "dispatchTakePicture: 1")
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(signupActivity.packageManager) != null) {
+            takePicture.launch(takePictureIntent)
+            Log.d(TAG, "dispatchTakePicture: 2")
+        }
+        Log.d(TAG, "dispatchTakePicture: 3")
+    }
+
     private fun selectCategory(){
         val chipGroup = binding.chipGroup;
         Log.d(TAG, "selectCategory:1")
@@ -58,6 +86,8 @@ class SignupProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         selectCategory()
+        selectPicture()
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
