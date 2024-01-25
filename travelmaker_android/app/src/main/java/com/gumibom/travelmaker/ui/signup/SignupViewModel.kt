@@ -80,4 +80,14 @@ class SignupViewModel @Inject constructor(
 
     // 우건
 
+
+    //인호
+    private val _favoriteList = MutableLiveData<List<String>>()
+    val favoriteList: LiveData<List<String>> = _favoriteList
+    fun updateFavoriteList(newList: List<String>) {
+        _favoriteList.value = newList
+    }
+    fun saveToUserDTO() {
+    }
+    //인호 끝
 }

@@ -31,12 +31,12 @@ class SignupActivity : AppCompatActivity() {
             as NavHostFragment).navController
         }
         setContentView(binding.root)
-
-                                                                                    //권한 체크
+        //권한 체크
         val checker = PermissionChecker(this)
         val runtimePermissions = arrayOf(
-            Manifest.permission.POST_NOTIFICATIONS,
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
         )
         if (!checker.checkPermission(runtimePermissions)) {
             checker.permitted = object : PermissionListener {
