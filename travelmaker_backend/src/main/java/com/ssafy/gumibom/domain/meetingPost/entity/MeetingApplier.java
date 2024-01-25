@@ -7,10 +7,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class MeetingApplier {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "meeting_applier_id")
     private Long id;
 
@@ -22,7 +24,6 @@ public class MeetingApplier {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
 
     private Boolean isNative;
     private Boolean isHead;

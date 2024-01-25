@@ -15,15 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MeetingPost {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "meeting_post_id")
     private Long id;
 
-//    @JsonIgnore
+    //    @JsonIgnore
 //    @OneToMany(mappedBy = "meeting_post")
     @ElementCollection
     private List<Category> categories = new ArrayList<>();

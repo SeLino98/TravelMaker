@@ -2,7 +2,6 @@ package com.ssafy.gumibom.domain.meetingPost.repository;
 
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,12 +27,12 @@ public class MeetingPostRepository {
         // 위도 경도 따와서 기준 위치 근방 km 안인지 확인 후 select
 
         return em.createQuery("SELECT m, " +
-                "(6371 * acos(" +
-                "cos(radians(:latitude)) * cos(radians(m.position.latitude)) * cos(radians(m.position.longitude) - radians(:longitude)) " +
-                "+ sin(radians(:latitude)) * sin(radians(m.position.latitude)) " +
-                ")) AS distance " +
-                "FROM MeetingPost m " +
-                "HAVING distance <= :upToKm ", MeetingPost.class)
+                        "(6371 * acos(" +
+                        "cos(radians(:latitude)) * cos(radians(m.position.latitude)) * cos(radians(m.position.longitude) - radians(:longitude)) " +
+                        "+ sin(radians(:latitude)) * sin(radians(m.position.latitude)) " +
+                        ")) AS distance " +
+                        "FROM MeetingPost m " +
+                        "HAVING distance <= :upToKm ", MeetingPost.class)
                 .setParameter("latitude", latitude)
                 .setParameter("longitude", longitude)
                 .setParameter("upToKm", upToKm)

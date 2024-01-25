@@ -6,10 +6,12 @@ import lombok.Setter;
 
 @Entity
 @Embeddable
-@Getter @Setter
+@Getter
+@Setter
 public class Position { // 모임 장소
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "position_id")
     private Long id;
 
