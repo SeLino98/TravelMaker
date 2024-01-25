@@ -46,7 +46,14 @@ class SignupPhoneFragment : Fragment() {
         binding.btnSignupCertificationPhone.setOnClickListener {
             val phoneNumber = binding.btnSignupCertificationPhone.text.toString()
             signupViewModel.sendPhoneNumber(phoneNumber)
+
+            setTimer()
         }
+    }
+
+    // 인증번호 요청 시 사용자에게 3분 타이머를 보여주는 함수
+    private fun setTimer() {
+
     }
 
     // 뒤로 가기 버튼 클릭 시 EditText의 focus를 없애는 콜백 함수
