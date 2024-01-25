@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.ui.signup
 
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +13,11 @@ import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.NaverAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.concurrent.timer
 
 
 private const val TAG = "SignupViewModel_싸피"
@@ -40,7 +44,8 @@ class SignupViewModel @Inject constructor(
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
 
-
+    // 타이머의 코루틴을 추적하는 변수
+    private var timerJob : Job? = null
     // 우건
 
 
@@ -85,6 +90,32 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
 
         }
+    }
+
+    // 코루틴으로 3분 타이머를 동작하는 함수
+    fun startTimer(textView : TextView) {
+        timerJob?.cancel()
+
+        timerJob = viewModelScope.launch {
+            val totalTime = 3 * 60 // 3분
+
+            for (time in totalTime downTo 1) {
+                val mins = time / 60
+                val secs = time % 60
+
+                val timeFormat = "${mins}:${"%02d".format(secs)}" // 3:00 형태로 변환
+                updateTimerUI(timeFormat, textView)
+                delay(1000)
+            }
+        }
+    }
+
+    fun endTimer() {
+        timerJob?.cancel()
+    }
+
+    private fun updateTimerUI(timeFormat : String, timerText : TextView) {
+        timerText.text = timeFormat
     }
     // 우건
 

@@ -37,7 +37,7 @@ class ApplicationClass : Application(){
     }
 
     companion object {
-        const val BASE_URL = ""
+        const val BASE_URL = "https://zzz"
 
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"
