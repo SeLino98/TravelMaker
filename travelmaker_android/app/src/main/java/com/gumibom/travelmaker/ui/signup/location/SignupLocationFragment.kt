@@ -125,10 +125,8 @@ class SignupLocationFragment : Fragment() {
 
     // 다음 Text가 활성화 되는 함수
     private fun setNextTextToggle() {
-
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
         val notActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-
         signupViewModel.address.observe(viewLifecycleOwner) { address ->
             // 주소를 선택했으면 색깔을 검정색으로 바꾸고 isNextPage => true, viewModel address에 저장
             if (address.isNotEmpty()) {
@@ -161,7 +159,6 @@ class SignupLocationFragment : Fragment() {
     private fun selectKoreanEnglish(location : String) : String {
         val koreanRegex = Regex(KOREAN_PATTERN)
         val englishRegex = Regex(ENGLISH_PATTERN)
-
         // 입력한 장소가 한국어 + 숫자면
         return if (koreanRegex.matches(location)) {
             KOREAN

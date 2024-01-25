@@ -31,10 +31,12 @@ class RemoteDataSourceModule {
         return GoogleLocationRemoteDataSourceImpl(googleLocationSearchService)
     }
 
+
     @Singleton
     @Provides
     fun provideSignupRemoteDataSource(signupService : SignupService) : SignupRemoteDataSource {
         return SignupRemoteDataSourceImpl(signupService)
     }
+
 
 }
