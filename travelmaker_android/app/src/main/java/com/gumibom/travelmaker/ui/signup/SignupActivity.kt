@@ -22,6 +22,14 @@ private const val TAG = "SignupActivity_싸피"
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
     private lateinit var navController : NavController
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        Log.d(TAG, "onRequestPermissionsResult: ${requestCode} ${permissions} ${grantResults}")
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,30 +41,26 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
         //권한 체크
         val checker = PermissionChecker(this)
-        val runtimePermissions = arrayOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-        )
-        if (!checker.checkPermission(runtimePermissions)) {
-            checker.permitted = object : PermissionListener {
-                override fun onGranted() {
-                    //퍼미션 획득 성공일때
-                    /* permission check */
-                    Log.d(TAG, "onGranted: 토큰 수신 함 ")
-//                    getTokenFCM()
-                }
-            }
-            checker.requestPermissionLauncher.launch(runtimePermissions)
-        } else { //이미 전체 권한이 있는 경우
-            /* permission check */
-            Log.d(TAG, "onGranted: 토큰 수신 함2 ")
-//            getTokenFCM()
-        }
-
-        //
-
-
+//        val runtimePermissions = arrayOf(
+//            Manifest.permission.CAMERA,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//        )
+//        if (!checker.checkPermission(runtimePermissions)) {
+//            checker.permitted = object : PermissionListener {
+//                override fun onGranted() {
+//                    //퍼미션 획득 성공일때
+//                    /* permission check */
+//                    Log.d(TAG, "onGranted: 토큰 수신 함 ")
+////                    getTokenFCM()
+//                }
+//            }
+//            checker.requestPermissionLauncher.launch(runtimePermissions)
+//        } else { //이미 전체 권한이 있는 경우
+//            /* permission check */
+//            Log.d(TAG, "onGranted: 토큰 수신 함2 ")
+////            getTokenFCM()
+//        }
         // 프로그레스바 진행률 설정
         setProgressBar(20)
     }

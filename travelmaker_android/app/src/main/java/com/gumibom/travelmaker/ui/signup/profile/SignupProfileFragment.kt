@@ -1,53 +1,70 @@
-package com.gumibom.travelmaker.ui.signup
+package com.gumibom.travelmaker.ui.signup.profile
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.RectF
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
+import com.gumibom.travelmaker.ui.signup.SignupActivity
+import com.gumibom.travelmaker.ui.signup.SignupViewModel
 
-private const val TAG = "SignupProfileFragment_inho"
+private const val TAG = "SignupProfileFragment"
+
 class SignupProfileFragment : Fragment() {
     private val imagePickCode = 1000
     private val permissionCode = 1001
     private val cameraRequestCode = 1002
     private var profileFlag = false;
-    private var _binding :FragmentSignupProfileBinding? = null
+    private var _binding : FragmentSignupProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var signupActivity: SignupActivity;
-    private val signupViewModel:SignupViewModel by viewModels()
+    private val signupViewModel: SignupViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         selectCategory()
         selectPicture()
         observeViewModel()
+        backAndNextBtn()
+        signupActivity.setProgressBar(80)
+    }
+    private fun backAndNextBtn(){
+        binding.tvSignupLocationPrevious.setOnClickListener {
+
+        }
+        binding.tvSignupLocationNext.setOnClickListener {
+
+        }
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach:11 ")
         //Activity 연결
         signupActivity = context as SignupActivity
+
+
+
     }
     private fun observeViewModel() {
 //        signupViewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
 //            Log.d(TAG, "observeViewModel: ${favoriteList.toList()}")
 //        }
+
+        //1. viewModel에서 리스트로 받고 옵저버로 실시간 갱신
+        //2. 엘범 플래그는 구지? viewModel로 안빼도 될 듯
+        //3. 두 값이 체크 됐을 때 다음버튼 활성화
+
     }
     private fun selectPicture(){
         //+버튼 클릭 시
@@ -90,17 +107,6 @@ class SignupProfileFragment : Fragment() {
         profileFlag = true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            permissionCode -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    choosePhotoFromGallery()
-                } else {
-                    // Permission denied
-                }
-            }
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -114,7 +120,6 @@ class SignupProfileFragment : Fragment() {
                     val thumbnail = data?.extras?.get("data") as? Bitmap
                     binding.ivProfile.setImageBitmap(thumbnail)
                 }
-
             }
         }
     }
@@ -137,7 +142,7 @@ class SignupProfileFragment : Fragment() {
     }*/
 
     private fun selectCategory(){
-        val chipGroup:ChipGroup = binding.chipGroup
+        val chipGroup: ChipGroup = binding.chipGroup
         Log.d(TAG, "selectCategory:1")
         chipGroup.setOnCheckedStateChangeListener {
                 group, checkId ->
@@ -152,7 +157,10 @@ class SignupProfileFragment : Fragment() {
 //                  val selectedChips = checkId.map { it }
 //                    signupViewModel.updateFavoriteList(selctedName)
                     Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChip")
-                    Log.d(TAG, "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}")
+                    Log.d(
+                        TAG,
+                        "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}"
+                    )
                 }
             }
             //모든 칩들의 공통 특성 선택
@@ -164,7 +172,7 @@ class SignupProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSignupProfileBinding.inflate(inflater,container,false)
+        _binding = FragmentSignupProfileBinding.inflate(inflater, container, false)
         return binding.root
         //inflater.inflate(R.layout.fragment_profile_signup, container, false)
     }

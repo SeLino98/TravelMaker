@@ -2,17 +2,38 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/signup_nav_graph"
-    app:startDestination="@id/signupLocationFragment">
+    app:startDestination="@id/signupActivity">
     <fragment
         android:id="@+id/signupLocationFragment"
         android:name="com.gumibom.travelmaker.ui.signup.location.SignupLocationFragment"
         android:label="SignupLocationFragment" />
     <fragment
         android:id="@+id/signupProfileFragment"
-        android:name="com.gumibom.travelmaker.ui.signup.SignupProfileFragment"
+        android:name="com.gumibom.travelmaker.ui.signup.profile.SignupProfileFragment"
         android:label="SignupProfileFragment" />
     <fragment
         android:id="@+id/signupPhoneFragment"
         android:name="com.gumibom.travelmaker.ui.signup.phone.SignupPhoneFragment"
         android:label="SignupPhoneFragment" />
+    <fragment
+        android:id="@+id/signupGenderBirthdayFragment"
+        android:name="com.gumibom.travelmaker.ui.signup.genderbirth.SignupGenderBirthdayFragment"
+        android:label="SignupGenderBirthdayFragment" />
+    <fragment
+        android:id="@+id/signupIdPwFramgnet"
+        android:name="com.gumibom.travelmaker.ui.signup.idpw.SignupIdPwFramgnet"
+        android:label="SignupIdPwFramgnet" />
+    <activity
+        android:id="@+id/signupActivity"
+        android:name="com.gumibom.travelmaker.ui.signup.SignupActivity"
+        android:label="SignupActivity" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.gumibom.travelmaker.ui.login.LoginFragment"
+        android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/signupNicknameFragment"
+        android:name="com.gumibom.travelmaker.ui.signup.nickname.SignupNicknameFragment"
+        android:label="SignupNicknameFragment" />
+
 </navigation>
