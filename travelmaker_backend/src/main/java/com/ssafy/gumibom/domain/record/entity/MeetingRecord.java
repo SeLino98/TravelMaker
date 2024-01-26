@@ -2,8 +2,6 @@ package com.ssafy.gumibom.domain.record.entity;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.MeetingPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.entity.Pamphlet;
-import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
-import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.*;
 
 @Entity

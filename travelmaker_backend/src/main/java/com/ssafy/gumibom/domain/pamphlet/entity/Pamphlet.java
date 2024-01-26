@@ -1,6 +1,5 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
-import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
