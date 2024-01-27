@@ -1,24 +1,34 @@
 package com.gumibom.travelmaker.ui.signup
 
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
+
+import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
+import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.NaverAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.concurrent.timer
 
 
 private const val TAG = "SignupViewModel_싸피"
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val getNaverLocationUseCase: GetNaverLocationUseCase,
-    private val getGoogleLocationUseCase: GetGoogleLocationUseCase
+    private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
+    private val sendPhoneNumberUseCase: SendPhoneNumberUseCase
+
 ) : ViewModel() {
     /*
         변수 사용하는 공간
@@ -37,7 +47,8 @@ class SignupViewModel @Inject constructor(
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
 
-
+    // 타이머의 코루틴을 추적하는 변수
+    private var timerJob : Job? = null
     // 우건
 
 
@@ -77,7 +88,48 @@ class SignupViewModel @Inject constructor(
         Log.d(TAG, "setAddress: $_address")
     }
 
+    // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
+    fun sendPhoneNumber(phoneNumber : String) {
+        viewModelScope.launch {
 
+        }
+    }
+
+    // 코루틴으로 3분 타이머를 동작하는 함수
+    fun startTimer(textView : TextView) {
+        timerJob?.cancel()
+
+        timerJob = viewModelScope.launch {
+            val totalTime = 3 * 60 // 3분
+
+            for (time in totalTime downTo 1) {
+                val mins = time / 60
+                val secs = time % 60
+
+                val timeFormat = "${mins}:${"%02d".format(secs)}" // 3:00 형태로 변환
+                updateTimerUI(timeFormat, textView)
+                delay(1000)
+            }
+        }
+    }
+
+    fun endTimer() {
+        timerJob?.cancel()
+    }
+
+    private fun updateTimerUI(timeFormat : String, timerText : TextView) {
+        timerText.text = timeFormat
+    }
     // 우건
 
+
+    //인호
+    private val _favoriteList = MutableLiveData<List<String>>()
+    val favoriteList: LiveData<List<String>> = _favoriteList
+    fun updateFavoriteList(newList: List<String>) {
+        _favoriteList.value = newList
+    }
+    fun saveToUserDTO() {
+    }
+    //인호 끝
 }

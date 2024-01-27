@@ -128,7 +128,6 @@ class SignupLocationFragment : Fragment() {
 
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
         val notActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-
         signupViewModel.address.observe(viewLifecycleOwner) { address ->
             // 주소를 선택했으면 색깔을 검정색으로 바꾸고 isNextPage => true, viewModel address에 저장
             if (address.isNotEmpty()) {

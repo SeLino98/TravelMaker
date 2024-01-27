@@ -1,5 +1,7 @@
 package com.gumibom.travelmaker.domain.signup
 
+
+import android.util.Log
 import com.gumibom.travelmaker.data.dto.naver.AddressDTO
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 import com.gumibom.travelmaker.model.Address
@@ -20,6 +22,7 @@ class GetNaverLocationUseCase @Inject constructor(
         // 여기서 DTO null 체크를 하고 model로 데이터 변환
 
         val response = naverLocationRepositoryImpl.findNaverLocationSearch(idKey, secretKey, location, display)
+        Log.d(TAG, "findNaverLocationSearch: $response")
 
         var items = mutableListOf<AddressDTO>()
         var result = mutableListOf<Address>()

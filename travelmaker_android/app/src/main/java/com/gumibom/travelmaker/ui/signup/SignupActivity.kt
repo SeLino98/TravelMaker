@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.signup
 
+import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +10,14 @@ import com.gumibom.travelmaker.BuildConfig
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.ActivitySignupBinding
+import com.gumibom.travelmaker.util.PermissionChecker
+import com.gumibom.travelmaker.util.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ActivityContext
+
 
 private const val TAG = "SignupActivity_싸피"
+
 @AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
@@ -25,6 +31,31 @@ class SignupActivity : AppCompatActivity() {
             as NavHostFragment).navController
         }
         setContentView(binding.root)
+        //권한 체크
+        val checker = PermissionChecker(this)
+        val runtimePermissions = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+        )
+        if (!checker.checkPermission(runtimePermissions)) {
+            checker.permitted = object : PermissionListener {
+                override fun onGranted() {
+                    //퍼미션 획득 성공일때
+                    /* permission check */
+                    Log.d(TAG, "onGranted: 토큰 수신 함 ")
+//                    getTokenFCM()
+                }
+            }
+            checker.requestPermissionLauncher.launch(runtimePermissions)
+        } else { //이미 전체 권한이 있는 경우
+            /* permission check */
+            Log.d(TAG, "onGranted: 토큰 수신 함2 ")
+//            getTokenFCM()
+        }
+
+        //
+
 
         // 프로그레스바 진행률 설정
         setProgressBar(20)

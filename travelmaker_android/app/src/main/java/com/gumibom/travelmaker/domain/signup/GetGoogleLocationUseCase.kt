@@ -38,4 +38,6 @@ class GetGoogleLocationUseCase @Inject constructor(
 
         return googleAddress
     }
+
 }
+
