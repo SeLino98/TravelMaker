@@ -22,3 +22,8 @@ const val WRONG_INPUT = "잘못된 입력입니다. 다시 검색해주세요."
 // 기타 상수
 const val KOREAN = "korean"
 const val ENGLISH = "english"
+
+// 아이디 찾기 상수
+const val EMPTY_NICKNAME = 0
+const val WRONG_NICKNAME = 1
+const val CORRECT_NICKNAME = 2

@@ -69,5 +69,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <!-- TabLayout Text 스타일 정의-->
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
 
 </resources>

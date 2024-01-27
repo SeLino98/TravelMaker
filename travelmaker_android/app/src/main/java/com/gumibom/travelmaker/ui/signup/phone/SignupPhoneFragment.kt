@@ -2,6 +2,8 @@ package com.gumibom.travelmaker.ui.signup.phone
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +44,7 @@ class SignupPhoneFragment : Fragment() {
 
         getCertificationNumber()
         checkSecretNumber()
+        phoneNumberCheck()
 
     }
 
@@ -51,10 +54,16 @@ class SignupPhoneFragment : Fragment() {
      */
     private fun getCertificationNumber() {
         binding.btnSignupCertificationPhone.setOnClickListener {
-            val phoneNumber = binding.btnSignupCertificationPhone.text.toString()
-            signupViewModel.sendPhoneNumber(phoneNumber)
+            val phoneNumber = binding.tieSignupPhone.text.toString()
+            val phoneNumberError = binding.tilSignupPhone.error
 
-            startTimer()
+            // 정상 휴대폰 번호면 서버 통신
+            if (phoneNumberError == null && phoneNumber.isNotEmpty()) {
+                signupViewModel.sendPhoneNumber(phoneNumber)
+
+                startTimer()
+            }
+
         }
     }
 
@@ -94,6 +103,29 @@ class SignupPhoneFragment : Fragment() {
                 activity?.onBackPressed()
             }
         }
+    }
+
+    // 휴대폰 번호 입력 error 체크
+    private fun phoneNumberCheck() {
+        binding.tieSignupPhone.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            // 비어있으면 error 표시
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val phoneNumber = binding.tieSignupPhone.text.toString()
+
+                if (phoneNumber.length != 11) {
+                    binding.tilSignupPhone.error = "휴대폰 번호는 11자리여야 합니다."
+                } else {
+                    binding.tilSignupPhone.error = null
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
     }
 
 
