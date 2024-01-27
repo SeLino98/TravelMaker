@@ -21,7 +21,6 @@ class SignupIdPwFramgnet : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
-
     }
 
     override fun onCreateView(
@@ -30,10 +29,22 @@ class SignupIdPwFramgnet : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSignupIdPwBinding.inflate(inflater,container,false)
-
         return binding.root
+    }
+    private fun backAndNextNaviBtn(){
+        binding.tvSignupIdPwBefore.setOnClickListener {
+            activity.navigateToPreviousFragment()
+        }
+        binding.tvSignupIdPwNext.setOnClickListener {
+            activity.navigateToNextFragment()
+        }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        backAndNextNaviBtn()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
     }
 }

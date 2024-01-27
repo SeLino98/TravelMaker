@@ -19,7 +19,14 @@ class SignupNicknameFragment : Fragment(){
         activity = context as SignupActivity
 
     }
-
+    private fun backAndNextNaviBtn(){
+        binding.tvSignupNicknameBefore.setOnClickListener {
+            activity.navigateToPreviousFragment()
+        }
+        binding.tvSignupNicknameNext.setOnClickListener {
+            activity.navigateToNextFragment()
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,5 +37,6 @@ class SignupNicknameFragment : Fragment(){
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        backAndNextNaviBtn()
     }
 }

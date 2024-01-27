@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputEditText
 import com.gumibom.travelmaker.databinding.FragmentSignupPhoneBinding
+import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 
 class SignupPhoneFragment : Fragment() {
@@ -22,7 +23,7 @@ class SignupPhoneFragment : Fragment() {
 
     private lateinit var phoneEditText : TextInputEditText
     private lateinit var certificationEditText : TextInputEditText
-
+    private lateinit var activity:SignupActivity
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +33,10 @@ class SignupPhoneFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as SignupActivity
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,7 +44,7 @@ class SignupPhoneFragment : Fragment() {
         certificationEditText = binding.tieSignupCertificationNumber
 
         getCertificationNumber()
-
+        backAndNextNaviBtn()
     }
 
     private fun getCertificationNumber() {
@@ -78,5 +83,12 @@ class SignupPhoneFragment : Fragment() {
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
-
+    private fun backAndNextNaviBtn(){
+        binding.tvSignupPhonePrevious.setOnClickListener {
+            activity.navigateToPreviousFragment()
+        }
+        binding.tvSignupPhoneNext.setOnClickListener {
+            activity.navigateToNextFragment()
+        }
+    }
 }

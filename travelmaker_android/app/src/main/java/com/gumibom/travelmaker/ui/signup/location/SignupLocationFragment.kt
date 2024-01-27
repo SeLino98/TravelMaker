@@ -27,6 +27,7 @@ import com.gumibom.travelmaker.constant.NAVER_SECRET_KEY
 import com.gumibom.travelmaker.constant.NO_SEARCH_LOCATION
 import com.gumibom.travelmaker.constant.WRONG_INPUT
 import com.gumibom.travelmaker.databinding.FragmentSignupLocationBinding
+import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,6 +42,7 @@ class SignupLocationFragment : Fragment() {
     private val signupViewModel : SignupViewModel by activityViewModels()
 
     private lateinit var adapter : SignupLocationAdapter
+    private lateinit var activity : SignupActivity
     private var isNextPage = false // 다음 페이지로 넘어갈지 말지 결정하는 변수
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +55,10 @@ class SignupLocationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as SignupActivity
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,8 +66,16 @@ class SignupLocationFragment : Fragment() {
         searchLocation()
         setNextTextToggle()
         openNextPage()
+        backAndNextNaviBtn()
     }
-
+    private fun backAndNextNaviBtn(){
+        binding.tvSignupLocationPrevious.setOnClickListener {
+            activity.navigateToPreviousFragment()
+        }
+        binding.tvSignupLocationNext.setOnClickListener {
+            activity.navigateToNextFragment()
+        }
+    }
     // 리싸이클러뷰 세팅
     private fun setAdapter() {
         adapter = SignupLocationAdapter(requireContext(), signupViewModel)

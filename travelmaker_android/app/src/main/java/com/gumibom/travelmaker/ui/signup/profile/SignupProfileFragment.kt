@@ -36,15 +36,14 @@ class SignupProfileFragment : Fragment() {
         selectCategory()
         selectPicture()
         observeViewModel()
-        backAndNextBtn()
-        signupActivity.setProgressBar(80)
+        backAndNextNaviBtn()
     }
-    private fun backAndNextBtn(){
+    private fun backAndNextNaviBtn(){
         binding.tvSignupLocationPrevious.setOnClickListener {
-
+            signupActivity.navigateToPreviousFragment()
         }
         binding.tvSignupLocationNext.setOnClickListener {
-
+            signupActivity.navigateToNextFragment()
         }
     }
     override fun onAttach(context: Context) {
