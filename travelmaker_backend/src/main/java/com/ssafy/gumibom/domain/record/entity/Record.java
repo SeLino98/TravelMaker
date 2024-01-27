@@ -30,5 +30,8 @@ public abstract class Record {
     @Embedded
     private Emoji emoji;
 
+    private String testCode1;
+    private String testCodeForCodeReview;
+
     public abstract void setPamphlet(Pamphlet pamphlet);
 }
