@@ -25,8 +25,9 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="240dp"
         android:layout_marginStart="80dp"
-
-        android:text="남성\n입니다"
+        android:textSize="20sp"
+        android:textColor="@color/light_gray"
+        android:text="남성"
         android:background="@drawable/btn_gender_selection"
         />
 
@@ -37,8 +38,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="240dp"
         android:layout_marginEnd="80dp"
-
-        android:text="여성\n입니다"
+        android:textSize="20sp"
+        android:textColor="@color/light_gray"
+        android:text="여성"
         android:background="@drawable/btn_gender_selection"
         />
 

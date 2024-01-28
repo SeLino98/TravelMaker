@@ -27,7 +27,10 @@ class SignupViewModel @Inject constructor(
      */
 
     // 우건
+    // 가변형 변수는 바로 아래쪽에 몰아놓기
     var selectAddress = ""
+
+
 
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
