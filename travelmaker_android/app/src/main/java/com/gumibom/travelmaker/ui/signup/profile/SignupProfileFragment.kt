@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/SignupProfileFragment.kt
-=======
 import androidx.fragment.app.Fragment
->>>>>>> 609da452812e67e47fb7f3804b9475272bef50ba:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/profile/SignupProfileFragment.kt
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -63,7 +60,6 @@ class SignupProfileFragment : Fragment() {
 //        signupViewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
 //            Log.d(TAG, "observeViewModel: ${favoriteList.toList()}")
 //        }
-
         //1. viewModel에서 리스트로 받고 옵저버로 실시간 갱신
         //2. 엘범 플래그는 구지? viewModel로 안빼도 될 듯
         //3. 두 값이 체크 됐을 때 다음버튼 활성화
