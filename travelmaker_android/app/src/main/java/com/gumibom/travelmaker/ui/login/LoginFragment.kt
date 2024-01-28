@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 class LoginFragment  : Fragment(){
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -15,6 +14,7 @@ class LoginFragment  : Fragment(){
     ): View? {
 
         return super.onCreateView(inflater, container, savedInstanceState)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

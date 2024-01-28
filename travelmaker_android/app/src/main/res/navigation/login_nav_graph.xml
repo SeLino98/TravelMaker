@@ -8,4 +8,5 @@
         android:id="@+id/findIdPwFragment"
         android:name="com.gumibom.travelmaker.ui.login.forgetIdPw.FindIdPwFragment"
         android:label="FindIdPwFragment" />
+
 </navigation>
