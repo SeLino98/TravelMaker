@@ -23,7 +23,7 @@ public class MeetingRepository {
      * 특정 유저의 모임 조회
      * @param userId
      */
-    public List<Meeting> findByMemberId(long userId) {
+    public List<Meeting> findByMemberId(Long userId) {
         // userRepository 코드로 수정 필요
         List<MeetingMember> meetingMemberList = em.find(User.class, userId).getMeetingMemberList();
         return meetingMemberList.stream().map(MeetingMember::getMeeting).toList();

@@ -19,13 +19,13 @@ public class Meeting {
 
     @Id @GeneratedValue
     @Column(name = "meeting_id")
-    private long id;
+    private Long id;
 
     @ElementCollection
     private List<Category> categories;
 
     private String imgUrl;
-    private boolean status; // 모임 진행 중인지, 모임 완료되었는지
+    private Boolean status; // 모임 진행 중인지, 모임 완료되었는지
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 

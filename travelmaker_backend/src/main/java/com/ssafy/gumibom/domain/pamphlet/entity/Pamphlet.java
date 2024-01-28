@@ -18,10 +18,10 @@ public abstract class Pamphlet {
 
     @Id @GeneratedValue
     @Column(name = "pamphlet_id")
-    private long id;
+    private Long id;
 
     private String title;
-    private int love;
+    private Integer love;
     private LocalDateTime createTime;
 
     public abstract void addRecord(Record record);

@@ -19,7 +19,7 @@ public class PersonalPamphletRepository implements PamphletRepository {
     }
 
     @Override
-    public List<Pamphlet> findByUserId(long id) {
+    public List<Pamphlet> findByUserId(Long id) {
         return em.createQuery("select pp from PersonalPamphlet pp " +
                 "where pp.user.id = id", Pamphlet.class).getResultList();
     }

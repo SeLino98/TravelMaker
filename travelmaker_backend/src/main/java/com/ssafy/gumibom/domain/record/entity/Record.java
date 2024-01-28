@@ -19,7 +19,7 @@ public abstract class Record {
 
     @Id @GeneratedValue
     @Column(name = "record_id")
-    private long id;
+    private Long id;
 
     private String title;
     private LocalDateTime createDate;

@@ -9,6 +9,6 @@ import java.util.List;
 public interface PamphletRepository {
 
     public void save(Pamphlet pamphlet);
-    public List<Pamphlet> findByUserId(long id);
+    public List<Pamphlet> findByUserId(Long id);
     public List<Pamphlet> findAll();
 }

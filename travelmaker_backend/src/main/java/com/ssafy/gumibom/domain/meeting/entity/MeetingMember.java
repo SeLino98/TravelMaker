@@ -11,7 +11,7 @@ public class MeetingMember {
 
     @Id @GeneratedValue
     @Column(name = "meeting_member_id")
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meeting_id")
@@ -21,7 +21,7 @@ public class MeetingMember {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private boolean isNative;
+    private Boolean isNative;
 
     public void setUser(User user) {
         this.user = user;

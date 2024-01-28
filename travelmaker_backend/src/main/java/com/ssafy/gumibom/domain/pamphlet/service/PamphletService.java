@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class PamphletService {
+public abstract class PamphletService {
 
-    private final PamphletRepository pamphletRepository;
+
 }
