@@ -14,6 +14,15 @@ spring:
       hibernate:
         format_sql: true
 
-#jasypt:
-#  encryptor:
-#    bean: jasyptStringEncryptor
+cloud:
+  aws:
+    s3:
+      bucket: ENC(Y4/w6+PLIdoUTI9TcQf7/echDgJEldvj3uF8hXTHGqw=)
+    credentials:
+      access-key: ENC(d+zPWsAtzmUL8Ve0cxpeoGulXzgyrIsDzONSCglQAXo=)
+      secret-key: ENC(7UzrnKPq0ZAolzrPxTRNC9tcbw0ETQzyrKDS5454M0YjOtPzVQOJQjqLPZbNSTLXzWDnLDyZq4o=)
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
