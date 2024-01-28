@@ -5,4 +5,6 @@ import retrofit2.Response
 interface SignupRepository {
 
     suspend fun sendPhoneNumber(phoneNumber : String) : Response<Boolean>
+    suspend fun checkDuplicatedId(id:String): Response<Boolean>
+
 }

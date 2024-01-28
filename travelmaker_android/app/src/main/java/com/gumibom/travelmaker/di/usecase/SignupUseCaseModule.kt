@@ -6,6 +6,7 @@ import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
 
 import com.gumibom.travelmaker.data.repository.signup.SignupRepository
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
@@ -16,6 +17,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase as CheckDuplicatedIdUseCase1
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,6 +46,12 @@ class SignupUseCaseModule {
     @Provides
     fun provideCheckSecretNumberUseCase(signupRepository : SignupRepository) : CheckSecretNumberUseCase {
         return CheckSecretNumberUseCase(signupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCheckDuplicatedIdUseCase(signupRepository: SignupRepository) : CheckDuplicatedIdUseCase {
+        return CheckDuplicatedIdUseCase(signupRepository)
     }
 
 }

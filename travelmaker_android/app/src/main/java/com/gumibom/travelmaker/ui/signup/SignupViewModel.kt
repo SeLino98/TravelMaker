@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
-
 import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
@@ -27,16 +27,19 @@ private const val TAG = "SignupViewModel_싸피"
 class SignupViewModel @Inject constructor(
     private val getNaverLocationUseCase: GetNaverLocationUseCase,
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
-    private val sendPhoneNumberUseCase: SendPhoneNumberUseCase
+    private val sendPhoneNumberUseCase: SendPhoneNumberUseCase,
+    private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase
 
 ) : ViewModel() {
     /*
         변수 사용하는 공간
-
      */
 
     // 우건
+    // 가변형 변수는 바로 아래쪽에 몰아놓기
     var selectAddress = ""
+
+
 
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
@@ -49,12 +52,16 @@ class SignupViewModel @Inject constructor(
 
     // 타이머의 코루틴을 추적하는 변수
     private var timerJob : Job? = null
+
     // 우건
 
+    // 지원
+    private val _isDuplicatedId = MutableLiveData<Boolean>()
+    val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
+    // 지원
 
-
-
-
+    // 인호
+    // 인호
 
     /*
         함수 사용하는 공간
@@ -122,7 +129,6 @@ class SignupViewModel @Inject constructor(
     }
     // 우건
 
-
     //인호
     private val _favoriteList = MutableLiveData<List<String>>()
     val favoriteList: LiveData<List<String>> = _favoriteList
@@ -132,4 +138,16 @@ class SignupViewModel @Inject constructor(
     fun saveToUserDTO() {
     }
     //인호 끝
+
+    // 지원
+    fun checkId(id: String) {
+        viewModelScope.launch {
+//            val isCheckId = checkDuplicatedIdUseCase.checkDuplicatedId(id)!!
+//            _isDuplicatedId.value = isCheckId
+            _isDuplicatedId.value = false
+        }
+    }
+
+    // 지원
 }
+

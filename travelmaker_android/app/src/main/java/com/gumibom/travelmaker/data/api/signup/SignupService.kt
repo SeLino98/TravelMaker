@@ -16,4 +16,7 @@ interface SignupService {
     // 이 인증번호가 맞는지 확인하는 api
     @GET("/users/join/auth")
     fun isCertificationNumber(@Query("number") secretNumber : String) : Response<Boolean>
+
+    @POST("/users/join/fill/check-id-dup")
+    fun checkDuplicatedId(@Body id : String) : Response<Boolean>
 }

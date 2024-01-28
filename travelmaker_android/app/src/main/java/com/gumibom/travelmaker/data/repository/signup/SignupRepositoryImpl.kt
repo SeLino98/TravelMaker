@@ -9,7 +9,13 @@ class SignupRepositoryImpl @Inject constructor(
     private val signupRemoteDataSourceImpl: SignupRemoteDataSource
 ) : SignupRepository {
 
+
     override suspend fun sendPhoneNumber(phoneNumber: String): Response<Boolean> {
         return signupRemoteDataSourceImpl.sendPhoneNumber(phoneNumber)
+    }
+    override suspend fun checkDuplicatedId(id: String): Response<Boolean> {
+        val response = signupRemoteDataSourceImpl.checkDuplicatedId(id)
+        return response
+
     }
 }

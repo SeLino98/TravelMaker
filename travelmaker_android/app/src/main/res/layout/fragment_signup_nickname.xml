@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="269dp"
         app:helperText="Travel Maker의 프로필에 등록되는 닉네임으로\n이후 변경을 할 수 없습니다."
+        
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
