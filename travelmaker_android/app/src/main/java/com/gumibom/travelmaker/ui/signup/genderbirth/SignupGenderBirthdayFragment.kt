@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import com.gumibom.travelmaker.databinding.FragmentSignupGenderBirthdayBinding
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignupGenderBirthdayFragment : Fragment(){
     private lateinit var activity: SignupActivity;
     private val signupViewModel: SignupViewModel by viewModels()
@@ -19,6 +21,14 @@ class SignupGenderBirthdayFragment : Fragment(){
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
+    }
+    private fun backAndNextNaviBtn(){
+        binding.tvSignupGenderBirthdayBefore.setOnClickListener {
+            activity.navigateToPreviousFragment()
+        }
+        binding.tvSignupGenderBirthdayNext.setOnClickListener {
+            activity.navigateToNextFragment()
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +40,7 @@ class SignupGenderBirthdayFragment : Fragment(){
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        backAndNextNaviBtn()
     }
     override fun onDestroyView() {
         super.onDestroyView()

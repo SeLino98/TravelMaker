@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import com.gumibom.travelmaker.databinding.FragmentSignupIdPwBinding
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignupIdPwFramgnet : Fragment() {
 
     private lateinit var activity : SignupActivity

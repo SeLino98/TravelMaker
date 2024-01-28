@@ -14,7 +14,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.gumibom.travelmaker.databinding.FragmentSignupPhoneBinding
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignupPhoneFragment : Fragment() {
 
     private var _binding : FragmentSignupPhoneBinding? = null

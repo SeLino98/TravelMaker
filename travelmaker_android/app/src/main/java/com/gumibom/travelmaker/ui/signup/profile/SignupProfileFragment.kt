@@ -19,9 +19,10 @@ import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "SignupProfileFragment"
-
+@AndroidEntryPoint
 class SignupProfileFragment : Fragment() {
     private val imagePickCode = 1000
     private val permissionCode = 1001
@@ -101,11 +102,16 @@ class SignupProfileFragment : Fragment() {
         profileFlag = true;
     }
     private fun takePhotoFromCamera() {
+        //권한을 설정하기
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(cameraIntent, cameraRequestCode)
         profileFlag = true
     }
-
+/*FATAL EXCEPTION: main
+                                                                                                    Process: com.gumibom.travelmaker, PID: 28866
+                                                                                                    java.lang.SecurityException:
+                                                                                                     Permission Denial: starting Intent { act=android.media.action.IMAGE_CAPTURE cmp=com.android.camera2/com.android.camera.CaptureActivity } from ProcessRecord{a9ed258 28866:com.gumibom.travelmaker/u0a88} (pid=28866, uid=10088)
+                                                                                                    with revoked permission android.permission.CAMERA*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -122,15 +128,15 @@ class SignupProfileFragment : Fragment() {
             }
         }
     }
-    /*
-    private val takePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val imageBitmap = result.data?.extras?.get("data") as Bitmap?
-            binding.ivProfile.setImageBitmap(imageBitmap)
-        }
-        Log.d(TAG, "selectPicture: 12#!@#")
-    }
-    private fun dispatchTakePicture() {
+
+//    private val takePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            val imageBitmap = result.data?.extras?.get("data") as Bitmap?
+//            binding.ivProfile.setImageBitmap(imageBitmap)
+//        }
+//        Log.d(TAG, "selectPicture: 12#!@#")
+//    }
+//    private fun dispatchTakePicture() {
 //        Log.d(TAG, "dispatchTakePicture: 1")
 //        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{
@@ -138,7 +144,7 @@ class SignupProfileFragment : Fragment() {
 //            Log.d(TAG, "dispatchTakePicture: 2")
 //        }
 //        Log.d(TAG, "dispatchTakePicture: 3")
-    }*/
+
 
     private fun selectCategory(){
         val chipGroup: ChipGroup = binding.chipGroup

@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gumibom.travelmaker.databinding.FragmentSignupNicknameBinding
 import com.gumibom.travelmaker.ui.signup.SignupActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignupNicknameFragment : Fragment(){
     private var _binding :FragmentSignupNicknameBinding? = null
     private val binding get() = _binding!!

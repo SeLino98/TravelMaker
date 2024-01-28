@@ -10,7 +10,7 @@ class NaverLocationRemoteDataSourceImpl @Inject constructor(
     private val naverLocationService : NaverLocationSearchService
 ) : NaverLocationRemoteDataSource {
 
-    // 네이버 위치 검색
+    //네이버 위치 검색
     override suspend fun findNaverLocationSearch(
         idKey: String,
         secretKey: String,

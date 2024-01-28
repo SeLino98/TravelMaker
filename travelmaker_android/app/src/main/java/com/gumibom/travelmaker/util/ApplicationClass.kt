@@ -23,21 +23,10 @@ class ApplicationClass : Application(){
     //FCM토큰
     private fun getTokenFCM(){
         //FCM토큰 수신
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "FCM 토큰 얻기에 실패하였습니다.", task.exception)
-                return@OnCompleteListener
-            }
-            // token log 남기기
-            Log.d(TAG, "token: ${task.result?:"task.result is null"}")
-            if(task.result != null){//토큰 얻기에 성공함.
-                uploadToken(task.result!!)
-            }
-        })
     }
 
     companion object {
-        const val BASE_URL = ""
+        const val BASE_URL = "https://naver.com"
 
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"

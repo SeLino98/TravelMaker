@@ -21,6 +21,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 
 private const val TAG = "SignupActivity_싸피"
 
+
 @AndroidEntryPoint
 class SignupActivity : AppCompatActivity(){
     private lateinit var binding : ActivitySignupBinding
