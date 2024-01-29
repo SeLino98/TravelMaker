@@ -8,13 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
@@ -30,10 +23,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private lateinit var navController : NavController
 
-    private lateinit var oneTapClient: SignInClient
+//    private lateinit var oneTapClient: SignInClient
     private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
     private var showOneTapUI = true
-    private lateinit var signInRequest: BeginSignInRequest
+//    private lateinit var signInRequest: BeginSignInRequest
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,47 +38,56 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
-        oneTapClient = Identity.getSignInClient(this)
-        signInRequest = BeginSignInRequest.builder()
-            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
-                .setSupported(true)
-                .build())
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    // Your server's client ID, not your Android client ID.
-                    .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(false)
-                    .build())
-            // Automatically sign in when exactly one credential is retrieved.
-            .setAutoSelectEnabled(true)
-            .build()
+//        oneTapClient = Identity.getSignInClient(this)
+//        signInRequest = BeginSignInRequest.builder()
+//            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+//                .setSupported(true)
+//                .build())
+//            .setGoogleIdTokenRequestOptions(
+//                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                    .setSupported(true)
+//                    // Your server's client ID, not your Android client ID.
+//                    .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
+//                    // Only show accounts previously used to sign in.
+//                    .setFilterByAuthorizedAccounts(false)
+//                    .build())
+//            // Automatically sign in when exactly one credential is retrieved.
+//            .setAutoSelectEnabled(true)
+//            .build()
         // ...
 
-        googleLogin()
-    }
-    private fun googleLogin(){
-        binding.btnGoogleLogin.setOnClickListener {
-            
-            oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(this) { result ->
-                    try {
-                        startIntentSenderForResult(
-                            result.pendingIntent.intentSender, REQ_ONE_TAP,
-                            null, 0, 0, 0, null)
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }
-                .addOnFailureListener(this) { e ->
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d(TAG, "asdf"+e.localizedMessage)
+//        googleLogin()
 
-                }
+    }
+
+    fun navigateToNextFragment(bundle : Bundle) {
+        Log.d(TAG, "navigateToNextFragment: gdgd")
+        when(navController.currentDestination?.id){
+            R.id.loginFragment2-> navController.navigate(R.id.action_loginFragment2_to_findIdPwFragment, bundle)
+            R.id.signupNicknameFragment->navController.navigate(R.id.action_signupNicknameFragment_to_signupLocationFragment)
         }
     }
+//    private fun googleLogin(){
+//        binding.btnGoogleLogin.setOnClickListener {
+//
+//            oneTapClient.beginSignIn(signInRequest)
+//                .addOnSuccessListener(this) { result ->
+//                    try {
+//                        startIntentSenderForResult(
+//                            result.pendingIntent.intentSender, REQ_ONE_TAP,
+//                            null, 0, 0, 0, null)
+//                    } catch (e: IntentSender.SendIntentException) {
+//                        Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
+//                    }
+//                }
+//                .addOnFailureListener(this) { e ->
+//                    // No saved credentials found. Launch the One Tap sign-up flow, or
+//                    // do nothing and continue presenting the signed-out UI.
+//                    Log.d(TAG, "asdf"+e.localizedMessage)
+//
+//                }
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

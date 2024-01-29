@@ -1,0 +1,15 @@
+package com.gumibom.travelmaker.data.datasource.login
+
+import com.gumibom.travelmaker.data.api.login.LoginService
+import com.gumibom.travelmaker.data.dto.request.LoginRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
+import retrofit2.Response
+import javax.inject.Inject
+
+class LoginRemoteDataSourceImpl @Inject constructor(
+    private val loginService : LoginService
+) : LoginRemoteDataSource {
+    override suspend fun login(loginRequestDTO: LoginRequestDTO): Response<IsSuccessResponseDTO> {
+        return loginService.login(loginRequestDTO)
+    }
+}

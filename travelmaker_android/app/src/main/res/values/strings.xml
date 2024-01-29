@@ -23,6 +23,12 @@
     <string name="signup_hint_phone_number">전화번호</string>
     <string name="signup_button_number">인증 요청</string>
     <string name="login_findPw_password">비밀번호</string>
+    <string name="login_input_id">아이디를 입력해주세요.</string>
+    <string name="login_input_password">비밀번호를 입력해주세요.</string>
+    <string name="button_login">로그인</string>
+    <string name="button_signup">회원가입</string>
+    <string name="login_find_id">아이디 찾기</string>
+    <string name="login_find_password">비밀번호 찾기</string>
     <!-- END -->
 
 

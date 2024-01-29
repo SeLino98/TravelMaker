@@ -1,4 +1,4 @@
-package com.gumibom.travelmaker.di.usecase
+package com.gumibom.travelmaker.di.usecase.signup
 
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository

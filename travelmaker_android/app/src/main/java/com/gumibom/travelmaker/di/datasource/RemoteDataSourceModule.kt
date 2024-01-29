@@ -1,12 +1,15 @@
 package com.gumibom.travelmaker.di.datasource
 
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
+import com.gumibom.travelmaker.data.api.login.LoginService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
 
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
 
@@ -41,6 +44,12 @@ class RemoteDataSourceModule {
     @Provides
     fun provideSignupRemoteDataSource(signupService : SignupService) : SignupRemoteDataSource {
         return SignupRemoteDataSourceImpl(signupService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoginRemoteDataSource(loginService: LoginService) : LoginRemoteDataSource {
+        return LoginRemoteDataSourceImpl(loginService)
     }
 
 }
