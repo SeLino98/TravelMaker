@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "694623643672",
+    "project_id": "travelmaker-fe00c",
+    "storage_bucket": "travelmaker-fe00c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694623643672:android:ae6638780f3f5a8fe5bb6d",
+        "android_client_info": {
+          "package_name": "com.gumibom.travelmaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694623643672-0s48vdhfngktidnu8ntmf3m6mejnm4qg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gumibom.travelmaker",
+            "certificate_hash": "40a0de743f489bd2d4435fb75660f1059c0a183d"
+          }
+        },
+        {
+          "client_id": "694623643672-38hieegqerevl7hhvp7vv3r73nvbv47c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gumibom.travelmaker",
+            "certificate_hash": "e35380384d0650838f101b3282da648a57fac3ae"
+          }
+        },
+        {
+          "client_id": "694623643672-7tj3j0ejulvtsjq5liip0bvnps6eqg4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gumibom.travelmaker",
+            "certificate_hash": "e7211f4df9be2c0e5b7a7f541369d19e55c4d22b"
+          }
+        },
+        {
+          "client_id": "694623643672-9ck9l854tsvhs605jnbpgm58l3j0e51j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIw7tx7hSxVC5Hx4iDwjRrBvFCeHU4gU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694623643672-9ck9l854tsvhs605jnbpgm58l3j0e51j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
