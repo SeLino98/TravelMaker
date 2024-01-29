@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meeting.entity;
 
 
-import com.ssafy.gumibom.domain.user.User;
+import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 

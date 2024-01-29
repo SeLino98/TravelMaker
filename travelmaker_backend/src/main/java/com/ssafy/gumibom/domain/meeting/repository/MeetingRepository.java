@@ -2,7 +2,6 @@ package com.ssafy.gumibom.domain.meeting.repository;
 
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
-import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,8 @@
 package com.ssafy.gumibom.domain.meetingPost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.user.User;
+import com.ssafy.gumibom.domain.user.entity.User;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
