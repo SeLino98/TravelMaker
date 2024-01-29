@@ -2,15 +2,24 @@ package com.ssafy.gumibom.domain.record.entity;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.Pamphlet;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
+import com.ssafy.gumibom.global.common.Emoji;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
+@NoArgsConstructor
 @DiscriminatorValue("P")
 public class PersonalRecord extends Record {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pamphlet_id")
     private PersonalPamphlet personalPamphlet;
+
+    public PersonalRecord(String title, String text) {
+        super(title, text);
+    }
 
     // 연관관계 편의 메서드
     @Override

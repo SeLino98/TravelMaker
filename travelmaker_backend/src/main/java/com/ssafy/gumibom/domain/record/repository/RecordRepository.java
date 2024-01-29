@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.record.repository;
 
+import com.ssafy.gumibom.domain.record.entity.Record;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
