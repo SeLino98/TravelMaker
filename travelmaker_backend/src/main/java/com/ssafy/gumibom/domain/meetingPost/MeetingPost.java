@@ -1,6 +1,8 @@
 package com.ssafy.gumibom.domain.meetingPost;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.global.common.Category;
+import com.ssafy.gumibom.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,8 +39,8 @@ public class MeetingPost {
     private LocalDateTime deadline;
     private String imgUrl;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "meeting_post")
-//    private List<User> appliers = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "meeting_post")
+    private List<User> appliers = new ArrayList<>();
 
 }
