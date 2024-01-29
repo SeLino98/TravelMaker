@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
 import com.gumibom.travelmaker.BuildConfig
+import com.gumibom.travelmaker.MainActivity
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -153,4 +155,11 @@ class LoginActivity : AppCompatActivity() {
 //        }
 //    }
 
+    // 메인 화면으로 넘어가는 함수
+    fun moveMainActivity() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(intent)
+    }
 }

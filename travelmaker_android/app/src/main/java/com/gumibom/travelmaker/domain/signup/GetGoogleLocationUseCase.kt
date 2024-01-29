@@ -18,8 +18,11 @@ class GetGoogleLocationUseCase @Inject constructor(
         if (response.isSuccessful) {
             val body = response.body()
 
-            val googleAddress = convertAddressModel(body)
-            googleAddressList.add(googleAddress)
+            if (body != null) {
+                val googleAddress = convertAddressModel(body)
+                googleAddressList.add(googleAddress)
+            }
+
         }
 
         return googleAddressList

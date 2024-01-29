@@ -17,6 +17,9 @@ class ApplicationClass : Application(){
     override fun onCreate() {
         super.onCreate()
 
+        //shared preference 초기화
+        sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)
+
     }
     /* permission check */
 
@@ -26,6 +29,9 @@ class ApplicationClass : Application(){
     }
 
     companion object {
+
+        lateinit var sharedPreferencesUtil: SharedPreferencesUtil
+
         const val BASE_URL = "https://naver.com"
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"

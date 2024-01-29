@@ -27,3 +27,7 @@ const val ENGLISH = "english"
 const val EMPTY_NICKNAME = 0
 const val WRONG_NICKNAME = 1
 const val CORRECT_NICKNAME = 2
+
+// 로그인 상수
+const val SUCCESS_LOGIN = "로그인에 성공하였습니다."
+const val NO_LOGIN = "아이디나 비밀번호를 다시 입력해주세요."
