@@ -2,8 +2,8 @@ package com.ssafy.gumibom.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
-import com.ssafy.gumibom.domain.meetingPost.MeetingApplier;
-import com.ssafy.gumibom.domain.meetingPost.MeetingPost;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
