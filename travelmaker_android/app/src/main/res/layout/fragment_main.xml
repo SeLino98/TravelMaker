@@ -9,7 +9,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_look_for_"
+        android:id="@+id/btn_look_for_mate"
         android:layout_width="160dp"
         android:layout_height="325dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_look_around_pamphlet"
@@ -33,7 +33,7 @@
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btn_look_for_"
+        app:layout_constraintStart_toEndOf="@+id/btn_look_for_mate"
         app:layout_constraintTop_toBottomOf="@+id/btn_create_my_pamphlet" />
 
     <Button

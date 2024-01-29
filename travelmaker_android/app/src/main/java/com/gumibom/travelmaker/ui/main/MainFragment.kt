@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     private var _binding :FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -23,8 +25,9 @@ class MainFragment : Fragment() {
         initButtonClickListener()
     }
     private fun initButtonClickListener(){
-        binding.btnLookFor.setOnClickListener {
-
+        binding.btnLookForMate.setOnClickListener {
+            //activity. 버튼 이동로직들이 fragment에 있는데, activity에서 버튼 이동 관리하는 게 맞는건가?
+            activity.navigationToNextFragment()
         }
         binding.btnCreateMyPamphlet.setOnClickListener {
 
