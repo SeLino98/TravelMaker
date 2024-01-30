@@ -4,15 +4,15 @@ pipeline{
     stages{
         stage('Build'){
             steps{
-                script{
-                    sh 'pwd'
-                    sh 'ls'
-                    sh 'cd travelmaker_backend'
-                    sh 'ls'
-                    sh 'chmod +x gradlew'
-                    sh './gradlew clean build'
-                    sh 'chmod +x ./docker_install.sh'
-                    sh './docker_install.sh'
+                dir('travelmaker_backend'){
+                    script{
+                        sh 'pwd'
+                        sh 'ls'
+                        sh 'chmod +x gradlew'
+                        sh './gradlew clean build'
+                        sh 'chmod +x ./docker_install.sh'
+                        sh './docker_install.sh'
+                    }
                 }
             }
         }
