@@ -53,8 +53,6 @@ class MainFindMateFragment : Fragment() {
         val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
         standardBottomSheetBehavior.state = STATE_HALF_EXPANDED;
         standardBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-
-
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 val screenHeight = Resources.getSystem().displayMetrics.heightPixels
                 val halfHeight = screenHeight / 2
@@ -66,10 +64,8 @@ class MainFindMateFragment : Fragment() {
                     in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state = STATE_HALF_EXPANDED
                     in halfToTop  until  screenHeight -> standardBottomSheetBehavior.state = STATE_EXPANDED
                 }
-                Log.d(TAG, "onSlide:_ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
-
+                Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
             }
-
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
