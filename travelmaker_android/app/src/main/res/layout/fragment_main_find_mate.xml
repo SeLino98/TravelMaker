@@ -1,33 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--    tools:context="">-->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.findmate. MainFindMateFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.main.findmate.MainFindMateFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btn_collapsed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="20dp"
-            android:text="collapsed" />
-
-        <Button
-            android:id="@+id/btn_expanded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="20dp"
-            android:text="expanded" />
-    </LinearLayout>
 
     <!-- Persistent Bottom Sheet -->
     <!-- behavior 속성을 여기서 적용합니다 -->
@@ -60,5 +39,11 @@
             android:gravity="center"/>
 
     </LinearLayout>
+    <!-- Persistent Bottom Sheet -->
+    <!-- behavior 속성을 여기서 적용합니다 -->
+    <include
+        android:id="@+id/bts"
+        layout="@layout/fragment_main_find_mate_detail"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
