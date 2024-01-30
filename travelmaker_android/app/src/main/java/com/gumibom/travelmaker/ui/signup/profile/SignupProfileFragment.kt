@@ -30,8 +30,14 @@ class SignupProfileFragment : Fragment() {
     private var profileFlag = false;
     private var _binding : FragmentSignupProfileBinding? = null
     private val binding get() = _binding!!
-    private lateinit var signupActivity: SignupActivity;
+    private lateinit var signupActivity: SignupActivity
     private val signupViewModel: SignupViewModel by viewModels()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d(TAG, "onAttach:11 ")
+        //Activity 연결
+        signupActivity = context as SignupActivity
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         selectCategory()
@@ -46,15 +52,6 @@ class SignupProfileFragment : Fragment() {
         binding.tvSignupLocationNext.setOnClickListener {
             signupActivity.navigateToNextFragment()
         }
-    }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d(TAG, "onAttach:11 ")
-        //Activity 연결
-        signupActivity = context as SignupActivity
-
-
-
     }
     private fun observeViewModel() {
 //        signupViewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->

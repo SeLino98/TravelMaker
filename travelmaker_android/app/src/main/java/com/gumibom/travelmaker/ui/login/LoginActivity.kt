@@ -13,9 +13,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Task
 import com.gumibom.travelmaker.BuildConfig
-import com.gumibom.travelmaker.MainActivity
+
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityLoginBinding
+import com.gumibom.travelmaker.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "LoginActivity"
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
     private lateinit var navController : NavController
+
 
 //    private lateinit var oneTapClient: SignInClient
     private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
@@ -40,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+
 //        oneTapClient = Identity.getSignInClient(this)
 //        signInRequest = BeginSignInRequest.builder()
 //            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
@@ -91,33 +94,8 @@ class LoginActivity : AppCompatActivity() {
 //        }
 //    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        when (requestCode) {
-            REQ_ONE_TAP -> {
-                try {
-                    // ...
-                } catch (e: ApiException) {
-                    when (e.statusCode) {
-                        CommonStatusCodes.CANCELED -> {
-                            Log.d(TAG, "One-tap dialog was closed.")
-                            // Don't re-prompt the user.
-                            showOneTapUI = false
-                        }
-                        CommonStatusCodes.NETWORK_ERROR -> {
-                            Log.d(TAG, "One-tap encountered a network error.")
-                            // Try again or just ignore.
-                        }
-                        else -> {
-                            Log.d(TAG, "Couldn't get credential from result." +
-                                    " (${e.localizedMessage})")
-                        }
-                    }
-                }
-            }
-        }
-    }
+
 //    private fun googleSignOut(){
 //        binding.btnTestSignOut.setOnClickListener {
 //            googleSignInClient.signOut()
@@ -154,7 +132,6 @@ class LoginActivity : AppCompatActivity() {
 //            Toast.makeText(this,"account${account}",Toast.LENGTH_SHORT).show()
 //        }
 //    }
-
     // 메인 화면으로 넘어가는 함수
     fun moveMainActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {

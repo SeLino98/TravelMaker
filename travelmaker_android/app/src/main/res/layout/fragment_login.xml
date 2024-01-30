@@ -111,4 +111,12 @@
         app:layout_constraintStart_toStartOf="@id/btn_login_signup"
         app:layout_constraintTop_toBottomOf="@id/btn_login_signup" />
 
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_login_main_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

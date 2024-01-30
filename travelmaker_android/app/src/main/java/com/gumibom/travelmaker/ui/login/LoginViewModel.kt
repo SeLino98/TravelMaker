@@ -25,5 +25,4 @@ class LoginViewModel @Inject constructor(
             _isLogin.value = loginUseCase.login(loginRequestDTO)
         }
     }
-
 }
