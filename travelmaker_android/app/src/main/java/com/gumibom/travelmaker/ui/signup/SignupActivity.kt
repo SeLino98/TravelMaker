@@ -52,6 +52,7 @@ class SignupActivity : AppCompatActivity(){
         navController.navigateUp()
         updateProgressBar(false)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
