@@ -30,6 +30,22 @@ class MainFindMateFragment : Fragment() {
     val bottomsheetFragment = MainFindMateDetailFragment()
 //    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private lateinit var activity : MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as MainActivity
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentMainFindMateBinding.inflate(inflater,container,false);
+        return binding.root
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Assuming the Bottom Sheet is part of the Fragment's layout
@@ -79,22 +95,7 @@ class MainFindMateFragment : Fragment() {
     fun Int.dpToPixels(context: Context): Int = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
     ).toInt()
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activity = context as MainActivity
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMainFindMateBinding.inflate(inflater,container,false);
-        return binding.root
-
-    }
     private fun modalBottomSheetEvent(){
 //        val bottomSheetBackCallback = object : OnBackPressedCallback(/* enabled= */false) {
 //            override fun handleOnBackStarted(backEvent: BackEventCompat) {
