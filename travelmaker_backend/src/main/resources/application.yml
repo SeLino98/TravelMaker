@@ -26,3 +26,8 @@ cloud:
       auto: false
     stack:
       auto: false
+
+coolsms:
+  apikey : ENC(vImbLVrEKhRcpw4V9SDzb65QF75toGAqYFQxP6w65W4)
+  apisecret : ENC(tXtdAdiNRCXm8EPhD0/nuJDzSQ9LvDf72o5Oi3R51zC3YBvwGhs8yS+oJ+A11V9H)
+  fromnumber : ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)

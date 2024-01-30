@@ -26,6 +26,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//oauth2-client
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	//문자인증 solapi
+	implementation 'net.nurigo:sdk:4.2.7'
+
 	// jasypt 의존성 추가
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 	// aws cloud 의존성 추가

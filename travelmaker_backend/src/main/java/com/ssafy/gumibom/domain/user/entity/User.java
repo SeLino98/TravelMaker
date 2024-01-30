@@ -8,7 +8,9 @@ import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class User {
     private String nickname;
     private boolean gender;
     private String birth;
-    private String phoneNum;
+    private String phone;
     private String imgURL;
+    private double belief;
     private String town;
+    private String fcmtoken;
 
     @Embedded
     private Nation nation;
@@ -50,5 +54,14 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY)
     private MeetingMember meetingMember;
 
+    public User(String loginId, String password, String nickname, String birth, String phone, boolean gender, List<Category> categories, Nation nation) {
+    }
 
+    public void passwordEncoding(){
+
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

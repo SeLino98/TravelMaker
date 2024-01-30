@@ -2,7 +2,7 @@ package com.ssafy.gumibom.global.config;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class SImplePasswordEncoder implements PasswordEncoder {
+public class PasswordEncodeConfig implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
         return rawPassword.toString();

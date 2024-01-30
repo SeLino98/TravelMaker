@@ -43,11 +43,11 @@ public class MeetingPost {
     private String imgUrl;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "meeting_post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "meeting_post", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "meetingPost", cascade = CascadeType.ALL)
     private Position position;
 
     public void addApplier(User user, Boolean isHead, Position position) {

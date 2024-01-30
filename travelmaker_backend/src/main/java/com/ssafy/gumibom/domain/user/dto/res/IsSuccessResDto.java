@@ -4,7 +4,7 @@ import lombok.*;
 
 @Getter
 @Builder
-public class CommonResDto {
+public class IsSuccessResDto {
     /*
     회원가입 성공여부
     회원가입 문자발송 여부

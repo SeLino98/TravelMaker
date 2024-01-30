@@ -4,7 +4,7 @@ import lombok.*;
 
 @Getter
 @Builder
-public class FindIdResDto {
+public class FindIdBySmsAuthResDto {
     private boolean isSuccess;
     private String message;
     private String loginId;

@@ -1,2 +1,9 @@
-package com.ssafy.gumibom.domain.user.dto.res;public class LoginResDto {
+package com.ssafy.gumibom.domain.user.dto.res;
+
+import lombok.*;
+
+@Getter
+@Builder
+public class LoginResDto {
+    private Long userId;
 }

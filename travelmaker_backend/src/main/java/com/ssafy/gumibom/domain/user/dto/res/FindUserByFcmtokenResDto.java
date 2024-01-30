@@ -1,17 +1,14 @@
 package com.ssafy.gumibom.domain.user.dto.res;
 
-import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
 import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Builder
-public class UserResDto {
+public class FindUserByFcmtokenResDto {
     private Long id;
 
     private String loginId;
