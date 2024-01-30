@@ -37,16 +37,10 @@ import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.hilt.android.AndroidEntryPoint
 
 
-private const val TAG = "LoginFragment"
+private const val TAG = "LoginFragment_싸피"
 
 @AndroidEntryPoint
 class LoginFragment  : Fragment(){
-    private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
-    private var showOneTapUI = true
-
-    private lateinit var oneTapClient: SignInClient
-
-    private lateinit var signInRequest: BeginSignInRequest
     private var _binding :FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity:LoginActivity
@@ -55,10 +49,6 @@ class LoginFragment  : Fragment(){
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as LoginActivity
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     private lateinit var auth: FirebaseAuth
@@ -73,23 +63,11 @@ class LoginFragment  : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        oneTapClient = Identity.getSignInClient(activity)
-        signInRequest = BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    // Your server's client ID, not your Android client ID.
-                    .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(true)
-                    .build())
-            .build()
-        initGoogleLogin()
-        googleLogin()
         testClickEvent()
-
+        signup()
         moveFindIdPwFragment()
         login()
+        googleLogin()
         observeLoginData()
 
     }
@@ -99,11 +77,13 @@ class LoginFragment  : Fragment(){
             startActivity(intent)
         }
     }
-    override fun onStart() {
-        super.onStart()
-        auth = Firebase.auth
-    }
 
+    // 회원가입 버튼 클릭 시 signupActivity로 넘어가는 함수
+    private fun signup() {
+        binding.btnLoginSignup.setOnClickListener {
+            activity.moveSignupActivity(null)
+        }
+    }
 
     // 아이디 찾기 클릭 시 아이디 찾기 화면으로 전환
     private fun moveFindIdPwFragment() {
@@ -138,6 +118,13 @@ class LoginFragment  : Fragment(){
         }
     }
 
+    private fun googleLogin() {
+        binding.btnGoogleLogin.setOnClickListener {
+            activity.googleLogin()
+        }
+    }
+
+
     // LiveData를 관찰하여 로그인 성공 실패 여부를 확인하는 함수
     private fun observeLoginData() {
         loginViewModel.isLogin.observe(viewLifecycleOwner){ response->
@@ -161,48 +148,6 @@ class LoginFragment  : Fragment(){
     private fun initGoogleLogin(){
 
 
-    }
-    private fun googleLogin(){
-        binding.btnGoogleLogin.setOnClickListener {
-            oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(activity) { result ->
-                    try {
-                        val intentSender = result.pendingIntent.intentSender
-                        startIntentSenderForResult(intentSender, REQ_ONE_TAP, null, 0, 0, 0, null)
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }
-                .addOnFailureListener(activity) { e ->
-                    Log.d(TAG, e.localizedMessage)
-                }
-        }
-    }
-    
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            REQ_ONE_TAP -> {
-                try {
-                    val credential = oneTapClient.getSignInCredentialFromIntent(data)
-                    val idToken = credential.googleIdToken
-                    when {
-                        idToken != null -> {
-                            // Got an ID token from Google. Use it to authenticate
-                            // with your backend.
-                            Log.d(TAG, "Got ID token.")
-                        }
-
-                        else -> {
-                            // Shouldn't happen.
-                            Log.d(TAG, "No ID token!")
-                        }
-                    }
-                } catch (e: ApiException) {
-                }
-            }
-        }
     }
 }
 

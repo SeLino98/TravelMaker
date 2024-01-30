@@ -44,6 +44,8 @@ class SignupProfileFragment : Fragment() {
         selectPicture()
         observeViewModel()
         backAndNextNaviBtn()
+
+        // TODO 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
     }
     private fun backAndNextNaviBtn(){
         binding.tvSignupLocationPrevious.setOnClickListener {

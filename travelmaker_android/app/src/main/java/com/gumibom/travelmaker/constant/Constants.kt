@@ -31,3 +31,6 @@ const val CORRECT_NICKNAME = 2
 // 로그인 상수
 const val SUCCESS_LOGIN = "로그인에 성공하였습니다."
 const val NO_LOGIN = "아이디나 비밀번호를 다시 입력해주세요."
+
+// 구글 로그인 상수
+const val FAIL_GOOGLE_LOGIN = "구글 로그인에 실패하였습니다."

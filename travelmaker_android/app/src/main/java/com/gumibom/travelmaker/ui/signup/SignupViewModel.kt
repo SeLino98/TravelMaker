@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.signup
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -37,8 +38,12 @@ class SignupViewModel @Inject constructor(
 
     // 우건
     // 가변형 변수는 바로 아래쪽에 몰아놓기
-    var selectAddress = ""
+    var bundle : Bundle? = null
 
+    var loginId : String? = null
+    var password : String? = null
+    var selectAddress = ""
+    var email : String? = null
 
 
     private val _address = MutableLiveData<String>()

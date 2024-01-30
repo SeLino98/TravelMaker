@@ -1,12 +1,15 @@
 package com.gumibom.travelmaker.util
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,6 +24,24 @@ class PermissionChecker (private val context : Context){
             }
         }
         return true;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun checkPermission() {
+        val checker = PermissionChecker(context)
+        val runtimePermissions = arrayOf(
+            Manifest.permission.POST_NOTIFICATIONS
+        )
+        if (!checker.checkPermission(runtimePermissions)) {
+            checker.requestPermissionLauncher.launch(runtimePermissions)
+            checker.permitted = object : PermissionListener {
+                override fun onGranted() {
+                    //퍼미션 획득 성공일때
+                }
+            }
+        } else {
+
+        }
     }
 
     //권한 호출 후 결과받아 처리할 런처이다 권한 없는 것을 확인하고 다른 창이나 설정으로 이동시킨다.

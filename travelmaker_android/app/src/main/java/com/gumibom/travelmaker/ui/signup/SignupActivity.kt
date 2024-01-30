@@ -2,13 +2,28 @@ package com.gumibom.travelmaker.ui.signup
 
 import android.Manifest
 import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.navigateUp
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.gumibom.travelmaker.BuildConfig
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
@@ -26,16 +41,50 @@ private const val TAG = "SignupActivity_싸피"
 class SignupActivity : AppCompatActivity(){
     private lateinit var binding : ActivitySignupBinding
     private lateinit var navController : NavController
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        Log.d(TAG, "onRequestPermissionsResult: ${requestCode} ${permissions} ${grantResults}")
-//    }
+
+    private var mAuth : FirebaseAuth? = null
+    var mGoogleSignInClient : GoogleSignInClient? = null
+
+    private val signupViewModel : SignupViewModel by viewModels()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 회원가입 네비게이션을 위한 navController 지정
+        binding = ActivitySignupBinding.inflate(layoutInflater).apply {
+            navController = (supportFragmentManager.findFragmentById(R.id.fragment_container_signup)
+            as NavHostFragment).navController
+        }
+        setContentView(binding.root)
+
+        googleSignup()
+        // 프로그레스바 진행률 설정
+        setProgressBar(20)
+    }
+
+    // 구글 로그인을 클릭했는데 처음 로그인한 사용자일 시
+    private fun googleSignup() {
+        val googleEmail = intent.getStringExtra("email")
+
+        // 구글 이메일을 인텐트로 성공적으로 받았다면
+        if (googleEmail != "") {
+            val bundle = bundleOf("email" to googleEmail)
+            signupViewModel.bundle = bundle
+
+            // R.id.specific_fragment는 백 스택을 제거할 대상 프래그먼트의 ID입니다. 'true'는 이 프래그먼트를 포함하여 제거한다는 의미입니다.
+            // 아이디 패스워드 프래그먼트는 구글 로그인 시 백스택에서 제거한다.
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.signupIdPwFramgnet, true)
+                .build()
+            navController.navigate(R.id.action_signupIdPwFramgnet_to_signupNicknameFragment, bundle, navOptions)
+        }
+    }
+
+
+
     fun navigateToNextFragment() {
-    Log.d(TAG, "navigateToNextFragment: gdgd")
+        Log.d(TAG, "navigateToNextFragment: gdgd")
         when(navController.currentDestination?.id){
             R.id.signupIdPwFramgnet-> navController.navigate(R.id.action_signupIdPwFramgnet_to_signupNicknameFragment)
             R.id.signupNicknameFragment->navController.navigate(R.id.action_signupNicknameFragment_to_signupLocationFragment)
@@ -48,44 +97,22 @@ class SignupActivity : AppCompatActivity(){
     }
 
     fun navigateToPreviousFragment() {
-        Log.d(TAG, "navigateToPreviousFragment: ASDF")
-        navController.navigateUp()
-        updateProgressBar(false)
-    }
+        Log.d(TAG, "navigateToPreviousFragment: ${signupViewModel.bundle}")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // 회원가입 네비게이션을 위한 navController 지정
-        binding = ActivitySignupBinding.inflate(layoutInflater).apply {
-            navController = (supportFragmentManager.findFragmentById(R.id.fragment_container_signup)
-            as NavHostFragment).navController
+        // 구글 로그인이 아니면 뒤로가기 정상 동작
+        if (signupViewModel.bundle == null) {
+            navController.navigateUp()
+            updateProgressBar(false)
+        } else {
+            // 구글 로그인인데 회원가입 첫 화면인 닉네임 화면이면 activity 종료
+            if (navController.currentDestination?.id == R.id.signupNicknameFragment) {
+                finish()
+            } else { // 닉네임 화면이 아니면 뒤로가기 정상 동작
+                navController.navigateUp()
+                updateProgressBar(false)
+            }
         }
-        setContentView(binding.root)
-        //권한 체크
-        val checker = PermissionChecker(this)
-//        val runtimePermissions = arrayOf(
-//            Manifest.permission.CAMERA,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//            Manifest.permission.READ_EXTERNAL_STORAGE,
-//        )
-//        if (!checker.checkPermission(runtimePermissions)) {
-//            checker.permitted = object : PermissionListener {
-//                override fun onGranted() {
-//                    //퍼미션 획득 성공일때
-//                    /* permission check */
-//                    Log.d(TAG, "onGranted: 토큰 수신 함 ")
-////                    getTokenFCM()
-//                }
-//            }
-//            checker.requestPermissionLauncher.launch(runtimePermissions)
-//        } else { //이미 전체 권한이 있는 경우
-//            /* permission check */
-//            Log.d(TAG, "onGranted: 토큰 수신 함2 ")
-////            getTokenFCM()
-//        }
-        // 프로그레스바 진행률 설정
-        setProgressBar(20)
+
     }
 
     // 회원가입 화면 프로그레스바 진행률

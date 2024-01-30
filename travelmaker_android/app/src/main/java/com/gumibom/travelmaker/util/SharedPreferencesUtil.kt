@@ -37,4 +37,23 @@ class SharedPreferencesUtil(context : Context) {
         editor.clear()
         editor.apply()
     }
+
+    fun addGoogleEmail(email : String) {
+        val editor = preferences.edit()
+        editor.putString("googleEmail", email)
+        editor.apply()
+    }
+
+    fun getGoogleEmail() : Boolean {
+        val isEmail = preferences.getString("googleEmail", "")
+
+        return isEmail != ""
+    }
+
+    fun deleteGoogleEmail() {
+        //preference 지우기
+        val editor = preferences.edit()
+        editor.clear()
+        editor.apply()
+    }
 }
