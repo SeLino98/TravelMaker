@@ -27,6 +27,24 @@ class MainFindMateFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentMainFindMateBinding.inflate(inflater,container,false);
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Assuming the Bottom Sheet is part of the Fragment's layout
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.persistentBottomSheet)
+
+        // Initially hide the Bottom Sheet
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        persistentBottomSheetEvent()
+    }
     private fun persistentBottomSheetEvent() {
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -52,20 +70,6 @@ class MainFindMateFragment : Fragment() {
             }
         })
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // Assuming the Bottom Sheet is part of the Fragment's layout
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.persistentBottomSheet)
 
-        // Initially hide the Bottom Sheet
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        persistentBottomSheetEvent()
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMainFindMateBinding.inflate(inflater,container,false);
-        return binding.root
-    }
+
 }
