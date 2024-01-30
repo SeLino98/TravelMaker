@@ -1,7 +1,11 @@
 package com.gumibom.travelmaker.ui.main.findmate
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -11,6 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
@@ -19,6 +28,7 @@ import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.FragmentMainFindMateBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
@@ -30,6 +40,7 @@ class MainFindMateFragment : Fragment() {
     val bottomsheetFragment = MainFindMateDetailFragment()
 //    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private lateinit var activity : MainActivity
+    private lateinit var googleMapWrapper : GoogleMapWrapper
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -87,7 +98,12 @@ class MainFindMateFragment : Fragment() {
                 }
             }
         })
+
+        googleMapWrapper = GoogleMapWrapper(requireContext())
+        binding.googleMap.addView(googleMapWrapper)
     }
+
+
     // Set initial peek height
 
 

@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.login
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
@@ -66,6 +67,8 @@ class LoginActivity : AppCompatActivity() {
     private fun setFirebasePermission() {
         permissionChecker.checkPermission()
     }
+
+
 
     private fun initAuth() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

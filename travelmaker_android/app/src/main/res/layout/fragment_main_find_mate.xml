@@ -7,7 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.findmate.MainFindMateFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/google_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Persistent Bottom Sheet -->
     <!-- behavior 속성을 여기서 적용합니다 -->
     <LinearLayout

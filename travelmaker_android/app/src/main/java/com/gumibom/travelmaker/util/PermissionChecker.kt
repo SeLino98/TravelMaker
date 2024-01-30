@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import dagger.hilt.android.AndroidEntryPoint
 
 class PermissionChecker (private val context : Context){
     lateinit var permitted : PermissionListener
@@ -44,9 +45,27 @@ class PermissionChecker (private val context : Context){
         }
     }
 
+    val locationPermissionRequest = (context as AppCompatActivity).registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                // Precise location access granted.
+            }
+            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                // Only approximate location access granted.
+            } else -> {
+            // No location access granted.
+                moveToSettings()
+            }
+        }
+    }
+
+
+
     //권한 호출 후 결과받아 처리할 런처이다 권한 없는 것을 확인하고 다른 창이나 설정으로 이동시킨다.
     //startPermiossionRequestResult
-    val requestPermissionLauncher =(context as AppCompatActivity).registerForActivityResult(
+    val requestPermissionLauncher = (context as AppCompatActivity).registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()){
         if (it.values.contains(false)){
             Toast.makeText(context,"권한이 부족합니다 설정창으로 넘어갑니다.",Toast.LENGTH_SHORT).show()
