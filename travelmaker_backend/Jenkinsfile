@@ -11,7 +11,6 @@ pipeline {
         		//프로젝트 빌드
         		withCredentials([string(credentialsId: 'JASYPT_KEY', variable: 'JASYPT_KEY')]) {
         		    sh 'cd ./travelmaker_backend && ./gradlew clean build -PJASYPT_KEY=$JASYPT_KEY'
-        		    sh './gradlew bootJar'
         		}
 			}
 		}
