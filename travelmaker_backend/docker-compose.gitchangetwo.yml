@@ -2,11 +2,11 @@ version: '3.1'
 
 services:
   api:
-  image: leejoongwon/travelmaker:latest
-  container_name: travelmaker-gitchangetwo
-  environment:
-    - LANG=ko_KR.UTF-8
-    - HTTP_PORT=8081
-    - JASYPT_KEY=jasypt
-  ports:
-    - '8081:8080'
+    image: leejoongwon/travelmaker:latest
+    container_name: travelmaker-gitchangetwo
+    environment:
+      - LANG=ko_KR.UTF-8
+      - HTTP_PORT=8081
+      - JASYPT_KEY=jasypt
+    ports:
+      - '8081:8080'

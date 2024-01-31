@@ -29,12 +29,7 @@ pipeline {
 		stage('Deploy') {
 			steps {
 			    sh 'pwd'
-				sshagent(credentials: ['travelmaker_ec2_server']) {
-                    withCredentials([string(credentialsId: 'ec2-server-ip', variable: 'EC2_SERVER_IP')]) {
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@$EC2_SERVER_IP "sudo sh deploy.sh"'
-                        sh 'pwd'
-                    }
-                }
+			    sh 'sudo sh deploy.sh'
 			}
 		}
 	}
