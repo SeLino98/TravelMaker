@@ -19,8 +19,8 @@ pipeline {
 				sh 'pwd'
 			    sh 'ls -al'
 				withCredentials([usernamePassword(credentialsId: 'docker-hub-path', passwordVariable: 'REPOSITORY', usernameVariable: 'USERSPACE')]) {
-                    sh 'cd ./travelmaker_backend && docker build -f Dockerfile -t USERSPACE/REPOSITORY .'
-				    sh 'cd ./travelmaker_backend && docker push USERSPACE/REPOSITORY'
+                    sh 'cd ./travelmaker_backend && docker build -f Dockerfile -t $USERSPACE/$REPOSITORY .'
+				    sh 'cd ./travelmaker_backend && docker push $USERSPACE/$REPOSITORY'
 				    echo 'docker push Success!!'
                 }
 				echo 'docker push Success!!'
