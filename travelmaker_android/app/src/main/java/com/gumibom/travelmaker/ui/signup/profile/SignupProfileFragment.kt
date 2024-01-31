@@ -3,13 +3,16 @@ package com.gumibom.travelmaker.ui.signup.profile
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
@@ -19,7 +22,11 @@ import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.FileOutputStream
+
 
 private const val TAG = "SignupProfileFragment"
 @AndroidEntryPoint
@@ -34,7 +41,6 @@ class SignupProfileFragment : Fragment() {
     private val signupViewModel: SignupViewModel by viewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "onAttach:11 ")
         //Activity 연결
         signupActivity = context as SignupActivity
     }
@@ -87,7 +93,6 @@ class SignupProfileFragment : Fragment() {
             Log.d(TAG, "selectPicture: GHDGDG2222")
         }
     }
-
     private fun deletePhotoFromProfile() {
         profileFlag = false
         binding.ivProfile.setBackgroundResource(R.drawable.ic_empty_profile_circle)
@@ -105,48 +110,63 @@ class SignupProfileFragment : Fragment() {
         startActivityForResult(cameraIntent, cameraRequestCode)
         profileFlag = true
     }
-/*FATAL EXCEPTION: main
-                                                                                                    Process: com.gumibom.travelmaker, PID: 28866
-                                                                                                    java.lang.SecurityException:
-                                                                                                     Permission Denial: starting Intent { act=android.media.action.IMAGE_CAPTURE cmp=com.android.camera2/com.android.camera.CaptureActivity } from ProcessRecord{a9ed258 28866:com.gumibom.travelmaker/u0a88} (pid=28866, uid=10088)
-                                                                                                    with revoked permission android.permission.CAMERA*/
+    private fun saveImageToStorage(uri: Uri): Uri {
+        val inputStream = signupActivity.contentResolver.openInputStream(uri)
+        val directory = File(signupActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "TravelMaker")
+        if (!directory.exists()) directory.mkdirs()
+        val file = File(directory, "cropped_${System.currentTimeMillis()}.jpg")
+        val outputStream = FileOutputStream(file)
+        inputStream.use { input ->
+            outputStream.use { output ->
+                input?.copyTo(output)
+            }
+        }
 
+        // Return the saved image URI
+        return Uri.fromFile(file)
+    }
+    private fun handleCroppedImage(data: Intent?) {
+        val resultUri = UCrop.getOutput(data!!)
+        resultUri?.let {
+            // Save the cropped image to phone storage and get URI
+            val savedUri = saveImageToStorage(it)
+            Log.d(TAG, "handleCroppedImage: ${savedUri.toString()}")
+            // Display the cropped image in ImageView
+            binding.ivProfile.setImageURI(savedUri)
+            Log.d(TAG, "handleCroppedImage:END")
+        }
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult:!!!!!${requestCode} : ${resultCode} : ${data}")
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 imagePickCode -> {
-                    val selectedImage = data?.data
-                    binding.ivProfile.setImageURI(selectedImage)
+                    val sourceUri = data?.data // Get the URI of selected image
+                    Log.d(TAG, "onActivityResult: imagePickCodeLog")
+                    val destinationUri = Uri.fromFile(File(signupActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "cropped_${System.currentTimeMillis()}.jpg"))
+                    Log.d(TAG, "onActivityResult: ${destinationUri.toString()}")
+                    UCrop.of(sourceUri!!, destinationUri)
+                        .withAspectRatio(1f, 1f)
+                        .start(signupActivity)
                 }
-                cameraRequestCode -> {
-                    val thumbnail = data?.extras?.get("data") as? Bitmap
-                    binding.ivProfile.setImageBitmap(thumbnail)
+                UCrop.REQUEST_CROP -> {
+                    Log.d(TAG, "onActivityResult: REQUEST_CROP ${data.toString()}")
+                    handleCroppedImage(data)
+                    Log.d(TAG, "onActivityResult: REQUEST_CROPEND")
                 }
             }
         }
     }
-
-//    private val takePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            val imageBitmap = result.data?.extras?.get("data") as Bitmap?
-//            binding.ivProfile.setImageBitmap(imageBitmap)
+//    val cropActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+//            // Handle the cropped image result
+//            val resultUri = UCrop.getOutput(result.data!!)
+//            Log.d(TAG, "Cropped Image Uri: $resultUri")
 //        }
-//        Log.d(TAG, "selectPicture: 12#!@#")
 //    }
-//    private fun dispatchTakePicture() {
-//        Log.d(TAG, "dispatchTakePicture: 1")
-//        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{
-//            takePicture.launch(takePictureIntent)
-//            Log.d(TAG, "dispatchTakePicture: 2")
-//        }
-//        Log.d(TAG, "dispatchTakePicture: 3")
-
-
     private fun selectCategory(){
         val chipGroup: ChipGroup = binding.chipGroup
-        Log.d(TAG, "selectCategory:1")
         chipGroup.setOnCheckedStateChangeListener {
                 group, checkId ->
             val selectedChip: List<Int> = checkId;
