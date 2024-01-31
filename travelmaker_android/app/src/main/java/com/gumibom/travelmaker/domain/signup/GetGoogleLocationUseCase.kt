@@ -20,7 +20,10 @@ class GetGoogleLocationUseCase @Inject constructor(
 
             if (body != null) {
                 val googleAddress = convertAddressModel(body)
-                googleAddressList.add(googleAddress)
+
+                if (googleAddress != null) {
+                    googleAddressList.add(googleAddress)
+                }
             }
 
         }
@@ -28,16 +31,25 @@ class GetGoogleLocationUseCase @Inject constructor(
         return googleAddressList
     }
 
-    private fun convertAddressModel(body : GoogleLocationDTO?) : Address {
+    private fun convertAddressModel(body : GoogleLocationDTO?) : Address? {
         // 데이터가 null인 경우 ""로 초기화
-        val formattedAddress = body?.results?.get(0)?.formatted_address ?: ""
-        //
-        val country = formattedAddress.split(" ").lastOrNull()
 
-        val googleAddress = Address(
-            country,
-            formattedAddress
-        )
+        var googleAddress : Address? = null
+
+        if (body?.results!!.isNotEmpty()) {
+            val formattedAddress = body.results.get(0).formatted_address
+            val country = formattedAddress.split(" ").lastOrNull()
+
+            val latitude = body.results.get(0).geometry.location.lat
+            val longitude = body.results.get(0).geometry.location.lng
+
+            googleAddress = Address(
+                country,
+                formattedAddress,
+                latitude,
+                longitude
+            )
+        }
 
         return googleAddress
     }

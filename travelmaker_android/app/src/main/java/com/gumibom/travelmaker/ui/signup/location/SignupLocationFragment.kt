@@ -20,6 +20,7 @@ import com.gumibom.travelmaker.constant.DISPLAY
 import com.gumibom.travelmaker.constant.ENGLISH
 import com.gumibom.travelmaker.constant.ENGLISH_PATTERN
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
+import com.gumibom.travelmaker.constant.KAKAO_API_KEY
 import com.gumibom.travelmaker.constant.KOREAN
 import com.gumibom.travelmaker.constant.KOREAN_PATTERN
 import com.gumibom.travelmaker.constant.NAVER_ID_KEY
@@ -81,7 +82,7 @@ class SignupLocationFragment : Fragment() {
         adapter = SignupLocationAdapter(requireContext(), signupViewModel)
 
         // 네이버 장소가 갱신된 경우
-        signupViewModel.naverAddressList.observe(viewLifecycleOwner) { addressList ->
+        signupViewModel.kakaoAddressList.observe(viewLifecycleOwner) { addressList ->
             Log.d(TAG, "setAdapter: $addressList")
 
             if (addressList.isNotEmpty()) {
@@ -115,11 +116,11 @@ class SignupLocationFragment : Fragment() {
             val location = binding.etSignupLocation.text.toString()
 
             val language = selectKoreanEnglish(location)
-
+            Log.d(TAG, "searchLocation: $location")
             // 한국어면 네이버 api, 영어면 구글 api 호출
             when (language) {
                 KOREAN -> {
-                    signupViewModel.getNaverLocation(NAVER_ID_KEY, NAVER_SECRET_KEY, location, DISPLAY)
+                    signupViewModel.getKakaoLocation(KAKAO_API_KEY, location)
                 }
                 ENGLISH -> {
                     signupViewModel.getGoogleLocation(location, GOOGLE_API_KEY)

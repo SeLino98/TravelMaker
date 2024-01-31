@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.di.datasource
 
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
+import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
 import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
@@ -9,6 +10,8 @@ import com.gumibom.travelmaker.data.api.signup.SignupService
 
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.datasource.kakao.KakaoLocationRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.kakao.KakaoLocationRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
@@ -41,7 +44,11 @@ class RemoteDataSourceModule {
         return GoogleLocationRemoteDataSourceImpl(googleLocationSearchService)
     }
 
-
+    @Singleton
+    @Provides
+    fun provideKakaoLocationRemoteDataSource(kakaoLocationSearchService: KakaoLocationSearchService) : KakaoLocationRemoteDataSource {
+        return KakaoLocationRemoteDataSourceImpl(kakaoLocationSearchService)
+    }
 
     @Singleton
     @Provides

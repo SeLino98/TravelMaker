@@ -10,27 +10,23 @@ import androidx.lifecycle.viewModelScope
 
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
-import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
-import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
+import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
-import com.gumibom.travelmaker.model.NaverAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.concurrent.timer
 
 
 private const val TAG = "SignupViewModel_싸피"
 @HiltViewModel
 class SignupViewModel @Inject constructor(
-    private val getNaverLocationUseCase: GetNaverLocationUseCase,
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val sendPhoneNumberUseCase: SendPhoneNumberUseCase,
-    private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase
-
+    private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase,
+    private val getKakaoLocationUseCase: GetKakaoLocationUseCase
 ) : ViewModel() {
     /*
         변수 사용하는 공간 시작
@@ -53,6 +49,9 @@ class SignupViewModel @Inject constructor(
 
     private val _naverAddressList = MutableLiveData<MutableList<Address>>()
     val naverAddressList : LiveData<MutableList<Address>> = _naverAddressList
+
+    private val _kakaoAddressList = MutableLiveData<MutableList<Address>>()
+    val kakaoAddressList : LiveData<MutableList<Address>> = _kakaoAddressList
 
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
@@ -77,14 +76,10 @@ class SignupViewModel @Inject constructor(
      */
 // 우건
 
-    // 네이버 장소 검색 리스트 받기
-    fun getNaverLocation(idKey : String, secretKey : String, location : String, display : Int) {
-        // TODO 네이버 장소 데이터 받기 구현 필요
+    // 카카오 장소 검색 리스트 받기
+    fun getKakaoLocation(apiKey : String, location : String) {
         viewModelScope.launch {
-            val naverAddressList = getNaverLocationUseCase.findNaverLocationSearch(idKey, secretKey, location, display)
-            
-            _naverAddressList.value = naverAddressList
-            Log.d(TAG, "getNaverLocation: $naverAddressList")
+            _kakaoAddressList.value = getKakaoLocationUseCase.getKakaoLocation(apiKey, location)
         }
     }
     

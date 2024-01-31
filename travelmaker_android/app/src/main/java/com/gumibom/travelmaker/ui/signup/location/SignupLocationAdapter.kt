@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ItemLocationListBinding
 import com.gumibom.travelmaker.model.Address
+import com.gumibom.travelmaker.model.KakaoAddress
 import com.gumibom.travelmaker.model.NaverAddress
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 

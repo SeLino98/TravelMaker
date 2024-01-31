@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -13,10 +14,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
@@ -104,19 +109,37 @@ class MainFindMateFragment : Fragment(), Callback {
         googleMapWrapper = GoogleMapWrapper(requireContext())
         googleMapWrapper.setCallback(this)
         binding.googleMap.addView(googleMapWrapper)
-        
-        observeLivaData()
 
+        observeLivaData()
+        searchPlaces()
 
     }
 
-    private fun observeLivaData() {
-        findMateViewModel.markerList.observe(viewLifecycleOwner) { markerPosition ->
-            for (marker in markerPosition) {
-                val location = LatLng(marker.position.latitude, marker.position.longitude)
-                googleMapWrapper.setMarker(location, "")
+    // 장소 검색 화면으로 넘어가기
+    private fun searchPlaces() {
+        binding.btnFindMatePlace.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_mainFindMateFragment_to_findMateSearchFragment)
+        }
+    }
 
+    private fun observeLivaData() {
+        // 현재 위치의 변화가 있으면 마커 리스트를 받아서 마커 표시
+        findMateViewModel.markerList.observe(viewLifecycleOwner) { markerPosition ->
+            // 내 위치 근방에 모임이 없다면
+            if (markerPosition.isEmpty()) {
+                val latitude = findMateViewModel.currentLatitude
+                val longitude = findMateViewModel.currentLongitude
+
+                val location = LatLng(latitude, longitude)
+                googleMapWrapper.setMyLocation(location)
+            }  // 있다면
+            else {
+                for (marker in markerPosition) {
+                    val location = LatLng(marker.position.latitude, marker.position.longitude)
+                    googleMapWrapper.setMarker(location, "")
+                }
             }
+
             Log.d(TAG, "observeLivaData: $markerPosition")
         }
         
@@ -126,12 +149,14 @@ class MainFindMateFragment : Fragment(), Callback {
      * 위치 업데이트 콜백 함수
      */
     override fun onLocationUpdated(latitude: Double, longitude: Double) {
+        findMateViewModel.currentLatitude = latitude
+        findMateViewModel.currentLongitude = longitude
+
         Log.d(TAG, "onLocationUpdated: 통신하나요?")
-        findMateViewModel.getMarkers(latitude, longitude, 3.0)
+//        findMateViewModel.getMarkers(latitude, longitude, 3.0)
+        // 테스트 용 내 현재 위치
+        googleMapWrapper.setMyLocation(LatLng(latitude, longitude))
     }
-
-
-
 
     // Set initial peek height
 

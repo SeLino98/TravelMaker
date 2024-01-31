@@ -3,6 +3,7 @@ package com.gumibom.travelmaker.di.repository
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.kakao.KakaoLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
@@ -11,6 +12,8 @@ import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
 
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepositoryImpl
+import com.gumibom.travelmaker.data.repository.kakao.KakaoLocationRepository
+import com.gumibom.travelmaker.data.repository.kakao.KakaoLocationRepositoryImpl
 import com.gumibom.travelmaker.data.repository.login.LoginRepository
 import com.gumibom.travelmaker.data.repository.login.LoginRepositoryImpl
 import com.gumibom.travelmaker.data.repository.meeting.MeetingRepository
@@ -44,6 +47,12 @@ class RepositoryModule {
         return GoogleLocationRepositoryImpl(googleLocationRemoteDataSource)
     }
 
+    @Singleton
+    @Provides
+    fun provideKakaoLocationRepository(kakaoLocationRemoteDataSource: KakaoLocationRemoteDataSource) : KakaoLocationRepository {
+        return KakaoLocationRepositoryImpl(kakaoLocationRemoteDataSource)
+    }
+
     // 회원가입 레퍼지토리
     @Singleton
     @Provides
@@ -57,6 +66,7 @@ class RepositoryModule {
         return LoginRepositoryImpl(loginRemoteDataSource)
     }
 
+    // 모임 관련 레퍼지토리
     @Singleton
     @Provides
     fun provideMeetingRepository(meetingRemoteDataSource : MeetingRemoteDataSource) : MeetingRepository {

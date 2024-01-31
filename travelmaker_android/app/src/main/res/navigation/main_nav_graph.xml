@@ -21,11 +21,18 @@
         <action
             android:id="@+id/action_mainFindMateFragment_to_mainFindMateDetailFragment"
             app:destination="@id/mainFindMateDetailFragment" />
+        <action
+            android:id="@+id/action_mainFindMateFragment_to_findMateSearchFragment"
+            app:destination="@id/findMateSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFindMateDetailFragment"
         android:name="com.gumibom.travelmaker.ui.main.findmate.MainFindMateDetailFragment"
         android:label="fragment_main_find_mate_detail"
         tools:layout="@layout/fragment_main_find_mate_detail" />
+    <fragment
+        android:id="@+id/findMateSearchFragment"
+        android:name="com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment"
+        android:label="FindMateSearchFragment" />
 
 </navigation>

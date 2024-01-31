@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.PackageManager
+import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
@@ -85,6 +86,16 @@ class GoogleMapWrapper @JvmOverloads constructor(
         val zoomLevel = 15.0f // 줌 레벨을 조정하세요. 값이 클수록 더 가까워집니다.
 
         googleMap.addMarker(MarkerOptions().position(location).title(title))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
+    }
+
+    /**
+     * 내 현재 위치를 마커 없이 파란점만 표시하는 기능
+     */
+    fun setMyLocation(location : LatLng) {
+        val zoomLevel = 15.0f // 줌 레벨을 조정하세요. 값이 클수록 더 가까워집니다.
+
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
     }
@@ -194,7 +205,6 @@ class GoogleMapWrapper @JvmOverloads constructor(
         callback?.onLocationUpdated(latitude, longitude)
         Log.d(TAG, "updateLocation: $callback")
     }
-
 
 
     /**

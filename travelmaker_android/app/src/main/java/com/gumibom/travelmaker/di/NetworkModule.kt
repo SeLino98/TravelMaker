@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.di
 
 
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
+import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
 import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
@@ -31,6 +32,10 @@ class NetworkModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class GoogleRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class KakaoRetrofit
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
@@ -96,6 +101,18 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    @KakaoRetrofit
+    fun provideKakaoRetrofit(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(ApplicationClass.KAKAO_LOCATION_SEARCH_URL)
+        .client(okHttpClient)
+        .addConverterFactory(gsonConverterFactory)
+        .build()
+
+    @Provides
+    @Singleton
     fun provideNaverLocationSearchService(@NaverRetrofit retrofit: Retrofit) : NaverLocationSearchService {
         return retrofit.create(NaverLocationSearchService::class.java)
     }
@@ -106,6 +123,11 @@ class NetworkModule {
         return retrofit.create(GoogleLocationSearchService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideKakaoService(@KakaoRetrofit retrofit : Retrofit) : KakaoLocationSearchService {
+        return retrofit.create(KakaoLocationSearchService::class.java)
+    }
 
     @Provides
     @Singleton
@@ -124,5 +146,4 @@ class NetworkModule {
     fun provideMeetingService(@MainRetrofit retrofit : Retrofit) : MeetingService {
         return retrofit.create(MeetingService::class.java)
     }
-
 }

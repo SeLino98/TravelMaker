@@ -16,35 +16,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <EditText
-            android:id="@+id/et_find_mate_location"
+        <Button
+            style="@style/Text.Regular20"
+            android:id="@+id/btn_find_mate_place"
             android:layout_width="371dp"
             android:layout_height="56dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/background_find_mate_edittext"
+            android:background="@drawable/background_button_certification_ripple"
             android:paddingStart="25dp"
             android:paddingEnd="0dp"
+            android:text="@string/find_mate_another_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageView
-            android:id="@+id/iv_find_mate_location_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="15dp"
-            android:src="@drawable/ic_location_search"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="@id/et_find_mate_location"
-            app:layout_constraintTop_toTopOf="@id/et_find_mate_location" />
 
         <HorizontalScrollView
             style="@style/CustomScrollbarHorizontalScrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_find_mate_location">
+            app:layout_constraintTop_toBottomOf="@id/btn_find_mate_place">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
