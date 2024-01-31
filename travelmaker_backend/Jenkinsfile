@@ -13,11 +13,11 @@ pipeline {
         		    sh 'cd ./travelmaker_backend && ./gradlew clean build -PJASYPT_KEY=$JASYPT_KEY'
                     script {
                                             sh """
-                                                ./gradlew jib -Pdocker.repository=${USERSPACE} \
-                                                              -Pdocker.repository.username=${USERNAME} \
-                                                              -Pdocker.repository.password=${PASSWORD} \
-                                                              -Pdocker.image.name=${REPOSITORY} \
-                                                              -Pdocker.image.tag=${currentBuild.number}
+                                                ./gradlew clean build -Pdocker.repository=${USERSPACE} \
+                                                                      -Pdocker.repository.username=${USERNAME} \
+                                                                      -Pdocker.repository.password=${PASSWORD} \
+                                                                      -Pdocker.image.name=${REPOSITORY} \
+                                                                      -Pdocker.image.tag=${currentBuild.number}
                                             """
                                         }
         		}
@@ -27,6 +27,7 @@ pipeline {
 		    steps{
 		        sh 'pwd'
 			    withCredentials([usernamePassword(credentialsId: 'docker-login-creds', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME'), usernamePassword(credentialsId: 'docker-hub-path', passwordVariable: 'REPOSITORY', usernameVariable: 'USERSPACE')]) {
+                    sh 'chmod +x ./travelmaker_backend/gradlew'
                     script {
                                             sh """
                                                 ./gradlew jib -Pdocker.repository=${USERSPACE} \
