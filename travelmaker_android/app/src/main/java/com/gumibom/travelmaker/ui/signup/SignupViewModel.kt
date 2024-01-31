@@ -33,9 +33,10 @@ class SignupViewModel @Inject constructor(
 
 ) : ViewModel() {
     /*
-        변수 사용하는 공간
+        변수 사용하는 공간 시작
      */
 
+<<<<<<< HEAD
     // 우건
     // 가변형 변수는 바로 아래쪽에 몰아놓기
     var bundle : Bundle? = null
@@ -46,6 +47,13 @@ class SignupViewModel @Inject constructor(
     var email : String? = null
 
 
+=======
+    // 가변형 변수 자리
+    var selectAddress = ""
+
+    // 가변형 변수 자리
+// 우건
+>>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
 
@@ -54,6 +62,7 @@ class SignupViewModel @Inject constructor(
 
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
+<<<<<<< HEAD
 
     // 타이머의 코루틴을 추적하는 변수
     private var timerJob : Job? = null
@@ -61,18 +70,22 @@ class SignupViewModel @Inject constructor(
     // 우건
 
     // 지원
+=======
+// 지원
+>>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de
     private val _isDuplicatedId = MutableLiveData<Boolean>()
     val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
-    // 지원
-
-    // 인호
-    // 인호
+// 인호
 
     /*
-        함수 사용하는 공간
-     */
+        변수 사용하는 공간 끝
+    */
 
-    // 우건
+
+    /*
+        함수 사용하는 공간 시작
+     */
+// 우건
 
     // 네이버 장소 검색 리스트 받기
     fun getNaverLocation(idKey : String, secretKey : String, location : String, display : Int) {
@@ -104,6 +117,7 @@ class SignupViewModel @Inject constructor(
     fun sendPhoneNumber(phoneNumber : String) {
         viewModelScope.launch {
 
+<<<<<<< HEAD
         }
     }
 
@@ -145,14 +159,22 @@ class SignupViewModel @Inject constructor(
     //인호 끝
 
     // 지원
+=======
+// 지원
+>>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de
     fun checkId(id: String) {
         viewModelScope.launch {
-//            val isCheckId = checkDuplicatedIdUseCase.checkDuplicatedId(id)!!
-//            _isDuplicatedId.value = isCheckId
+        // '중복된 아이디'인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
             _isDuplicatedId.value = false
         }
     }
+// 인호
 
-    // 지원
 }
+<<<<<<< HEAD
 
+=======
+/*
+    함수 사용하는 공간 끝
+ */
+>>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de
