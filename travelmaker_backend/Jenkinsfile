@@ -9,30 +9,35 @@ pipeline {
         		//프로젝트 권한 변경
         		sh 'chmod +x ./travelmaker_backend/gradlew'
         		//프로젝트 빌드
-        		withCredentials([string(credentialsId: 'JASYPT_KEY', variable: 'JASYPT_KEY')]) {
+        		withCredentials([string(credentialsId: 'JASYPT_KEY', variable: 'JASYPT_KEY'), usernamePassword(credentialsId: 'docker-login-creds', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME'), usernamePassword(credentialsId: 'docker-hub-path', passwordVariable: 'REPOSITORY', usernameVariable: 'USERSPACE')]) {
         		    sh 'cd ./travelmaker_backend && ./gradlew clean build -PJASYPT_KEY=$JASYPT_KEY'
+                    script {
+                                            sh """
+                                                ./gradlew jib -Pdocker.repository=${USERSPACE} \
+                                                              -Pdocker.repository.username=${USERNAME} \
+                                                              -Pdocker.repository.password=${PASSWORD} \
+                                                              -Pdocker.image.name=${REPOSITORY} \
+                                                              -Pdocker.image.tag=${currentBuild.number}
+                                            """
+                                        }
         		}
 			}
 		}
-		stage('Docker Hub Login'){
+		stage('Docker Hub Publish'){
 		    steps{
 		        sh 'pwd'
-			    withCredentials([usernamePassword(credentialsId: 'docker-login-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
+			    withCredentials([usernamePassword(credentialsId: 'docker-login-creds', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME'), usernamePassword(credentialsId: 'docker-hub-path', passwordVariable: 'REPOSITORY', usernameVariable: 'USERSPACE')]) {
+                    script {
+                                            sh """
+                                                ./gradlew jib -Pdocker.repository=${USERSPACE} \
+                                                              -Pdocker.repository.username=${USERNAME} \
+                                                              -Pdocker.repository.password=${PASSWORD} \
+                                                              -Pdocker.image.name=${REPOSITORY} \
+                                                              -Pdocker.image.tag=${currentBuild.number}
+                                            """
+                                        }
                 }
 		    }
-		}
-		stage('Docker Build and Push') {
-			steps {
-				sh 'pwd'
-			    sh 'ls -al'
-				withCredentials([usernamePassword(credentialsId: 'docker-hub-path', passwordVariable: 'REPOSITORY', usernameVariable: 'USERSPACE')]) {
-                    sh 'cd ./travelmaker_backend && docker build -f Dockerfile -t USERSPACE/REPOSITORY .'
-				    sh 'cd ./travelmaker_backend && docker push USERSPACE/REPOSITORY'
-				    echo 'docker push Success!!'
-                }
-				echo 'docker push Success!!'
-			}
 		}
 		stage('Deploy') {
 			steps {
