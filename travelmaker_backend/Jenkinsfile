@@ -2,13 +2,6 @@
 pipeline {
 	agent any
 	stages {
-	    stage('Git Clone'){
-            steps {
-               withCredentials([string(credentialsId: 'git-repo-url', variable: 'GIT_URL')]) {
-                    git credentialsId: 'gitlab_ID_PW', url: '$GIT_URL'
-                }
-            }
-	    }
 		stage('Build') {
 			steps {
 				sh 'pwd'
