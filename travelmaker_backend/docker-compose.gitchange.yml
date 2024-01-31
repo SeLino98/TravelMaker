@@ -2,8 +2,8 @@ version: '3.1'
 
 services:
   api:
-  image: 2joong1/travelmaker:latest
-  container_name: test-gitchange
+  image: leejoongwon/travelmaker:latest
+  container_name: travelmaker-gitchange
   environment:
     - LANG=ko_KR.UTF-8
     - HTTP_PORT=8080
