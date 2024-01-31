@@ -26,18 +26,12 @@ class SignupIdPwFramgnet : Fragment() {
     private lateinit var activity : SignupActivity
     private var _binding :FragmentSignupIdPwBinding? = null
     private val binding get() = _binding!!
-<<<<<<< HEAD:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/idpw/SignupIdPwFramgnet.kt
     private var isNextPage = false
     private val signupViewModel : SignupViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
     }
-=======
-
-    private val signupViewModel : SignupViewModel by activityViewModels()
-    private var isNextPage = false
->>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/SignupIdPwFragment.kt
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,56 +41,52 @@ class SignupIdPwFramgnet : Fragment() {
         _binding = FragmentSignupIdPwBinding.inflate(inflater,container,false)
         return binding.root
     }
-<<<<<<< HEAD:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/idpw/SignupIdPwFramgnet.kt
+
+    // onViewCreated
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        backAndNextNaviBtn()
+        observeData()
+
+        // A-1. id_et가 비어 있으면 EditText에 error 표시 하기
+        // A-2. id_et의 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
+        signupIdCheck()
+        // B. A에서 성공 하면, id_et 내용으로 dup check 돌리기(ViewModel,liveData, observe) -> 1. 성공 or 2. 실패
+        isDupId()
+        // C. B에서 성공 하면, pw_et에 칠수 있고,
+
+        // D-1. pw_et가 비어 있으면 EditText에 error 표시 하기
+        // D-2. pw_et 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
+        signupPwCheck()
+        // E. D 성공시, 다음 버튼 활성화...
+        setNextToggle()
+
+        openNextPage()
+        onDestroyView()
+
+    }
+
     private fun backAndNextNaviBtn(){
-        binding.tvSignupIdPwBefore.setOnClickListener {
+        binding.btnSignup1Previous.setOnClickListener {
             activity.navigateToPreviousFragment()
         }
-        binding.tvSignupIdPwNext.setOnClickListener {
+        binding.btnSignup1Next.setOnClickListener {
             activity.navigateToNextFragment()
         }
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val noDuplicationBtn = binding.btnSignupId
-        noDuplicationBtn.setOnClickListener{
-            val idContents = binding.etSignupId.text.toString()
-            signupViewModel.checkId(idContents)
-        }
-        observeData()
-        backAndNextNaviBtn()
-    }
-    private fun observeData(){
-        signupViewModel.isDuplicatedId.observe(viewLifecycleOwner){it ->
-            if (it == true){
-                Toast.makeText(requireContext(),"중복된 아이디 입니다.", Toast.LENGTH_LONG).show()
+    private fun observeData() {
+        signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) { it ->
+            if (it == true) {
+                Toast.makeText(requireContext(), "중복된 아이디 입니다.", Toast.LENGTH_LONG).show()
 //                '중복된 아이디 입니다.' 라고 toast 뜨기
             } else {
-                Toast.makeText(requireContext(),"가능한 아이디 입니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "가능한 아이디 입니다.", Toast.LENGTH_LONG).show()
 //                '사용가능한 아이디 입니다.' 라고 toast 뜨기
-=======
-
-// onViewCreated
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    // A-1. id_et가 비어 있으면 EditText에 error 표시 하기
-    // A-2. id_et의 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
-    signupIdCheck()
-    // B. A에서 성공 하면, id_et 내용으로 dup check 돌리기(ViewModel,liveData, observe) -> 1. 성공 or 2. 실패
-    isDupId()
-    // C. B에서 성공 하면, pw_et에 칠수 있고,
-
-    // D-1. pw_et가 비어 있으면 EditText에 error 표시 하기
-    // D-2. pw_et 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
-    signupPwCheck()
-    // E. D 성공시, 다음 버튼 활성화...
-    setNextToggle()
-
-    openNextPage()
-    onDestroyView()
-
+            }
+        }
     }
+
+
 
     /*
     signupIdCheck(){}
@@ -164,8 +154,7 @@ class SignupIdPwFramgnet : Fragment() {
     private fun signupPwCheck(){
         binding.etSignupPw.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("Not yet implemented")
->>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/SignupIdPwFragment.kt
+
             }
             // id_et가 비어있으면 error 표시
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -186,11 +175,11 @@ class SignupIdPwFramgnet : Fragment() {
             }
         })
     }
-<<<<<<< HEAD:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/idpw/SignupIdPwFramgnet.kt
+
     override fun onDetach() {
         super.onDetach()
     }
-=======
+
     /*
     isValidatePw(pw: String): Boolean {}
     비밀번호의 유효성 검사를 위한... 자식 함수
@@ -206,7 +195,6 @@ class SignupIdPwFramgnet : Fragment() {
     setNextToggle(){}
     다음으로 넘어가는 버튼이 활성화 되는 부모함수
     */
->>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/SignupIdPwFragment.kt
     private fun setNextToggle(){
         // 다음 Text가 활성화 되는 함수
         // isNextPage = true 되려면... 중복 아닌 아이디 & 비밀번호칸 차야함.
@@ -233,10 +221,7 @@ class SignupIdPwFramgnet : Fragment() {
         }
     }
 
-<<<<<<< HEAD:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/idpw/SignupIdPwFramgnet.kt
     // N. 마지막.
-=======
->>>>>>> 2bfa900c57d22154beee102c7f7ca2a5b0a2b8de:travelmaker_android/app/src/main/java/com/gumibom/travelmaker/ui/signup/SignupIdPwFragment.kt
     override fun onDestroyView() {
         super.onDestroyView()
     }
