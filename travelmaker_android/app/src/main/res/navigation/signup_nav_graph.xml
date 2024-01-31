@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/signup_nav_graph"
     app:startDestination="@id/signupIdPwFramgnet">
 
@@ -17,8 +18,8 @@
         android:name="com.gumibom.travelmaker.ui.signup.profile.SignupProfileFragment"
         android:label="SignupProfileFragment" >
         <action
-            android:id="@+id/action_signupProfileFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_signupProfileFragment_to_signupSuccessFragment"
+            app:destination="@id/signupSuccessFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupPhoneFragment"
@@ -60,4 +61,9 @@
             android:id="@+id/action_signupNicknameFragment_to_signupLocationFragment"
             app:destination="@id/signupLocationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/signupSuccessFragment"
+        android:name="com.gumibom.travelmaker.ui.signup.success.SignupSuccessFragment"
+        android:label="fragment_signup_success"
+        tools:layout="@layout/fragment_signup_success" />
 </navigation>

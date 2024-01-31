@@ -60,8 +60,9 @@ class SignupActivity : AppCompatActivity(){
 
         googleSignup()
         // 프로그레스바 진행률 설정
-        setProgressBar(20)
+        setProgressBar(0)
     }
+    /// TODO: Back Stack 달기
 
     // 구글 로그인을 클릭했는데 처음 로그인한 사용자일 시
     private fun googleSignup() {
@@ -91,7 +92,7 @@ class SignupActivity : AppCompatActivity(){
             R.id.signupLocationFragment->navController.navigate(R.id.action_signupLocationFragment_to_signupGenderBirthdayFragment)
             R.id.signupGenderBirthdayFragment->navController.navigate(R.id.action_signupGenderBirthdayFragment_to_signupPhoneFragment)
             R.id.signupPhoneFragment->navController.navigate(R.id.action_signupPhoneFragment_to_signupProfileFragment)
-            R.id.signupProfileFragment->navController.navigate(R.id.action_signupProfileFragment_to_loginFragment) //로그인으로 이동
+            R.id.signupProfileFragment->navController.navigate(R.id.action_signupProfileFragment_to_signupSuccessFragment) //로그인으로 이동
         }
         updateProgressBar(true)
     }

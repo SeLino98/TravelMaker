@@ -4,8 +4,10 @@
     <string name="signup_next">다음</string>
     <string name="signup_title">동네인증을 해주세요!</string>
     <string name="signup_title2">본인이 살고 있는 곳을 검색해\n입력해주세요.</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="signup_success_title">가입이 완료되었습니다.</string>
+    <string name="signup_success_content">로그인 화면으로 이동합니다.</string>
 
 
     <!-- 회원가입 6 프로필 String -->
@@ -30,6 +32,5 @@
     <string name="login_find_id">아이디 찾기</string>
     <string name="login_find_password">비밀번호 찾기</string>
     <!-- END -->
-
-
+    <!-- 회원가입 성공메시지 -->
 </resources>
