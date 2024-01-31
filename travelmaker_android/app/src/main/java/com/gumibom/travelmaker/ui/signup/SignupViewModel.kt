@@ -13,6 +13,7 @@ import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
+import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -27,7 +28,7 @@ class SignupViewModel @Inject constructor(
     private val sendPhoneNumberUseCase: SendPhoneNumberUseCase,
     private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase,
     private val getKakaoLocationUseCase: GetKakaoLocationUseCase
-) : ViewModel() {
+) : ViewModel(), CommonViewModel {
     /*
         변수 사용하는 공간 시작
      */
@@ -93,9 +94,9 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    fun setAddress(address : String) {
+    override fun setAddress(address : String) {
         _address.value = address
-        Log.d(TAG, "setAddress: $_address")
+        Log.d(TAG, "setAddress: ${_address.value}")
     }
 
     // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자

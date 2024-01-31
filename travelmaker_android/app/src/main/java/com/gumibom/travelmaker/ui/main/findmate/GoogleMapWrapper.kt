@@ -20,6 +20,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -56,12 +57,18 @@ class GoogleMapWrapper @JvmOverloads constructor(
     private lateinit var locationPermissionRequest : ActivityResultLauncher<Array<String>>
 
     private var callback : Callback? = null
-
+    private var mapCallback: GoogleMapReadyCallback? = null
     init {
         initView()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         getLatLng()
         requestLocationUpdates()
+    }
+
+
+
+    fun setReadyCallback(callback: GoogleMapReadyCallback) {
+        this.mapCallback = callback
     }
 
     fun setCallback(callback : Callback){
@@ -77,6 +84,37 @@ class GoogleMapWrapper @JvmOverloads constructor(
         mapView.getMapAsync(this)
 
         addView(mapView)
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        Log.d(TAG, "onMapReady: 너 호출되니?")
+        p0?.let { map ->
+            googleMap = p0
+            val uiSettings = googleMap.uiSettings
+            mapCallback?.onMapReady()
+
+            // 나의 현재 위치를 파란점으로 표시
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                googleMap.isMyLocationEnabled = true
+            }
+
+            // 줌 컨드롤러
+            uiSettings.isZoomControlsEnabled = true
+            // 내 위치로 이동 버튼 끄기
+            uiSettings.isMyLocationButtonEnabled = false
+
+            // 줌 컨트롤러 위치 변경
+            googleMap.setPadding(0, 0, 0, 250)
+
+        }
+        // 현재 위치 표시 활성화
     }
 
     /**
@@ -104,36 +142,7 @@ class GoogleMapWrapper @JvmOverloads constructor(
      * Google Map이 사용 가능할 때 호출되는 콜백
      * Map 객체를 얻어와서 내부 변수에 저장합니다.
      */
-    override fun onMapReady(map: GoogleMap?) {
-        Log.d(TAG, "onMapReady: 너 호출되니?")
-        map?.let { map ->
-            googleMap = map
-            val uiSettings = googleMap.uiSettings
 
-            // 나의 현재 위치를 파란점으로 표시
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                googleMap.isMyLocationEnabled = true
-            }
-
-            // 줌 컨드롤러
-            uiSettings.isZoomControlsEnabled = true
-            // 내 위치로 이동 버튼 끄기
-            uiSettings.isMyLocationButtonEnabled = false
-
-            // 줌 컨트롤러 위치 변경
-            googleMap.setPadding(0, 0, 0, 250)
-
-        }
-        // 현재 위치 표시 활성화
-
-    }
 
     /**
      * 현재 위치의 위도 경도를 받아오는 함수
@@ -221,8 +230,9 @@ class GoogleMapWrapper @JvmOverloads constructor(
     fun onDestroy() {
         mapView.onDestroy()
     }
-
     fun onLowMemory() {
         mapView.onLowMemory()
     }
+
+
 }

@@ -14,7 +14,7 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/google_map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <Button
             style="@style/Text.Regular20"

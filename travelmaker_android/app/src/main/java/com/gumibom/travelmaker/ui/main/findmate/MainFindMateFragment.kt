@@ -20,12 +20,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
@@ -34,14 +36,16 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HALF_EX
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.FragmentMainFindMateBinding
+import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
 private const val TAG = "MainFindMateFragment_싸피"
 @AndroidEntryPoint
-class MainFindMateFragment : Fragment(), Callback {
+class MainFindMateFragment : Fragment(), Callback, GoogleMapReadyCallback {
     private var _binding:FragmentMainFindMateBinding? = null
     private val binding get() = _binding!!
     val bottomsheetFragment = MainFindMateDetailFragment()
@@ -50,7 +54,7 @@ class MainFindMateFragment : Fragment(), Callback {
     private lateinit var googleMapWrapper : GoogleMapWrapper
 
     private val findMateViewModel : FindMateViewModel by viewModels()
-
+    private val mainViewModel : MainViewModel by activityViewModels()
 
 
     override fun onAttach(context: Context) {
@@ -65,11 +69,13 @@ class MainFindMateFragment : Fragment(), Callback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView: ")
         _binding = FragmentMainFindMateBinding.inflate(inflater,container,false);
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: ")
         // Assuming the Bottom Sheet is part of the Fragment's layout
         val standardBottomSheet = binding.bts.bottomSheetLayout
         val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
@@ -108,21 +114,34 @@ class MainFindMateFragment : Fragment(), Callback {
 
         googleMapWrapper = GoogleMapWrapper(requireContext())
         googleMapWrapper.setCallback(this)
+        googleMapWrapper.setReadyCallback(this)
+        binding.googleMap.onCreate(savedInstanceState)
         binding.googleMap.addView(googleMapWrapper)
 
+        Log.d(TAG, "onViewCreated: $googleMapWrapper")
         observeLivaData()
         searchPlaces()
 
     }
 
+    // 장소 검색으로 위치를 변화 시켰다면
+    private fun checkChangeLocation() {
+        Log.d(TAG, "checkChangeLocation: ${mainViewModel.address}")
+        if (mainViewModel.address != null) {
+            mainViewModel.setSelectAddress(mainViewModel.address!!)
+        }
+    }
+
     // 장소 검색 화면으로 넘어가기
     private fun searchPlaces() {
         binding.btnFindMatePlace.setOnClickListener {
+            mainViewModel.address = null
             Navigation.findNavController(it).navigate(R.id.action_mainFindMateFragment_to_findMateSearchFragment)
         }
     }
 
     private fun observeLivaData() {
+
         // 현재 위치의 변화가 있으면 마커 리스트를 받아서 마커 표시
         findMateViewModel.markerList.observe(viewLifecycleOwner) { markerPosition ->
             // 내 위치 근방에 모임이 없다면
@@ -139,10 +158,16 @@ class MainFindMateFragment : Fragment(), Callback {
                     googleMapWrapper.setMarker(location, "")
                 }
             }
-
             Log.d(TAG, "observeLivaData: $markerPosition")
         }
-        
+        mainViewModel.selectAddress.observe(viewLifecycleOwner) { address ->
+            // TODO 여기서 새롭게 받은 address로 서버한테 넘겨서 위치 재갱신 하기
+
+            // 여기는 Test 용
+            val location = LatLng(address.latitude, address.longitude)
+            googleMapWrapper.setMyLocation(location)
+            binding.btnFindMatePlace.text = address.title
+        }
     }
 
     /**
@@ -155,7 +180,16 @@ class MainFindMateFragment : Fragment(), Callback {
         Log.d(TAG, "onLocationUpdated: 통신하나요?")
 //        findMateViewModel.getMarkers(latitude, longitude, 3.0)
         // 테스트 용 내 현재 위치
-        googleMapWrapper.setMyLocation(LatLng(latitude, longitude))
+        if (mainViewModel.address == null) {
+            googleMapWrapper.setMyLocation(LatLng(latitude, longitude))
+        }
+    }
+
+    /**
+     * 구글 맵이 준비될 때 동작하는 콜백 함수
+     */
+    override fun onMapReady() {
+        checkChangeLocation()
     }
 
     // Set initial peek height
@@ -187,23 +221,41 @@ class MainFindMateFragment : Fragment(), Callback {
     }
     override fun onResume() {
         super.onResume()
+        Log.d(TAG, "onResume: ")
         googleMapWrapper.onResume()
+//        checkChangeLocation()
     }
 
     override fun onPause() {
         super.onPause()
+        Log.d(TAG, "onPause: ")
         googleMapWrapper.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d(TAG, "onDestroy: ")
         googleMapWrapper.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        googleMapWrapper.onDestroy()
+        Log.d(TAG, "onDestroyView called")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "onDetach called")
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
         googleMapWrapper.onLowMemory()
     }
+
+
 
 
 }

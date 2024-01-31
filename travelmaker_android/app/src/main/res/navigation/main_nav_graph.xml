@@ -33,6 +33,12 @@
     <fragment
         android:id="@+id/findMateSearchFragment"
         android:name="com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment"
-        android:label="FindMateSearchFragment" />
+        android:label="FindMateSearchFragment" >
+        <action
+            android:id="@+id/action_findMateSearchFragment_to_mainFindMateFragment"
+            app:popUpTo="@id/mainFindMateFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/mainFindMateFragment" />
+    </fragment>
 
 </navigation>

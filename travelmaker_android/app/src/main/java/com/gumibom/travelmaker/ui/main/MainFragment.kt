@@ -35,9 +35,9 @@ class MainFragment : Fragment() {
         binding.btnLookAroundPamphlet.setOnClickListener {
 
         }
-        binding.btnMyGroup.setOnClickListener {
-
-        }
+//        binding.btnMyGroup.setOnClickListener {
+//
+//        }
         binding.btnReadMyRecord.setOnClickListener {
 
         }

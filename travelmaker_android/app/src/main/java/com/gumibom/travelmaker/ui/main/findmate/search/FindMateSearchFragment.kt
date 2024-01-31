@@ -1,7 +1,9 @@
 package com.gumibom.travelmaker.ui.main.findmate.search
 
 import android.content.Context
+import android.location.Address
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,27 +11,38 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.google.android.material.internal.ViewUtils.hideKeyboard
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.gumibom.travelmaker.R
-import com.gumibom.travelmaker.constant.DISPLAY
 import com.gumibom.travelmaker.constant.ENGLISH
 import com.gumibom.travelmaker.constant.ENGLISH_PATTERN
-import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KOREAN
 import com.gumibom.travelmaker.constant.KOREAN_PATTERN
-import com.gumibom.travelmaker.constant.NAVER_ID_KEY
-import com.gumibom.travelmaker.constant.NAVER_SECRET_KEY
+import com.gumibom.travelmaker.constant.NO_SEARCH_LOCATION
 import com.gumibom.travelmaker.constant.WRONG_INPUT
-import com.gumibom.travelmaker.databinding.FragmentMainFindMateBinding
 import com.gumibom.travelmaker.databinding.FragmentMainFindMateSearchBinding
+import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.signup.SignupActivity
+import com.gumibom.travelmaker.ui.signup.location.SignupLocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "FindMateSearchFragment_싸피"
 @AndroidEntryPoint
 class FindMateSearchFragment : Fragment() {
 
     private var _binding: FragmentMainFindMateSearchBinding? = null
     private val binding get() = _binding!!
+    private val mainViewModel : MainViewModel by activityViewModels()
+    private lateinit var activity : MainActivity
+    private lateinit var adapter : SignupLocationAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as MainActivity
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +57,41 @@ class FindMateSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         searchPlaces()
+        setAdapter()
+
+        adapter.setOnItemClickListener { address ->
+            mainViewModel.address = address
+            activity.navigationPop()
+        }
     }
+
+    private fun setAdapter() {
+        adapter = SignupLocationAdapter(requireContext(), mainViewModel)
+
+        // 네이버 장소가 갱신된 경우
+        mainViewModel.kakaoAddressList.observe(viewLifecycleOwner) { addressList ->
+            if (addressList.isNotEmpty()) {
+                adapter.submitList(addressList.toMutableList())
+            } else {
+                adapter.submitList(addressList.toMutableList())
+                Toast.makeText(requireContext(), NO_SEARCH_LOCATION, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // 구글 장소가 갱신된 경우
+        mainViewModel.googleAddressList.observe(viewLifecycleOwner) { addressList ->
+            if (addressList.isNotEmpty()) {
+                adapter.submitList(addressList.toMutableList())
+            } else {
+                adapter.submitList(addressList.toMutableList())
+                Toast.makeText(requireContext(), NO_SEARCH_LOCATION, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.rvFindMateSearch.adapter = adapter
+    }
+
+
 
     /**
      *  장소 검색
@@ -61,10 +108,10 @@ class FindMateSearchFragment : Fragment() {
             // 한국어면 네이버 api, 영어면 구글 api 호출
             when (language) {
                 KOREAN -> {
-
+                    mainViewModel.getKakaoLatLng(location)
                 }
                 ENGLISH -> {
-
+                    mainViewModel.getGoogleLatLng(location)
                 }
                 else -> {
                     // 둘다 아니면 토스트 메시지 띄움
