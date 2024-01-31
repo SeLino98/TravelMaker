@@ -87,4 +87,11 @@
         <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
     </style>
 
+    <!-- 가로 스크롤 바 색상 변경-->
+    <!-- res/values/styles.xml -->
+    <style name="CustomScrollbarHorizontalScrollView">
+        <item name="android:scrollbarThumbHorizontal">@drawable/background_drawable_scroll</item>
+    </style>
+
+
 </resources>

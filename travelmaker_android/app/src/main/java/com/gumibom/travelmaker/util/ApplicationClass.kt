@@ -32,7 +32,7 @@ class ApplicationClass : Application(){
 
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
 
-        const val BASE_URL = "https://naver.com"
+        const val BASE_URL = "http://192.168.100.94:8080"
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"
 

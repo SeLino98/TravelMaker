@@ -54,12 +54,17 @@ class GoogleMapWrapper @JvmOverloads constructor(
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationPermissionRequest : ActivityResultLauncher<Array<String>>
 
+    private var callback : Callback? = null
 
     init {
         initView()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         getLatLng()
         requestLocationUpdates()
+    }
+
+    fun setCallback(callback : Callback){
+        this.callback = callback
     }
 
     /**
@@ -148,7 +153,6 @@ class GoogleMapWrapper @JvmOverloads constructor(
         Log.d(TAG, "createLocationCallback: 콜백이 왜 안되지?")
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                Log.d(TAG, "onLocationResult: $locationResult")
                 locationResult.lastLocation?.let{
                     Log.d(TAG, "onLocationResult: $it")
                     updateLocation(it.latitude, it.longitude)
@@ -156,9 +160,6 @@ class GoogleMapWrapper @JvmOverloads constructor(
             }
         }
     }
-
-
-
 
     /**
      *  위치 업데이트 요청 함수
@@ -189,7 +190,9 @@ class GoogleMapWrapper @JvmOverloads constructor(
 
     private fun updateLocation(latitude : Double, longitude : Double) {
         val location = LatLng(latitude, longitude)
-        setMarker(location, "현재 위치")
+        Log.d(TAG, "updateLocation: 너한테 오니?")
+        callback?.onLocationUpdated(latitude, longitude)
+        Log.d(TAG, "updateLocation: $callback")
     }
 
 

@@ -39,6 +39,57 @@
             app:layout_constraintEnd_toEndOf="@id/et_find_mate_location"
             app:layout_constraintTop_toTopOf="@id/et_find_mate_location" />
 
+        <HorizontalScrollView
+            style="@style/CustomScrollbarHorizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_find_mate_location">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/et_find_mate_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingStart="20dp"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.chip.Chip
+                    style="@style/chipRegular"
+                    android:id="@+id/chip_taste"
+                    android:text="@string/sign_chip_taste"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/chipRegular"
+                    android:id="@+id/chip_healing"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/sign_chip_healing"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/chipRegular"
+                    android:id="@+id/chip_culture"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/sign_chip_culture"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/chipRegular"
+                    android:id="@+id/chip_active"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/sign_chip_active"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/chipRegular"
+                    android:id="@+id/chip_picture"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/sign_chip_picture"/>
+                <com.google.android.material.chip.Chip
+                    style="@style/chipRegular"
+                    android:id="@+id/chip_nature"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/sign_chip_nature"/>
+            </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Persistent Bottom Sheet -->
     <!-- behavior 속성을 여기서 적용합니다 -->

@@ -16,10 +16,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
@@ -32,15 +34,19 @@ import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
-private const val TAG = "MainFindMateFragment"
+private const val TAG = "MainFindMateFragment_싸피"
 @AndroidEntryPoint
-class MainFindMateFragment : Fragment() {
+class MainFindMateFragment : Fragment(), Callback {
     private var _binding:FragmentMainFindMateBinding? = null
     private val binding get() = _binding!!
     val bottomsheetFragment = MainFindMateDetailFragment()
 //    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private lateinit var activity : MainActivity
     private lateinit var googleMapWrapper : GoogleMapWrapper
+
+    private val findMateViewModel : FindMateViewModel by viewModels()
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -96,8 +102,35 @@ class MainFindMateFragment : Fragment() {
         })
 
         googleMapWrapper = GoogleMapWrapper(requireContext())
+        googleMapWrapper.setCallback(this)
         binding.googleMap.addView(googleMapWrapper)
+        
+        observeLivaData()
+
+
     }
+
+    private fun observeLivaData() {
+        findMateViewModel.markerList.observe(viewLifecycleOwner) { markerPosition ->
+            for (marker in markerPosition) {
+                val location = LatLng(marker.position.latitude, marker.position.longitude)
+                googleMapWrapper.setMarker(location, "")
+
+            }
+            Log.d(TAG, "observeLivaData: $markerPosition")
+        }
+        
+    }
+
+    /**
+     * 위치 업데이트 콜백 함수
+     */
+    override fun onLocationUpdated(latitude: Double, longitude: Double) {
+        Log.d(TAG, "onLocationUpdated: 통신하나요?")
+        findMateViewModel.getMarkers(latitude, longitude, 3.0)
+    }
+
+
 
 
     // Set initial peek height
@@ -146,6 +179,8 @@ class MainFindMateFragment : Fragment() {
         super.onLowMemory()
         googleMapWrapper.onLowMemory()
     }
+
+
 }
 
 
