@@ -11,7 +11,6 @@ class CheckDuplicatedIdUseCase @Inject constructor(
 
         if (response.isSuccessful) {
             val body = response.body()
-
             return body
         } else {
             return null

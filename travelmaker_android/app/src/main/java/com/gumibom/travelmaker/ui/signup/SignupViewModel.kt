@@ -86,7 +86,7 @@ class SignupViewModel @Inject constructor(
 // 지원
     fun checkId(id: String) {
         viewModelScope.launch {
-        // '중복된 아디이인지' 의 기본값 = false: 중복된 아이디가 아닙니다.
+        // '중복된 아이디'인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
             _isDuplicatedId.value = false
         }
     }
