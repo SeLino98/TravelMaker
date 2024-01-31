@@ -3,7 +3,6 @@ package com.ssafy.gumibom.domain.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
-import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
@@ -16,7 +15,8 @@ import java.util.List;
 @Table(name = "users")
 @Getter
 public class User {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -24,7 +24,10 @@ public class User {
     private String password;
     private String email;
     private String nickname;
-    private boolean gender;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender; // Gender는 enum 타입
+
     private String birth;
     private String phoneNum;
     private String imgURL;
@@ -40,15 +43,20 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PersonalPamphlet> personalPamphlets;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MeetingPost> meetingPosts;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<MeetingPost> meetingPosts;
 
     @OneToOne(fetch = FetchType.LAZY)
     private MeetingApplier meetingApplier;
 
     @OneToOne(fetch = FetchType.LAZY)
     private MeetingMember meetingMember;
+
+    // Gender enum 타입 정의
+    public enum Gender {
+        MALE, FEMALE
+    }
 
 
 }

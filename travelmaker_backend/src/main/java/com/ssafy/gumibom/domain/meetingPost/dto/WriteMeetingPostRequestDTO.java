@@ -34,5 +34,5 @@ public class WriteMeetingPostRequestDTO {
     private String imgUrlMain;
     private String imgUrlSub;
     private String imgUrlThr;
-    private List<Integer> categories;
+    private List<String> categories;
 }

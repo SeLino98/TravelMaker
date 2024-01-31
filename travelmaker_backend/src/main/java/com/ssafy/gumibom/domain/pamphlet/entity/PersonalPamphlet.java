@@ -1,14 +1,12 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
-<<<<<<< HEAD
 import com.ssafy.gumibom.domain.record.entity.Record;
-=======
 import com.ssafy.gumibom.domain.user.entity.User;
->>>>>>> feature/user
 import com.ssafy.gumibom.global.common.Category;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +21,10 @@ public class PersonalPamphlet extends Pamphlet {
     @ElementCollection
     private List<Category> categories;
 
-<<<<<<< HEAD
-=======
     private LocalDateTime createDate;
     private String title;
     private int love;
 
->>>>>>> feature/user
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
 

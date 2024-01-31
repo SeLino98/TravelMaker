@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.meeting.repository;
 
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
+import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -23,9 +24,13 @@ public class MeetingRepository {
      * @param userId
      */
     public List<Meeting> findByMemberId(Long userId) {
+
         // userRepository 코드로 수정 필요
-        List<MeetingMember> meetingMemberList = em.find(User.class, userId).getMeetingMemberList();
-        return meetingMemberList.stream().map(MeetingMember::getMeeting).toList();
+//        List<MeetingMember> meetingMemberList = em.find(User.class, userId).getMeetingMemberList();
+//        return meetingMemberList.stream().map(MeetingMember::getMeeting).toList();
+        return em.createQuery("select mm.meeting from MeetingMember mm " +
+                        "where mm.user.id = :userId ")
+                .getResultList();
     }
 
     public List<Meeting> findAll() {

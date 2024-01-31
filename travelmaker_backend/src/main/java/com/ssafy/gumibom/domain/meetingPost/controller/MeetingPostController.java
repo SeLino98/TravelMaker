@@ -4,10 +4,13 @@ import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import com.ssafy.gumibom.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
 @RequestMapping("/meeting-post")
 @RequiredArgsConstructor
 public class MeetingPostController {
@@ -15,16 +18,26 @@ public class MeetingPostController {
     private final UserService userService;
     private final MeetingPostService meetingPostService;
 
+    // 모임글 작성
     @PostMapping
-    public String writeMeetingPost(@RequestBody WriteMeetingPostRequestDTO requestDTO) {
+    public ResponseEntity<?> writeMeetingPost(@RequestBody WriteMeetingPostRequestDTO requestDTO) {
 
-        meetingPostService.write(requestDTO);
-        return "redirect:/meeting-post";
+//        meetingPostService.write(requestDTO);
+//        return "redirect:/meeting-post";
+        return meetingPostService.write(requestDTO);
     }
 
-//    @GetMapping("/{meetingPostId}")
-//    public String clickMarker(@PathVariable("meetingPostId") Long meetingPostId) {
-//
-//        meetingPostService.meetingPostDetail(meetingPostId);
-//    }
+    @GetMapping
+    public ResponseEntity<?> inquiryMeetingPost(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam(defaultValue = "3") Double radius, @RequestParam(defaultValue = "taste, healing, culture, active, picture, nature") List<String> categories) {
+
+        return meetingPostService.meetingPostRadius(latitude, longitude, radius, categories);
+    }
+
+    @GetMapping("/{meetingPostId}")
+    public ResponseEntity<?> clickMarker(@PathVariable("meetingPostId") Long meetingPostId) {
+
+        return meetingPostService.meetingPostDetail(meetingPostId);
+    }
+
+
 }

@@ -7,9 +7,6 @@ import lombok.Getter;
 @Getter
 public class Position { // 모임 장소
 
-
-    private Long id;
-
     private String name;
 
     private Double latitude;

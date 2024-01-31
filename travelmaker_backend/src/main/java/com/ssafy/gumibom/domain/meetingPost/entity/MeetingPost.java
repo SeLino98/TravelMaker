@@ -18,14 +18,14 @@ import java.util.List;
 public class MeetingPost {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meeting_post_id")
     private Long id;
 
     //    @JsonIgnore
 //    @OneToMany(mappedBy = "meeting_post")
     @ElementCollection
-    private List<Integer> categories = new ArrayList<>();
+    private List<String> categories = new ArrayList<>();
 
     private String title;
     private String content;
