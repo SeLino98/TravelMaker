@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    group:
+      development:
+        - common
+        - blue
+        - green
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ENC(P5J7Ioi0OprueUrt3fFv2A==)
@@ -18,6 +24,7 @@ spring:
       max-file-size: 1GB
       max-request-size: 1GB
 
+
 cloud:
   aws:
     s3:
@@ -30,3 +37,26 @@ cloud:
       auto: false
     stack:
       auto: false
+
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: blue
+
+server:
+  port: 8080
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: green
+
+server:
+  port: 8081
