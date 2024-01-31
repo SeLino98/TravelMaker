@@ -24,7 +24,7 @@
         android:id="@+id/lottie_success_signup"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        app:lottie_repeatCount="100"
+        app:lottie_repeatCount="1"
         android:visibility="visible"
         app:lottie_autoPlay="true"
         app:lottie_fileName="signupcomplete.json"
