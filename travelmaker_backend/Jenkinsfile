@@ -19,10 +19,9 @@ pipeline{
         stage('Deploy'){
             steps{
                 script{
-                    sh 'yum install -y sudo'
-                    sh 'sudo systemctl start docker'
-                    sh 'sudo systemctl enable docker'
-                    sh 'docker build -t jenkins .'
+                    sh 'systemctl start docker'
+                    sh 'systemctl enable docker'
+                    sh 'docker build -t jenkins'
                     sh 'docker rm -f jenkins'
                     sh 'docker run -d --name jenkins -p 9090:8080 jenkins'
                 }
