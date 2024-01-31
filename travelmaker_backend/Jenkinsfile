@@ -1,56 +1,79 @@
-pipeline{
-    agent any
 
-    stages{
-        stage('Build'){
-            steps{
-                dir('travelmaker_backend'){
-                    script{
-                        sh 'pwd'
-                        sh 'ls'
-                        sh 'chmod +x gradlew'
-                        sh './gradlew clean build'
-                        sh 'chmod +x ./docker_install.sh'
-                        sh './docker_install.sh'
+pipeline {
+	agent any
+	stages {
+	    stage('Git Clone'){
+            steps {
+               withCredentials([string(credentialsId: 'git-repo-url', variable: 'GIT_URL')]) {
+                    git credentialsId: 'gitlab_ID_PW', url: '$GIT_URL'
+                }
+            }
+	    }
+		stage('Build') {
+			steps {
+				sh 'pwd'
+				sh 'ls -al'
+        		//프로젝트 권한 변경
+        		sh 'chmod +x ./travelmaker_backend/gradlew'
+        		//프로젝트 빌드
+        		withCredentials([string(credentialsId: 'JASYPT_KEY', variable: 'JASYPT_KEY')]) {
+        		    sh 'cd ./travelmaker_backend && ./gradlew clean build -PJASYPT_KEY=$JASYPT_KEY'
+        		}
+			}
+		}
+		stage('Docker Hub Login'){
+		    steps{
+		        sh 'pwd'
+			    withCredentials([usernamePassword(credentialsId: 'docker-login-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
+                }
+		    }
+		}
+		stage('Docker Build and Push') {
+			steps {
+				sh 'pwd'
+			    sh 'ls -al'
+				withCredentials([usernamePassword(credentialsId: 'docker-hub-path', passwordVariable: 'REPOSITORY', usernameVariable: 'USERSPACE')]) {
+                    sh 'cd ./travelmaker_backend && docker build -f Dockerfile -t USERSPACE/REPOSITORY .'
+				    sh 'cd ./travelmaker_backend && docker push USERSPACE/REPOSITORY'
+				    echo 'docker push Success!!'
+                }
+				echo 'docker push Success!!'
+			}
+		}
+		stage('Deploy') {
+			steps {
+			    sh 'pwd'
+				sshagent(credentials: ['travelmaker_ec2_server']) {
+                    withCredentials([string(credentialsId: 'ec2-server-ip', variable: 'EC2_SERVER_IP')]) {
+                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@$EC2_SERVER_IP "sudo sh deploy.sh"'
                     }
                 }
+			}
+		}
+	}
+	    post {
+            success {
+            	script {
+                    def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                    def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                    mattermostSend (color: 'good',
+                    message: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
+                    endpoint: 'https://meeting.ssafy.com/hooks/jpyak6ugbtygzdbaqjkhy8bmrw',
+                    channel: 'D202-Jenkins'
+                    )
+                }
             }
-        }
-        stage('Deploy'){
-            steps{
-                script{
-                    sh 'systemctl start docker'
-                    sh 'systemctl enable docker'
-                    sh 'docker build -t jenkins'
-                    sh 'docker rm -f jenkins'
-                    sh 'docker run -d --name jenkins -p 9090:8080 jenkins'
+            failure {
+            	script {
+                    def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                    def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                    mattermostSend (color: 'danger',
+                    message: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
+                    endpoint: 'https://meeting.ssafy.com/hooks/jpyak6ugbtygzdbaqjkhy8bmrw',
+                    channel: 'D202-Jenkins'
+                    )
                 }
             }
         }
-    }
-
-    post {
-        success {
-        	script {
-                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
-                mattermostSend (color: 'good',
-                message: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
-                endpoint: 'https://meeting.ssafy.com/hooks/jpyak6ugbtygzdbaqjkhy8bmrw',
-                channel: 'D202-Jenkins'
-                )
-            }
-        }
-        failure {
-        	script {
-                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
-                mattermostSend (color: 'danger',
-                message: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
-                endpoint: 'https://meeting.ssafy.com/hooks/jpyak6ugbtygzdbaqjkhy8bmrw',
-                channel: 'D202-Jenkins'
-                )
-            }
-        }
-    }
 }
