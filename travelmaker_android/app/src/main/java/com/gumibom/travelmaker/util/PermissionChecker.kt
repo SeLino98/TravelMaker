@@ -13,9 +13,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 class PermissionChecker (private val context : Context){
+
     lateinit var permitted : PermissionListener
     fun checkPermission(permission: Array<String>) : Boolean{
         //내가 받은 권한들을 리스트로 받고 하나라도 거부된 권한이 있다면 false를 리턴한다.
@@ -31,7 +33,9 @@ class PermissionChecker (private val context : Context){
     fun checkPermission() {
         val checker = PermissionChecker(context)
         val runtimePermissions = arrayOf(
-            Manifest.permission.POST_NOTIFICATIONS
+            Manifest.permission.POST_NOTIFICATIONS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
         )
         if (!checker.checkPermission(runtimePermissions)) {
             checker.requestPermissionLauncher.launch(runtimePermissions)
@@ -42,22 +46,6 @@ class PermissionChecker (private val context : Context){
             }
         } else {
 
-        }
-    }
-
-    val locationPermissionRequest = (context as AppCompatActivity).registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        when {
-            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                // Precise location access granted.
-            }
-            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                // Only approximate location access granted.
-            } else -> {
-            // No location access granted.
-                moveToSettings()
-            }
         }
     }
 

@@ -12,4 +12,5 @@
     <color name="timer_red">#FA1010</color>
     <color name="hint_color">#661d1b20</color>
     <color name="button_text_color">#1D1B20</color>
+    <color name="second_main_color">#DDF3FF</color>
 </resources>

@@ -131,6 +131,25 @@ class MainFindMateFragment : Fragment() {
 //            }
 //        }
     }
+    override fun onResume() {
+        super.onResume()
+        googleMapWrapper.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        googleMapWrapper.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        googleMapWrapper.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        googleMapWrapper.onLowMemory()
+    }
 }
 
 

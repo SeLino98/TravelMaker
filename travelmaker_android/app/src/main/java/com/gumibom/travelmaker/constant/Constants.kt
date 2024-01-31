@@ -34,3 +34,6 @@ const val NO_LOGIN = "아이디나 비밀번호를 다시 입력해주세요."
 
 // 구글 로그인 상수
 const val FAIL_GOOGLE_LOGIN = "구글 로그인에 실패하였습니다."
+
+// 퍼미션 메시지
+const val NOT_ALLOW_PERMISSION = "위치 권한이 필요합니다."

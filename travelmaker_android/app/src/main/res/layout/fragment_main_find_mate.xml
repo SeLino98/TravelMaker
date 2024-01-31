@@ -16,6 +16,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <EditText
+            android:id="@+id/et_find_mate_location"
+            android:layout_width="371dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/background_find_mate_edittext"
+            android:paddingStart="25dp"
+            android:paddingEnd="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_find_mate_location_search"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_location_search"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="@id/et_find_mate_location"
+            app:layout_constraintTop_toTopOf="@id/et_find_mate_location" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Persistent Bottom Sheet -->
     <!-- behavior 속성을 여기서 적용합니다 -->
