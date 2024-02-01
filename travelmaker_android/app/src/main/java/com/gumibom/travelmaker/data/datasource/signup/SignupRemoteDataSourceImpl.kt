@@ -14,6 +14,10 @@ class SignupRemoteDataSourceImpl @Inject constructor(
     override suspend fun checkDuplicatedId(id: String): Response<Boolean> {
         val response = signupService.checkDuplicatedId(id)
         return response
-
     }
+    override suspend fun checkDuplicatedNickname(nickname: String): Response<Boolean> {
+        val response = signupService.checkDuplicatedNickname(nickname)
+        return response
+    }
+
 }

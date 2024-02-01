@@ -25,31 +25,24 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RemoteDataSourceModule {
-
     @Singleton
     @Provides
     fun provideNaverLocationRemoteDataSource(naverLocationSearchService: NaverLocationSearchService) : NaverLocationRemoteDataSource {
         return NaverLocationRemoteDataSourceImpl(naverLocationSearchService)
     }
-
     @Singleton
     @Provides
     fun provideGoogleLocationRemoteDataSource(googleLocationSearchService: GoogleLocationSearchService) : GoogleLocationRemoteDataSource {
         return GoogleLocationRemoteDataSourceImpl(googleLocationSearchService)
     }
-
-
-
     @Singleton
     @Provides
     fun provideSignupRemoteDataSource(signupService : SignupService) : SignupRemoteDataSource {
         return SignupRemoteDataSourceImpl(signupService)
     }
-
     @Singleton
     @Provides
     fun provideLoginRemoteDataSource(loginService: LoginService) : LoginRemoteDataSource {
         return LoginRemoteDataSourceImpl(loginService)
     }
-
 }

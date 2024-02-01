@@ -19,7 +19,7 @@ import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-private const val TAG = "SignupIdPwFramgnet"
+const val TAG = "SignupIdPwFramgnet"
 @AndroidEntryPoint
 class SignupIdPwFramgnet : Fragment() {
 
@@ -45,35 +45,39 @@ class SignupIdPwFramgnet : Fragment() {
     // onViewCreated
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Z. 이전/다음 버튼 활성화
         backAndNextNaviBtn()
+        // Y. liveData가 지켜보다가 검사 돌리기
         observeData()
-
         // A-1. id_et가 비어 있으면 EditText에 error 표시 하기
         // A-2. id_et의 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
         signupIdCheck()
         // B. A에서 성공 하면, id_et 내용으로 dup check 돌리기(ViewModel,liveData, observe) -> 1. 성공 or 2. 실패
         isDupId()
-        // C. B에서 성공 하면, pw_et에 칠수 있고,
-
         // D-1. pw_et가 비어 있으면 EditText에 error 표시 하기
         // D-2. pw_et 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
         signupPwCheck()
-        // E. D 성공시, 다음 버튼 활성화...
+        // E. D 성공시, 다음 버튼 검정색으로 나오게 함...
         setNextToggle()
-
-        openNextPage()
+        // G. 지금 화면 종료
         onDestroyView()
-
     }
 
     private fun backAndNextNaviBtn(){
-        binding.btnSignup1Previous.setOnClickListener {
-            activity.navigateToPreviousFragment()
-        }
-        binding.btnSignup1Next.setOnClickListener {
-            activity.navigateToNextFragment()
+        val btnSignupPrevious = binding.btnSignup1Previous
+        val btnSignupNext = binding.btnSignup1Next
+        val errorSignupPw = binding.tilSignupPw.error
+
+        btnSignupPrevious.setOnClickListener {
+                activity.navigateToPreviousFragment()
+            }
+        if (errorSignupPw == null) {
+            btnSignupNext.setOnClickListener {
+                activity.navigateToNextFragment()
+            }
         }
     }
+
     private fun observeData() {
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) { it ->
             if (it == true) {
@@ -85,8 +89,6 @@ class SignupIdPwFramgnet : Fragment() {
             }
         }
     }
-
-
 
     /*
     signupIdCheck(){}
@@ -154,7 +156,6 @@ class SignupIdPwFramgnet : Fragment() {
     private fun signupPwCheck(){
         binding.etSignupPw.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
             // id_et가 비어있으면 error 표시
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -171,7 +172,6 @@ class SignupIdPwFramgnet : Fragment() {
                 }
             }
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("Not yet implemented")
             }
         })
     }
@@ -193,13 +193,11 @@ class SignupIdPwFramgnet : Fragment() {
     }
     /*
     setNextToggle(){}
-    다음으로 넘어가는 버튼이 활성화 되는 부모함수
+    다음으로 넘어가는 버튼이 찐해지는 부모함수
     */
     private fun setNextToggle(){
-        // 다음 Text가 활성화 되는 함수
-        // isNextPage = true 되려면... 중복 아닌 아이디 & 비밀번호칸 차야함.
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
-        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
+
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) {it ->
             Log.d(TAG, "setNextToggle: ")
             if (it == false){
@@ -207,17 +205,7 @@ class SignupIdPwFramgnet : Fragment() {
                 binding.btnSignup1Next.setTextColor(activeColor)
                 isNextPage = true
             // 중복된 아이디가 맞는 경우
-            } else {
-                // isNextPage 값을 false로 변경
-                isNextPage = false
             }
-        }
-    }
-
-    // 다음 버튼이 활성화 되어있을 시 페이지 전환하는 함수
-    private fun openNextPage(){
-        if (isNextPage) {
-//            TODO 네비게이션으로 다음 페이지 전환 기능 구현 필요
         }
     }
 

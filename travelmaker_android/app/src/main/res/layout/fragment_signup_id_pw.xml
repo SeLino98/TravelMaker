@@ -8,11 +8,12 @@
 
     <TextView
         android:id="@+id/tv_signup_id_pw_title"
+
         style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_idpw_title"
-
+        android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,19 +25,25 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_signup_id"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
 
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         app:helperText="@string/signup_id_helper_msg"
         android:hint="@string/signup_label_id"
+
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
         style="@style/TextLabel"
 
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -52,16 +59,17 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_signup_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="@+id/til_signup_id"
-        app:layout_constraintTop_toBottomOf="@id/til_signup_id"
-        app:layout_constraintTop_toTopOf="@id/til_signup_id"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="8dp"
 
         android:text="@string/signup_btn_check_dup_id"
+        android:layout_width="71dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/btn_duplicate_check"
         />
 
@@ -69,11 +77,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_signup_pw"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
 
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
         app:helperText="@string/signup_pw_helper_msg"
         android:hint="@string/signup_label_pw"
+
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+
         style="@style/TextLabel"
         app:endIconMode="password_toggle"
 
@@ -88,6 +102,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signup_pw"
 
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:hint="@string/signup_hint_pw_msg"
@@ -100,14 +115,14 @@
 
     <Button
         android:id="@+id/btn_signup1_previous"
+
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_previous"
         android:background="@drawable/btn_ripple_effect"
-
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,14 +133,14 @@
 
     <Button
         android:id="@+id/btn_signup1_next"
+
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_next"
         android:background="@drawable/btn_ripple_effect"
-
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,6 +7,7 @@ import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
 
 import com.gumibom.travelmaker.data.repository.signup.SignupRepository
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
@@ -35,7 +36,6 @@ class SignupUseCaseModule {
         return GetGoogleLocationUseCase(googleLocationRepository)
     }
 
-
     @Singleton
     @Provides
     fun provideSendPhoneNumberUseCase(signupRepository : SignupRepository) : SendPhoneNumberUseCase {
@@ -52,6 +52,12 @@ class SignupUseCaseModule {
     @Provides
     fun provideCheckDuplicatedIdUseCase(signupRepository: SignupRepository) : CheckDuplicatedIdUseCase {
         return CheckDuplicatedIdUseCase(signupRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCheckDuplicatedNicknameUseCase(signupRepository: SignupRepository) : CheckDuplicatedNicknameUseCase {
+        return CheckDuplicatedNicknameUseCase(signupRepository)
     }
 
 }

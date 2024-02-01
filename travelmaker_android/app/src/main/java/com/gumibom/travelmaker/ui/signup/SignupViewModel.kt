@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetNaverLocationUseCase
 import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
@@ -29,7 +30,9 @@ class SignupViewModel @Inject constructor(
     private val getNaverLocationUseCase: GetNaverLocationUseCase,
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val sendPhoneNumberUseCase: SendPhoneNumberUseCase,
-    private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase
+    private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase,
+
+    private val checkDuplicatedNicknameUseCase: CheckDuplicatedNicknameUseCase
 
 ) : ViewModel() {
     /*
@@ -65,7 +68,11 @@ class SignupViewModel @Inject constructor(
     // 지원
     private val _isDuplicatedId = MutableLiveData<Boolean>()
     val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
-// 인호
+
+    private val _isDuplicatedNickname = MutableLiveData<Boolean>()
+    val isDuplicatedNickname : LiveData<Boolean> = _isDuplicatedNickname
+
+    // 인호
 
     /*
         변수 사용하는 공간 끝
@@ -149,10 +156,18 @@ class SignupViewModel @Inject constructor(
     // 지원
     fun checkId(id: String) {
         viewModelScope.launch {
-        // '중복된 아이디'인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
+        // '중복된 아이디'여부의 기본값 = false ==> '중복이 아닌 아이디' 입니다.
             _isDuplicatedId.value = false
         }
     }
+
+    fun checkNickname(nickname: String) {
+        viewModelScope.launch {
+            // '중복된 닉네임'여부의 기본값 = false ==> '중복이 아닌 닉네임' 입니다.
+            _isDuplicatedNickname.value = false
+        }
+    }
+
 // 인호
 
 }

@@ -69,6 +69,14 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="CustomTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <!-- 다른 필요한 스타일 속성들을 여기에 추가 -->
+    </style>
+
     <!-- TabLayout Text 스타일 정의-->
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">22sp</item>
