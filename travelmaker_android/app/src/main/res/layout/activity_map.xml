@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/google_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        style="@style/Text.Regular20"
+        android:id="@+id/btn_find_mate_place"
+        android:layout_width="371dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background_button_certification_ripple"
+        android:paddingStart="25dp"
+        android:paddingEnd="0dp"
+        android:text="@string/find_mate_another_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <HorizontalScrollView
+        style="@style/CustomScrollbarHorizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_find_mate_place">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/et_find_mate_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="20dp"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.chip.Chip
+                style="@style/chipRegular"
+                android:id="@+id/chip_taste"
+                android:text="@string/sign_chip_taste"/>
+            <com.google.android.material.chip.Chip
+                style="@style/chipRegular"
+                android:id="@+id/chip_healing"
+                android:layout_marginStart="10dp"
+                android:text="@string/sign_chip_healing"/>
+            <com.google.android.material.chip.Chip
+                style="@style/chipRegular"
+                android:id="@+id/chip_culture"
+                android:layout_marginStart="10dp"
+                android:text="@string/sign_chip_culture"/>
+            <com.google.android.material.chip.Chip
+                style="@style/chipRegular"
+                android:id="@+id/chip_active"
+                android:layout_marginStart="10dp"
+                android:text="@string/sign_chip_active"/>
+            <com.google.android.material.chip.Chip
+                style="@style/chipRegular"
+                android:id="@+id/chip_picture"
+                android:layout_marginStart="10dp"
+                android:text="@string/sign_chip_picture"/>
+            <com.google.android.material.chip.Chip
+                style="@style/chipRegular"
+                android:id="@+id/chip_nature"
+                android:layout_marginStart="10dp"
+                android:text="@string/sign_chip_nature"/>
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
