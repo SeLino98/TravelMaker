@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_mainFragment_to_mainFindMateFragment"
             app:destination="@id/mainFindMateFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mainMyGroupFragment"
+            app:destination="@id/mainMyGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFindMateFragment"
@@ -31,6 +34,7 @@
         android:label="fragment_main_find_mate_detail"
         tools:layout="@layout/fragment_main_find_mate_detail" />
     <fragment
+
         android:id="@+id/findMateSearchFragment"
         android:name="com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment"
         android:label="FindMateSearchFragment" >
@@ -39,6 +43,12 @@
             app:popUpTo="@id/mainFindMateFragment"
             app:popUpToInclusive="true"
             app:destination="@id/mainFindMateFragment" />
+
     </fragment>
+    <fragment
+        android:id="@+id/mainMyGroupFragment"
+        android:name="com.gumibom.travelmaker.ui.main.mygroup.MainMyGroupFragment"
+        android:label="fragment_main_my_group"
+        tools:layout="@layout/fragment_main_my_group" />
 
 </navigation>

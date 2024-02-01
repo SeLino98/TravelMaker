@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:titleCentered="true"
             app:menu="@menu/menu_main"
             app:titleTextColor="@color/black" >
         </com.google.android.material.appbar.MaterialToolbar>

@@ -37,13 +37,34 @@ class MainActivity : AppCompatActivity() {
                     as NavHostFragment).navController
         }
         setContentView(binding.root)
-
-
         initToolbar()
         setFirebase()
+        setNavigationMenuToolbar()
     }
-
-
+    private fun setNavigationMenuToolbar(){
+        //프래그먼트가 ~~ 일 땐 ~~로
+        //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.mainFragment -> {
+                    binding.toolbar.menu.clear() // 기존 메뉴 제거
+                    binding.toolbar.inflateMenu(R.menu.menu_main) // 새 메뉴 설정
+                    binding.toolbar.title = "TEST"
+                    binding.toolbar.navigationIcon = null
+                }
+                R.id.mainMyGroupFragment, R.id.mainFindMateFragment -> {
+                    binding.toolbar.menu.clear() // 기존 메뉴 제거
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = "HHHH"
+                    binding.toolbar.setNavigationOnClickListener {
+                        Log.d(TAG, "setNavigationMenuToolbar: ")
+                        navController.navigateUp()
+                    }
+                    binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
+                }
+            }
+        }
+    }
 
     private fun setFirebase(){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -79,11 +100,11 @@ class MainActivity : AppCompatActivity() {
     fun navigationPop() {
         navController.navigateUp()
     }
+
     private fun initToolbar(){
         binding.toolbar.setNavigationOnClickListener {
             // Handle navigation icon press
         }
-
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_notify -> {

@@ -27,8 +27,8 @@ class ClickEventDialog(context: Context):AlertDialog.Builder(context){
         //레이아웃의 사이즈 특성 등등을 설정할 수 잇다.
         val view = LayoutInflater.from(context).inflate(R.layout.click_event_dialog,null)
         dialog.setContentView(view)
-        val x = 1800.toInt()
-        val y = 1500.toInt()
+        val x = 900.toInt()
+        val y = 750.toInt()
         dialog.setCancelable(false);
         dialog.window?.setLayout(x,y);
         dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_click_event_backgound)

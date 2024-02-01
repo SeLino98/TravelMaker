@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.gumibom.travelmaker.R
@@ -45,7 +47,7 @@ class SignupProfileFragment : Fragment() {
         observeViewModel()
         backAndNextNaviBtn()
 
-        // TODO 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
+        // 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
     }
     private fun backAndNextNaviBtn(){
         binding.tvSignupLocationPrevious.setOnClickListener {
@@ -105,45 +107,40 @@ class SignupProfileFragment : Fragment() {
         startActivityForResult(cameraIntent, cameraRequestCode)
         profileFlag = true
     }
-/*FATAL EXCEPTION: main
-                                                                                                    Process: com.gumibom.travelmaker, PID: 28866
-                                                                                                    java.lang.SecurityException:
-                                                                                                     Permission Denial: starting Intent { act=android.media.action.IMAGE_CAPTURE cmp=com.android.camera2/com.android.camera.CaptureActivity } from ProcessRecord{a9ed258 28866:com.gumibom.travelmaker/u0a88} (pid=28866, uid=10088)
-                                                                                                    with revoked permission android.permission.CAMERA*/
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
+//                imagePickCode -> {
+//                    val selectedImage = data?.data
+//                    binding.ivProfile.setImageURI(selectedImage)
+//                }
+//                cameraRequestCode -> {
+//                    val thumbnail = data?.extras?.get("data") as? Bitmap
+//                    binding.ivProfile.setImageBitmap(thumbnail)
+//                }
                 imagePickCode -> {
-                    val selectedImage = data?.data
-                    binding.ivProfile.setImageURI(selectedImage)
+                    data?.data?.let { uri ->
+                        Glide.with(this)
+                            .load(uri)
+                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                            .into(binding.ivProfile)
+                    }
                 }
                 cameraRequestCode -> {
                     val thumbnail = data?.extras?.get("data") as? Bitmap
-                    binding.ivProfile.setImageBitmap(thumbnail)
+                    thumbnail?.let {
+                        Glide.with(this)
+                            .load(it)
+                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                            .into(binding.ivProfile)
+                    }
                 }
             }
+        }else{
+            Log.d(TAG, "onActivityResult: ")
         }
     }
-
-//    private val takePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            val imageBitmap = result.data?.extras?.get("data") as Bitmap?
-//            binding.ivProfile.setImageBitmap(imageBitmap)
-//        }
-//        Log.d(TAG, "selectPicture: 12#!@#")
-//    }
-//    private fun dispatchTakePicture() {
-//        Log.d(TAG, "dispatchTakePicture: 1")
-//        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{
-//            takePicture.launch(takePictureIntent)
-//            Log.d(TAG, "dispatchTakePicture: 2")
-//        }
-//        Log.d(TAG, "dispatchTakePicture: 3")
-
-
     private fun selectCategory(){
         val chipGroup: ChipGroup = binding.chipGroup
         Log.d(TAG, "selectCategory:1")
@@ -156,9 +153,6 @@ class SignupProfileFragment : Fragment() {
                 for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
                     val selectedChipId = token ///
                     val selctedName = group.findViewById<Chip>(selectedChipId)
-//                  val selectedChipText = selectedChip.text.toString()
-//                  val selectedChips = checkId.map { it }
-//                    signupViewModel.updateFavoriteList(selctedName)
                     Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChip")
                     Log.d(
                         TAG,

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">travelmaker</string>
-    
+
     <!-- 공용 문구 -->
     <string name="signup_previous">이전</string>
     <string name="signup_next">다음</string>
