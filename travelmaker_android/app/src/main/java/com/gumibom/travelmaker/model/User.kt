@@ -9,4 +9,5 @@ data class User(
 ) {
     constructor() : this(0, "", "", "","")
     constructor(loginId: String, password: String) : this(0, loginId, password, "", "")
+
 }
