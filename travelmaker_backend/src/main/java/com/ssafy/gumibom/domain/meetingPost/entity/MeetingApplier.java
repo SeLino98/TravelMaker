@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "meeting_applier", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "meeting_post_id"})
+})
 @Getter
 @Setter
 public class MeetingApplier {
@@ -21,7 +24,7 @@ public class MeetingApplier {
     private MeetingPost meetingPost;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

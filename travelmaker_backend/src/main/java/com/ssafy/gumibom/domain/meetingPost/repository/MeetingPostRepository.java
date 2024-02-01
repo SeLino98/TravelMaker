@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.meetingPost.repository;
 
+import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import jakarta.persistence.EntityManager;
@@ -46,6 +47,11 @@ public class MeetingPostRepository {
                 .setParameter("categories", categories)
                 .getResultList();
     }
+
+//    public List<DetailOfMeetingPostResponseDTO> inquiryMyMeetingPostList(Long userId) {
+//
+//        em.createQuery("select m, ")
+//    }
 
     public void deleteById(Long id) {
         em.remove(findOne(id));

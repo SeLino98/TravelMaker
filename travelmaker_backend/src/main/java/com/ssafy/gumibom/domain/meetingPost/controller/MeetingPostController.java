@@ -32,7 +32,7 @@ public class MeetingPostController {
 
     @Operation(summary = "위치 기반 모임글 리스트 필터링 조회")
     @GetMapping
-    public ResponseEntity<?> inquiryMeetingPost(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam(defaultValue = "3") Double radius, @RequestParam(defaultValue = "taste, healing, culture, active, picture, nature") List<String> categories) {
+    public ResponseEntity<?> inquiryMeetingPost(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam(defaultValue = "3") Double radius, @RequestParam(defaultValue = "taste,healing,culture,active,picture,nature") List<String> categories) {
 
         return meetingPostService.meetingPostRadius(latitude, longitude, radius, categories);
     }

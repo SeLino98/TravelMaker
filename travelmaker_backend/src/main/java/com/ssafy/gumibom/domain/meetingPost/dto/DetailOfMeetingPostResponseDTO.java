@@ -12,4 +12,5 @@ public class DetailOfMeetingPostResponseDTO {
 
     private MeetingPost meetingPost;
     private Long dDay;
+    private Boolean isHead;
 }
