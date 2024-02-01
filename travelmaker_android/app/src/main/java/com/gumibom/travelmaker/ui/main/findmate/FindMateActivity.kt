@@ -168,7 +168,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun updateLocation(latitude : Double, longitude : Double) {
         val location = LatLng(latitude, longitude)
-
+        mainViewModel.currentLatitude = latitude
+        mainViewModel.currentLongitude = longitude
         mainViewModel.getMarkers(latitude, longitude, 3.0)
 //        setMyLocation(location)
     }
@@ -177,6 +178,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // 현재 위치의 변화가 있으면 마커 리스트를 받아서 마커 표시
         mainViewModel.markerList.observe(this) { markerPosition ->
+            Log.d(TAG, "observeLivaData: $markerPosition")
             // 내 위치 근방에 모임이 없다면
             if (markerPosition.isEmpty()) {
                 val latitude = mainViewModel.currentLatitude
