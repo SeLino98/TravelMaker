@@ -66,7 +66,7 @@ class PermissionChecker (private val context : Context){
             moveToSettings()
         }else{
             Toast.makeText(context,"모든 권한이 허가됐습니다. ",Toast.LENGTH_SHORT).show()
-            permitted.onGranted()
+//            permitted.onGranted()
         }
     }
     //사용자가 권한을 허용하지 않았을때, 설정창으로 이동

@@ -16,7 +16,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
     }
 
-    override fun onMapReady(p0: GoogleMap?) {
-        TODO("Not yet implemented")
+    override fun onMapReady(p0: GoogleMap) {
+
     }
 }
