@@ -88,9 +88,13 @@
     </style>
 
     <!-- 가로 스크롤 바 색상 변경-->
-    <!-- res/values/styles.xml -->
     <style name="CustomScrollbarHorizontalScrollView">
         <item name="android:scrollbarThumbHorizontal">@drawable/background_drawable_scroll</item>
+    </style>
+
+    <!-- 전체화면 다이얼로그-->
+    <style name="AppTheme.FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
 

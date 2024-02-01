@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -19,11 +20,13 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.DENIED_LOCATION_PERMISSION
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
@@ -39,6 +42,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private lateinit var permissionChecker: PermissionChecker
 
+    private lateinit var findMateSearchFragment : FindMateSearchFragment
     private val mainViewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,13 +51,17 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         permissionChecker = PermissionChecker(this) // 퍼미션 체커 객체 생성
+        findMateSearchFragment = FindMateSearchFragment()
 
         googleMapInit()
         getLatLng()
         requestLocationUpdates()
         observeLivaData()
 
+        selectPlace()
+        openMeetingDialog()
     }
+
 
     // 구글 맵 초기화
     private fun googleMapInit() {
@@ -97,12 +105,14 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     /**
      * Google Map에 마커를 추가하고 해당 위치로 카메라 전환
      */
-    fun setMarker(location : LatLng, title : String) {
+    fun setMarker(location : LatLng, title : String) : Marker {
         val zoomLevel = 15.0f // 줌 레벨을 조정하세요. 값이 클수록 더 가까워집니다.
 
-        mMap.addMarker(MarkerOptions().position(location).title(title))
+        val marker = mMap.addMarker(MarkerOptions().position(location).title(title))!!
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
+
+        return marker
     }
 
     /**
@@ -170,8 +180,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val location = LatLng(latitude, longitude)
         mainViewModel.currentLatitude = latitude
         mainViewModel.currentLongitude = longitude
-        mainViewModel.getMarkers(latitude, longitude, 3.0)
-//        setMyLocation(location)
+//        mainViewModel.getMarkers(latitude, longitude, 3.0)
+        setMyLocation(location)
     }
 
     private fun observeLivaData() {
@@ -190,14 +200,17 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             else {
                 for (marker in markerPosition) {
                     val location = LatLng(marker.position.latitude, marker.position.longitude)
-                    setMarker(location, "")
+                    val title = marker.position.name
+                    val googleMarker = setMarker(location, title)
+
+                    googleMarker.tag = marker
                 }
             }
             Log.d(TAG, "observeLivaData: $markerPosition")
         }
         mainViewModel.selectAddress.observe(this) { address ->
             // TODO 여기서 새롭게 받은 address로 서버한테 넘겨서 위치 재갱신 하기
-
+            Log.d(TAG, "observeLivaData address: $address")
             // 여기는 Test 용
             val location = LatLng(address.latitude, address.longitude)
             setMyLocation(location)
@@ -205,7 +218,44 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    /**
+     * 위치를 선택하여 검색할 수 있는 바텀 시트 다이얼로그 show
+     */
+    private fun selectPlace() {
+        binding.btnFindMatePlace.setOnClickListener {
+            findMateSearchFragment.show(supportFragmentManager, "")
+        }
+    }
+
+    /**
+     * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
+     */
+    private fun openMeetingDialog() {
+        mMap.setOnMarkerClickListener {
+            true
+        }
+    }
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 100
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop: ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy: ")
     }
 }

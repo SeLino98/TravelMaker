@@ -17,8 +17,6 @@
         android:layout_height="56dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/background_button_certification_ripple"
-        android:paddingStart="25dp"
-        android:paddingEnd="0dp"
         android:text="@string/find_mate_another_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

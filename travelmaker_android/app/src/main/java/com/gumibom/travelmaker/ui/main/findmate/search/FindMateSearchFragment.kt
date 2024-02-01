@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.main.findmate.search
 
+import android.app.Dialog
 import android.content.Context
 import android.location.Address
 import android.os.Bundle
@@ -12,9 +13,12 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.ENGLISH
@@ -26,23 +30,24 @@ import com.gumibom.travelmaker.constant.WRONG_INPUT
 import com.gumibom.travelmaker.databinding.DialogMainFindMateSearchBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.FindMateActivity
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.location.SignupLocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "FindMateSearchFragment_싸피"
 @AndroidEntryPoint
-class FindMateSearchFragment : BottomSheetDialogFragment() {
+class FindMateSearchFragment : DialogFragment() {
 
     private var _binding: DialogMainFindMateSearchBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by activityViewModels()
-    private lateinit var activity : MainActivity
+    private lateinit var activity : FindMateActivity
     private lateinit var adapter : SignupLocationAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        activity = context as MainActivity
+        activity = context as FindMateActivity
     }
 
     override fun onCreateView(
@@ -54,6 +59,23 @@ class FindMateSearchFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        // 다이얼로그를 화면에 꽉 차게 표시하기 위해 설정
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // 다이얼로그의 테마를 설정
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setTitle("Location Search")
+
+        return dialog
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,8 +83,8 @@ class FindMateSearchFragment : BottomSheetDialogFragment() {
         setAdapter()
 
         adapter.setOnItemClickListener { address ->
-            mainViewModel.address = address
-            activity.navigationPop()
+            mainViewModel.userSelectAddress(address)
+            dismiss()
         }
     }
 
