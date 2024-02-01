@@ -100,7 +100,6 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             // Handle navigation icon press
         }
-
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_notify -> {

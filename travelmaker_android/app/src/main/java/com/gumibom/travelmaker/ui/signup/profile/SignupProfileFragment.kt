@@ -3,18 +3,17 @@ package com.gumibom.travelmaker.ui.signup.profile
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.gumibom.travelmaker.R
@@ -22,11 +21,7 @@ import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
-import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.FileOutputStream
-
 
 private const val TAG = "SignupProfileFragment"
 @AndroidEntryPoint
@@ -41,6 +36,7 @@ class SignupProfileFragment : Fragment() {
     private val signupViewModel: SignupViewModel by viewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.d(TAG, "onAttach:11 ")
         //Activity 연결
         signupActivity = context as SignupActivity
     }
@@ -51,7 +47,7 @@ class SignupProfileFragment : Fragment() {
         observeViewModel()
         backAndNextNaviBtn()
 
-        // TODO 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
+        // 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
     }
     private fun backAndNextNaviBtn(){
         binding.tvSignupLocationPrevious.setOnClickListener {
@@ -93,6 +89,7 @@ class SignupProfileFragment : Fragment() {
             Log.d(TAG, "selectPicture: GHDGDG2222")
         }
     }
+
     private fun deletePhotoFromProfile() {
         profileFlag = false
         binding.ivProfile.setBackgroundResource(R.drawable.ic_empty_profile_circle)
@@ -110,63 +107,43 @@ class SignupProfileFragment : Fragment() {
         startActivityForResult(cameraIntent, cameraRequestCode)
         profileFlag = true
     }
-    private fun saveImageToStorage(uri: Uri): Uri {
-        val inputStream = signupActivity.contentResolver.openInputStream(uri)
-        val directory = File(signupActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "TravelMaker")
-        if (!directory.exists()) directory.mkdirs()
-        val file = File(directory, "cropped_${System.currentTimeMillis()}.jpg")
-        val outputStream = FileOutputStream(file)
-        inputStream.use { input ->
-            outputStream.use { output ->
-                input?.copyTo(output)
-            }
-        }
-
-        // Return the saved image URI
-        return Uri.fromFile(file)
-    }
-    private fun handleCroppedImage(data: Intent?) {
-        val resultUri = UCrop.getOutput(data!!)
-        resultUri?.let {
-            // Save the cropped image to phone storage and get URI
-            val savedUri = saveImageToStorage(it)
-            Log.d(TAG, "handleCroppedImage: ${savedUri.toString()}")
-            // Display the cropped image in ImageView
-            binding.ivProfile.setImageURI(savedUri)
-            Log.d(TAG, "handleCroppedImage:END")
-        }
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d(TAG, "onActivityResult:!!!!!${requestCode} : ${resultCode} : ${data}")
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
+//                imagePickCode -> {
+//                    val selectedImage = data?.data
+//                    binding.ivProfile.setImageURI(selectedImage)
+//                }
+//                cameraRequestCode -> {
+//                    val thumbnail = data?.extras?.get("data") as? Bitmap
+//                    binding.ivProfile.setImageBitmap(thumbnail)
+//                }
                 imagePickCode -> {
-                    val sourceUri = data?.data // Get the URI of selected image
-                    Log.d(TAG, "onActivityResult: imagePickCodeLog")
-                    val destinationUri = Uri.fromFile(File(signupActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "cropped_${System.currentTimeMillis()}.jpg"))
-                    Log.d(TAG, "onActivityResult: ${destinationUri.toString()}")
-                    UCrop.of(sourceUri!!, destinationUri)
-                        .withAspectRatio(1f, 1f)
-                        .start(signupActivity)
+                    data?.data?.let { uri ->
+                        Glide.with(this)
+                            .load(uri)
+                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                            .into(binding.ivProfile)
+                    }
                 }
-                UCrop.REQUEST_CROP -> {
-                    Log.d(TAG, "onActivityResult: REQUEST_CROP ${data.toString()}")
-                    handleCroppedImage(data)
-                    Log.d(TAG, "onActivityResult: REQUEST_CROPEND")
+                cameraRequestCode -> {
+                    val thumbnail = data?.extras?.get("data") as? Bitmap
+                    thumbnail?.let {
+                        Glide.with(this)
+                            .load(it)
+                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                            .into(binding.ivProfile)
+                    }
                 }
             }
+        }else{
+            Log.d(TAG, "onActivityResult: ")
         }
     }
-//    val cropActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-//            // Handle the cropped image result
-//            val resultUri = UCrop.getOutput(result.data!!)
-//            Log.d(TAG, "Cropped Image Uri: $resultUri")
-//        }
-//    }
     private fun selectCategory(){
         val chipGroup: ChipGroup = binding.chipGroup
+        Log.d(TAG, "selectCategory:1")
         chipGroup.setOnCheckedStateChangeListener {
                 group, checkId ->
             val selectedChip: List<Int> = checkId;
@@ -176,9 +153,6 @@ class SignupProfileFragment : Fragment() {
                 for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
                     val selectedChipId = token ///
                     val selctedName = group.findViewById<Chip>(selectedChipId)
-//                  val selectedChipText = selectedChip.text.toString()
-//                  val selectedChips = checkId.map { it }
-//                    signupViewModel.updateFavoriteList(selctedName)
                     Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChip")
                     Log.d(
                         TAG,
