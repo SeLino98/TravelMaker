@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
     fun navigationToNextFragment(){
         navController.navigate(R.id.action_mainFragment_to_mainFindMateFragment)
     }
+
     private fun initToolbar(){
         binding.toolbar.setNavigationOnClickListener {
             // Handle navigation icon press

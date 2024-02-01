@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -47,6 +48,7 @@ class SignupActivity : AppCompatActivity(){
 
     private val signupViewModel : SignupViewModel by viewModels()
 
+    private lateinit var permissionCheck :PermissionChecker
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,15 @@ class SignupActivity : AppCompatActivity(){
             as NavHostFragment).navController
         }
         setContentView(binding.root)
+        permissionCheck = PermissionChecker(this)
+        permissionCheck.permitted = object : PermissionListener {
+            override fun onGranted() {
+                // 권한이 수여일 때
+
+                Toast.makeText(this@SignupActivity, "Permissions Granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+        permissionCheck.checkPermission()
 
         googleSignup()
         // 프로그레스바 진행률 설정
