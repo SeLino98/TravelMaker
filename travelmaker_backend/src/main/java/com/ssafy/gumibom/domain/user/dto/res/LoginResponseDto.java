@@ -1,11 +1,12 @@
 package com.ssafy.gumibom.domain.user.dto.res;
-
 import lombok.*;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class FindIdBySmsAuthResDto {
+public class LoginResponseDto {
     private boolean isSuccess;
     private String message;
-    private String loginId;
+    private String jwtToken;
 }

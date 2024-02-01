@@ -25,7 +25,7 @@ public class MeetingPost {
     @Column(name = "meeting_post_id")
     private Long id;
 
-    //    @JsonIgnore
+//    @JsonIgnore
 //    @OneToMany(mappedBy = "meeting_post")
     @ElementCollection
     private List<Category> categories = new ArrayList<>();
@@ -46,9 +46,9 @@ public class MeetingPost {
     @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "meetingPost", cascade = CascadeType.ALL)
-    private Position position;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "meetingPost", cascade = CascadeType.ALL)
+//    private Position position;
 
     public void addApplier(User user, Boolean isHead, Position position) {
         MeetingApplier meetingApplier = new MeetingApplier();
@@ -76,7 +76,7 @@ public class MeetingPost {
         meetingPost.setMemberMax(memberMax);
         meetingPost.setStartDate(startDate);
         meetingPost.setEndDate(endDate);
-        meetingPost.setPosition(position);
+//        meetingPost.setPosition(position);
         meetingPost.setDeadline(deadline);
         meetingPost.setImgUrl(imgUrl);
         meetingPost.setCategories(categories);

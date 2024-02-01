@@ -28,7 +28,22 @@ public class MessageController {
 
     public MessageController() {
         // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-        this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret, "https://api.coolsms.co.kr");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("apikey = " + this.apiKey);
+        System.out.println("apiSecret = " + this.apiSecret);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+
+        this.messageService = NurigoApp.INSTANCE.initialize(this.apiKey, this.apiSecret, "https://api.coolsms.co.kr");
     }
 
     @PostMapping("/send-one")

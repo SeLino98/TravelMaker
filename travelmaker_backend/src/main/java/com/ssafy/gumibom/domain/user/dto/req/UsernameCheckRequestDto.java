@@ -2,10 +2,10 @@ package com.ssafy.gumibom.domain.user.dto.req;
 
 import lombok.*;
 
-@Builder
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindFCMReqDto {
-    private String fcmtoken;
+@Builder
+public class UsernameCheckRequestDto {
+    private String username;
 }

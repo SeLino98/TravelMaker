@@ -3,35 +3,55 @@ package com.ssafy.gumibom.domain.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
-import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
+import com.ssafy.gumibom.domain.user.dto.req.SignupRequestDto;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "user_id")
     private Long id;
 
     private String username;
     private String password;
+    @Email
     private String email;
+
+    @NotEmpty
     private String nickname;
-    private boolean gender;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender; // Gender는 enum 타입
+
     private String birth;
+
+    @NotEmpty
+    @Size(min = 10, max = 15)
     private String phone;
+
+    @Lob
     private String imgURL;
+
     private double belief;
+
     private String town;
+
+    @Lob
     private String fcmtoken;
 
     @Embedded
@@ -40,28 +60,54 @@ public class User {
     @ElementCollection
     private List<Category> categories;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PersonalPamphlet> personalPamphlets;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MeetingPost> meetingPosts;
-
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MeetingApplier meetingApplier;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MeetingMember meetingMember;
 
-    public User(String loginId, String password, String nickname, String birth, String phone, boolean gender, List<Category> categories, Nation nation) {
+    //회원가입 시 사용될 생성자
+    @Builder
+    public User(SignupRequestDto signupRequestDto){
+        this.username = signupRequestDto.getUsername();
+        this.password = signupRequestDto.getPassword();
+        this.email = signupRequestDto.getEmail();
+        this.gender = signupRequestDto.getGender();
+        this.phone = signupRequestDto.getPhone();
+        this.nation = signupRequestDto.getNation();
+        this.categories = signupRequestDto.getCategories();
+        this.imgURL = signupRequestDto.getProfileImgURL();
     }
 
-    public void passwordEncoding(){
-
-    }
-
-    public void setPassword(String password) {
+    //token 생성시 사용될 생성자
+    @Builder
+    public User(String username, String password, Role role) {
+        this.username = username;
         this.password = password;
+        this.role = role;
     }
+
+    //    public User(String loginId, String password, String nickname, String birth, String phone, boolean gender, List<Category> categories, Nation nation) {
+//    }
+//
+//    public User(String subject, String password, Collection<? extends GrantedAuthority> authorities) {
+//    }
+//
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
+
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<MeetingPost> meetingPosts;
+
 }

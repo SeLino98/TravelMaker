@@ -1,4 +1,10 @@
 spring:
+  security:
+    jwt:
+      header: Authorization
+      secret: ENC(I23+H3zRfczCSQnICE7745gbu1wmyQoTPZ0btiqyFE7lX6ArnKUjSqP5NoyFMP+D)
+      token-validity-in-seconds: 86400
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ENC(P5J7Ioi0OprueUrt3fFv2A==)
@@ -28,6 +34,7 @@ cloud:
       auto: false
 
 coolsms:
-  apikey : ENC(vImbLVrEKhRcpw4V9SDzb65QF75toGAqYFQxP6w65W4)
-  apisecret : ENC(tXtdAdiNRCXm8EPhD0/nuJDzSQ9LvDf72o5Oi3R51zC3YBvwGhs8yS+oJ+A11V9H)
-  fromnumber : ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)
+  apikey: ENC(vImbLVrEKhRcpw4V9SDzb65QF75toGAqYFQxP6w65W4)
+  apisecret: ENC(tXtdAdiNRCXm8EPhD0/nuJDzSQ9LvDf72o5Oi3R51zC3YBvwGhs8yS+oJ+A11V9H)
+  fromnumber: ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)
+

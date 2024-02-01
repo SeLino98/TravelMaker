@@ -1,12 +1,11 @@
 package com.ssafy.gumibom.domain.user.dto.req;
-
 import lombok.*;
 
-@Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-public class LoginReqDto {
-    private String loginId;
+@AllArgsConstructor
+@Builder
+public class LoginRequestDto {
+    private String username;
     private String password;
 }

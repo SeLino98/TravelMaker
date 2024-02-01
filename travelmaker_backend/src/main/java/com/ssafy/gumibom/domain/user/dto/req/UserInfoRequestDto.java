@@ -1,12 +1,11 @@
 package com.ssafy.gumibom.domain.user.dto.req;
-
 import lombok.*;
 
-@Builder
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindPwReqDto {
-    private String loginId;
-    private String phone;
+@Builder
+public class UserInfoRequestDto {
+    private Long userId;
+    private String fcmtoken;
 }
