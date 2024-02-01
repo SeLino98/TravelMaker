@@ -3,10 +3,11 @@ package com.ssafy.gumibom.domain.meetingPost.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.user.entity.User;
-import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Position;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class MeetingPost {
     private String imgUrlThr;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
     @Embedded
@@ -86,37 +87,29 @@ public class MeetingPost {
         return meetingPost;
     }
 
-    /* 분리수거 직전
-public static MeetingPost createMeetingPost(WriteMeetingPostRequestDTO requestDTO, User author
-//                                                , String title, String content, LocalDateTime authDate,
-//                                                Integer nativeMin, Integer travelerMin, Integer memberMax,
-//                                                LocalDateTime startDate, LocalDateTime endDate, Position position,
-//                                                LocalDateTime deadline, String imgUrlMain, String imgUrlSub, String imgUrlThr, List<Category> categories
-    ) {
+    public MeetingPost updateMeetingPost(WriteMeetingPostRequestDTO requestDTO) {
 
-        MeetingPost meetingPost = new MeetingPost(requestDTO);
+        this.title = requestDTO.getTitle();
+        this.content = requestDTO.getContent();
+        this.authDate = requestDTO.getAuthDate();
 
-        meetingPost.addApplier(author, true, requestDTO.getPosition());
+        this.deadline = requestDTO.getDeadline();
+        // 기간 변경에 따른 status 변경
+        this.status = !this.deadline.isBefore(LocalDateTime.now());
 
-//        meetingPost.setTitle(requestDTO.getTitle());
-//        meetingPost.setContent(requestDTO.getContent());
-//        meetingPost.setAuthDate(requestDTO.getAuthDate());
-//        meetingPost.setNativeMin(requestDTO.getNativeMin());
-//        meetingPost.setTravelerMin(requestDTO.getTravelerMin());
-//        meetingPost.setMemberMax(requestDTO.getMemberMax());
-//        meetingPost.setStartDate(requestDTO.getStartDate());
-//        meetingPost.setEndDate(requestDTO.getEndDate());
-//        meetingPost.setPosition(requestDTO.getPosition());
-//        meetingPost.setDeadline(requestDTO.getDeadline());
-//        meetingPost.setImgUrlMain(imgUrlMain);
-//        meetingPost.setImgUrlSub(imgUrlSub);
-//        meetingPost.setImgUrlThr(imgUrlThr);
-//        meetingPost.setCategories(categories);
+        this.startDate = requestDTO.getStartDate();
+        this.endDate = requestDTO.getEndDate();
+        this.nativeMin = requestDTO.getNativeMin();
+        this.travelerMin = requestDTO.getTravelerMin();
+        this.memberMax = requestDTO.getMemberMax();
+        this.imgUrlMain = requestDTO.getImgUrlMain();
+        this.imgUrlSub = requestDTO.getImgUrlSub();
+        this.imgUrlThr = requestDTO.getImgUrlThr();
+        this.categories = requestDTO.getCategories();
+        this.position = requestDTO.getPosition();
 
-        return meetingPost;
+        return this;
     }
-     */
-
 
     public void updateMeetingPostStatus(Boolean newStatus) {
         this.status = newStatus;

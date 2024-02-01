@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,5 +38,17 @@ public class MeetingPostController {
         return meetingPostService.meetingPostDetail(meetingPostId);
     }
 
+    @PutMapping("/{meetingPostId}")
+    public ResponseEntity<?> modifyMeetingPost(@RequestBody WriteMeetingPostRequestDTO requestDTO, @PathVariable Long meetingPostId) {
+
+        return meetingPostService.modify(requestDTO, meetingPostId);
+    }
+
+    @DeleteMapping("/{meetingPostId}")
+    public ResponseEntity<?> deleteMeetingPost(@PathVariable Long meetingPostId) {
+
+        meetingPostService.delete(meetingPostId);
+        return ResponseEntity.ok("모임글이 삭제되었습니다.");
+    }
 
 }

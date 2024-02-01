@@ -45,7 +45,7 @@ public class MeetingPostService {
 
         DetailOfMeetingPostResponseDTO responseDTO = new DetailOfMeetingPostResponseDTO();
         responseDTO.setMeetingPost(meetingPostRepository.findOne(id));
-        responseDTO.setDDay(ChronoUnit.DAYS.between(responseDTO.getMeetingPost().getDeadline(), LocalDateTime.now())-1);
+        responseDTO.setDDay(ChronoUnit.DAYS.between(responseDTO.getMeetingPost().getDeadline(), LocalDateTime.now()) - 1);
 
         return ResponseEntity.ok(responseDTO);
     }
@@ -55,5 +55,21 @@ public class MeetingPostService {
     public ResponseEntity<?> meetingPostRadius(Double latitude, Double longitude, Double radius, List<String> categories) {
 
         return ResponseEntity.ok(meetingPostRepository.findByGeo(latitude, longitude, radius, categories));
+    }
+
+    @Transactional
+    public ResponseEntity<?> modify(WriteMeetingPostRequestDTO requestDTO, Long id) {
+        MeetingPost originalMP = meetingPostRepository.findOne(id);
+        if (originalMP == null) {
+            throw new IllegalArgumentException("수정에 실패했습니다.");
+        }
+
+        meetingPostRepository.save(originalMP.updateMeetingPost(requestDTO));
+        return ResponseEntity.ok("수정에 성공했습니다.");
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        meetingPostRepository.deleteById(id);
     }
 }

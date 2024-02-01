@@ -4,7 +4,6 @@ import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,8 +31,8 @@ public class MeetingPostRepository {
                         "WHERE m.deadline < CURRENT_TIMESTAMP ")
                 .executeUpdate();
 
-       em.flush();
-       em.clear();
+        em.flush();
+        em.clear();
 
         // 위도 경도 따와서 기준 위치 근방 km 안인지, 아직 모집 중인지 확인 후 select
         return em.createQuery("SELECT distinct m.id, m.position " +
@@ -46,5 +45,9 @@ public class MeetingPostRepository {
                 .setParameter("upToKm", upToKm)
                 .setParameter("categories", categories)
                 .getResultList();
+    }
+
+    public void deleteById(Long id) {
+        em.remove(findOne(id));
     }
 }
