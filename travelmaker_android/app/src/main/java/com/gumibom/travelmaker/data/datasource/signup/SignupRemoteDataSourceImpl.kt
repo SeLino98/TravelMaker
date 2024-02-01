@@ -16,4 +16,7 @@ class SignupRemoteDataSourceImpl @Inject constructor(
         return response
 
     }
+    private fun mapper(){
+
+    }
 }

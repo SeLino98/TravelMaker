@@ -3,6 +3,7 @@ package com.gumibom.travelmaker.ui.main
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
+import com.gumibom.travelmaker.ui.main.findmate.FindMateActivity
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -99,6 +101,11 @@ class MainActivity : AppCompatActivity() {
 
     fun navigationPop() {
         navController.navigateUp()
+    }
+
+    fun moveGoogleMap() {
+        val intent = Intent(this, FindMateActivity::class.java)
+        startActivity(intent)
     }
 
     private fun initToolbar(){

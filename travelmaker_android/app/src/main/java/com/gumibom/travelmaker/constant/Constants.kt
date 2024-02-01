@@ -38,3 +38,4 @@ const val FAIL_GOOGLE_LOGIN = "구글 로그인에 실패하였습니다."
 
 // 퍼미션 메시지
 const val NOT_ALLOW_PERMISSION = "위치 권한이 필요합니다."
+const val DENIED_LOCATION_PERMISSION = "위치 권한이 필요합니다. 지도를 종료합니다."

@@ -199,13 +199,10 @@ class GoogleMapWrapper @JvmOverloads constructor(
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            Log.d(TAG, "requestLocationUpdates: 콜백 함수 ")
             fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
             return
         } else {
-            Log.d(TAG, "requestLocationUpdates: 권한이 없나?")
         }
-
     }
 
     private fun updateLocation(latitude : Double, longitude : Double) {

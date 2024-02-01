@@ -15,6 +15,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.ENGLISH
 import com.gumibom.travelmaker.constant.ENGLISH_PATTERN
@@ -22,7 +23,7 @@ import com.gumibom.travelmaker.constant.KOREAN
 import com.gumibom.travelmaker.constant.KOREAN_PATTERN
 import com.gumibom.travelmaker.constant.NO_SEARCH_LOCATION
 import com.gumibom.travelmaker.constant.WRONG_INPUT
-import com.gumibom.travelmaker.databinding.FragmentMainFindMateSearchBinding
+import com.gumibom.travelmaker.databinding.DialogMainFindMateSearchBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.signup.SignupActivity
@@ -31,9 +32,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "FindMateSearchFragment_싸피"
 @AndroidEntryPoint
-class FindMateSearchFragment : Fragment() {
+class FindMateSearchFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentMainFindMateSearchBinding? = null
+    private var _binding: DialogMainFindMateSearchBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by activityViewModels()
     private lateinit var activity : MainActivity
@@ -49,7 +50,7 @@ class FindMateSearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainFindMateSearchBinding.inflate(inflater,container,false);
+        _binding = DialogMainFindMateSearchBinding.inflate(inflater,container,false);
         return binding.root
     }
 
@@ -150,5 +151,10 @@ class FindMateSearchFragment : Fragment() {
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         binding.etFindMateSearch.clearFocus() // editText의 Focus를 잃게 한다.
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

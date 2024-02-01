@@ -21,6 +21,7 @@ import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSour
 
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
+import dagger.Binds
 
 import dagger.Module
 import dagger.Provides
@@ -50,11 +51,12 @@ class RemoteDataSourceModule {
         return KakaoLocationRemoteDataSourceImpl(kakaoLocationSearchService)
     }
 
+
     @Singleton
     @Provides
-    fun provideSignupRemoteDataSource(signupService : SignupService) : SignupRemoteDataSource {
-        return SignupRemoteDataSourceImpl(signupService)
-    }
+   fun provideSignupRemoteDataSource(signupService: SignupService): SignupRemoteDataSource {
+       return SignupRemoteDataSourceImpl(signupService)
+   }
 
     @Singleton
     @Provides
