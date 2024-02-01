@@ -32,7 +32,7 @@ pipeline {
 				sshagent(credentials: ['travelmaker_ec2_server']) {
                     withCredentials([string(credentialsId: 'ec2-server-ip', variable: 'EC2_SERVER_IP'), usernamePassword(credentialsId: 'docker-login-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@$EC2_SERVER_IP "sudo sh deploy.sh"'
+                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@$EC2_SERVER_IP "sudo sh deploy2.sh"'
                         sh 'pwd'
                     }
                 }
