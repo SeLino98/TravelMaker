@@ -31,8 +31,7 @@ class SignupViewModel @Inject constructor(
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val sendPhoneNumberUseCase: SendPhoneNumberUseCase,
     private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase,
-
-    private val checkDuplicatedNicknameUseCase: CheckDuplicatedNicknameUseCase
+    private val checkDuplicatedNicknameUseCase: CheckDuplicatedNicknameUseCase,
 
 ) : ViewModel() {
     /*
@@ -160,7 +159,6 @@ class SignupViewModel @Inject constructor(
             _isDuplicatedId.value = false
         }
     }
-
     fun checkNickname(nickname: String) {
         viewModelScope.launch {
             // '중복된 닉네임'여부의 기본값 = false ==> '중복이 아닌 닉네임' 입니다.

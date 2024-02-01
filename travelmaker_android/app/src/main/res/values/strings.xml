@@ -30,7 +30,7 @@
     <string name="signup_success_content">로그인 화면으로 이동합니다.</string>
 
     <!-- 회원가입 4 성별과 생년월일 -->
-    <string name="signup_genderbirth_title">성별과 생년월일을\n    선택해주세요.</string>
+    <string name="signup_genderbirth_title">성별과 생년월일을\n     선택해주세요.</string>
     <string name="signup_genderbirth_hint_msg">생년월일</string>
     <string name="signup_genderbirth_helper_msg">MM/DD/YYYY</string>
     <string name="signup_gender_man">남성</string>

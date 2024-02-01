@@ -49,7 +49,7 @@ class SignupNicknameFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         // Z. 이전/다음 버튼 활성화
         backAndNextNaviBtn()
-        // Y. liveData가 지켜보다가 검사 돌리기
+        // Y. liveData가 지켜보다가 중복 검사 돌리기
         observeData()
         // A-1. nickname_et가 비어 있으면 EditText에 error 표시 하기
         // A-2. nickname_et의 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
@@ -117,8 +117,10 @@ class SignupNicknameFragment : Fragment(){
         btnSignupPrevious.setOnClickListener {
             activity.navigateToPreviousFragment()
         }
-        btnSignupNext.setOnClickListener {
-            activity.navigateToNextFragment()
+        if (isNextPage) {
+            btnSignupNext.setOnClickListener {
+                activity.navigateToNextFragment()
+            }
         }
     }
 
@@ -142,8 +144,9 @@ class SignupNicknameFragment : Fragment(){
         }
     }
 
-    // N. 마지막.
+    // 마지막.
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
 }
