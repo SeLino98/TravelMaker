@@ -50,11 +50,10 @@ class SignupGenderBirthdayFragment : Fragment(){
         // A. 성별 버튼의 한쪽 선택하여 클릭시, 선택된 쪽의 색이 좀더 진해짐.
         setGenderBtnColorToggle()
         // B. 스피너로 생년월일의 연/월/일 선택 <- default 값, 시작~끝 범위 정해줘야 함
-        setDatepicker()
         // C. A,B 모두 제대로 선택시 <- 다음 버튼이 진해지고, isNextPage = true 됨
-
-        // D.
-
+        setDatepicker()
+        // D. 종료
+        onDestroyView()
     }
 
     /*
@@ -67,18 +66,22 @@ class SignupGenderBirthdayFragment : Fragment(){
         val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
         val activeColor = ContextCompat.getColor(requireContext(), R.color.blue_gray)
 
+        // TODO 한번 누른 버튼을 재 클릭시, 선택이 풀리는 것도 구현이 필요함(manBtn)
         // 만약 manBtn이 클릭된 경우
         manBtn.setOnClickListener {
             manBtn.setBackgroundColor(activeColor)
             womanBtn.setBackgroundColor(nonActiveColor)
             isGenderSelected = true
+            signupViewModel.selectGender = "남성"
             checkNextPageEligibility()
         }
+        // TODO 한번 누른 버튼을 재 클릭시, 선택이 풀리는 것도 구현이 필요함(womanBtn)
         // 만약 womanBtn이 클릭된 경우
         womanBtn.setOnClickListener {
             manBtn.setBackgroundColor(nonActiveColor)
             womanBtn.setBackgroundColor(activeColor)
             isGenderSelected = true
+            signupViewModel.selectGender = "여성"
             checkNextPageEligibility()
         }
 
@@ -95,6 +98,7 @@ class SignupGenderBirthdayFragment : Fragment(){
                     view, year, monthOfYear, dayOfMonth ->
                 Log.d(TAG, "선택된 날짜: $year-${monthOfYear + 1}-$dayOfMonth")
             isBirthSelected = true
+            signupViewModel.selectBirthDate = datepicker.year.toString()
             checkNextPageEligibility()
         })
         maxCalendar.set(2008, Calendar.JANUARY, 1)
