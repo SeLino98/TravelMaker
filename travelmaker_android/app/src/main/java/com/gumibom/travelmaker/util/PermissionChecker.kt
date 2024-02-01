@@ -22,7 +22,9 @@ private const val TAG = "PermissionChecker"
 class PermissionChecker (private val context : Context){
 
     lateinit var permitted : PermissionListener
-    fun checkPermission(permission: Array<String>) : Boolean{
+
+
+    private fun checkPermission(permission: Array<String>) : Boolean{
         //내가 받은 권한들을 리스트로 받고 하나라도 거부된 권한이 있다면 false를 리턴한다.
         Log.d(TAG, "checkPermission:START ${permission.size}")
         for (tokens in permission){
@@ -66,11 +68,10 @@ class PermissionChecker (private val context : Context){
             moveToSettings()
         }else{
             Toast.makeText(context,"모든 권한이 허가됐습니다. ",Toast.LENGTH_SHORT).show()
-            permitted.onGranted()
         }
     }
     //사용자가 권한을 허용하지 않았을때, 설정창으로 이동
-    fun moveToSettings() { // TODO:  내 커스텀 다이얼로그로 수정
+    fun moveToSettings() {
         val alertDialog = ClickEventDialog(context)
         alertDialog.setTitle("권한이 필요합니다.")
         alertDialog.setMessage("설정으로 이동합니다.")

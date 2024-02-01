@@ -48,7 +48,7 @@ class SignupActivity : AppCompatActivity(){
 
     private val signupViewModel : SignupViewModel by viewModels()
 
-    private lateinit var permissionCheck :PermissionChecker
+    private val permissionCheck = PermissionChecker(this)
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +59,27 @@ class SignupActivity : AppCompatActivity(){
             as NavHostFragment).navController
         }
         setContentView(binding.root)
-        permissionCheck = PermissionChecker(this)
         permissionCheck.permitted = object : PermissionListener {
-            override fun onGranted() {
-                // 권한이 수여일 때
-
-                Toast.makeText(this@SignupActivity, "Permissions Granted", Toast.LENGTH_SHORT).show()
-            }
+                override fun onGranted() {
+                    //퍼미션 획득 성공일때
+//                    startScan()
+                    Log.d(TAG, "onGranted: onGranted")
+                }
         }
         permissionCheck.checkPermission()
+//        /* permission check */
+//        if (!permissionCheck.checkPermission(runtimePermissions)) {
+//            permissionCheck.permitted = object : PermissionListener {
+//                override fun onGranted() {
+//                    //퍼미션 획득 성공일때
+//                    startScan()
+//                }
+//            }
+//            permissionCheck.requestPermissionLauncher.launch(runtimePermissions)
+//        } else { //이미 전체 권한이 있는 경우
+//            startScan()
+//        }
+        /* permission check */
 
         googleSignup()
         // 프로그레스바 진행률 설정
