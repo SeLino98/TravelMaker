@@ -55,7 +55,6 @@ class PermissionChecker (private val context : Context){
                 }
             }
         } else {
-            Toast.makeText(context, "실패쓰~", Toast.LENGTH_SHORT).show()
             requestPermissionLauncher.launch(runtimePermissions)
         }
     }
