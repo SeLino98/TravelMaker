@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "meeting_applier", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "meeting_post_id"})
+})
 @Getter
 @Setter
 public class MeetingApplier {
@@ -21,21 +24,11 @@ public class MeetingApplier {
     private MeetingPost meetingPost;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     private Boolean isNative;
     private Boolean isHead;
 
-//    public static MeetingApplier createMeetingApplier(User user, MeetingPost meetingPost) {
-//        MeetingApplier meetingApplier = new MeetingApplier();
-//        meetingApplier.setUser(user);
-//        meetingApplier.setIsHead(false);
-////        meetingApplier.setIsNative(user.getTown());
-////        user isNative 어떻게 잘 판별하는 함수 만들어서 넣기~
-//        meetingApplier.setMeetingPost(meetingPost);
-//
-//        return meetingApplier;
-//    }
 }

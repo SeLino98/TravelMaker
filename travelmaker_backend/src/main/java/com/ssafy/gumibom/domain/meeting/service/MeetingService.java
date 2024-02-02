@@ -12,4 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class MeetingService {
 
     private final MeetingRepository meetingRepository;
+
+    /*
+    모임 리스트 조회할 때 ResponseDTO에 현지인 수 여행객 수도 같이 보내주세요...
+     */
 }
