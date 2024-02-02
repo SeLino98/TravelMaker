@@ -32,13 +32,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RemoteDataSourceModule {
-
     @Singleton
     @Provides
     fun provideNaverLocationRemoteDataSource(naverLocationSearchService: NaverLocationSearchService) : NaverLocationRemoteDataSource {
         return NaverLocationRemoteDataSourceImpl(naverLocationSearchService)
     }
-
     @Singleton
     @Provides
     fun provideGoogleLocationRemoteDataSource(googleLocationSearchService: GoogleLocationSearchService) : GoogleLocationRemoteDataSource {
@@ -50,7 +48,6 @@ class RemoteDataSourceModule {
     fun provideKakaoLocationRemoteDataSource(kakaoLocationSearchService: KakaoLocationSearchService) : KakaoLocationRemoteDataSource {
         return KakaoLocationRemoteDataSourceImpl(kakaoLocationSearchService)
     }
-
 
     @Singleton
     @Provides

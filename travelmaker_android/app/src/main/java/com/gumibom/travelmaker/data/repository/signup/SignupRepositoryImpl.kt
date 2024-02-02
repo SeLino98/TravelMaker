@@ -10,23 +10,18 @@ import javax.inject.Inject
 class SignupRepositoryImpl @Inject constructor(
     private val signupRemoteDataSourceImpl: SignupRemoteDataSource
 ) : SignupRepository {
-
-
     override suspend fun sendPhoneNumber(phoneNumber: String): Response<Boolean> {
         return signupRemoteDataSourceImpl.sendPhoneNumber(phoneNumber)
     }
     override suspend fun checkDuplicatedId(id: String): Response<Boolean> {
-
-
         return signupRemoteDataSourceImpl.checkDuplicatedId(id)
-    }
-
-
-    override suspend fun checkDuplicateNickname(nickname: String): Response<Boolean> {
-        return signupRemoteDataSourceImpl.checkDuplicateNickname(nickname)
     }
 
     override suspend fun saveUserData(userInfo: UserRequestDTO): Response<Boolean> {
         return signupRemoteDataSourceImpl.saveUserData(userInfo)
+    }
+    override suspend fun checkDuplicatedNickname(nickname: String): Response<Boolean> {
+        val response = signupRemoteDataSourceImpl.checkDuplicatedNickname(nickname)
+        return response
     }
 }

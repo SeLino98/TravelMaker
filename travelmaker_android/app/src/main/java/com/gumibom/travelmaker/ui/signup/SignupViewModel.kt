@@ -43,10 +43,12 @@ class SignupViewModel @Inject constructor(
      */
 
     // 우건
-    // 가변형 변수는 바로 아래쪽에 몰아놓기
     var bundle : Bundle? = null
+    // 가변형 변수 자리
+
     var loginId : String? = null
     var password : String? = null
+    var nickname : String? = null
     var email : String? = null
 
     // 가변형 변수 자리
@@ -99,6 +101,11 @@ class SignupViewModel @Inject constructor(
 
 // 우건
 
+    var selectAddress = ""
+    var selectGender = ""
+    var selectBirthDate = ""
+    // 가변형 변수 자리
+
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
 
@@ -114,12 +121,14 @@ class SignupViewModel @Inject constructor(
     // 타이머의 코루틴을 추적하는 변수
     private var timerJob : Job? = null
 
-    // 우건
-
     // 지원
     private val _isDuplicatedId = MutableLiveData<Boolean>()
     val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
-// 인호
+
+    private val _isDuplicatedNickname = MutableLiveData<Boolean>()
+    val isDuplicatedNickname : LiveData<Boolean> = _isDuplicatedNickname
+
+    // 인호
 
     /*
         변수 사용하는 공간 끝
@@ -192,9 +201,18 @@ class SignupViewModel @Inject constructor(
     fun checkId(id: String) {
         viewModelScope.launch {
         // '중복된 아이디' 인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
+
+        // '중복된 아이디'여부의 기본값 = false ==> '중복이 아닌 아이디' 입니다.
             _isDuplicatedId.value = false
         }
     }
+    fun checkNickname(nickname: String) {
+        viewModelScope.launch {
+        // '중복된 닉네임'여부의 기본값 = false ==> '중복이 아닌 닉네임' 입니다.
+            _isDuplicatedNickname.value = false
+        }
+    }
+
 // 인호
 }
 

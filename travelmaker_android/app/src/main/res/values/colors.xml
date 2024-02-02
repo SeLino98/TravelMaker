@@ -13,4 +13,5 @@
     <color name="hint_color">#661d1b20</color>
     <color name="button_text_color">#1D1B20</color>
     <color name="second_main_color">#DDF3FF</color>
+    <color name="blue_gray">#ff21272b</color>
 </resources>

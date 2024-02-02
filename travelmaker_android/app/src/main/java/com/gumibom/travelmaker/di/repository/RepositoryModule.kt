@@ -59,6 +59,7 @@ class RepositoryModule {
     fun provideSignupRepository(signupRemoteDataSource : SignupRemoteDataSource) : SignupRepository {
         return SignupRepositoryImpl(signupRemoteDataSource)
     }
+
     // 로그인 레퍼지토리
     @Singleton
     @Provides

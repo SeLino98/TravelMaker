@@ -160,7 +160,6 @@ class SignupLocationFragment : Fragment() {
     // 다음 버튼이 활성화 되어있을 시 페이지 전환하는 함수
     private fun openNextPage() {
         if (isNextPage) {
-            // TODO 네비게이션으로 다음 페이지 전환 기능 구현 필요
         }
     }
 

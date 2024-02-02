@@ -6,36 +6,49 @@
 
     <TextView
         android:id="@+id/tv_signup_nickname_title"
+
         style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="67dp"
-        android:paddingStart="0dp"
-        android:text="#2\n내 닉네임을 설정해주세요."
+        android:textSize="32sp"
+        android:text="@string/signup_nickname_title"
+
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_signup_nickname"
-        android:layout_width="370dp"
+
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="269dp"
-        app:helperText="Travel Maker의 프로필에 등록되는 닉네임으로\n이후 변경을 할 수 없습니다."
-        
+        app:helperText="@string/signup_nickname_helper_msg"
+        android:hint="@string/signup_label_nickname"
+        app:boxStrokeColor="@drawable/selector_input_layout_color"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        style="@style/TextLabel"
+
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintVertical_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColorHint="@color/hint_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signup_nickname"
-            android:background="@drawable/background_location_edittext"
+
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="닉네임을 입력해주세요."
+            android:hint="@string/signup_hint_nickname_msg"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
 
@@ -44,44 +57,50 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_check_dup_nick"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_signup_nickname"
+        android:text="@string/signup_btn_check_dup_id"
+        android:layout_width="71dp"
         android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="@+id/til_signup_nickname"
-        app:layout_constraintTop_toTopOf="@+id/til_signup_nickname"
-        app:layout_constraintBottom_toBottomOf="@+id/til_signup_nickname"
-
-        android:layout_marginBottom="34dp"
-        android:layout_marginEnd="8dp"
-
-        android:text="중복확인"
-        android:background="@drawable/btn_duplicate_check"
-        />
-
-    <TextView
-        android:id="@+id/tv_signup_nickname_before"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이전"
-        android:textSize="20sp"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintVertical_bias="0.43"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="38dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="99dp"
-        />
+        android:background="@drawable/btn_duplicate_check" />
 
-    <TextView
-        android:id="@+id/tv_signup_nickname_next"
+    <Button
+        android:id="@+id/btn_signup2_previous"
+
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="다음"
-        android:textSize="20sp"
+        android:text="@string/signup_previous"
+        android:background="@drawable/btn_ripple_effect"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="99dp"
-        style="@style/Text.Regular20.gray"
+
+        />
+
+
+    <Button
+        android:id="@+id/btn_signup2_next"
+
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_next"
+        android:background="@drawable/btn_ripple_effect"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
