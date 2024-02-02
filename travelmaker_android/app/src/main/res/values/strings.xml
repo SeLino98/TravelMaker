@@ -48,6 +48,7 @@
     <string name="login_find_id">아이디 찾기</string>
     <string name="login_find_password">비밀번호 찾기</string>
     <string name="find_mate_another_search">다른 장소도 검색해보세요.</string>
+    <string name="meeting_post_title">모임 생성</string>
     <!-- END -->
     <!-- 회원가입 성공메시지 -->
 </resources>

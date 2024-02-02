@@ -28,6 +28,7 @@ class FindIdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setInit()
         getCertificationNumber()
         checkCertificationNumber()
         nicknameCheck()
@@ -35,6 +36,10 @@ class FindIdFragment : Fragment() {
 
         // TODO 휴대폰 문자 인증 성공 시 아이디 찾기 버튼 활성화 -> 다이얼로그로 사용자의 ID 알려주기
 
+    }
+
+    private fun setInit() {
+        binding.tilLoginFindId.error = null
     }
 
     /*
@@ -109,6 +114,5 @@ class FindIdFragment : Fragment() {
             }
         })
     }
-
 
 }

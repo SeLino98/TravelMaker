@@ -78,7 +78,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
+        val uiSettings = mMap.uiSettings
         // 나의 현재 위치를 파란점으로 표시
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -93,6 +93,11 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             // 권한이 없으면 설정창으로 이동한다.
             permissionChecker.moveToSettings()
         }
+        // 줌 컨드롤러
+        uiSettings.isZoomControlsEnabled = true
+
+        // 줌 컨트롤러 위치 변경
+        googleMap.setPadding(0, 0, 0, 250)
 
         openMeetingDialog()
 
@@ -274,11 +279,16 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val categoryList : List<Chip> = listOf(taste, healing, culture, active, picture, nature)
 
         binding.ivMapFiltering.setOnClickListener {
-//            for (category in categoryList) {
-//                if (category.fo)
-//            }
-            val tasteCheck = taste.isCheckable
-            Log.d(TAG, "selectCategory: ${tasteCheck}")
+            val filterCategories = mutableListOf<String>()
+
+            for (category in categoryList) {
+                // chip이 선택되어 있으면
+                if (category.isCheckable) {
+                    filterCategories.add(category.text.toString())
+                }
+            }
+
+            // TODO 여기서 서버 통신으로 필터링
         }
     }
     companion object {
