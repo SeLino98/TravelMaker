@@ -5,6 +5,7 @@ import com.ssafy.gumibom.domain.record.service.RecordService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,5 +48,9 @@ public class RecordController {
         return recordService.uploadVideo(video);
     }
 
-
+    @GetMapping(value = "/test/deploy")
+    public String testDeploy() {
+        return "deployTest";
+    }
+    
 }
