@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.ui.main.findmate
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,7 @@ import com.gumibom.travelmaker.constant.DENIED_LOCATION_PERMISSION
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostActivity
 import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +65,18 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
         selectPlace()
         selectCategory()
+
+        moveMeetingPost()
+    }
+
+    /**
+     * 모임 생성 화면으로 넘어가기
+     */
+    private fun moveMeetingPost() {
+        binding.fabMapMeetingAdd.setOnClickListener {
+            val intent = Intent(this, MeetingPostActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

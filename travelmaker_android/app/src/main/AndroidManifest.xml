@@ -64,6 +64,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".ui.main.findmate.meeting_post.MeetingPostActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>
