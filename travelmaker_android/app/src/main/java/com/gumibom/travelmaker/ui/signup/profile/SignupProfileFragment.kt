@@ -52,6 +52,9 @@ class SignupProfileFragment : Fragment() {
             signupActivity.navigateToPreviousFragment()
         }
         binding.tvSignupLocationNext.setOnClickListener {
+            //완료 버튼 눌렀을 때
+            signupViewModel.saveToUserDTO()
+
             signupActivity.navigateToNextFragment()
         }
     }

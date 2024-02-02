@@ -4,6 +4,7 @@
     <!-- 공용 문구 -->
     <string name="signup_previous">이전</string>
     <string name="signup_next">다음</string>
+    <string name="signup_complete">완료</string>
 
     <!-- 회원가입 1 아이디 와 패스워드  -->
     <string name="signup_idpw_title">회원가입이에요.\n아이디와 패스워드를 입력해주세요.</string>

@@ -9,4 +9,5 @@ interface NaverLocationRemoteDataSource {
         secretKey: String,
         location : String,
         display : Int) : Response<NaverLocationDTO>
+
 }
