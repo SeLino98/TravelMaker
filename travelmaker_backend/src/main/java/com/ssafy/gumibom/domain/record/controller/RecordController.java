@@ -52,5 +52,9 @@ public class RecordController {
     public String testDeploy() {
         return "deployTest";
     }
-    
+
+    public void test(){
+        
+    }
+
 }
