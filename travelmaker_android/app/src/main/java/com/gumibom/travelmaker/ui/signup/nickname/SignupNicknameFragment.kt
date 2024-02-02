@@ -25,7 +25,7 @@ class SignupNicknameFragment : Fragment(){
     private lateinit var activity : SignupActivity
     private var _binding :FragmentSignupNicknameBinding? = null
     private val binding get() = _binding!!
-    private var isNextPage = false
+    private var isNextPage = true
     private val signupViewModel : SignupViewModel by viewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,8 +55,24 @@ class SignupNicknameFragment : Fragment(){
         // A-2. nickname_et의 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
         signupNicknameCheck()
         // B. A에서 성공 하면, id_et 내용으로 dup check 돌리기(ViewModel,liveData, observe) -> 1. 성공 or 2. 실패
-        isDupNickname()
 
+    }
+
+    private fun backAndNextNaviBtn(){
+        val btnSignupPrevious = binding.btnSignup2Previous
+        val btnSignupNext = binding.btnSignup2Next
+        // 뒤로가기 버튼 기능은 늘 가능
+        btnSignupPrevious.setOnClickListener {
+            activity.navigateToPreviousFragment()
+        // 앞으로가기 버튼 기능을 특정한 경우에만 가능
+        }
+        btnSignupNext.setOnClickListener {
+            if (isNextPage) {
+                activity.navigateToNextFragment()
+            } else {
+                btnSignupNext.setOnClickListener {}
+            }
+        }
     }
 
     private fun observeData() {
@@ -86,6 +102,9 @@ class SignupNicknameFragment : Fragment(){
                 } else {
                     binding.tilSignupNickname.error = null
                 }
+                isDupNickname()
+                // 해야할일: isDupNickname()에 값에 따라, tilSignupNickname.error 값도 결정되게 만들기. 근데 liveData에 연결되어서, 어케 해야할지..
+                setNextToggle()
             }
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -109,36 +128,28 @@ class SignupNicknameFragment : Fragment(){
         // 3. 값이 바뀔때마다
         // 4. onChanged 메소드가 호출되는 것을 확인한다
     }
-
-    private fun backAndNextNaviBtn(){
-        val btnSignupPrevious = binding.btnSignup2Previous
-        val btnSignupNext = binding.btnSignup2Next
-
-        btnSignupPrevious.setOnClickListener {
-            activity.navigateToPreviousFragment()
-        }
-        if (isNextPage) {
-            btnSignupNext.setOnClickListener {
-                activity.navigateToNextFragment()
-            }
-        }
+    override fun onDetach() {
+        super.onDetach()
     }
-
     /*
     setNextToggle(){}
     다음으로 넘어가는 버튼이 찐해지는 부모함수
     */
     private fun setNextToggle(){
+        val nicknameContent = binding.etSignupNickname.text.toString()
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
+        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
+        val isNicknameValid = nicknameContent.isNotEmpty()
 
         signupViewModel.isDuplicatedNickname.observe(viewLifecycleOwner) {it ->
             Log.d(TAG, "setNextToggle: ")
-            if (it == false){
+            if (isNicknameValid && binding.tilSignupNickname.error == null){
                 // 이전 버튼의 색을 activeColor 로 변경하고, isNextPage 값을 true로 변경
                 binding.btnSignup2Next.setTextColor(activeColor)
                 isNextPage = true
                 // 중복된 아이디가 맞는 경우
             } else {
+                binding.btnSignup2Next.setTextColor(nonActiveColor)
                 isNextPage = false
             }
         }

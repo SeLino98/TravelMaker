@@ -53,27 +53,18 @@ class SignupIdPwFramgnet : Fragment() {
         // A-2. id_et의 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
         signupIdCheck()
         // B. A에서 성공 하면, id_et 내용으로 dup check 돌리기(ViewModel,liveData, observe) -> 1. 성공 or 2. 실패
-        isDupId()
         // D-1. pw_et가 비어 있으면 EditText에 error 표시 하기
         // D-2. pw_et 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
         signupPwCheck()
-        // E. D 성공시, 다음 버튼 검정색으로 나오게 함...
-        setNextToggle()
-        // G. 지금 화면 종료
-        onDestroyView()
     }
-
-    private fun backAndNextNaviBtn(){
-        val btnSignupPrevious = binding.btnSignup1Previous
+    private fun backAndNextNaviBtn() {
         val btnSignupNext = binding.btnSignup1Next
-        val errorSignupPw = binding.tilSignupPw.error
-
-        btnSignupPrevious.setOnClickListener {
-                activity.navigateToPreviousFragment()
-            }
-        if (errorSignupPw == null) {
-            btnSignupNext.setOnClickListener {
+        // 앞으로가기 버튼 기능을 특정한 경우에만 가능
+        btnSignupNext.setOnClickListener {
+            if (isNextPage) {
                 activity.navigateToNextFragment()
+            } else {
+                btnSignupNext.setOnClickListener {}
             }
         }
     }
@@ -82,10 +73,8 @@ class SignupIdPwFramgnet : Fragment() {
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) { it ->
             if (it == true) {
                 Toast.makeText(requireContext(), "중복된 아이디 입니다.", Toast.LENGTH_LONG).show()
-//                '중복된 아이디 입니다.' 라고 toast 뜨기
             } else {
                 Toast.makeText(requireContext(), "가능한 아이디 입니다.", Toast.LENGTH_LONG).show()
-//                '사용가능한 아이디 입니다.' 라고 toast 뜨기
             }
         }
     }
@@ -101,7 +90,6 @@ class SignupIdPwFramgnet : Fragment() {
     private fun signupIdCheck(){
         binding.etSignupId.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                TODO("Not yet implemented")
             }
             // id_et가 비어있으면 error 표시
             // id_et가 유효성 검사를 통과 못하면 error 표시
@@ -113,13 +101,16 @@ class SignupIdPwFramgnet : Fragment() {
                     binding.tilSignupId.error = null
                 }
                 if (!isValidateId(idContent)) {
-                    binding.tilSignupId.error = "유효하지 않은 ID 입니다."
+                    binding.tilSignupId.error = "영문, 숫자 포함 6자리 이상"
                 } else {
                     binding.tilSignupId.error = null
                 }
+                isDupId()
+                // 해야할일: isDupId()에 값에 따라, tilSignupId.error 값도 결정되게 만들기. 근데 liveData에 연결되어서, 어케 해야할지..
+                setNextToggle()
+
             }
             override fun afterTextChanged(p0: Editable?) {
-//                TODO("Not yet implemented")
             }
         })
     }
@@ -136,6 +127,8 @@ class SignupIdPwFramgnet : Fragment() {
     /*
     isDupId(){}
     아이디의 중복 검사를 위한... 자식 함수
+    1. 중복되지 않은 아이디 입니다. => Toast
+    2. 중복된 아이디 입니다. => Toast
     */
     private fun isDupId(){
         val isDupIdBtn = binding.btnSignupId
@@ -144,7 +137,7 @@ class SignupIdPwFramgnet : Fragment() {
             val idContents = binding.etSignupId.text.toString()
             signupViewModel.checkId(idContents)
         }
-        // 1. 중복검사 버튼을 누를때마 뷰모델에 liveData를 만들고
+        // 1. 중복검사 버튼을 누를때마다 뷰모델에 liveData를 만들고
         // 2. liveData에 옵저버를 달고
         // 3. 값이 바뀔때마다
         // 4. onChanged 메소드가 호출되는 것을 확인한다
@@ -152,6 +145,9 @@ class SignupIdPwFramgnet : Fragment() {
     /*
     signupPwCheck(){}
     비밀번호의 유효성 검사를 위한... 부모 함수
+    1. PW를 입력 해주세요 => Toast
+    2. 유효하지 않은 PW 입니다. => Toast
+    3. 입력되었고 유효함 => error = null
     */
     private fun signupPwCheck(){
         binding.etSignupPw.addTextChangedListener(object : TextWatcher {
@@ -166,10 +162,11 @@ class SignupIdPwFramgnet : Fragment() {
                     binding.tilSignupPw.error = null
                 }
                 if (!isValidatePw(pwContent)) {
-                    binding.tilSignupPw.error = "유효하지 않은 PW 입니다."
+                    binding.tilSignupPw.error = "영문, 숫자, 특수문자 포함 8자리 이상"
                 } else {
                     binding.tilSignupPw.error = null
                 }
+                setNextToggle()
             }
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -183,6 +180,7 @@ class SignupIdPwFramgnet : Fragment() {
     /*
     isValidatePw(pw: String): Boolean {}
     비밀번호의 유효성 검사를 위한... 자식 함수
+    boolean 값만 내뱉음
     */
     private fun isValidatePw(pw: String): Boolean {
         // 비밀번호 길이 및 문자 조건 검사
@@ -193,24 +191,33 @@ class SignupIdPwFramgnet : Fragment() {
     }
     /*
     setNextToggle(){}
-    다음으로 넘어가는 버튼이 찐해지는 부모함수
+    다음으로 넘어가는 버튼이 진해지고, isNextPage = true 로 변경
     */
-    private fun setNextToggle(){
+    private fun setNextToggle() {
+        val idContent = binding.etSignupId.text.toString()
+        val pwContent = binding.etSignupPw.text.toString()
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
+        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
 
-        signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) {it ->
-            Log.d(TAG, "setNextToggle: ")
-            if (it == false){
-                // 이전 버튼의 색을 activeColor 로 변경하고, isNextPage 값을 true로 변경
-                binding.btnSignup1Next.setTextColor(activeColor)
-                isNextPage = true
-            // 중복된 아이디가 맞는 경우
-            }
+        // ID와 PW의 입력 및 유효성 검사
+        val isIdValid = idContent.isNotEmpty() && isValidateId(idContent)
+        val isPwValid = pwContent.isNotEmpty() && isValidatePw(pwContent)
+
+        if (isIdValid && isPwValid) {
+            // 모든 조건이 충족되었을 때만 다음 버튼 활성화
+            binding.btnSignup1Next.setTextColor(activeColor)
+            isNextPage = true
+        } else {
+            // 하나라도 충족되지 않으면 비활성화
+            binding.btnSignup1Next.setTextColor(nonActiveColor)
+            isNextPage = false
         }
     }
 
-    // N. 마지막.
+
+
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
 }

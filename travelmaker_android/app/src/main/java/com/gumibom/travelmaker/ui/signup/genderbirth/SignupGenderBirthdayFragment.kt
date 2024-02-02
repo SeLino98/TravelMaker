@@ -23,6 +23,7 @@ class SignupGenderBirthdayFragment : Fragment(){
     private lateinit var activity: SignupActivity;
     private val signupViewModel: SignupViewModel by viewModels()
     private var _binding:FragmentSignupGenderBirthdayBinding? = null
+
     private val binding get() = _binding!!
     private var isNextPage = false
     private var isGenderSelected = false
@@ -38,23 +39,43 @@ class SignupGenderBirthdayFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView: 1")
         _binding = FragmentSignupGenderBirthdayBinding.inflate(inflater,container,false)
+        Log.d(TAG, "onCreateView: ${_binding.toString()}")
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isBirthSelected = true
-        // Z. 이전/다음 버튼 활성화
-        updateNextBtnState()
+        backAndNextNaviBtn()
         // A. 성별 버튼의 한쪽 선택하여 클릭시, 선택된 쪽의 색이 좀더 진해짐.
         setGenderBtnColorToggle()
         // B. 스피너로 생년월일의 연/월/일 선택 <- default 값, 시작~끝 범위 정해줘야 함
         // C. A,B 모두 제대로 선택시 <- 다음 버튼이 진해지고, isNextPage = true 됨
         setDatepicker()
         // D. 종료
-        onDestroyView()
+
     }
+    private fun backAndNextNaviBtn() {
+        val btnSignupPrevious = binding.btnSignup4Previous
+        val btnSignupNext = binding.btnSignup4Next
+
+        btnSignupPrevious.setOnClickListener{
+            activity.navigateToPreviousFragment()
+        }
+
+        btnSignupNext.setOnClickListener {
+            if (isNextPage) {
+                activity.navigateToNextFragment()
+            } else {
+
+            }
+        }
+    }
+
+
 
     /*
     setGenderBtnColorToggle(){}
@@ -63,28 +84,23 @@ class SignupGenderBirthdayFragment : Fragment(){
     private fun setGenderBtnColorToggle() {
         val manBtn = binding.btnSignupMan
         val womanBtn = binding.btnSignupWoman
-        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-        val activeColor = ContextCompat.getColor(requireContext(), R.color.blue_gray)
 
-        // TODO 한번 누른 버튼을 재 클릭시, 선택이 풀리는 것도 구현이 필요함(manBtn)
         // 만약 manBtn이 클릭된 경우
         manBtn.setOnClickListener {
-            manBtn.setBackgroundColor(activeColor)
-            womanBtn.setBackgroundColor(nonActiveColor)
+            manBtn.setBackgroundResource(R.drawable.btn_gender_selected)
+            womanBtn.setBackgroundResource(R.drawable.btn_gender_selection)
             isGenderSelected = true
             signupViewModel.selectGender = "남성"
-            checkNextPageEligibility()
+            setNextToggle()
         }
-        // TODO 한번 누른 버튼을 재 클릭시, 선택이 풀리는 것도 구현이 필요함(womanBtn)
         // 만약 womanBtn이 클릭된 경우
         womanBtn.setOnClickListener {
-            manBtn.setBackgroundColor(nonActiveColor)
-            womanBtn.setBackgroundColor(activeColor)
+            womanBtn.setBackgroundResource(R.drawable.btn_gender_selected)
+            manBtn.setBackgroundResource(R.drawable.btn_gender_selection)
             isGenderSelected = true
             signupViewModel.selectGender = "여성"
-            checkNextPageEligibility()
+            setNextToggle()
         }
-
     }
     /*
     setDatepicker()
@@ -94,38 +110,35 @@ class SignupGenderBirthdayFragment : Fragment(){
         val maxCalendar = Calendar.getInstance()
         val minCalendar = Calendar.getInstance()
 
-        datepicker.init(1994, 11, 10, DatePicker.OnDateChangedListener {
+        datepicker.init(1994, 10, 10, DatePicker.OnDateChangedListener {
                     view, year, monthOfYear, dayOfMonth ->
                 Log.d(TAG, "선택된 날짜: $year-${monthOfYear + 1}-$dayOfMonth")
             isBirthSelected = true
             signupViewModel.selectBirthDate = datepicker.year.toString()
-            checkNextPageEligibility()
+
         })
         maxCalendar.set(2008, Calendar.JANUARY, 1)
         minCalendar.set(1924, Calendar.JANUARY, 1)
         datepicker.maxDate = maxCalendar.timeInMillis
         datepicker.minDate = minCalendar.timeInMillis
+        setNextToggle()
     }
+    private fun setNextToggle() {
+        val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
+        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
 
-    /*
-    setNextToggle()
-    */
-    // 성별 선택과 생일 선택이 모두 이뤄졌는지 체크하는 함수.
-    private fun checkNextPageEligibility() {
-        isNextPage = isGenderSelected && isBirthSelected
-        updateNextBtnState()
-    }
-    // '다음'버튼의 활성화 상태를 업데이트하는 함수
-    private fun updateNextBtnState() {
-        binding.btnSignup4Next.isEnabled = isNextPage
-        if (isNextPage) {
-            binding.btnSignup4Next.setOnClickListener{
-                activity.navigateToNextFragment()
-            }
+        if (isGenderSelected && isBirthSelected) {
+            // 모든 조건이 충족되었을 때만 다음 버튼 활성화
+            binding.btnSignup4Next.setTextColor(activeColor)
+            isNextPage = true
         } else {
-            binding.btnSignup4Next.setOnClickListener(null)
+            // 하나라도 충족되지 않으면 비활성화
+            binding.btnSignup4Next.setTextColor(nonActiveColor)
+            isNextPage = false
         }
     }
+
+
     /*
     onDestroyView()
     */

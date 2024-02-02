@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_idpw_title"
-        android:textSize="20sp"
+        android:textSize="32sp"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,9 +36,9 @@
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
         style="@style/TextLabel"
-
+        app:boxStrokeColor="@drawable/selector_input_layout_color"
         app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:hint="@string/signup_hint_id_msg"
+            android:hint= "@string/signup_hint_id_msg"
             android:paddingStart="20dp"
             android:paddingEnd="20dp" />
 
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
 
         app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintVertical_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -90,7 +90,7 @@
 
         style="@style/TextLabel"
         app:endIconMode="password_toggle"
-
+        app:boxStrokeColor="@drawable/selector_input_layout_color"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,25 +110,6 @@
             android:paddingEnd="20dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-    <Button
-        android:id="@+id/btn_signup1_previous"
-
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_previous"
-        android:background="@drawable/btn_ripple_effect"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        />
 
 
     <Button

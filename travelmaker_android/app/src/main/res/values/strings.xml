@@ -6,9 +6,9 @@
     <string name="signup_next">다음</string>
 
     <!-- 회원가입 1 아이디 와 패스워드  -->
-    <string name="signup_idpw_title">회원가입을 진행합니다.\n아이디와 패스워드를 설정 해주세요.</string>
-    <string name="signup_hint_id_msg">아이디를 입력해주세요</string>
-    <string name="signup_hint_pw_msg">비밀번호를 입력해주세요</string>
+    <string name="signup_idpw_title">회원가입을 진행합니다.\n아이디와 패스워드를\n설정 해주세요.</string>
+    <string name="signup_hint_id_msg">아이디</string>
+    <string name="signup_hint_pw_msg">비밀번호</string>
     <string name="signup_id_helper_msg">영문, 숫자 포함 6자리 이상</string>
     <string name="signup_pw_helper_msg">영문, 숫자, 특수문자 포함 8자리 이상</string>
     <string name="signup_label_id">아이디</string>
@@ -16,7 +16,7 @@
     <string name="signup_btn_check_dup_id">중복확인</string>
 
     <!-- 회원가입 2 닉네임 -->
-    <string name="signup_nickname_title">사용하실 닉네임을 설정해주세요.</string>
+    <string name="signup_nickname_title">사용하실 닉네임을\n    설정해주세요.</string>
     <string name="signup_hint_nickname_msg">닉네임을 입력해주세요</string>
     <string name="signup_nickname_helper_msg">프로필에 등록되는 닉네임으로\n이후 변경이 불가합니다.</string>
     <string name="signup_label_nickname">닉네임</string>
@@ -30,7 +30,7 @@
     <string name="signup_success_content">로그인 화면으로 이동합니다.</string>
 
     <!-- 회원가입 4 성별과 생년월일 -->
-    <string name="signup_genderbirth_title">성별과 생년월일을\n     선택해주세요.</string>
+    <string name="signup_genderbirth_title">성별과 생년월일을\n    선택해주세요.</string>
     <string name="signup_genderbirth_hint_msg">생년월일</string>
     <string name="signup_genderbirth_helper_msg">MM/DD/YYYY</string>
     <string name="signup_gender_man">남성</string>
