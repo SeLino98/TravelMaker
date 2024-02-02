@@ -95,7 +95,11 @@ public class MeetingPost {
 
         this.deadline = requestDTO.getDeadline();
         // 기간 변경에 따른 status 변경
-        this.status = !this.deadline.isBefore(LocalDateTime.now());
+        if (this.deadline != null) {
+            this.status = this.deadline.isBefore(LocalDateTime.now());
+        } else {
+            this.status = false;
+        }
 
         this.startDate = requestDTO.getStartDate();
         this.endDate = requestDTO.getEndDate();

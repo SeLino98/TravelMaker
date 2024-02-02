@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.meetingPost.controller;
 
+import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import com.ssafy.gumibom.domain.user.service.UserService;
@@ -31,10 +32,10 @@ public class MeetingPostController {
     }
 
     @Operation(summary = "위치 기반 모임글 리스트 필터링 조회")
-    @GetMapping
-    public ResponseEntity<?> inquiryMeetingPost(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam(defaultValue = "3") Double radius, @RequestParam(defaultValue = "taste,healing,culture,active,picture,nature") List<String> categories) {
+    @PostMapping
+    public ResponseEntity<?> inquiryMeetingPost(@RequestBody FindByGeoRequestDTO requestDTO) {
 
-        return meetingPostService.meetingPostRadius(latitude, longitude, radius, categories);
+        return meetingPostService.meetingPostRadius(requestDTO.getLatitude(), requestDTO.getLongitude(), requestDTO.getRadius(), requestDTO.getCategories());
     }
 
     @Operation(summary = "마커 클릭 시 모임글 상세 조회")
