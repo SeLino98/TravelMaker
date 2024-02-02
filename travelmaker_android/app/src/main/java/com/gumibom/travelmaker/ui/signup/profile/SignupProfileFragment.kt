@@ -114,14 +114,6 @@ class SignupProfileFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-//                imagePickCode -> {
-//                    val selectedImage = data?.data
-//                    binding.ivProfile.setImageURI(selectedImage)
-//                }
-//                cameraRequestCode -> {
-//                    val thumbnail = data?.extras?.get("data") as? Bitmap
-//                    binding.ivProfile.setImageBitmap(thumbnail)
-//                }
                 imagePickCode -> {
                     data?.data?.let { uri ->
                         Glide.with(this)
@@ -154,7 +146,7 @@ class SignupProfileFragment : Fragment() {
 
             if (selectedChip != null) {
                 for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
-                    val selectedChipId = token ///
+                    val selectedChipId = token //
                     val selctedName = group.findViewById<Chip>(selectedChipId)
                     Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChip")
                     Log.d(

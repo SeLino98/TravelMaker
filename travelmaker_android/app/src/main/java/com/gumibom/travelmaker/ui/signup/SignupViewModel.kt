@@ -88,6 +88,13 @@ class SignupViewModel @Inject constructor(
             Log.d(TAG, "saveToUserDTO: ")
         }
     }
+    var isDupNick : Boolean = true
+    fun checkDupNickName(nickName:String){
+        viewModelScope.launch {
+            isDupNick = (checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName))?:true
+
+        }
+    }
     //인호 끝
 
 // 우건
@@ -184,7 +191,7 @@ class SignupViewModel @Inject constructor(
     // 지원
     fun checkId(id: String) {
         viewModelScope.launch {
-        // '중복된 아이디'인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
+        // '중복된 아이디' 인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
             _isDuplicatedId.value = false
         }
     }

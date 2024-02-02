@@ -45,8 +45,14 @@ class SignupNicknameFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         backAndNextNaviBtn()
+        checkDuplicateNickName()
+        signupViewModel.isDupNick
     }
-
+    private fun checkDuplicateNickName(){
+        binding.btnCheckDupNick.setOnClickListener {
+            signupViewModel.checkDupNickName(binding.etSignupNickname.text.toString())
+        }
+    }
     private fun backAndNextNaviBtn(){
         binding.tvSignupNicknameBefore.setOnClickListener {
             activity.navigateToPreviousFragment()

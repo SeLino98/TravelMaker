@@ -13,17 +13,17 @@ class SignupRemoteDataSourceImpl @Inject constructor(
         return signupService.sendPhoneNumber(phoneNumber)
     }
     override suspend fun checkDuplicatedId(id: String): Response<Boolean> {
-        val response = signupService.checkDuplicatedId(id)
-        return response
+
+        return signupService.checkDuplicatedId(id)
 
     }
 
     override suspend fun checkDuplicateNickname(nickname: String): Response<Boolean> {
-        
+        return signupService.checkDuplicatedNickName(nickname)
     }
 
     override suspend fun saveUserData(userInfo: UserRequestDTO): Response<Boolean> {
-
+        return signupService.saveUserInfo(userInfo)
     }
 
     private fun mapper(){

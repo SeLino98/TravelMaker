@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.data.api.signup
 
+import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,6 +20,12 @@ interface SignupService {
 
     @POST("/users/join/fill/check-id-dup")
     fun checkDuplicatedId(@Body id : String) : Response<Boolean>
+
+    @POST("/users/join/fill/check-nick-dup")
+    fun checkDuplicatedNickName(@Body name : String) : Response<Boolean>
+
+    @POST("/users/join/fill/save-user")
+    fun saveUserInfo(@Body userInfo : UserRequestDTO) : Response<Boolean>
 
 
     //아이디와 비밀번호를 입력했을 때 정상적인 유저인지 확인하고 로그인 성공 메시지 발송

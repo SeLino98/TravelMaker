@@ -108,7 +108,7 @@ dependencies {
     implementation platform ('com.google.firebase:firebase-bom:30.1.0') //이거 버전올리면 안됨.
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
-
+    
     // google map
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
