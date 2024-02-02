@@ -13,10 +13,6 @@ import java.util.List;
 @DiscriminatorValue(value = "M")
 public class MeetingPamphlet extends Pamphlet {
 
-    private LocalDateTime createDate;
-    private String title;
-    private int love;
-
     @OneToOne
     @JoinColumn(name = "meetingPamphlet")
     private Meeting meeting;

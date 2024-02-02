@@ -6,6 +6,7 @@ import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Category;
 import jakarta.persistence.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,7 @@ public class PersonalPamphlet extends Pamphlet {
     private User user;
 
     @ElementCollection
-    private List<Category> categories;
-
-    private LocalDateTime createDate;
-    private String title;
-    private int love;
+    private ArrayList<Integer> categories;
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
