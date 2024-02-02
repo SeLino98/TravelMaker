@@ -74,6 +74,7 @@ class PermissionChecker (private val context : Context){
         val alertDialog = ClickEventDialog(context)
         alertDialog.setTitle("권한이 필요합니다.")
         alertDialog.setMessage("설정으로 이동합니다.")
+        alertDialog.setContent("권한이 없으면 앱 이용에 제한이 됩니다.")
         alertDialog.setPositiveBtnTitle("확인")
         alertDialog.setPositiveButtonListener {
             val intent =
@@ -81,7 +82,10 @@ class PermissionChecker (private val context : Context){
             context.startActivity(intent)
             alertDialog.clickDialogDissMiss()
         }
-        alertDialog.setNegativeButton("취소") { dialogInterface, i -> dialogInterface.cancel() }
+        alertDialog.setNegativeBtnTitle("취소")
+        alertDialog.setNegativeButtonListener {
+            alertDialog.clickDialogDissMiss()
+        }
         alertDialog.clickDialogShow()
     }
 

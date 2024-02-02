@@ -13,9 +13,7 @@ class SignupRemoteDataSourceImpl @Inject constructor(
         return signupService.sendPhoneNumber(phoneNumber)
     }
     override suspend fun checkDuplicatedId(id: String): Response<Boolean> {
-
         return signupService.checkDuplicatedId(id)
-
     }
 
     override suspend fun checkDuplicateNickname(nickname: String): Response<Boolean> {

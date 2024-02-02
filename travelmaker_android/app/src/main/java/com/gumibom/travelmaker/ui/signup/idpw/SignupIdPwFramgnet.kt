@@ -136,9 +136,7 @@ class SignupIdPwFramgnet : Fragment() {
     아이디의 중복 검사를 위한... 자식 함수
     */
     private fun isDupId(){
-        val isDupIdBtn = binding.btnSignupId
-
-        isDupIdBtn.setOnClickListener{
+        binding.btnCheckDupId.setOnClickListener{
             val idContents = binding.etSignupId.text.toString()
             signupViewModel.checkId(idContents)
         }

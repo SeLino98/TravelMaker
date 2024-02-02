@@ -16,19 +16,14 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignupNicknameFragment : Fragment(){
-
     private var _binding :FragmentSignupNicknameBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity : SignupActivity
-
     private val signupViewModel : SignupViewModel by viewModels()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
-
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val googleEmail = arguments?.getString("email")
@@ -46,7 +41,12 @@ class SignupNicknameFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         backAndNextNaviBtn()
         checkDuplicateNickName()
-        signupViewModel.isDupNick
+        observeViewModel()
+    }
+    private fun observeViewModel(){
+        signupViewModel.isDupNick.observe(viewLifecycleOwner){
+            binding.tvSignupNicknameNext.isEnabled = !it
+        }
     }
     private fun checkDuplicateNickName(){
         binding.btnCheckDupNick.setOnClickListener {

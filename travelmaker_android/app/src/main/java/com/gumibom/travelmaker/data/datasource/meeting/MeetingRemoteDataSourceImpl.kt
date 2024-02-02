@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.data.datasource.meeting
 
 import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
+import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,4 +16,10 @@ class MeetingRemoteDataSourceImpl @Inject constructor(
     ): Response<MutableList<MarkerPositionResponseDTO>> {
         return meetingService.getMarkerPositions(latitude, longitude, radius)
     }
+
+    override suspend fun getPostDetail(id: Int): Response<MeetingPostDTO> {
+        return meetingService.getPostDetail(id)
+    }
+
+
 }

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -53,21 +54,25 @@ class SignupProfileFragment : Fragment() {
         binding.tvSignupLocationPrevious.setOnClickListener {
             signupActivity.navigateToPreviousFragment()
         }
-        binding.tvSignupLocationNext.setOnClickListener {
-            //완료 버튼 눌렀을 때
-            signupViewModel.saveToUserDTO()
-
-            signupActivity.navigateToNextFragment()
+        binding.tvSignupLocationNext.setOnClickListener {//완료 버튼 눌렀을 때
+            signupViewModel.saveToUserDTO()//DTO 통신
+            //서버에 정상적으로 저장이 되면 ObserViewModel에서 isSignup값이 전환되고 자동으로 페이지가 넘어간다.
         }
     }
     private fun observeViewModel() {
+        signupViewModel.isSignup.observe(viewLifecycleOwner){
+            if (it){//성공했다면? 화면전환
+                signupActivity.navigateToNextFragment()
+            }else{
+                Toast.makeText(activity, "회원가입 실패~!쓰 ", Toast.LENGTH_SHORT).show()
+            }
+        }
 //        signupViewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
 //            Log.d(TAG, "observeViewModel: ${favoriteList.toList()}")
 //        }
         //1. viewModel에서 리스트로 받고 옵저버로 실시간 갱신
         //2. 엘범 플래그는 구지? viewModel로 안빼도 될 듯
         //3. 두 값이 체크 됐을 때 다음버튼 활성화
-
     }
     private fun selectPicture(){
         //+버튼 클릭 시

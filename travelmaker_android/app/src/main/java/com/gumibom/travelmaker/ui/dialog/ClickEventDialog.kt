@@ -54,7 +54,10 @@ class ClickEventDialog(context: Context):AlertDialog.Builder(context){
             dialog.dismiss()
         }
     }
-
+    fun setNegativeBtnTitle(title :String){
+        val btnView : Button = dialog.findViewById(R.id.dialog_content_no)
+        btnView.text= title
+    }
     fun setNegativeButtonListener(listener: () -> Unit) {
         val noButton: Button = dialog.findViewById(R.id.dialog_content_no)
         noButton.setOnClickListener {

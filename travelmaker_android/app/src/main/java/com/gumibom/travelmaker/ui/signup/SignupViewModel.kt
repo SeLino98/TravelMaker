@@ -58,7 +58,7 @@ class SignupViewModel @Inject constructor(
     fun updateFavoriteList(newList: List<String>) {
         _favoriteList.value = newList
     }
-    private var isSignup:Boolean = false;
+
     private lateinit var userInfo:UserRequestDTO
     fun setUserDataToUserDTO(category: Int, userId: String,
                              password: String, email: String,
@@ -80,19 +80,25 @@ class SignupViewModel @Inject constructor(
             belief = belief
         )
     }
+    private val _isSignup = MutableLiveData<Boolean>()
+            val isSignup = _isSignup
+
     fun saveToUserDTO() {
         //여따 LoginRequsetDTO 정보를 다 담아야 됨.
        // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
         viewModelScope.launch {
-            isSignup = saveUserInfoUseCase.saveUserInfo(userInfo) ?: false
+            isSignup.value = saveUserInfoUseCase.saveUserInfo(userInfo) ?: false
             Log.d(TAG, "saveToUserDTO: ")
         }
     }
-    var isDupNick : Boolean = true
+    private val _isDupNick = MutableLiveData<Boolean>()
+    val isDupNick = _isDupNick
+
+
     fun checkDupNickName(nickName:String){
         viewModelScope.launch {
-            isDupNick = (checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName))?:true
-
+            val isDuplicated = checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName)?:false
+            _isDupNick.value = isDuplicated
         }
     }
     //인호 끝
@@ -119,7 +125,7 @@ class SignupViewModel @Inject constructor(
     // 지원
     private val _isDuplicatedId = MutableLiveData<Boolean>()
     val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
-// 인호
+    // 인호
 
     /*
         변수 사용하는 공간 끝
