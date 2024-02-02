@@ -33,6 +33,10 @@ class MainViewModel @Inject constructor(
     var currentLatitude = 0.0
     var currentLongitude = 0.0
 
+    // 초기 찐 내 위치의 위도 경도
+    var initLatitude = 0.0
+    var initLongitude = 0.0
+
     private val _markerList = MutableLiveData<List<MarkerPosition>>()
     val markerList : LiveData<List<MarkerPosition>> = _markerList
 

@@ -66,21 +66,6 @@ class SignupActivity : AppCompatActivity(){
                     Log.d(TAG, "onGranted: onGranted")
                 }
         }
-        permissionCheck.checkPermission()
-//        /* permission check */
-//        if (!permissionCheck.checkPermission(runtimePermissions)) {
-//            permissionCheck.permitted = object : PermissionListener {
-//                override fun onGranted() {
-//                    //퍼미션 획득 성공일때
-//                    startScan()
-//                }
-//            }
-//            permissionCheck.requestPermissionLauncher.launch(runtimePermissions)
-//        } else { //이미 전체 권한이 있는 경우
-//            startScan()
-//        }
-        /* permission check */
-
         googleSignup()
         // 프로그레스바 진행률 설정
         setProgressBar(0)

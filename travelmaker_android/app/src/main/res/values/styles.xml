@@ -21,6 +21,7 @@
         <item name="android:layout_width">68dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/light_gray</item>
     </style>
 
     <style name="Text.Regular" parent="android:TextAppearance">

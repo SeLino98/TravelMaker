@@ -22,13 +22,16 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.chip.Chip
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.DENIED_LOCATION_PERMISSION
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
+import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notifyAll
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "FindMateActivity_싸피"
@@ -59,7 +62,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         observeLivaData()
 
         selectPlace()
-        openMeetingDialog()
+        selectCategory()
     }
 
 
@@ -90,6 +93,9 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             // 권한이 없으면 설정창으로 이동한다.
             permissionChecker.moveToSettings()
         }
+
+        openMeetingDialog()
+
     }
 
     /**
@@ -105,7 +111,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     /**
      * Google Map에 마커를 추가하고 해당 위치로 카메라 전환
      */
-    fun setMarker(location : LatLng, title : String) : Marker {
+    private fun setMarker(location : LatLng, title : String) : Marker {
         val zoomLevel = 15.0f // 줌 레벨을 조정하세요. 값이 클수록 더 가까워집니다.
 
         val marker = mMap.addMarker(MarkerOptions().position(location).title(title))!!
@@ -177,11 +183,14 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateLocation(latitude : Double, longitude : Double) {
-        val location = LatLng(latitude, longitude)
         mainViewModel.currentLatitude = latitude
         mainViewModel.currentLongitude = longitude
-//        mainViewModel.getMarkers(latitude, longitude, 3.0)
-        setMyLocation(location)
+
+        mainViewModel.initLatitude = latitude
+        mainViewModel.initLongitude = longitude
+
+        mainViewModel.getMarkers(latitude, longitude, 3.0)
+//        setMyLocation(location)
     }
 
     private fun observeLivaData() {
@@ -206,13 +215,15 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
                     googleMarker.tag = marker
                 }
             }
-            Log.d(TAG, "observeLivaData: $markerPosition")
         }
         mainViewModel.selectAddress.observe(this) { address ->
             // TODO 여기서 새롭게 받은 address로 서버한테 넘겨서 위치 재갱신 하기
-            Log.d(TAG, "observeLivaData address: $address")
-            // 여기는 Test 용
+            Log.d(TAG, "selectAddress: $address")
             val location = LatLng(address.latitude, address.longitude)
+            mainViewModel.getMarkers(address.latitude, address.longitude, 3.0)
+            mainViewModel.currentLatitude = address.latitude
+            mainViewModel.currentLongitude = address.longitude
+
             setMyLocation(location)
             binding.btnFindMatePlace.text = address.title
         }
@@ -231,8 +242,31 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
      * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
      */
     private fun openMeetingDialog() {
-        mMap.setOnMarkerClickListener {
+        mMap.setOnMarkerClickListener { marker ->
+
+            val markerPosition = marker.tag as MarkerPosition
+            val meetingId = markerPosition.id
+            Log.d(TAG, "openMeetingDialog: $meetingId")
+            
             true
+        }
+    }
+
+    /**
+     * chip을 선택하고 필터링 버튼을 눌렀을 때 필터된 결과만 서버에서 가져옴
+     */
+    private fun selectCategory() {
+        val taste = binding.chipMapTaste
+        val healing = binding.chipMapHealing
+        val culture = binding.chipMapCulture
+        val active = binding.chipMapActive
+        val picture = binding.chipMapPicture
+        val nature = binding.chipMapNature
+
+        val categoryList : List<Chip> = listOf(taste, healing, culture, active, picture, nature)
+
+        binding.ivMapFiltering.setOnClickListener {
+
         }
     }
     companion object {
