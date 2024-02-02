@@ -23,7 +23,7 @@ public class MeetingPostController {
 
     // 모임글 작성
     @Operation(summary = "모임글 작성")
-    @PostMapping
+    @PostMapping("/write")
     public ResponseEntity<?> writeMeetingPost(@RequestBody WriteMeetingPostRequestDTO requestDTO) {
 
 //        meetingPostService.write(requestDTO);
