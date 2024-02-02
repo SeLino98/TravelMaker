@@ -147,11 +147,11 @@ class SignupLocationFragment : Fragment() {
             // 주소를 선택했으면 색깔을 검정색으로 바꾸고 isNextPage => true, viewModel address에 저장
             if (address.isNotEmpty()) {
                 binding.tvSignupLocationNext.setTextColor(activeColor)
-                signupViewModel.selectAddress = address
+//                signupViewModel.selectAddress = address
                 isNextPage = true
             } else {
                 binding.tvSignupLocationNext.setTextColor(notActiveColor)
-                signupViewModel.selectAddress = ""
+//                signupViewModel.selectAddress = ""
                 isNextPage = false
             }
         }

@@ -244,10 +244,18 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun openMeetingDialog() {
         mMap.setOnMarkerClickListener { marker ->
 
+
+            //바텀시트가 열리고 데이터를 받아서 띄운다.
+
             val markerPosition = marker.tag as MarkerPosition
             val meetingId = markerPosition.id
+            //아이디 넘겨서 데이터 받고
+
+            //뿌리기
+
             Log.d(TAG, "openMeetingDialog: $meetingId")
-            
+
+
             true
         }
     }

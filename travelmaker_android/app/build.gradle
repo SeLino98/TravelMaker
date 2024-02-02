@@ -109,8 +109,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
 
-    //사진 편집
-    implementation 'com.github.yalantis:ucrop:2.2.8'
 
     // google map
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
