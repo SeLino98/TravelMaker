@@ -16,6 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class RecordService {
 
+    @Autowired
     private final RecordRepository recordRepository;
 
     @Autowired

@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeetingRepository {
 
-<<<<<<< HEAD
 //    private final EntityManager em;
 //
 //    public void save(Meeting meeting) {
@@ -48,7 +47,7 @@ public class MeetingRepository {
 //        List<Meeting> findByUserId(@Param("userId") Long userId);
 //
 //    }
-=======
+
     private final EntityManager em;
 
     public void save(Meeting meeting) {
@@ -68,5 +67,4 @@ public class MeetingRepository {
     public List<Meeting> findAll() {
         return em.createQuery("select m from Meeting m", Meeting.class).getResultList();
     }
->>>>>>> feature/record
 }
