@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.datasource.signup
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
+import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -16,6 +17,15 @@ class SignupRemoteDataSourceImpl @Inject constructor(
         return response
 
     }
+
+    override suspend fun checkDuplicateNickname(nickname: String): Response<Boolean> {
+        
+    }
+
+    override suspend fun saveUserData(userInfo: UserRequestDTO): Response<Boolean> {
+
+    }
+
     private fun mapper(){
 
     }
