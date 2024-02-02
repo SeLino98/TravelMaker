@@ -19,4 +19,9 @@ interface SignupService {
 
     @POST("/users/join/fill/check-id-dup")
     fun checkDuplicatedId(@Body id : String) : Response<Boolean>
+
+
+    //아이디와 비밀번호를 입력했을 때 정상적인 유저인지 확인하고 로그인 성공 메시지 발송
+
+
 }

@@ -7,10 +7,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
 
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
+import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
+
 import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
+import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
+import com.gumibom.travelmaker.domain.signup.SaveUserInfoUseCase
+
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.ui.common.CommonViewModel
@@ -27,8 +33,11 @@ class SignupViewModel @Inject constructor(
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val sendPhoneNumberUseCase: SendPhoneNumberUseCase,
     private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase,
-    private val getKakaoLocationUseCase: GetKakaoLocationUseCase
+    private val checkDuplicatedNicknameUseCase: CheckDuplicatedNicknameUseCase,
+    private val getKakaoLocationUseCase: GetKakaoLocationUseCase,
+    private val saveUserInfoUseCase :SaveUserInfoUseCase
 ) : ViewModel(), CommonViewModel {
+
     /*
         변수 사용하는 공간 시작
      */
@@ -36,15 +45,53 @@ class SignupViewModel @Inject constructor(
     // 우건
     // 가변형 변수는 바로 아래쪽에 몰아놓기
     var bundle : Bundle? = null
-
     var loginId : String? = null
     var password : String? = null
     var email : String? = null
 
     // 가변형 변수 자리
-    var selectAddress = ""
-
     // 가변형 변수 자리
+
+    //인호
+    private val _favoriteList = MutableLiveData<List<String>>()
+    val favoriteList: LiveData<List<String>> = _favoriteList
+    fun updateFavoriteList(newList: List<String>) {
+        _favoriteList.value = newList
+    }
+    private var isSignup:Boolean = false;
+    private lateinit var userInfo:UserRequestDTO
+    fun setUserDataToUserDTO(category: Int, userId: String,
+                             password: String, email: String,
+                             nickname: String, gender: Boolean,
+                             birth: String, phoneNum: String,
+                             imgURL: String, town: String,
+                             belief: Double) {
+        userInfo = UserRequestDTO(
+            category = category,
+            userId = userId,
+            password = password,
+            email = email,
+            nickname = nickname,
+            gender = gender,
+            birth = birth,
+            phoneNum = phoneNum,
+            imgURL = imgURL,
+            town = town,
+            belief = belief
+        )
+    }
+    fun saveToUserDTO() {
+        //여따 LoginRequsetDTO 정보를 다 담아야 됨.
+       // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
+        viewModelScope.launch {
+            isSignup = saveUserInfoUseCase.saveUserInfo(userInfo) ?: false
+            Log.d(TAG, "saveToUserDTO: ")
+        }
+    }
+    //인호 끝
+
+// 우건
+
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
 
@@ -102,6 +149,7 @@ class SignupViewModel @Inject constructor(
     // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
     fun sendPhoneNumber(phoneNumber : String) {
         viewModelScope.launch {
+
         }
     }
 
@@ -132,15 +180,6 @@ class SignupViewModel @Inject constructor(
     }
     // 우건
 
-    //인호
-    private val _favoriteList = MutableLiveData<List<String>>()
-    val favoriteList: LiveData<List<String>> = _favoriteList
-    fun updateFavoriteList(newList: List<String>) {
-        _favoriteList.value = newList
-    }
-    fun saveToUserDTO() {
-    }
-    //인호 끝
 
     // 지원
     fun checkId(id: String) {
@@ -150,5 +189,5 @@ class SignupViewModel @Inject constructor(
         }
     }
 // 인호
-
 }
+

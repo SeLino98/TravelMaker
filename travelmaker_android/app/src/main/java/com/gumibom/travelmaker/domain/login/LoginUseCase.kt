@@ -11,6 +11,7 @@ import javax.inject.Inject
 class LoginUseCase @Inject constructor(
     private val loginRepositoryImpl: LoginRepository
 ){
+//    NaverLocationRemoteDataSource
     suspend fun login(loginRequestDTO: LoginRequestDTO) : BooleanResponse {
         val response = loginRepositoryImpl.login(loginRequestDTO)
         var booleanResponse = BooleanResponse(false, "")

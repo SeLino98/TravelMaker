@@ -7,9 +7,14 @@ import retrofit2.http.Query
 
 interface GoogleLocationSearchService {
 
+
     @GET("/maps/api/geocode/json")
     suspend fun findGoogleLocationSearch(
         @Query("address") location: String,
         @Query("key") apiKey: String
     ) : Response<GoogleLocationDTO>
+
+
+
+
 }
