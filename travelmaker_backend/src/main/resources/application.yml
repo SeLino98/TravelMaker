@@ -1,9 +1,15 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ENC(P5J7Ioi0OprueUrt3fFv2A==)
-    password: ENC(eCb5NnNqDSeixJJVCqt0Cw==)
-    url: ENC(FfK3luDDW5RcfTf1Y1ANsU5fbfTK71q6ycvpGMufvdnRfihWWrBlpm6NV6l0liIOGAiXlQhyAK5JQJYcYhrKIzWfyKBYBLbB1hNl4kPyA64=)
+  profiles:
+    group:
+      development:
+        - common
+        - rdb_database
+        - port_8080
+---
+spring:
+  config:
+    activate:
+      on-profile: common
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -13,7 +19,24 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+---
+spring:
+  config:
+    activate:
+      on-profile: rdb_database
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ENC(35Ri/9f4Hv2XEb8/ajB5Xw==)
+    password: ENC(c9UeCbXeIgt1eH80thMPuis3icfdciYJnf7n3/cm48k=)
+    url: ENC(CCSipdikBLPbdGrvZudyMLFL+hIKfNrp2t6JGYS57Qlg4/7UFZ5z/kvr+WCb90pOJk5wR0wkKsAl3M74nizbX3KdO7TaHk3tlW5kmGsFOAkJfHDy5cIwycVsbMOqmt3zzHkVHpLTb4eT0AfZJ3VXnDlAocEJPDoBN9J6CYsFN5+EYfng1a53SwZgDgalWjvd7+56tIOY+/6K8XHjF4Ey7Q==)
+---
+spring:
+  config:
+    activate:
+      on-profile: port_8080
+server:
+  port: 8080
+---
 cloud:
   aws:
     s3:
@@ -27,8 +50,9 @@ cloud:
     stack:
       auto: false
 
-coolsms:
-  apikey: ENC(vImbLVrEKhRcpw4V9SDzb65QF75toGAqYFQxP6w65W4)
-  apisecret: ENC(tXtdAdiNRCXm8EPhD0/nuJDzSQ9LvDf72o5Oi3R51zC3YBvwGhs8yS+oJ+A11V9H)
-  fromnumber: ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)
+#coolsms:
+#  apikey: ENC(vImbLVrEKhRcpw4V9SDzb65QF75toGAqYFQxP6w65W4)
+#  apisecret: ENC(tXtdAdiNRCXm8EPhD0/nuJDzSQ9LvDf72o5Oi3R51zC3YBvwGhs8yS+oJ+A11V9H)
+#  fromnumber: ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)
+---
 

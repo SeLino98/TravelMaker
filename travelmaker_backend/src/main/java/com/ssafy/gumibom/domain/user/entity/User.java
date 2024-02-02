@@ -76,10 +76,13 @@ public class User {
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<MeetingPost> meetingPosts;
+<<<<<<< HEAD
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MeetingApplier> meetingAppliers = new ArrayList<>();
+=======
+>>>>>>> feature/record
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MeetingMember> meetingMembers = new ArrayList<>();

@@ -24,7 +24,7 @@ public class MeetingPamphletRepository implements PamphletRepository {
     @Override
     public List<Pamphlet> findByUserId(Long userId) {
 //        List<Meeting> meetings = meetingRepository.findByMemberId(userId);
-        // Pamphlet <-> MeetingPamphlet 상속 관계: pamphlet으로 형변환 해서 리턴 괜찮은지?
+//        // Pamphlet <-> MeetingPamphlet 상속 관계: pamphlet으로 형변환 해서 리턴 괜찮은지?
 //        return meetings.stream().map(o -> (Pamphlet)o.getMeetingPamphlet()).toList();
         return null;
     }

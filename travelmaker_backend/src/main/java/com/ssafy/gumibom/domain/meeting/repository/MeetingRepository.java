@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.meeting.repository;
 
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
+import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeetingRepository {
 
+<<<<<<< HEAD
 //    private final EntityManager em;
 //
 //    public void save(Meeting meeting) {
@@ -46,4 +48,25 @@ public class MeetingRepository {
 //        List<Meeting> findByUserId(@Param("userId") Long userId);
 //
 //    }
+=======
+    private final EntityManager em;
+
+    public void save(Meeting meeting) {
+        em.persist(meeting);
+    }
+
+    /**
+     * 특정 유저의 모임 조회
+     * @param
+     */
+//    public List<Meeting> findByMemberId(Long userId) {
+//        // userRepository 코드로 수정 필요
+//        List<MeetingMember> meetingMemberList = em.find(User.class, userId).getMeetingMemberList();
+//        return meetingMemberList.stream().map(MeetingMember::getMeeting).toList();
+//    }
+
+    public List<Meeting> findAll() {
+        return em.createQuery("select m from Meeting m", Meeting.class).getResultList();
+    }
+>>>>>>> feature/record
 }

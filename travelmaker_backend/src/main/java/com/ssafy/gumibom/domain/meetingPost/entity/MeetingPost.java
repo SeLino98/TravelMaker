@@ -43,9 +43,17 @@ public class MeetingPost {
     private String imgUrlThr;
 
     @JsonIgnore
+<<<<<<< HEAD
     @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
+=======
+    @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL)
+    private List<MeetingApplier> appliers = new ArrayList<>();
+
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "meeting_post", cascade = CascadeType.ALL)
+>>>>>>> feature/record
     @Embedded
     private Position position;
 
