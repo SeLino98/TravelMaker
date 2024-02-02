@@ -7,7 +7,7 @@ class CheckDuplicatedNicknameUseCase @Inject constructor(
     private val repository:SignupRepository
 ){
     suspend fun checkDuplicatedNick(nickname:String):Boolean?{
-        val response = repository.checkDuplicateNickname(nickname)
+        val response = repository.checkDuplicatedNickname(nickname)
         return if (response.isSuccessful){
             response.body()
         }else{

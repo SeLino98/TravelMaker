@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupIdPwFramgnet"
-        android:name="com.gumibom.travelmaker.ui.signup.idpw.SignupIdPwFramgnet"
+        android:name="com.gumibom.travelmaker.ui.signup.idpw.SignupIdPwFragment"
         android:label="SignupIdPwFramgnet" >
         <action
             android:id="@+id/action_signupIdPwFramgnet_to_signupNicknameFragment"
