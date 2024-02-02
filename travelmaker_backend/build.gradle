@@ -35,9 +35,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	//jwt
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.4'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.4'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.4'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 	//문자인증 solapi
 	implementation 'net.nurigo:sdk:4.2.7'
@@ -51,6 +51,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 }
 
 tasks.named('test') {

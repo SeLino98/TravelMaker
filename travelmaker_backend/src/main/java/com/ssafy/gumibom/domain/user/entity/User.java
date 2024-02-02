@@ -12,8 +12,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -21,9 +28,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@EqualsAndHashCode(of = "id")
+public class User{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -60,9 +68,6 @@ public class User {
     @ElementCollection
     private List<Category> categories;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PersonalPamphlet> personalPamphlets;
@@ -73,28 +78,28 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MeetingMember meetingMember;
 
-    //회원가입 시 사용될 생성자
-    @Builder
-    public User(SignupRequestDto signupRequestDto){
-        this.username = signupRequestDto.getUsername();
-        this.password = signupRequestDto.getPassword();
-        this.email = signupRequestDto.getEmail();
-        this.gender = signupRequestDto.getGender();
-        this.phone = signupRequestDto.getPhone();
-        this.nation = signupRequestDto.getNation();
-        this.categories = signupRequestDto.getCategories();
-        this.imgURL = signupRequestDto.getProfileImgURL();
-    }
 
-    //token 생성시 사용될 생성자
-    @Builder
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+//    @Builder
+//    public User(SignupRequestDto signupRequestDto){
+//        this.username = signupRequestDto.getUsername();
+//        this.password = signupRequestDto.getPassword();
+//        this.email = signupRequestDto.getEmail();
+//        this.gender = signupRequestDto.getGender();
+//        this.phone = signupRequestDto.getPhone();
+//        this.nation = signupRequestDto.getNation();
+//        this.categories = signupRequestDto.getCategories();
+//        this.imgURL = signupRequestDto.getProfileImgURL();
+//    }
+//
+//    //token 생성시 사용될 생성자
+//    @Builder
+//    public User(String username, String password, Role role) {
+//        this.username = username;
+//        this.password = password;
+//        this.role = role;
+//    }
 
-    //    public User(String loginId, String password, String nickname, String birth, String phone, boolean gender, List<Category> categories, Nation nation) {
+//    public User(String loginId, String password, String nickname, String birth, String phone, boolean gender, List<Category> categories, Nation nation) {
 //    }
 //
 //    public User(String subject, String password, Collection<? extends GrantedAuthority> authorities) {

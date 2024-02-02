@@ -1,10 +1,4 @@
 spring:
-  security:
-    jwt:
-      header: Authorization
-      secret: ENC(I23+H3zRfczCSQnICE7745gbu1wmyQoTPZ0btiqyFE7lX6ArnKUjSqP5NoyFMP+D)
-      token-validity-in-seconds: 86400
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ENC(P5J7Ioi0OprueUrt3fFv2A==)
@@ -15,7 +9,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
