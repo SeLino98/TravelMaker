@@ -266,7 +266,11 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val categoryList : List<Chip> = listOf(taste, healing, culture, active, picture, nature)
 
         binding.ivMapFiltering.setOnClickListener {
-
+//            for (category in categoryList) {
+//                if (category.fo)
+//            }
+            val tasteCheck = taste.isCheckable
+            Log.d(TAG, "selectCategory: ${tasteCheck}")
         }
     }
     companion object {
