@@ -88,6 +88,13 @@ class SignupViewModel @Inject constructor(
             Log.d(TAG, "saveToUserDTO: ")
         }
     }
+    var isDupNick : Boolean = true
+    fun checkDupNickName(nickName:String){
+        viewModelScope.launch {
+            isDupNick = (checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName))?:true
+
+        }
+    }
     //인호 끝
 
 // 우건
