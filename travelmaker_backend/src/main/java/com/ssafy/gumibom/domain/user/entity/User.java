@@ -84,6 +84,14 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MeetingMember> meetingMembers = new ArrayList<>();
 
+    // Init DB를 위한 테스트용 생성자
+    public User(String username, String password, String nickname, String phone) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.phone = phone;
+    }
+
     // Gender enum 타입 정의
     public enum Gender {
         MALE, FEMALE
