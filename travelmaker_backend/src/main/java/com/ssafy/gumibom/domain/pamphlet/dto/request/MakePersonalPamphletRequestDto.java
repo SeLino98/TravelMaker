@@ -18,6 +18,5 @@ public class MakePersonalPamphletRequestDto {
     @NotBlank
     private String title;
 
-    @NotBlank
     private ArrayList<String> categories;
 }

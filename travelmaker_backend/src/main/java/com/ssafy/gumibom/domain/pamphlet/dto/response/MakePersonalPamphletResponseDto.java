@@ -5,11 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
 @Getter
 public class MakePersonalPamphletResponseDto extends BaseResponseDto {
 
-    private long pamphletId;
+    private Long pamphletId;
 
     public MakePersonalPamphletResponseDto(Boolean isSuccess, String message, Long pamphletId) {
         super(isSuccess, message);

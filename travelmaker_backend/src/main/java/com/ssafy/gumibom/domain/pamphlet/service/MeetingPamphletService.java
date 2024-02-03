@@ -7,9 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MeetingPamphletService extends PamphletService {
+public class MeetingPamphletService {
 
-    @Override
     public void makePamphlet() {
 
     }
