@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PersonalPamphletService extends PamphletService {
 
-    private final PersonalPamphletRepository pamphletRepository;
+    private final PersonalPamphletRepository ppRepository;
 
     @Override
     public void makePamphlet() {
