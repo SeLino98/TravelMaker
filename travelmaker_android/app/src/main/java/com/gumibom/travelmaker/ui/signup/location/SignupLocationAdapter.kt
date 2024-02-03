@@ -15,6 +15,7 @@ import com.gumibom.travelmaker.model.KakaoAddress
 import com.gumibom.travelmaker.model.NaverAddress
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostViewModel
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 
 
@@ -41,10 +42,9 @@ class SignupLocationAdapter(private val context : Context, private val viewModel
                 previousItem = selectItemPosition
 
                 // 만약 넘겨받은 viewModel이 MainViewModel이면
-                if (viewModel is MainViewModel) {
+                if (viewModel is MainViewModel || viewModel is MeetingPostViewModel) {
                     onItemClickListener?.invoke(item)
                 }
-
                 // 클릭한 아이템이 이전에 선택한 아이템과 다르면 선택된 아이템으로 설정하고 배경색 변경
                 if (position != selectItemPosition) {
                     selectItemPosition = position

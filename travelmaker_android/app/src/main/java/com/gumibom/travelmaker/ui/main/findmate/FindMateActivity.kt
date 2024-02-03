@@ -56,7 +56,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         permissionChecker = PermissionChecker(this) // 퍼미션 체커 객체 생성
-        findMateSearchFragment = FindMateSearchFragment()
+        findMateSearchFragment = FindMateSearchFragment(mainViewModel)
 
         googleMapInit()
         getLatLng()

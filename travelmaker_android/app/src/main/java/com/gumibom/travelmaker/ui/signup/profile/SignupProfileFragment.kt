@@ -137,7 +137,7 @@ class SignupProfileFragment : Fragment() {
         }
     }
     private fun selectCategory(){
-        val chipGroup: ChipGroup = binding.chipGroup
+        val chipGroup: ChipGroup = binding.chipGroup1
         Log.d(TAG, "selectCategory:1")
         chipGroup.setOnCheckedStateChangeListener {
                 group, checkId ->

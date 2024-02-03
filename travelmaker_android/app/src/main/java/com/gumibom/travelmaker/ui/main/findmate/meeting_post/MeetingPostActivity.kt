@@ -7,7 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.ActivityMeetingPostBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MeetingPostActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMeetingPostBinding

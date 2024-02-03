@@ -41,3 +41,8 @@ const val NOT_ALLOW_PERMISSION = "위치 권한이 필요합니다."
 const val DENIED_LOCATION_PERMISSION = "위치 권한이 필요합니다. 지도를 종료합니다."
 
 // 카테고리 String
+
+// 캘린더 메시지
+const val NO_DATE = "현재 날짜 이전은 선택할 수 없습니다."
+const val WRONG_DATE = "잘못된 날짜 형식입니다."
+const val BEFORE_DATE = "모임 시작 날짜보다\n이전 날짜를 선택해주세요."

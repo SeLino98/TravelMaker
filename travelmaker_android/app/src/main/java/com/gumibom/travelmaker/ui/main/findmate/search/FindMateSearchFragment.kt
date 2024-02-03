@@ -28,27 +28,24 @@ import com.gumibom.travelmaker.constant.KOREAN_PATTERN
 import com.gumibom.travelmaker.constant.NO_SEARCH_LOCATION
 import com.gumibom.travelmaker.constant.WRONG_INPUT
 import com.gumibom.travelmaker.databinding.DialogMainFindMateSearchBinding
+import com.gumibom.travelmaker.ui.common.CommonViewModel
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.findmate.FindMateActivity
+import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostViewModel
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.location.SignupLocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "FindMateSearchFragment_싸피"
 @AndroidEntryPoint
-class FindMateSearchFragment : DialogFragment() {
+class FindMateSearchFragment(private val commonViewModel: CommonViewModel) : DialogFragment() {
 
     private var _binding: DialogMainFindMateSearchBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel : MainViewModel by activityViewModels()
-    private lateinit var activity : FindMateActivity
+    private val meetingPostViewModel : MeetingPostViewModel by activityViewModels()
     private lateinit var adapter : SignupLocationAdapter
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activity = context as FindMateActivity
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,13 +81,20 @@ class FindMateSearchFragment : DialogFragment() {
         setAdapter()
 
         adapter.setOnItemClickListener { address ->
-            mainViewModel.userSelectAddress(address)
-            dismiss()
+            Log.d(TAG, "onViewCreated: $address")
+            if (commonViewModel is MainViewModel) {
+                mainViewModel.userSelectAddress(address)
+                dismiss()
+            } else if (commonViewModel is MeetingPostViewModel) {
+                meetingPostViewModel.meetingSelectAddress(address)
+                dismiss()
+            }
+
         }
     }
 
     private fun setAdapter() {
-        adapter = SignupLocationAdapter(requireContext(), mainViewModel)
+        adapter = SignupLocationAdapter(requireContext(), commonViewModel)
 
         // 네이버 장소가 갱신된 경우
         mainViewModel.kakaoAddressList.observe(viewLifecycleOwner) { addressList ->
