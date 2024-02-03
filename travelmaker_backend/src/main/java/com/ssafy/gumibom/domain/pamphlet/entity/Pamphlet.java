@@ -20,9 +20,9 @@ public abstract class Pamphlet {
     @Column(name = "pamphlet_id")
     private Long id;
 
-    private String title;
-    private Integer love;
-    private LocalDateTime createTime;
+    protected String title;
+    protected Integer love;
+    protected LocalDateTime createTime;
 
     public abstract void addRecord(Record record);
     public abstract void removeRecord(Record record);

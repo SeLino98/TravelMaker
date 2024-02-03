@@ -5,6 +5,7 @@ import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,19 @@ public class PersonalPamphlet extends Pamphlet {
     private User user;
 
     @ElementCollection
-    private ArrayList<Integer> categories;
+    private ArrayList<String> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
+
+
+    // 연관관계 편의 메서드
+    // 양방향 연결일 때 편하게 메서드로 세팅
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getPersonalPamphlets().add(this);
+    }
 
     @Override
     public void addRecord(Record record) {
@@ -30,5 +40,27 @@ public class PersonalPamphlet extends Pamphlet {
     @Override
     public void removeRecord(Record record) {
         this.personalRecords.remove((PersonalRecord) record);
+    }
+
+    // 팜플렛 제목 및 기본 정보를 세팅하는 함수
+    public void setPamphlet(String title) {
+        this.title = title;
+        this.createTime = LocalDateTime.now();
+        this.love = 0;
+    }
+
+
+    // 생성 메서드
+    // 도메인 모델 패턴
+
+    public static PersonalPamphlet createPersonalPamphlet(User user, String title, String... categories) {
+        PersonalPamphlet pPamphlet = new PersonalPamphlet();
+        pPamphlet.setPamphlet(title);
+        pPamphlet.setUser(user);
+        for(String category: categories) {
+            pPamphlet.categories.add(category);
+        }
+
+        return pPamphlet;
     }
 }
