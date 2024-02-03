@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meeting_post_nav_graph"
+    app:startDestination="@id/meetingPostDateFragment">
+
+    <fragment
+        android:id="@+id/meetingPostDateFragment"
+        android:name="com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostDateFragment"
+        android:label="MeetingPostDateFragment" />
+</navigation>

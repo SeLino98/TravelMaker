@@ -107,7 +107,6 @@
 
     <Button
         android:id="@+id/btn_signup1_next"
-
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

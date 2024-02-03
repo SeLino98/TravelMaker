@@ -72,6 +72,7 @@ class FindMateSearchFragment : DialogFragment() {
         // 다이얼로그의 테마를 설정
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setTitle("Location Search")
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_click_event_backgound)
 
         return dialog
     }
