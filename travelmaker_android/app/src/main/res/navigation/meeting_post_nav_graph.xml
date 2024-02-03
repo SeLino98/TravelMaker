@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/meetingPostDateFragment"
         android:name="com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostDateFragment"
-        android:label="MeetingPostDateFragment" />
+        android:label="MeetingPostDateFragment" >
+        <action
+            android:id="@+id/action_meetingPostDateFragment_to_meetingPostPictureFragment"
+            app:destination="@id/meetingPostPictureFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/meetingPostPictureFragment"
+        android:name="com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostPictureFragment"
+        android:label="MeetingPostPictureFragment" />
 </navigation>

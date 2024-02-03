@@ -32,7 +32,7 @@ class ApplicationClass : Application(){
 
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
 
-        const val BASE_URL = "http://192.168.100.94:8080"
+        const val BASE_URL = "http://i10d202.p.ssafy.io:8080"
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"
         const val KAKAO_LOCATION_SEARCH_URL = "https://dapi.kakao.com"

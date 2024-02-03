@@ -49,6 +49,7 @@
     <string name="sign_chip_picture">사진</string>
     <string name="sign_chip_culture">문화</string>
     <string name="sign_chip_taste">맛집</string>
+    <string name="sign_chip_shopping">쇼핑</string>
     <string name="signup_phone_title">휴대전화 번호를 입력하세요.</string>
     <string name="signup_hint_phone_number">전화번호</string>
     <string name="signup_button_number">인증 요청</string>
@@ -66,6 +67,8 @@
     <string name="meeting_post_description">날짜, 시간 아이콘 클릭으로 날짜를 정해주세요.</string>
     <string name="meeting_picture_title">사진을 골라주세요.</string>
     <string name="meeting_picture_description">사진은 최대 3장 선택할 수 있어요.</string>
+    <string name="meeting_category_title">카테고리를 골라주세요.</string>
+    <string name="meeting_post_member">모임 인원을 설정해주세요.</string>
     <!-- END -->
     <!-- 회원가입 성공메시지 -->
 </resources>
