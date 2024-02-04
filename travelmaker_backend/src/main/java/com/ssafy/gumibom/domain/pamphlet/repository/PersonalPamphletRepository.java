@@ -43,6 +43,9 @@ public class PersonalPamphletRepository {
     }
 
     public List<PersonalPamphlet> findAll() {
-        return em.createQuery("select pp from PersonalPamphlet pp ", PersonalPamphlet.class).getResultList();
+        return em.createQuery(
+                "select pp from PersonalPamphlet pp " +
+                        "join fetch pp.user u "
+                , PersonalPamphlet.class).getResultList();
     }
 }

@@ -40,7 +40,7 @@ public class PersonalPamphletController {
 
     @Operation(summary = "특정 사용자의 팜플렛을 제외한 모든 개인 팜플렛 조회")
     @GetMapping(value = "v3/{userId}")
-    public List<PersonalPamphlet> selectAllPersonalPamphlet(@PathVariable("userId") Long userId) {
+    public List<PersonalPamphletDto> selectAllPersonalPamphlet(@PathVariable("userId") Long userId) {
         return pPamphletService.selectAllPamphlet(userId);
     }
 }

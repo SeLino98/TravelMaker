@@ -48,7 +48,7 @@ public class PersonalPamphletService {
     }
 
     // 사용자의 개인 팜플렛을 제외한 모든 개인 팜플렛 조회
-    public List<PersonalPamphlet> selectAllPamphlet(Long userId) {
+    public List<PersonalPamphletDto> selectAllPamphlet(Long userId) {
         List<PersonalPamphlet> myPersonalPamphlet = pPamphletRepository.findByUserId(userId);
         List<PersonalPamphlet> allPersonalPamphlet = pPamphletRepository.findAll();
 
@@ -56,6 +56,10 @@ public class PersonalPamphletService {
             allPersonalPamphlet.remove(myPamphlet);
         }
 
-        return allPersonalPamphlet;
+        List<PersonalPamphletDto> allPersonPamphletDto = allPersonalPamphlet.stream()
+                .map(p -> new PersonalPamphletDto(p))
+                .collect(Collectors.toList());
+
+        return allPersonPamphletDto;
     }
 }
