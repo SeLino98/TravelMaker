@@ -28,7 +28,7 @@ public class PersonalPamphletController {
 
     @Operation(summary = "특정 개인 팜플렛 조회")
     @GetMapping(value = "v1/{pamphletId}")
-    public PersonalPamphlet selectPersonalPamphletById(@PathVariable("pamphletId") Long pamphletId) {
+    public PersonalPamphletDto selectPersonalPamphletById(@PathVariable("pamphletId") Long pamphletId) {
         return pPamphletService.selectPamphletById(pamphletId);
     }
 

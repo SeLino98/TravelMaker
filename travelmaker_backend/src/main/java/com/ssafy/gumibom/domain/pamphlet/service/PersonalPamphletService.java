@@ -33,8 +33,9 @@ public class PersonalPamphletService {
     }
 
     // 팜플렛 아이디로 개인 팜플렛 조회
-    public PersonalPamphlet selectPamphletById(Long pamphletId) {
-        return pPamphletRepository.findByPamphletId(pamphletId);
+    public PersonalPamphletDto selectPamphletById(Long pamphletId) {
+        PersonalPamphlet pamphlet = pPamphletRepository.findByPamphletId(pamphletId);
+        return new PersonalPamphletDto(pamphlet);
     }
 
     // 유저 아이디로 개인 팜플렛 목록 조회

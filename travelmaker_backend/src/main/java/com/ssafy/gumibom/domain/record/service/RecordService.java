@@ -1,5 +1,10 @@
 package com.ssafy.gumibom.domain.record.service;
 
+import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
+import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
+import com.ssafy.gumibom.domain.pamphlet.service.PersonalPamphletService;
+import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
+import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.repository.RecordRepository;
 import com.ssafy.gumibom.global.util.S3Uploader;
@@ -16,29 +21,29 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class RecordService {
 
-    @Autowired
     private final RecordRepository recordRepository;
+    private final PersonalPamphletRepository pPamphletRepository;
 
     @Autowired
     private S3Uploader s3Uploader;
 
+    // 개인 팜플렛에 개인 기록 저장
     @Transactional
-    public Long makeRecord(MultipartFile video, MultipartFile image, Record record) throws IOException {
+    public Long makePersonalRecord(MultipartFile image, MultipartFile video, SavePersonalRecordRequestDto dto) throws IOException {
 
-        // 비디오 파일이 넘어온다면 -> S3에 업로드 후 record에 비디오 저장
-        if(video != null) {
-            String storedVideoFileName = s3Uploader.uploadFileToS3(video, "videos");
-            record.setVideo(storedVideoFileName);
-        }
-        // 이미지 파일이 넘어온다면 -> S3에 업로드 후 record에 이미지 저장
-        if(image != null) {
-            String storedImageFileName = s3Uploader.uploadFileToS3(image, "images");
-            record.setImage(storedImageFileName);
-        }
+        PersonalPamphlet pPamphlet = pPamphletRepository.findByPamphletId(dto.getPamphletId());
+        String title = dto.getTitle();
+        String imgUrl = "";
+        String videoUrl = "";
+        String text = dto.getText();
 
-        recordRepository.save(record);
+        if(image!=null) imgUrl = uploadImage(image);
+        if(video!=null) videoUrl = uploadVideo(video);
 
-        return record.getId();
+        PersonalRecord pRecord = PersonalRecord.createPersonalRecord(title, imgUrl, videoUrl, text, pPamphlet);
+        recordRepository.save(pRecord);
+
+        return pRecord.getId();
     }
 
     // S3 이미지 업로드 테스트용 함수
