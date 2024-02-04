@@ -64,7 +64,7 @@ class SignupProfileFragment : Fragment() {
     }
     private fun observeViewModel() {
         signupViewModel.isSignup.observe(viewLifecycleOwner){
-            if (it){//성공했다면? 화면전환
+            if (it.isSuccess){//성공했다면? 화면전환
                 signupActivity.navigateToNextFragment()
             }else{
                 Toast.makeText(activity, "회원가입 실패~!쓰 ", Toast.LENGTH_SHORT).show()

@@ -129,7 +129,7 @@ class SignupIdPwFragment : Fragment() {
     2. 중복된 아이디 입니다. => Toast
     */
     private fun isDupId(){
-        binding.btnCheckDupId.setOnClickListener{
+        binding.btnSignupId.setOnClickListener{
             val idContents = binding.etSignupId.text.toString()
             signupViewModel.checkId(idContents)
         }
