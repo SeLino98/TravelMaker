@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFindMateDetailFragment"
-        android:name="com.gumibom.travelmaker.ui.main.findmate.MainFindMateDetailFragment"
+        android:name="com.gumibom.travelmaker.ui.main.findmate.bottomsheet.MainFindMateDetailFragment"
         android:label="fragment_main_find_mate_detail"
         tools:layout="@layout/fragment_main_find_mate_detail" />
     <fragment

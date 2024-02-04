@@ -36,12 +36,9 @@ import dagger.hilt.android.AndroidEntryPoint
 private const val TAG = "SignupLocationFragment_싸피"
 @AndroidEntryPoint
 class SignupLocationFragment : Fragment() {
-
     private var _binding : FragmentSignupLocationBinding? = null
     private val binding get() = _binding!!
-
     private val signupViewModel : SignupViewModel by activityViewModels()
-
     private lateinit var adapter : SignupLocationAdapter
     private lateinit var activity : SignupActivity
     private var isNextPage = false // 다음 페이지로 넘어갈지 말지 결정하는 변수

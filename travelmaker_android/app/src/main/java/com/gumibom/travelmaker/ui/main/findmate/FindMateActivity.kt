@@ -271,9 +271,12 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             val markerPosition = marker.tag as MarkerPosition
             val meetingId = markerPosition.id
             //아이디 넘겨서 데이터 받고
-
+            mainViewModel.getPostDetail(meetingId)
             //뿌리기
+            mainViewModel.postDTO.observe(this){
+                //
 
+            }
             Log.d(TAG, "openMeetingDialog: $meetingId")
 
 

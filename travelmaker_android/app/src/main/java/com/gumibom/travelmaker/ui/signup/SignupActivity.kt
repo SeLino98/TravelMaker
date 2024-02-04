@@ -66,7 +66,7 @@ class SignupActivity : AppCompatActivity(){
                     Log.d(TAG, "onGranted: onGranted")
                 }
         }
-        googleSignup()
+//        googleSignup()
         // 프로그레스바 진행률 설정
         setProgressBar(0)
     }

@@ -25,16 +25,19 @@ private const val TAG = "SignupNicknameFramgnet"
 @AndroidEntryPoint
 class SignupNicknameFragment : Fragment(){
 
+
     private lateinit var activity : SignupActivity
+
+    private var isNextPage = true
+
     private var _binding :FragmentSignupNicknameBinding? = null
     private val binding get() = _binding!!
-    private var isNextPage = true
+
     private val signupViewModel : SignupViewModel by viewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val googleEmail = arguments?.getString("email")
@@ -54,7 +57,12 @@ class SignupNicknameFragment : Fragment(){
         backAndNextNaviBtn()
 
         checkDuplicateNickName()
-        signupViewModel.isDupNick
+        observeViewModel()
+    }
+    private fun observeViewModel(){
+        signupViewModel.isDupNick.observe(viewLifecycleOwner){
+            binding.btnSignup2Next.isEnabled = it.isSuccess
+        }
     }
     private fun checkDuplicateNickName(){
         binding.btnSignupNickname.setOnClickListener {

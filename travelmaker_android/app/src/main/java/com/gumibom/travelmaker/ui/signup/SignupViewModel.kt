@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
@@ -60,7 +61,7 @@ class SignupViewModel @Inject constructor(
     fun updateFavoriteList(newList: List<String>) {
         _favoriteList.value = newList
     }
-    private var isSignup:Boolean = false;
+
     private lateinit var userInfo:UserRequestDTO
     fun setUserDataToUserDTO(category: Int, userId: String,
                              password: String, email: String,
@@ -82,19 +83,25 @@ class SignupViewModel @Inject constructor(
             belief = belief
         )
     }
+    private val _isSignup = MutableLiveData<IsSuccessResponseDTO>()
+            val isSignup = _isSignup
+
     fun saveToUserDTO() {
         //여따 LoginRequsetDTO 정보를 다 담아야 됨.
        // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
         viewModelScope.launch {
-            isSignup = saveUserInfoUseCase.saveUserInfo(userInfo) ?: false
+            isSignup.value = saveUserInfoUseCase.saveUserInfo(userInfo)
             Log.d(TAG, "saveToUserDTO: ")
         }
     }
-    var isDupNick : Boolean = true
+    private val _isDupNick = MutableLiveData<IsSuccessResponseDTO>()
+    val isDupNick:LiveData<IsSuccessResponseDTO> = _isDupNick
+
+
     fun checkDupNickName(nickName:String){
         viewModelScope.launch {
-            isDupNick = (checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName))?:true
-
+            val isDuplicated = checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName)
+            _isDupNick.value = isDuplicated!!
         }
     }
     //인호 끝

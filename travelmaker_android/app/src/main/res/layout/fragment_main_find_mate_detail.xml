@@ -9,7 +9,7 @@
     app:behavior_hideable="false"
     app:behavior_peekHeight="100dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    tools:context=".ui.main.findmate.MainFindMateDetailFragment">
+    tools:context=".ui.main.findmate.bottomsheet.MainFindMateDetailFragment">
         <!-- Drag handle for accessibility -->
         <com.google.android.material.bottomsheet.BottomSheetDragHandleView
             android:id="@+id/drag_handle"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_place"
             android:layout_width="142dp"
             android:layout_height="142dp"
             android:background="@drawable/ic_empty_profile_circle"
@@ -175,7 +175,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rc_chip_list"
             android:layout_width="409dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
@@ -190,7 +190,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/rc_chip_list"
             tools:itemCount="1"
             tools:listitem="@layout/item_bottomsheet_image" />
 
@@ -223,7 +223,7 @@
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="41dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="@+id/rc_chip_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
