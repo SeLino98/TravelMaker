@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.BEFORE_DATE
+import com.gumibom.travelmaker.constant.NOT_ENOUGH_INPUT
 import com.gumibom.travelmaker.constant.WRONG_DATE
 import com.gumibom.travelmaker.databinding.FragmentMeetingPostDateBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
@@ -55,8 +56,8 @@ class MeetingPostDateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        datePickerHelper = DatePickerHelper(requireContext())
-        timePickerHelper = TimePickerHelper(requireContext())
+        datePickerHelper = DatePickerHelper(requireActivity())
+        timePickerHelper = TimePickerHelper(requireActivity())
         findMateSearchFragment = FindMateSearchFragment(meetingPostViewModel)
 
         moveNextFragment()
@@ -78,7 +79,16 @@ class MeetingPostDateFragment : Fragment() {
      */
     private fun moveNextFragment() {
         binding.btnMeetingPostNext.setOnClickListener {
-            activity.navigateToNextFragment()
+            val startDate = binding.tvMeetingStartDate.text.toString()
+            val deadLineDate = binding.tvMeetingDeadlineDate.text.toString()
+            val deadLineTime = binding.tvMeetingDeadlineTime.text.toString()
+            val meetingPlace = binding.tvMeetingPostPlace.text.toString()
+
+            if (startDate.isNotEmpty() && deadLineDate.isNotEmpty() && deadLineTime.isNotEmpty() && !meetingPlace.isNullOrEmpty()) {
+                activity.navigateToNextFragment()
+            } else {
+                Toast.makeText(requireContext(), NOT_ENOUGH_INPUT, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -86,7 +96,7 @@ class MeetingPostDateFragment : Fragment() {
      * 달력 아이콘 클릭 시 datePicker가 나오는 함수
      */
     private fun showDatePicker() {
-        binding.ivMeetingPostDate.setOnClickListener {
+        binding.tvMeetingStartDate.setOnClickListener {
             datePickerHelper.pickDate { dateString ->
                 // 빈 String이 아니면 text 추가
                 if (dateString.isNotEmpty()){
@@ -95,7 +105,7 @@ class MeetingPostDateFragment : Fragment() {
             }
         }
 
-        binding.ivMeetingPostDeadline.setOnClickListener {
+        binding.tvMeetingDeadlineDate.setOnClickListener {
             datePickerHelper.pickDate { dateString ->
                 // 빈 String이 아니면 text 추가
                 if (dateString.isNotEmpty()){
@@ -117,7 +127,7 @@ class MeetingPostDateFragment : Fragment() {
      */
     @SuppressLint("SetTextI18n")
     private fun showTimePicker() {
-        binding.ivMeetingPostDeadlineClock.setOnClickListener {
+        binding.tvMeetingDeadlineTime.setOnClickListener {
             timePickerHelper.pickTime{ hour, minute ->
                 // 12보다 크면 오후
                 if (hour >= 12) {

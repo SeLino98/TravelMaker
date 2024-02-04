@@ -34,13 +34,12 @@
         android:id="@+id/rv_meeting_post_picture"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_meeting_post_picture_description"
-        tools:listitem="@layout/item_meeting_post_picture"
-        />
+        tools:listitem="@layout/item_meeting_post_picture" />
 
     <TextView
         android:id="@+id/tv_meeting_post_content_title"

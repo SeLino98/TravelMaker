@@ -246,6 +246,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             setMyLocation(location)
             binding.btnFindMatePlace.text = address.title
         }
+
+
     }
 
     /**

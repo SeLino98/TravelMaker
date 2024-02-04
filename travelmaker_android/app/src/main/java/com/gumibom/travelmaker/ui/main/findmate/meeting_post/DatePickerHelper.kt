@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.gumibom.travelmaker.constant.NO_DATE
 import java.text.SimpleDateFormat
@@ -12,7 +13,7 @@ import java.util.Date
 import java.util.Locale
 
 private const val TAG = "DatePickerHelper_싸피"
-class DatePickerHelper(private val context : Context) {
+class DatePickerHelper(private val activity : FragmentActivity) {
     /**
      * DatePicker 생성 함수
      */
@@ -23,7 +24,11 @@ class DatePickerHelper(private val context : Context) {
         builder.setSelection(today.timeInMillis)
 
         val datePicker = builder.build()
-        datePicker.show((context as AppCompatActivity).supportFragmentManager, datePicker.toString())
+
+
+        datePicker.show(activity.supportFragmentManager, datePicker.toString())
+
+
 
         datePicker.addOnPositiveButtonClickListener { selectedDate ->
 
@@ -35,7 +40,7 @@ class DatePickerHelper(private val context : Context) {
                 현재 날짜보다 과거를 선택하면 선택을 할 수 없다.
              */
             if (!selectedCalendar.after(today) || selectedCalendar.equals(today)) {
-                Toast.makeText(context, NO_DATE, Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, NO_DATE, Toast.LENGTH_SHORT).show()
                 listener("")
             } else {
                 val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)

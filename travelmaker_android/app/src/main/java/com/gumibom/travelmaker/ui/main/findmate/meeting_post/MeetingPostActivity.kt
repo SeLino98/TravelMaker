@@ -31,7 +31,7 @@ class MeetingPostActivity : AppCompatActivity() {
     fun navigateToNextFragment() {
         when(navController.currentDestination?.id){
             R.id.meetingPostDateFragment-> navController.navigate(R.id.action_meetingPostDateFragment_to_meetingPostPictureFragment)
-            R.id.meetingPostPictureFragment->navController.navigate(R.id.action_signupNicknameFragment_to_signupLocationFragment)
+            R.id.meetingPostPictureFragment->navController.navigate(R.id.action_meetingPostPictureFragment_to_meetingPostCategoryFragment)
 
         }
     }

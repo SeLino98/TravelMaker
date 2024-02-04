@@ -69,8 +69,6 @@ class SignupGenderBirthdayFragment : Fragment(){
         btnSignupNext.setOnClickListener {
             if (isNextPage) {
                 activity.navigateToNextFragment()
-            } else {
-
             }
         }
     }
