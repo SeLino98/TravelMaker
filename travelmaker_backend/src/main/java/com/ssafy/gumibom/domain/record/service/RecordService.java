@@ -23,7 +23,7 @@ public class RecordService {
     private S3Uploader s3Uploader;
 
     @Transactional
-    public Long uploadRecord(MultipartFile video, MultipartFile image, Record record) throws IOException {
+    public Long makeRecord(MultipartFile video, MultipartFile image, Record record) throws IOException {
 
         // 비디오 파일이 넘어온다면 -> S3에 업로드 후 record에 비디오 저장
         if(video != null) {

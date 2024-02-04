@@ -19,12 +19,30 @@ public class PersonalPamphletRepository {
         return pPamphlet.getId();
     }
 
-    public List<Pamphlet> findByUserId(Long id) {
-        return em.createQuery("select pp from PersonalPamphlet pp " +
-                "where pp.user.id = id", Pamphlet.class).getResultList();
+    public PersonalPamphlet findByPamphletId(Long id) {
+//        return em.createQuery(
+//                "select pp from PersonalPamphlet pp "+
+//                        "join fetch pp.user "+
+//                        "join fetch pp.title "+
+//                        "join fetch pp.love "+
+//                        "join fetch pp.createTime "+
+//                        "join fetch pp.personalRecords ppr", PersonalPamphlet.class
+//        )
+//                .getResultList();
+        return em.find(PersonalPamphlet.class, id);
     }
 
-    public List<Pamphlet> findAll() {
-        return em.createQuery("select pp from PersonalPamphlet pp ", Pamphlet.class).getResultList();
+    public List<PersonalPamphlet> findByUserId(Long id) {
+        return em.createQuery(
+                "select pp from PersonalPamphlet pp " +
+                        "join fetch pp.user u " +
+                "where u.id = :id "
+                        , PersonalPamphlet.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    public List<PersonalPamphlet> findAll() {
+        return em.createQuery("select pp from PersonalPamphlet pp ", PersonalPamphlet.class).getResultList();
     }
 }
