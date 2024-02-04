@@ -45,6 +45,8 @@ class PermissionChecker (private val context : Context){
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.CAMERA,
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
         )
         if (checker.checkPermission(runtimePermissions)) {
             checker.requestPermissionLauncher.launch(runtimePermissions)

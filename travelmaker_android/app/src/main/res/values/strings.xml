@@ -64,7 +64,7 @@
     <string name="meeting_post_title">모임 생성</string>
     <string name="select_start_date">모임 시작 날짜를 선택해주세요.</string>
     <string name="select_deadline_day">모집 마감 날짜를 선택해주세요.</string>
-    <string name="meeting_post_description">날짜, 시간 아이콘 클릭으로 날짜를 정해주세요.</string>
+    <string name="meeting_post_description">장소는 아이콘, 날짜는 박스를 클릭해주세요.</string>
     <string name="meeting_picture_title">사진을 골라주세요.</string>
     <string name="meeting_picture_description">사진은 최대 3장 선택할 수 있어요.</string>
     <string name="meeting_category_title">카테고리를 골라주세요.</string>

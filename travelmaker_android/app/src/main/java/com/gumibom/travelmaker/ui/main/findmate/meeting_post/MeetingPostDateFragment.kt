@@ -66,6 +66,8 @@ class MeetingPostDateFragment : Fragment() {
         showTimePicker()
         selectMeetingLocation()
         observeLiveData()
+
+        // TODO 데이터 viewModel에 담기
     }
 
     private fun observeLiveData() {
@@ -127,7 +129,7 @@ class MeetingPostDateFragment : Fragment() {
      */
     @SuppressLint("SetTextI18n")
     private fun showTimePicker() {
-        binding.tvMeetingDeadlineTime.setOnClickListener {
+        binding.tvMeetingDeadlineClock.setOnClickListener {
             timePickerHelper.pickTime{ hour, minute ->
                 // 12보다 크면 오후
                 if (hour >= 12) {
