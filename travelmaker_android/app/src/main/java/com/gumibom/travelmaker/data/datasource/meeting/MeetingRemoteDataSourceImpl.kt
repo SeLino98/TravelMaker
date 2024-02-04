@@ -17,7 +17,7 @@ class MeetingRemoteDataSourceImpl @Inject constructor(
         return meetingService.getMarkerPositions(latitude, longitude, radius)
     }
 
-    override suspend fun getPostDetail(id: Int): Response<MeetingPostDTO> {
+    override suspend fun getPostDetail(id: Long): Response<MeetingPostDTO> {
         return meetingService.getPostDetail(id)
     }
 

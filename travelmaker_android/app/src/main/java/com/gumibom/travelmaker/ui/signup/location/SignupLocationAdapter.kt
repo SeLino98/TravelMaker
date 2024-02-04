@@ -3,7 +3,6 @@ package com.gumibom.travelmaker.ui.signup.location
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
@@ -19,7 +18,8 @@ import com.gumibom.travelmaker.ui.signup.SignupViewModel
 
 
 private const val TAG = "SignupLocationAdapter_싸피"
-class SignupLocationAdapter(private val context : Context, private val viewModel : CommonViewModel) : ListAdapter<Address, SignupLocationAdapter.SignupLocationViewHolder>(SignupLocationDiffUtil()) {
+class SignupLocationAdapter(private val context : Context, private val viewModel : CommonViewModel)
+    : ListAdapter<Address, SignupLocationAdapter.SignupLocationViewHolder>(SignupLocationDiffUtil()) {
 
     // 클릭한 아이템의 position을 갱신하기 위한 변수
     private var selectItemPosition = -1
@@ -37,7 +37,7 @@ class SignupLocationAdapter(private val context : Context, private val viewModel
             val selectColor = ContextCompat.getColor(context, R.color.gray_a25)
 
             binding.itemLocationLayout.setOnClickListener {
-                
+
                 previousItem = selectItemPosition
 
                 // 만약 넘겨받은 viewModel이 MainViewModel이면
@@ -53,7 +53,7 @@ class SignupLocationAdapter(private val context : Context, private val viewModel
                     notifyItemChanged(previousItem)
                     notifyItemChanged(position)
 
-                    
+
                     // 만약 넘겨받은 viewModel이 SignupViewModel이면
                     if (viewModel is SignupViewModel) {
                         // 선택한 아이템의 주소를 ViewModel에 저장
@@ -74,6 +74,7 @@ class SignupLocationAdapter(private val context : Context, private val viewModel
 
                 Log.d(TAG, "bind position: $position")
                 Log.d(TAG, "bind selectPosition: $selectItemPosition")
+//                Log.d(TAG, "bind: ${viewModel.address}")
             }
 
             // 배경색을 설정합니다. 선택된 아이템이면 다른 색으로 설정합니다.

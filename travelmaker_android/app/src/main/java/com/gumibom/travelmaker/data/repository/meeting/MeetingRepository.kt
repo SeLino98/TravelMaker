@@ -6,7 +6,7 @@ import retrofit2.Response
 
 interface MeetingRepository {
 
-    suspend fun getPostDetail(id:Int):Response<MeetingPostDTO>
+    suspend fun getPostDetail(id:Long):Response<MeetingPostDTO>
 
     suspend fun getMarkerPositions(latitude : Double
                                    , longitude : Double, radius : Double)

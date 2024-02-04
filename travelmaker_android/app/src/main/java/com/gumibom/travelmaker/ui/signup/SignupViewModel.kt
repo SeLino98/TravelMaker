@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
@@ -80,25 +81,25 @@ class SignupViewModel @Inject constructor(
             belief = belief
         )
     }
-    private val _isSignup = MutableLiveData<Boolean>()
+    private val _isSignup = MutableLiveData<IsSuccessResponseDTO>()
             val isSignup = _isSignup
 
     fun saveToUserDTO() {
         //여따 LoginRequsetDTO 정보를 다 담아야 됨.
        // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
         viewModelScope.launch {
-            isSignup.value = saveUserInfoUseCase.saveUserInfo(userInfo) ?: false
+            isSignup.value = saveUserInfoUseCase.saveUserInfo(userInfo)
             Log.d(TAG, "saveToUserDTO: ")
         }
     }
-    private val _isDupNick = MutableLiveData<Boolean>()
-    val isDupNick = _isDupNick
+    private val _isDupNick = MutableLiveData<IsSuccessResponseDTO>()
+    val isDupNick:LiveData<IsSuccessResponseDTO> = _isDupNick
 
 
     fun checkDupNickName(nickName:String){
         viewModelScope.launch {
-            val isDuplicated = checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName)?:false
-            _isDupNick.value = isDuplicated
+            val isDuplicated = checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName)
+            _isDupNick.value = isDuplicated!!
         }
     }
     //인호 끝

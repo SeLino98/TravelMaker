@@ -1,4 +1,4 @@
-package com.gumibom.travelmaker.ui.main.findmate
+package com.gumibom.travelmaker.ui.main.findmate.bottomsheet
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HALF_EXPANDED
@@ -16,6 +17,7 @@ import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.FragmentMainFindMateDetailBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,6 +26,9 @@ class MainFindMateDetailFragment : BottomSheetDialogFragment() {
     private var _binding : FragmentMainFindMateDetailBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity : MainActivity
+    private val viewModel : MainViewModel by activityViewModels()
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as MainActivity
@@ -37,11 +42,19 @@ class MainFindMateDetailFragment : BottomSheetDialogFragment() {
         _binding = FragmentMainFindMateDetailBinding.inflate(inflater,container,false)
         return binding.root
     }
+    private fun setBottomSheet(){
+//        val postDetail =
+//        val imageUrls = getImageUrls(postDetail)
+//        val adapter = ImageAdapter(imageUrls)
+//        recyclerView.adapter = adapter //
 
+        //chhip
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setBottomSheet()
     }
+
     companion object {
         const val TAG = "ModalBottomSheet"
     }
@@ -50,8 +63,6 @@ class MainFindMateDetailFragment : BottomSheetDialogFragment() {
         _binding= null
     }
     override fun onDestroy() {
-
         super.onDestroy()
-
     }
 }

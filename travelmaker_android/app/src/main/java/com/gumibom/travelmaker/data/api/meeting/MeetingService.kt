@@ -4,6 +4,7 @@ import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MeetingService {
@@ -16,7 +17,7 @@ interface MeetingService {
 
     @GET("/meeting-post")
     suspend fun getPostDetail(
-        @Query("id") id : Int
+        @Path("meetingPostId") id : Long
     ) : Response<MeetingPostDTO>
 
 

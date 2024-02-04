@@ -13,4 +13,5 @@ class SignupLocationDiffUtil : DiffUtil.ItemCallback<Address>() {
     override fun areContentsTheSame(oldItem: Address, newItem: Address): Boolean {
         return oldItem == newItem
     }
+
 }

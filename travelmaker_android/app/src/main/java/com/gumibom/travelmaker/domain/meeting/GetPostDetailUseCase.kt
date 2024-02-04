@@ -13,16 +13,15 @@ class GetPostDetailUseCase @Inject constructor(
     // 바텀 네비게이션에 있는 정보들을 뿌려주는 역할
     // DTO들로 받은 데이터들을 Model로 변환하고 return시킨다.
     // ViewModel에서 사용ㄷ회어허ㅏㄴ다 ㄴ알허 라ㅣ호
-    suspend fun getPostDetail(postId:Int):Boolean {
+    suspend fun getPostDetail(postId:Long):PostDetail {
         val response = meetingRepositoryImpl.getPostDetail(postId)
         if (response.isSuccessful) {
             val body = response.body()
             if (body != null) {
-                convertAddressModel(body)
-                return true
+                return convertAddressModel(body)
             }
         }
-        return false
+        return convertAddressModel(MeetingPostDTO())
     }
     private fun convertAddressModel(body : MeetingPostDTO) : PostDetail{
         return PostDetail(

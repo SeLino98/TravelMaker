@@ -9,11 +9,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
+import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
+import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.MarkerPosition
+import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,6 +28,9 @@ class MainViewModel @Inject constructor(
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val getKakaoLocationUseCase: GetKakaoLocationUseCase,
     private val getMarkerPositionsUseCase : GetMarkerPositionsUseCase,
+
+    private val getPostDetailUseCase:GetPostDetailUseCase
+
 ) : ViewModel(), CommonViewModel {
 
     var address : Address? = null
@@ -49,6 +55,17 @@ class MainViewModel @Inject constructor(
 
     private val _selectAddress = MutableLiveData<Address>()
     val selectAddress : LiveData<Address> = _selectAddress
+
+    //근방 위치를 통해 해당 정보의 데이터를 가져와서 viewmodel에 저장함.
+    private val _postDTO = MutableLiveData<PostDetail>()
+    val postDTO:LiveData<PostDetail> = _postDTO
+
+    //서버에서 마커를 클릭한 정보들을 가져옴 -> ui단에서 받은 데이터들을 저장하장
+    fun getPostDetail(pos:Long){
+        viewModelScope.launch {
+            _postDTO.value = getPostDetailUseCase.getPostDetail(pos)
+        }
+    }
 
     // 서버에서 내 근방 위치 모임들을 가져옴
     fun getMarkers(latitude : Double, longitude : Double, radius : Double) {

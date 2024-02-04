@@ -1,12 +1,13 @@
 package com.gumibom.travelmaker.domain.signup
 
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.repository.signup.SignupRepository
 import javax.inject.Inject
 
 class CheckDuplicatedNicknameUseCase @Inject constructor(
     private val repository:SignupRepository
 ){
-    suspend fun checkDuplicatedNick(nickname:String):Boolean?{
+    suspend fun checkDuplicatedNick(nickname:String): IsSuccessResponseDTO?{
         val response = repository.checkDuplicateNickname(nickname)
         return if (response.isSuccessful){
             response.body()

@@ -7,7 +7,7 @@ import retrofit2.Response
 interface MeetingRemoteDataSource {
     suspend fun getMarkerPositions(latitude : Double, longitude : Double, radius : Double) : Response<MutableList<MarkerPositionResponseDTO>>
 
-    suspend fun getPostDetail(id:Int) : Response<MeetingPostDTO>
+    suspend fun getPostDetail(id:Long) : Response<MeetingPostDTO>
 
 
 

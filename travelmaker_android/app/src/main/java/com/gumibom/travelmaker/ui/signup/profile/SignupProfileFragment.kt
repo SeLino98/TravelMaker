@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.gumibom.travelmaker.R
@@ -124,6 +127,7 @@ class SignupProfileFragment : Fragment() {
                         Glide.with(this)
                             .load(uri)
                             .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
                             .into(binding.ivProfile)
                     }
                 }
@@ -132,6 +136,7 @@ class SignupProfileFragment : Fragment() {
                     thumbnail?.let {
                         Glide.with(this)
                             .load(it)
+                            .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
                             .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
                             .into(binding.ivProfile)
                     }

@@ -39,6 +39,7 @@ import com.gumibom.travelmaker.databinding.FragmentMainFindMateBinding
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.MainFindMateDetailFragment
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log

@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MeetingRepositoryImpl @Inject constructor(
     private val meetingRemoteDataSourceImpl: MeetingRemoteDataSource
 ): MeetingRepository {
-    override suspend fun getPostDetail(id: Int): Response<MeetingPostDTO> {
+    override suspend fun getPostDetail(id: Long): Response<MeetingPostDTO> {
         return meetingRemoteDataSourceImpl.getPostDetail(id)
     }
 
