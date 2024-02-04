@@ -4,12 +4,14 @@ import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @DiscriminatorValue(value = "P")
 public class PersonalPamphlet extends Pamphlet {
 

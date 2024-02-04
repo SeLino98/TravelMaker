@@ -19,6 +19,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        # 페이징 +컬렉션 조회 최적화 (쓰는 이유를 알고,웬만하면 해당 옵션을 켜놓자)
+        # in 쿼리의 개수를 설정
+        default_batch_fetch_size: 100
 ---
 spring:
   config:
