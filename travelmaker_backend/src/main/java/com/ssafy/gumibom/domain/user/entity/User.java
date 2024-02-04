@@ -71,7 +71,7 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PersonalPamphlet> personalPamphlets;
+    private List<PersonalPamphlet> personalPamphlets = new ArrayList<>();
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

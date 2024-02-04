@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public abstract class Pamphlet {
 
     @Id @GeneratedValue

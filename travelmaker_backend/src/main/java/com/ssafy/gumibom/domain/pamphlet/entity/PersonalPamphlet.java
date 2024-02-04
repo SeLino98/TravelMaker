@@ -17,8 +17,8 @@ public class PersonalPamphlet extends Pamphlet {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ElementCollection
-    private ArrayList<String> categories = new ArrayList<>();
+//    @ElementCollection
+//    private ArrayList<String> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
@@ -53,13 +53,13 @@ public class PersonalPamphlet extends Pamphlet {
     // 생성 메서드
     // 도메인 모델 패턴
 
-    public static PersonalPamphlet createPersonalPamphlet(User user, String title, String... categories) {
+    public static PersonalPamphlet createPersonalPamphlet(User user, String title) {
         PersonalPamphlet pPamphlet = new PersonalPamphlet();
         pPamphlet.setPamphlet(title);
         pPamphlet.setUser(user);
-        for(String category: categories) {
-            pPamphlet.categories.add(category);
-        }
+//        for(String category: categories) {
+//            pPamphlet.categories.add(category);
+//        }
 
         return pPamphlet;
     }

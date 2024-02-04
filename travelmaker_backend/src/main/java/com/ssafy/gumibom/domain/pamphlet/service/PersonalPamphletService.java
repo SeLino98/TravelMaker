@@ -14,16 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PersonalPamphletService {
 
-
     private final PersonalPamphletRepository pPamphletRepository;
     private final UserRepository userRepository;
 
     // 개인 팜플렛 생성
-    public void makePamphlet(MakePersonalPamphletRequestDto makePPReqDto) {
+    @Transactional
+    public Long makePamphlet(MakePersonalPamphletRequestDto makePPReqDto) {
 
         User user = userRepository.findOne(makePPReqDto.getUserId());
         PersonalPamphlet pPamphlet = PersonalPamphlet.createPersonalPamphlet(user, makePPReqDto.getTitle());
 
-        pPamphletRepository.save(pPamphlet);
+        return pPamphletRepository.save(pPamphlet);
     }
 }
