@@ -1,7 +1,7 @@
 package com.ssafy.gumibom;
 
 
-import com.ssafy.gumibom.domain.user.entity.Gender;
+import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -28,8 +28,20 @@ public class InitDB {
         private final EntityManager em;
 
         public void initDB() {
-            User user = createUser("중원", "secret", "jw", "010-0000-0000");
-            em.persist(user);
+            User user1 = createUser("중원1", "secret1", "jw1", "010-1111-1111");
+            User user2 = createUser("중원2", "secret2", "jw2", "010-2222-2222");
+            User user3 = createUser("중원3", "secret3", "jw3", "010-3333-3333");
+            em.persist(user1);
+            em.persist(user2);
+            em.persist(user3);
+
+            PersonalPamphlet personalPamphlet1 = PersonalPamphlet.createPersonalPamphlet(user1, "첫번째 개인 팜플렛!");
+            PersonalPamphlet personalPamphlet2 = PersonalPamphlet.createPersonalPamphlet(user2, "두번째 개인 팜플렛!");
+            PersonalPamphlet personalPamphlet3 = PersonalPamphlet.createPersonalPamphlet(user3, "세번째 개인 팜플렛!");
+
+            em.persist(personalPamphlet1);
+            em.persist(personalPamphlet2);
+            em.persist(personalPamphlet3);
         }
     }
 
