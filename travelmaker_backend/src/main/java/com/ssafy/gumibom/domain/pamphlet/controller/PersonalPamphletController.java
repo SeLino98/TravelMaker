@@ -6,11 +6,13 @@ import com.ssafy.gumibom.domain.pamphlet.dto.response.MakePersonalPamphletRespon
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.service.PersonalPamphletService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Personal Pamphlet", description = "개인 팜플렛 관련 api")
 @RestController
 @RequestMapping("/personal-pamphlet")
 @RequiredArgsConstructor
