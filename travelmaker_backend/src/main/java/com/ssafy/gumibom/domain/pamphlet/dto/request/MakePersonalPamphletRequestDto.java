@@ -19,6 +19,4 @@ public class MakePersonalPamphletRequestDto {
     @NotBlank
     private String title;
 
-    private MultipartFile image;
-    private MultipartFile video;
 }

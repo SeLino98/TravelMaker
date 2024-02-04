@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 public class PersonalRecordDto {
 
     private String title;
-    private LocalDateTime createDate;
+    private LocalDateTime createTime;
     private String imgUrl;
     private String videoUrl;
     private String text;
 
     public PersonalRecordDto(PersonalRecord record) {
         this.title = record.getTitle();
-        this.createDate = record.getCreateDate();
+        this.createTime = record.getCreateTime();
         this.imgUrl = record.getImgUrl();
         this.videoUrl = record.getVideoUrl();
         this.text = record.getText();

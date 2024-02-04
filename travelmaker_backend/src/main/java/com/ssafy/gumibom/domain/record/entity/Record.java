@@ -22,7 +22,7 @@ public abstract class Record {
     private Long id;
 
     private String title;
-    private LocalDateTime createDate;
+    private LocalDateTime createTime;
     private String imgUrl;
     private String videoUrl;
     private String text;
@@ -35,7 +35,7 @@ public abstract class Record {
         this.imgUrl = imgUrl;
         this.videoUrl = videoUrl;
         this.text = text;
-        this.createDate = LocalDateTime.now();
+        this.createTime = LocalDateTime.now();
     }
 
     protected abstract void setPamphlet(Pamphlet pamphlet);

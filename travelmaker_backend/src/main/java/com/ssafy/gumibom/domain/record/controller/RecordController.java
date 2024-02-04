@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.record.controller;
 
 import com.ssafy.gumibom.domain.pamphlet.dto.request.MakePersonalPamphletRequestDto;
 import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
+import com.ssafy.gumibom.domain.record.dto.response.SavePersonalRecordResponseDto;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.service.RecordService;
@@ -25,12 +26,14 @@ public class RecordController {
     @PostMapping(value = "/personal-record", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
-    public Long savePersonalRecord(
+    public SavePersonalRecordResponseDto savePersonalRecord(
             @RequestPart(required = false) MultipartFile image,
             @RequestPart(required = false) MultipartFile video,
             @RequestPart SavePersonalRecordRequestDto sPRRequestD) throws IOException {
 
-        return recordService.makePersonalRecord(image, video, sPRRequestD);
+        Long recordId = recordService.makePersonalRecord(image, video, sPRRequestD);
+
+        return new SavePersonalRecordResponseDto(recordId, true, "팜플렛에 기록을 저장했습니다.");
     }
 
 

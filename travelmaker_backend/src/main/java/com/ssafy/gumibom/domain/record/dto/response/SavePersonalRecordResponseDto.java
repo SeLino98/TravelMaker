@@ -8,7 +8,8 @@ public class SavePersonalRecordResponseDto extends BaseResponseDto {
 
     private Long recordId;
 
-    public SavePersonalRecordResponseDto(Boolean isSuccess, String message) {
+    public SavePersonalRecordResponseDto(Long recordId, Boolean isSuccess, String message) {
         super(isSuccess, message);
+        this.recordId = recordId;
     }
 }
