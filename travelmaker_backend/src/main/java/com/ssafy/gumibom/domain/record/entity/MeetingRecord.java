@@ -19,7 +19,6 @@ public class MeetingRecord extends Record {
     private MeetingPamphlet meetingPamphlet;
 
     public MeetingRecord(String title, String text) {
-        super(title, text);
     }
 
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

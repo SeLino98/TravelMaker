@@ -30,23 +30,13 @@ public abstract class Record {
 //    @Embedded
 //    private Emoji emoji;
 
-//    public Record(String title, String text, Emoji emoji) {
-//        this.title = title;
-//        this.text = text;
-//        this.emoji = emoji;
-//    }
-
-    public Record(String title, String text) {
+    protected void setRecord(String title, String imgUrl, String videoUrl, String text) {
         this.title = title;
+        this.imgUrl = imgUrl;
+        this.videoUrl = videoUrl;
         this.text = text;
+        this.createDate = LocalDateTime.now();
     }
 
-    public void setVideo(String videoUrl) {
-        this.videoUrl = videoUrl;
-    };
-    public void setImage(String imgUrl) {
-        this.imgUrl = imgUrl;
-    };
-
-    public abstract void setPamphlet(Pamphlet pamphlet);
+    protected abstract void setPamphlet(Pamphlet pamphlet);
 }
