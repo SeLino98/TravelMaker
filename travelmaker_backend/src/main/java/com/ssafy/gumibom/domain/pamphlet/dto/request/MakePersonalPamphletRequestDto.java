@@ -3,6 +3,7 @@ package com.ssafy.gumibom.domain.pamphlet.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -17,4 +18,7 @@ public class MakePersonalPamphletRequestDto {
 
     @NotBlank
     private String title;
+
+    private MultipartFile image;
+    private MultipartFile video;
 }

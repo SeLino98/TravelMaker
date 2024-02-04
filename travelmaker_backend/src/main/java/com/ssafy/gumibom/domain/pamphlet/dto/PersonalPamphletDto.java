@@ -2,14 +2,12 @@ package com.ssafy.gumibom.domain.pamphlet.dto;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.record.dto.PersonalRecordDto;
-import com.ssafy.gumibom.domain.record.entity.Record;
-import lombok.Builder;
+import com.ssafy.gumibom.domain.user.entity.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +16,7 @@ import java.util.stream.Collectors;
 public class PersonalPamphletDto {
 
     private Long pamphletId;
+    private String nickname;
     private String title;
     private Integer love;
     private LocalDateTime createTime;
@@ -25,6 +24,7 @@ public class PersonalPamphletDto {
 
     public PersonalPamphletDto(PersonalPamphlet pPamphlet) {
         this.pamphletId = pPamphlet.getId();
+        this.nickname = pPamphlet.getUser().getNickname();
         this.title = pPamphlet.getTitle();
         this.love = pPamphlet.getLove();
         this.createTime = pPamphlet.getCreateTime();
