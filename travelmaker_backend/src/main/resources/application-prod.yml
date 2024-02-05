@@ -1,15 +1,8 @@
+## 운영 환경
+
 spring:
-  profiles:
-    group:
-      development:
-        - common
-        - rdb_database
-        - port_8080
----
-spring:
-  config:
-    activate:
-      on-profile: common
+  application:
+    name: travelmaker-prod
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -22,24 +15,15 @@ spring:
         # 페이징 +컬렉션 조회 최적화 (쓰는 이유를 알고,웬만하면 해당 옵션을 켜놓자)
         # in 쿼리의 개수를 설정
         default_batch_fetch_size: 100
----
-spring:
-  config:
-    activate:
-      on-profile: rdb_database
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ENC(35Ri/9f4Hv2XEb8/ajB5Xw==)
     password: ENC(c9UeCbXeIgt1eH80thMPuis3icfdciYJnf7n3/cm48k=)
     url: ENC(CCSipdikBLPbdGrvZudyMLFL+hIKfNrp2t6JGYS57Qlg4/7UFZ5z/kvr+WCb90pOJk5wR0wkKsAl3M74nizbX3KdO7TaHk3tlW5kmGsFOAkJfHDy5cIwycVsbMOqmt3zzHkVHpLTb4eT0AfZJ3VXnDlAocEJPDoBN9J6CYsFN5+EYfng1a53SwZgDgalWjvd7+56tIOY+/6K8XHjF4Ey7Q==)
----
-spring:
-  config:
-    activate:
-      on-profile: port_8080
+
 server:
   port: 8080
----
+
 cloud:
   aws:
     s3:
@@ -52,10 +36,3 @@ cloud:
       auto: false
     stack:
       auto: false
-
-#coolsms:
-#  apikey: ENC(vImbLVrEKhRcpw4V9SDzb65QF75toGAqYFQxP6w65W4)
-#  apisecret: ENC(tXtdAdiNRCXm8EPhD0/nuJDzSQ9LvDf72o5Oi3R51zC3YBvwGhs8yS+oJ+A11V9H)
-#  fromnumber: ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)
----
-
