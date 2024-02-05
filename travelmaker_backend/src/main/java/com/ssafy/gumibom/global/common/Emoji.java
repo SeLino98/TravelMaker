@@ -1,20 +1,6 @@
 package com.ssafy.gumibom.global.common;
 
-import jakarta.persistence.Embeddable;
-import lombok.Getter;
-
-@Embeddable
-@Getter
-// 값 타입 -> 변경 불가능하게 설계 (No setter)
-public class Emoji {
-
-    private String emotion;
-    private String img;
-
-    protected Emoji() {}
-
-    public Emoji(String emotion, String img) {
-        this.emotion = emotion;
-        this.img = img;
-    }
+// 여행 기록에 쓰일 감정 이모지
+public enum Emoji {
+    HAPPY, SMILE, SOSO, SAD, ANGRY
 }
