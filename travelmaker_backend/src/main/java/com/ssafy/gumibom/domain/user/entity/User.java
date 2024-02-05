@@ -3,9 +3,7 @@ package com.ssafy.gumibom.domain.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
-import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
-import com.ssafy.gumibom.domain.user.dto.req.SignupRequestDto;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
 import jakarta.persistence.*;
@@ -13,14 +11,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -54,24 +54,23 @@ public class User {
     private String phone;
 
     @Lob
-    private String imgURL;
+    private String profileImgURL;;
 
-    private double belief;
+    private Double trust;
 
     private String town;
 
     @Lob
     private String fcmtoken;
 
-    @Embedded
-    private Nation nation;
+    private String nation;
 
     @ElementCollection
-    private List<Category> categories;
+    private List<String> categories;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PersonalPamphlet> personalPamphlets = new ArrayList<>();
+    private List<PersonalPamphlet> personalPamphlets;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -84,19 +83,39 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MeetingMember> meetingMembers = new ArrayList<>();
 
-    // Init DB를 위한 테스트용 생성자
-    public User(String username, String password, String nickname, String phone) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.phone = phone;
+//    // Gender enum 타입 정의
+//    public enum Gender {
+//        MALE, FEMALE
+//    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Role을 GrantedAuthority로 변환
+        GrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+
+        // 변환된 GrantedAuthority를 담은 컬렉션 반환
+        return Collections.singletonList(authority);
     }
 
-    // Gender enum 타입 정의
-    public enum Gender {
-        MALE, FEMALE
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
+    }
 
 //    @Builder
 //    public User(SignupRequestDto signupRequestDto){
