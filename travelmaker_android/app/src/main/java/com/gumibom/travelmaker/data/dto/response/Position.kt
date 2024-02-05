@@ -5,4 +5,6 @@ data class Position(
     val longitude: Double,
     val name: String,
     val town: String
-)
+) {
+    constructor() : this(0.0, 0.0, "", "")
+}

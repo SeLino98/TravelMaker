@@ -64,14 +64,6 @@ class MeetingPostActivity : AppCompatActivity() {
         navController.navigateUp()
     }
 
-    /**
-     * 뒤로가기를 눌렀을 때
-     */
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        onBackPressedDispatcher.onBackPressed()
-        navigateToPreviousFragment()
-    }
 
     /**
      *  x버튼 클릭 시 액티비티 종료

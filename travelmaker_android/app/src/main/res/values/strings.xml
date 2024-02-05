@@ -69,6 +69,7 @@
     <string name="meeting_picture_description">사진은 최대 3장 선택할 수 있어요.</string>
     <string name="meeting_category_title">카테고리를 골라주세요.</string>
     <string name="meeting_post_member">모임 인원을 설정해주세요.</string>
+    <string name="chip_rest">휴식</string>
     <!-- END -->
     <!-- 회원가입 성공메시지 -->
 </resources>

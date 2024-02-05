@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -38,6 +39,8 @@ class MeetingPostPictureFragment : Fragment() {
     private var filePath = ""
     private var isNextPage = false
 
+    private lateinit var callback: OnBackPressedCallback
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as MeetingPostActivity
@@ -57,6 +60,16 @@ class MeetingPostPictureFragment : Fragment() {
                 meetingPostViewModel.addImageUrl(filePath)
             }
         }
+
+        // OnBackPressedCallback 인스턴스 생성 및 추가
+        callback = object : OnBackPressedCallback(true) { // true는 콜백을 활성화 상태로 만듭니다.
+            override fun handleOnBackPressed() {
+                activity.navigateToPreviousFragment()
+            }
+        }
+
+        // OnBackPressedDispatcher에 콜백 추가
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreateView(
@@ -112,6 +125,8 @@ class MeetingPostPictureFragment : Fragment() {
             val content = binding.etMeetingPostPictureContent.text.toString()
 
             if (title.isNotEmpty() && content.isNotEmpty() && isNextPage) {
+                meetingPostViewModel.title = title
+                meetingPostViewModel.content = content
                 activity.navigateToNextFragment()
             } else {
                 Toast.makeText(requireContext(), NOT_ENOUGH_INPUT, Toast.LENGTH_SHORT).show()
@@ -206,9 +221,13 @@ class MeetingPostPictureFragment : Fragment() {
         }
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        callback.remove()
     }
 }
