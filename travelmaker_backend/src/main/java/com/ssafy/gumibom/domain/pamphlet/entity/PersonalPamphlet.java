@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
+import ch.qos.logback.core.testUtil.StringListAppender;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.user.entity.User;
@@ -19,8 +20,8 @@ public class PersonalPamphlet extends Pamphlet {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @ElementCollection
-//    private ArrayList<String> categories = new ArrayList<>();
+    @Convert(converter = StringListAppender.class)
+    private ArrayList<String> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
