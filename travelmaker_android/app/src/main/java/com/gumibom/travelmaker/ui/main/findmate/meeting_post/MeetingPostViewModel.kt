@@ -4,17 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.data.dto.response.Position
+import com.gumibom.travelmaker.domain.meeting_post.PostMeetingUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.SendMeetingPost
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "MeetingPostViewModel_싸피"
 @HiltViewModel
 class MeetingPostViewModel @Inject constructor(
-
+    private val postMeetingUseCase: PostMeetingUseCase
 ) : ViewModel(), CommonViewModel {
 
     /**
@@ -53,16 +56,28 @@ class MeetingPostViewModel @Inject constructor(
         _urlLiveData.value = _imageUrlList
     }
 
-//    fun createMeeting() {
-//        val sendMeetingPost = SendMeetingPost(
-//            title,
-//            username,
-//            content,
-//            authDate,
-//
-//
-//        )
-//    }
+    fun createMeeting() {
+        val sendMeetingPost = SendMeetingPost(
+            title,
+            username,
+            content,
+            authDate,
+            startDate,
+            endDate,
+            _selectMeetingAddress.value!!,
+            maxMember,
+            minNative,
+            minTraveler,
+            deadlineDate,
+            deadlineTime,
+            categoryList
+        )
+        Log.d(TAG, "createMeeting: $sendMeetingPost")
+        viewModelScope.launch {
+            postMeetingUseCase.createMeeting(sendMeetingPost, _imageUrlList)
+        }
+
+    }
 
 
 

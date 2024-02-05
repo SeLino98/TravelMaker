@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.gumibom.travelmaker.constant.NOT_ENOUGH_INPUT
 import com.gumibom.travelmaker.databinding.FragmentMeetingPostCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -133,9 +135,21 @@ class MeetingPostCategoryFragment : Fragment() {
                                             "사진" to "picture", "자연" to "nature", "쇼핑" to "shopping", "휴식" to "rest")
 
         val chipGroup1 = binding.chipGroup1
+        val chipGroup2 = binding.chipGroup2
 
         for (index in 0 until chipGroup1.childCount) {
             val chip = chipGroup1.getChildAt(index) as? Chip
+            chip?.setOnClickListener {
+                // Chip 클릭 시 실행할 코드
+                if (chip.isChecked) {
+                    val chipText = chipMap.getValue(chip.text.toString())
+                    meetingPostViewModel.categoryList.add(chipText)
+                }
+            }
+        }
+
+        for (index in 0 until chipGroup2.childCount) {
+            val chip = chipGroup2.getChildAt(index) as? Chip
             chip?.setOnClickListener {
                 // Chip 클릭 시 실행할 코드
                 if (chip.isChecked) {
@@ -148,7 +162,16 @@ class MeetingPostCategoryFragment : Fragment() {
 
     private fun createMeeting() {
         binding.btnMeetingPostCreate.setOnClickListener {
-
+            if (
+                meetingPostViewModel.categoryList.isNotEmpty() &&
+                meetingPostViewModel.maxMember != 0 &&
+                meetingPostViewModel.minNative != 0 &&
+                meetingPostViewModel.minTraveler != 0 ) {
+                // 모두 입력되었으면 서버에 통신
+                meetingPostViewModel.createMeeting()
+            } else {
+                Toast.makeText(requireContext(), NOT_ENOUGH_INPUT, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.chip.Chip
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.DENIED_LOCATION_PERMISSION
+import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.ui.main.MainViewModel
@@ -208,7 +209,10 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         mainViewModel.initLatitude = latitude
         mainViewModel.initLongitude = longitude
 
-        mainViewModel.getMarkers(latitude, longitude, 3.0)
+        val markerPositionRequestDTO = MarkerPositionRequestDTO(
+            latitude, longitude, 3.0
+        )
+        mainViewModel.getMarkers(markerPositionRequestDTO)
 //        setMyLocation(location)
     }
 
@@ -239,7 +243,12 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             // TODO 여기서 새롭게 받은 address로 서버한테 넘겨서 위치 재갱신 하기
             Log.d(TAG, "selectAddress: $address")
             val location = LatLng(address.latitude, address.longitude)
-            mainViewModel.getMarkers(address.latitude, address.longitude, 3.0)
+
+            val markerPositionRequestDTO = MarkerPositionRequestDTO(
+                address.latitude, address.longitude, 3.0
+            )
+
+            mainViewModel.getMarkers(markerPositionRequestDTO)
             mainViewModel.currentLatitude = address.latitude
             mainViewModel.currentLongitude = address.longitude
 
@@ -312,25 +321,5 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 100
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: ")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause: ")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop: ")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy: ")
     }
 }

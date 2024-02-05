@@ -1,6 +1,8 @@
 package com.gumibom.travelmaker.data.repository.meeting
 
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
+import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
+import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import com.gumibom.travelmaker.data.repository.login.LoginRepositoryImpl
@@ -14,14 +16,11 @@ class MeetingRepositoryImpl @Inject constructor(
         return meetingRemoteDataSourceImpl.getPostDetail(id)
     }
 
-    override suspend fun getMarkerPositions(
-        latitude: Double,
-        longitude: Double,
-        radius: Double
-    ): Response<MutableList<MarkerPositionResponseDTO>> {
-        return meetingRemoteDataSourceImpl.getMarkerPositions(latitude, longitude, radius)
+    override suspend fun getMarkerPositions(markerPositionRequestDTO: MarkerPositionRequestDTO): Response<MutableList<MarkerPositionResponseDTO>> {
+        return meetingRemoteDataSourceImpl.getMarkerPositions(markerPositionRequestDTO)
     }
 
-
-
+    override suspend fun getMarkerCategoryPositions(markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO): Response<MutableList<MarkerPositionResponseDTO>> {
+        return meetingRemoteDataSourceImpl.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
+    }
 }

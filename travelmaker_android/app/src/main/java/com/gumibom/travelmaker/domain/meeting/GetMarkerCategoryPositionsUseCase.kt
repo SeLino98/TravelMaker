@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.domain.meeting
 
+import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
 import com.gumibom.travelmaker.data.repository.meeting.MeetingRepository
@@ -7,12 +8,11 @@ import com.gumibom.travelmaker.data.repository.meeting.MeetingRepositoryImpl
 import com.gumibom.travelmaker.model.MarkerPosition
 import javax.inject.Inject
 
-class GetMarkerPositionsUseCase @Inject constructor(
+class GetMarkerCategoryPositionsUseCase @Inject constructor(
     private val meetingRepositoryImpl: MeetingRepository
 ) {
-
-    suspend fun getMarkerPositions(markerPositionRequestDTO: MarkerPositionRequestDTO) : List<MarkerPosition>{
-        val response = meetingRepositoryImpl.getMarkerPositions(markerPositionRequestDTO)
+    suspend fun getMarkerCategoryPositions(markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO) : List<MarkerPosition>{
+        val response = meetingRepositoryImpl.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
         var markerPositionList = listOf<MarkerPosition>()
         if (response.isSuccessful) {
             // 데이터가 null 일 경우 빈 리스트
@@ -48,6 +48,4 @@ class GetMarkerPositionsUseCase @Inject constructor(
         }
         return markerPositionList
     }
-
-
 }

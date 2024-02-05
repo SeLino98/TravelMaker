@@ -84,14 +84,13 @@ class MeetingPostDateFragment : Fragment() {
             val startDate = binding.tvMeetingStartDate.text.toString()
             val endDate = binding.tvMeetingEndDate.text.toString()
             val deadLineDate = binding.tvMeetingDeadlineDate.text.toString()
-            val deadLineTime = binding.tvMeetingDeadlineTime.text.toString()
+            val deadLineTime = binding.tvMeetingDeadlineClock.text.toString()
             val meetingPlace = binding.tvMeetingPostPlace.text.toString()
 
             if (startDate.isNotEmpty() && endDate.isNotEmpty() && deadLineDate.isNotEmpty() && deadLineTime.isNotEmpty() && !meetingPlace.isNullOrEmpty()) {
                 meetingPostViewModel.startDate = startDate
                 meetingPostViewModel.endDate = endDate
                 meetingPostViewModel.deadlineDate = deadLineDate
-                meetingPostViewModel.deadlineTime = deadLineTime
 
                 activity.navigateToNextFragment()
             } else {
@@ -152,6 +151,7 @@ class MeetingPostDateFragment : Fragment() {
                 } else {
                     binding.tvMeetingDeadlineClock.text = "오전 ${hour}시 ${minute}분"
                 }
+                meetingPostViewModel.deadlineTime = "${hour}:$minute"
             }
         }
     }

@@ -9,7 +9,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
+import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
+import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
+import com.gumibom.travelmaker.data.dto.request.MeetingPostRequestDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
+import com.gumibom.travelmaker.domain.meeting.GetMarkerCategoryPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
@@ -28,7 +32,7 @@ class MainViewModel @Inject constructor(
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val getKakaoLocationUseCase: GetKakaoLocationUseCase,
     private val getMarkerPositionsUseCase : GetMarkerPositionsUseCase,
-
+    private val getMarkerCategoryPositionsUseCase: GetMarkerCategoryPositionsUseCase,
     private val getPostDetailUseCase:GetPostDetailUseCase
 
 ) : ViewModel(), CommonViewModel {
@@ -45,6 +49,9 @@ class MainViewModel @Inject constructor(
 
     private val _markerList = MutableLiveData<List<MarkerPosition>>()
     val markerList : LiveData<List<MarkerPosition>> = _markerList
+
+    private val _markerCategoryList = MutableLiveData<List<MarkerPosition>>()
+    val markerCategoryList : LiveData<List<MarkerPosition>> = _markerCategoryList
 
 
     private val _kakaoAddressList = MutableLiveData<MutableList<Address>>()
@@ -68,9 +75,16 @@ class MainViewModel @Inject constructor(
     }
 
     // 서버에서 내 근방 위치 모임들을 가져옴
-    fun getMarkers(latitude : Double, longitude : Double, radius : Double) {
+    fun getMarkers(markerPositionRequestDTO : MarkerPositionRequestDTO) {
         viewModelScope.launch {
-            _markerList.value = getMarkerPositionsUseCase.getMarkerPositions(latitude, longitude, radius)
+            _markerList.value = getMarkerPositionsUseCase.getMarkerPositions(markerPositionRequestDTO)
+        }
+    }
+
+    // 내 근방 위치 모임 카테고리 필터링
+    fun getCategoryMarkers(markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO) {
+        viewModelScope.launch {
+            _markerCategoryList.value = getMarkerCategoryPositionsUseCase.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
         }
     }
 

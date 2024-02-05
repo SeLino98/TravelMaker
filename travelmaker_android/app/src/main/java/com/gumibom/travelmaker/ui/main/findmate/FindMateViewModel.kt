@@ -22,13 +22,6 @@ class FindMateViewModel @Inject constructor(
     private val _markerList = MutableLiveData<List<MarkerPosition>>()
     val markerList : LiveData<List<MarkerPosition>> = _markerList
 
-    
-    // 서버에서 내 근방 위치 모임들을 가져옴
-    fun getMarkers(latitude : Double, longitude : Double, radius : Double) {
-        viewModelScope.launch {
-            _markerList.value = getMarkerPositionsUseCase.getMarkerPositions(latitude, longitude, radius)
-        }
-    }
 
     // 구글 api로 장소 검색 후 위도 경도 가져오기
     fun getGoogleLatLng() {

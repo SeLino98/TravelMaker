@@ -8,7 +8,7 @@ data class SendMeetingPost(
     val startDate : String,
     val endDate : String,
     val address : Address,
-    val maxNumber : Int,
+    val maxMember : Int,
     val minNative : Int,
     val minTraveler : Int,
     val deadlineDate : String,
