@@ -56,3 +56,5 @@ cloud:
 #  fromnumber: ENC(xh+4vRLXHZlgz/IrX/3SmOxtgjY3FMp9)
 ---
 
+jwt:
+  secret: 908411b7cc7ad34802ef51f16845e7180fc9daa7df1b24f1e2ecc72a91972383

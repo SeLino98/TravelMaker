@@ -89,6 +89,10 @@ public class User {
         MALE, FEMALE
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
 
 //    @Builder
 //    public User(SignupRequestDto signupRequestDto){
