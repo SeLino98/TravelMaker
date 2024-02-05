@@ -17,6 +17,8 @@ public class RecordRepository {
         em.persist(record);
     }
 
+    public void delete(Record record) { em.remove(record); }
+
     public Record findOne(Long id) {
         return em.find(Record.class, id);
     }
