@@ -1,6 +1,9 @@
 package com.ssafy.gumibom.domain.record.dto.request;
 
 
+import com.ssafy.gumibom.global.common.Emoji;
+import com.ssafy.gumibom.global.util.EmojiConverter;
+import jakarta.persistence.Convert;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,4 +22,7 @@ public class SavePersonalRecordRequestDto {
 
     @NotBlank
     private String text;
+
+    @Convert(converter = EmojiConverter.class)
+    private Emoji emoji;
 }

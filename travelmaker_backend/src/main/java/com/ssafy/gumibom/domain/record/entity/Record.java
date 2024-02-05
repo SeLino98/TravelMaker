@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.record.entity;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.Pamphlet;
 import com.ssafy.gumibom.global.common.Emoji;
+import com.ssafy.gumibom.global.util.EmojiConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,15 +28,16 @@ public abstract class Record {
     private String videoUrl;
     private String text;
 
-//    @Embedded
-//    private Emoji emoji;
+    @Convert(converter = EmojiConverter.class)
+    private Emoji emoji;
 
-    protected void setRecord(String title, String imgUrl, String videoUrl, String text) {
+    protected void setRecord(String title, String imgUrl, String videoUrl, String text, Emoji emoji) {
         this.title = title;
         this.imgUrl = imgUrl;
         this.videoUrl = videoUrl;
         this.text = text;
         this.createTime = LocalDateTime.now();
+        this.emoji = emoji;
     }
 
     protected abstract void setPamphlet(Pamphlet pamphlet);

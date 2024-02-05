@@ -29,9 +29,9 @@ public class PersonalRecord extends Record {
     }
 
     // 생성 메서드
-    public static PersonalRecord createPersonalRecord(String title, String imgUrl, String videoUrl, String text, PersonalPamphlet pPamphlet) {
+    public static PersonalRecord createPersonalRecord(String title, String imgUrl, String videoUrl, String text, PersonalPamphlet pPamphlet, Emoji emoji) {
         PersonalRecord pRecord = new PersonalRecord();
-        pRecord.setRecord(title, imgUrl, videoUrl, text);
+        pRecord.setRecord(title, imgUrl, videoUrl, text, emoji);
         pRecord.setPamphlet(pPamphlet);
 
         return pRecord;

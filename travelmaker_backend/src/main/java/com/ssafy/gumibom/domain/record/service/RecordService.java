@@ -7,6 +7,7 @@ import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.repository.RecordRepository;
+import com.ssafy.gumibom.global.common.Emoji;
 import com.ssafy.gumibom.global.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,12 @@ public class RecordService {
         String imgUrl = "";
         String videoUrl = "";
         String text = dto.getText();
+        Emoji emoji = dto.getEmoji();
 
         if(image!=null) imgUrl = uploadImage(image);
         if(video!=null) videoUrl = uploadVideo(video);
 
-        PersonalRecord pRecord = PersonalRecord.createPersonalRecord(title, imgUrl, videoUrl, text, pPamphlet);
+        PersonalRecord pRecord = PersonalRecord.createPersonalRecord(title, imgUrl, videoUrl, text, pPamphlet, emoji);
         recordRepository.save(pRecord);
 
         return pRecord.getId();
