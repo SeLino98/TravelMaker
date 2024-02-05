@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cl_mypage_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abl_mypage_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mt_mypage_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:title="@string/mypage_title"
+                app:titleCentered="true"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageButton
+            android:id="@+id/ib_mypage_previous"
+            android:layout_width="16dp"
+            android:layout_height="26dp"
+            android:background="@drawable/ic_previous"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_mypage_profile_img"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/iv_mypage_profile_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_empty_profile_circle"
+            />
+
+        <ImageView
+            android:id="@+id/iv_mypage_profile_example"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_alba_round"
+            android:layout_margin="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_mypage_profile_edit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_picture_add"
+            android:layout_gravity="bottom|end"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_mypage_nick_email"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <EditText
+            android:id="@+id/et_mypage_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/mypage_nickname"
+            android:text="@string/mypage_nickname"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColorHint="@color/black"
+            android:layout_gravity="top"
+            android:layout_marginStart="36dp"
+            />
+
+        <EditText
+            android:id="@+id/et_mypage_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mypage_email"
+            android:hint="@string/mypage_email"
+            android:textSize="16sp"
+            android:textColorHint="@color/black"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="36dp"
+        />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_mypage_trust_level"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+    
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_trust_level_bar_color"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mypage_trust_level"
+            android:textColor="@color/white"
+            android:textSize="72sp"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintVertical_bias="0.92"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+    <Button
+        android:id="@+id/btn_personal_info_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_edit_personal_info"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_gravity="start|center"
+        android:layout_marginStart="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_mypage_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_logout"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btn_mypage_withdrawal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_withdrawal"
+        android:textColor="@color/light_gray"
+        android:textSize="20sp"
+        android:layout_gravity="end|center"
+        android:layout_marginEnd="20dp"
+        />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
