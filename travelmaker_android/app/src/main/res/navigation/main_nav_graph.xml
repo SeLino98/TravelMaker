@@ -15,6 +15,15 @@
         <action
             android:id="@+id/action_mainFragment_to_mainMyGroupFragment"
             app:destination="@id/mainMyGroupFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mainGoTravelFragment"
+            app:destination="@id/mainGoTravelFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mainMyRecordFragment"
+            app:destination="@id/mainMyRecordFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mainLookPamphletsFragment"
+            app:destination="@id/mainLookPamphletsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFindMateFragment"
@@ -50,5 +59,20 @@
         android:name="com.gumibom.travelmaker.ui.main.mygroup.MainMyGroupFragment"
         android:label="fragment_main_my_group"
         tools:layout="@layout/fragment_main_my_group" />
+    <fragment
+        android:id="@+id/mainMyRecordFragment"
+        android:name="com.gumibom.travelmaker.ui.main.myrecord.MainMyRecordFragment"
+        android:label="fragment_main_my_record"
+        tools:layout="@layout/fragment_main_my_record" />
+    <fragment
+        android:id="@+id/mainGoTravelFragment"
+        android:name="com.gumibom.travelmaker.ui.main.gotravel.MainGoTravelFragment"
+        android:label="fragment_main_go_travel"
+        tools:layout="@layout/fragment_main_go_travel" />
+    <fragment
+        android:id="@+id/mainLookPamphletsFragment"
+        android:name="com.gumibom.travelmaker.ui.main.lookpamphlets.MainLookPamphletsFragment"
+        android:label="fragment_main_look_pamphlets"
+        tools:layout="@layout/fragment_main_look_pamphlets" />
 
 </navigation>

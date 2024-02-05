@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             // token log 남기기
             Log.d(TAG, "token: ${task.result?:"task.result is null"}")
             if(task.result != null){
+
                 uploadToken(task.result!!)
             }
         })
@@ -86,18 +87,28 @@ class MainActivity : AppCompatActivity() {
     private fun createNotificationChannel(id: String, name: String) {
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(id, name, importance)
-
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun testMoveFragment() {
-        navController.navigate(R.id.action_mainFindMateFragment_to_mainFindMateDetailFragment)
+    fun navigationToGotoTravel() {
+//        navController.navigate(R.id.action_mainFindMateFragment_to_mainFindMateDetailFragment)
+        navController.navigate(R.id.action_mainFragment_to_mainGoTravelFragment)
     }
-    fun navigationToNextFragment(){
-        navController.navigate(R.id.action_mainFragment_to_mainFindMateFragment)
+    fun navigationToGroupMSG(){
+        navController.navigate(R.id.action_mainFragment_to_mainMyGroupFragment)
     }
+    fun navigationToReadMyRecord(){
+        navController.navigate(R.id.action_mainFragment_to_mainMyRecordFragment)
+    }
+    fun navigationToLookAroundPam(){
+        navController.navigate(R.id.action_mainFragment_to_mainLookPamphletsFragment)
+    }
+//    fun navigationToNextFragment(){
+//        navController.navigate(R.id.action_mainFragment_to_mainFindMateFragment)
+//    }
+
 
     fun navigationPop() {
         navController.navigateUp()
