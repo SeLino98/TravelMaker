@@ -8,7 +8,6 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.io.IOException;
-import java.util.List;
 
 @Converter
 // 여행 기록에 담길 Emoji의 converter 생성

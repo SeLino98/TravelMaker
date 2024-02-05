@@ -4,7 +4,7 @@ import com.ssafy.gumibom.domain.pamphlet.dto.PersonalPamphletDto;
 import com.ssafy.gumibom.domain.pamphlet.dto.request.MakePersonalPamphletRequestDto;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
-import com.ssafy.gumibom.domain.record.dto.PersonalRecordDto;
+
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
