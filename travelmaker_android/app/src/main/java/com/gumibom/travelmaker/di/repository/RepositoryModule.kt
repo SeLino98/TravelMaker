@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.di.repository
 
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
+import com.gumibom.travelmaker.data.datasource.firebase.FirebaseFcmRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.kakao.KakaoLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSource
@@ -9,6 +10,8 @@ import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepository
+import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepositoryImpl
 
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepositoryImpl
@@ -34,6 +37,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
+
+    //파이어베이스 관련 Repo
+    @Singleton
+    @Provides
+    fun provideFirebaseFcmRepository(firebaseFcmRemoteDataSource: FirebaseFcmRemoteDataSource):FirebaseFcmRepository{
+        return FirebaseFcmRepositoryImpl(firebaseFcmRemoteDataSource)
+    }
 
     @Singleton
     @Provides

@@ -21,6 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private const val TAG = "MainActivity_싸피"
 @AndroidEntryPoint
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController : NavController
 
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate: @#!@#!@#")
@@ -77,13 +80,11 @@ class MainActivity : AppCompatActivity() {
             // token log 남기기
             Log.d(TAG, "token: ${task.result?:"task.result is null"}")
             if(task.result != null){
-
                 uploadToken(task.result!!)
             }
         })
         createNotificationChannel(CHANNEL_ID, "travelmaker")
     }
-
     private fun createNotificationChannel(id: String, name: String) {
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(id, name, importance)
@@ -105,10 +106,6 @@ class MainActivity : AppCompatActivity() {
     fun navigationToLookAroundPam(){
         navController.navigate(R.id.action_mainFragment_to_mainLookPamphletsFragment)
     }
-//    fun navigationToNextFragment(){
-//        navController.navigate(R.id.action_mainFragment_to_mainFindMateFragment)
-//    }
-
 
     fun navigationPop() {
         navController.navigateUp()
@@ -148,11 +145,39 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         // Notification Channel ID
-        const val CHANNEL_ID = "travelmaker_channel"
+        const val CHANNEL_ID = "travelmaker_channel" //mainActivity의 채널
+        //PendingIntent를 넘길 때 쓴다.
+//
+//        fun uploadToken(token: String) {
+//            Log.d(TAG, "uploadToken: $token")
+//        }
 
-        // TODO 서버에 토큰 업로드
-        fun uploadToken(token: String) {
-            Log.d(TAG, "uploadToken: $token")
+        fun uploadToken(token:String){
+            // 새로운 토큰 수신 시 서버로 전송
+            //파이어베이스에 있는 현재 유저의 전화번호를 가져오고,
+            //현재 토큰 값과 함께 요청
+            //유저 테이블 세팅하고
+            Log.d(TAG, "uploadToken: asdfasdfasdfasdfasdf")
+//            val authUser = AuthUser()
+//            authUser.uid = LoginRepo().getUserUid()
+//            authUser.token = token
+//            Log.d(TAG, "uploadToken: ${authUser.toString()}")
+//            //보낸다.
+//            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
+//            storeService.uploadToken(authUser).enqueue(object : Callback<String> {
+//                override fun onResponse(call: Call<String>, response: Response<String>) {
+//                    if(response.isSuccessful){
+//                        val res = response.body()
+//                        Log.d(TAG, "onResponse: $res")
+//                    } else {
+//                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
+//                    }
+//                }
+//                override fun onFailure(call: Call<String>, t: Throwable) {
+//                    Log.d(TAG, t.message ?: "토큰 정보 등록 중 통신오류")
+//                }
+//            })
         }
+
     }
 }

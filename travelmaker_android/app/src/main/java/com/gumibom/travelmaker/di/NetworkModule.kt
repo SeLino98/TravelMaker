@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.di
 
 
+import com.gumibom.travelmaker.data.api.firebase.FirebaseTokenService
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
@@ -110,6 +111,12 @@ class NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(gsonConverterFactory)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFcmTokenService(@MainRetrofit retrofit: Retrofit): FirebaseTokenService{
+        return retrofit.create(FirebaseTokenService::class.java)
+    }
 
     @Provides
     @Singleton
