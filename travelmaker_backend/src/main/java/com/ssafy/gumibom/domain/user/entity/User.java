@@ -93,6 +93,14 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+//    // Init DB를 위한 테스트용 생성자
+//    public User(String username, String password, String nickname, String phone) {
+//        this.username = username;
+//        this.password = password;
+//        this.nickname = nickname;
+//        this.phone = phone;
+//    }
+
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Role을 GrantedAuthority로 변환

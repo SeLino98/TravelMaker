@@ -15,16 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import java.util.List;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    private BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -34,9 +31,12 @@ public class UserService {
     public JwtToken login(String loginId, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginId, password);
 
+        System.out.println(authenticationToken);
+
         // 검증
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
+        System.out.println(authentication);
         // jwt 토큰 생성
         JwtToken token = jwtTokenProvider.generateToken(authentication);
 
@@ -46,7 +46,7 @@ public class UserService {
 
     //회원가입
     @Transactional
-    public Long signup(SignupRequestDto requestDto){
+    public Long signup(SignupRequestDto requestDto) {
 
         boolean check = checkPhoneNumExists(requestDto.getPhone());
         if (check) throw new IllegalArgumentException("이미 가입된 전화번호입니다.");
@@ -55,7 +55,7 @@ public class UserService {
         userRepository.save(requestDto.toEntity(encPwd));
         User user = userRepository.findByUsername(requestDto.getUsername());
 
-        if(user!=null) {
+        if (user != null) {
             return user.getId();
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);

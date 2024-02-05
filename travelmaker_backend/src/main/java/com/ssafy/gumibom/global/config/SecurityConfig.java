@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -47,8 +48,7 @@ public class SecurityConfig {
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration configuration = new CorsConfiguration();
                         //프론트 단에서 보낼 서버의 주소를 허용
-                        configuration.setAllowedOrigins(Collections.singletonList("http://i10d202.p.ssafy.io:8080"));
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8080"));
+                        configuration.setAllowedOrigins(Arrays.asList("http://i10d202.p.ssafy.io:8080", "http://localhost:8080"));
 
                         //허용할 method를 *로 함으로써 get, post, put, delete 등 모든 method를 허용
                         configuration.setAllowedMethods(Collections.singletonList("*"));
@@ -62,7 +62,7 @@ public class SecurityConfig {
                 })))
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(AbstractHttpConfigurer::disable)
-//                .csrf((auth)->auth.disable())
+                .csrf((auth)->auth.disable())
                 .formLogin((auth)->auth.disable())
                 .httpBasic((auth)->auth.disable())
 
