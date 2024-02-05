@@ -38,7 +38,21 @@ public class UserRepository {
         } catch (NoResultException e) {
             return null; // 결과가 없으면 null을 반환합니다.
         } catch (NonUniqueResultException e) {
-            throw new IllegalStateException("중복된 사용자 이름이 있습니다."); // 중복 결과 처리
+            throw new IllegalStateException("중복된 사용자 아이디가 있습니다."); // 중복 결과 처리
+        }
+    }
+
+    public Boolean existUsersByPhoneNum(String phoneNum) {
+        try {
+            User user = em.createQuery("select u from User u where u.phone = :phoneNum", User.class)
+                    .setParameter("phoneNum", phoneNum)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        } catch (NonUniqueResultException e) {
+//            throw new IllegalStateException("해당 전화번호는 이미 가입되어 있습니다.");
+            return true;
         }
     }
 
