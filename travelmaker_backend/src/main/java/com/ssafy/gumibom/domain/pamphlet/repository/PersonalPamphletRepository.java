@@ -14,6 +14,14 @@ public class PersonalPamphletRepository {
 
     private final EntityManager em;
 
+    /**
+     * Entity Manager가 관리하는 엔티티의 수정 방법 (2가지)
+     * 1. 변경 감지 (dirty-checking)
+     *  1-1. 영속성 컨텍스트에 종속된 엔티티에 대해 값을 바꿔주면 commit 시점에 update 쿼리가 나감 (자바의 컬렉션을 생각)
+     * 2. 병합 (em.merge)
+     *  2-1. 준영속 엔티티 -> 영속성 엔티티로 변경 (넘어온 모든 데이터를 바꿔치기)
+     * 웬만하면 변경 감지를 이용할 것
+     */
     public Long save(PersonalPamphlet pPamphlet) {
         em.persist(pPamphlet);
         return pPamphlet.getId();

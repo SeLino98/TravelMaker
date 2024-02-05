@@ -32,6 +32,13 @@ public class PersonalPamphletService {
         return pPamphletRepository.save(pPamphlet);
     }
 
+    // 개인 팜플렛 종료
+    @Transactional
+    public void finishPamphlet(Long pamphletId) {
+        PersonalPamphlet pPamphlet = pPamphletRepository.findByPamphletId(pamphletId);
+        pPamphlet.finishPamphlet();
+    }
+
     // 팜플렛 아이디로 개인 팜플렛 조회
     public PersonalPamphletDto selectPamphletById(Long pamphletId) {
         PersonalPamphlet pamphlet = pPamphletRepository.findByPamphletId(pamphletId);

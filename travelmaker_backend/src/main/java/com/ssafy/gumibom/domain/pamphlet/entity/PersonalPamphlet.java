@@ -26,6 +26,7 @@ public class PersonalPamphlet extends Pamphlet {
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
 
+    private Boolean isFinish;
 
     // 연관관계 편의 메서드
     // 양방향 연결일 때 편하게 메서드로 세팅
@@ -51,6 +52,12 @@ public class PersonalPamphlet extends Pamphlet {
         this.createTime = LocalDateTime.now();
         this.love = 0;
         this.categories = categories;
+        this.isFinish = false;
+    }
+
+    // 개인 팜플렛을 종료시키는 함수 -> 변경 감지(dirty-checking)를 이용해 엔티티 수정
+    public void finishPamphlet() {
+        this.isFinish = true;
     }
 
 
