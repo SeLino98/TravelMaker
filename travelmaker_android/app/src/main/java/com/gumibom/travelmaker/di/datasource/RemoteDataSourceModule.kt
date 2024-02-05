@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.di.datasource
 
+import com.gumibom.travelmaker.data.api.firebase.FirebaseTokenService
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
@@ -7,6 +8,8 @@ import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
+import com.gumibom.travelmaker.data.datasource.firebase.FirebaseFcmRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.firebase.FirebaseFcmRemoteDataSourceImpl
 
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.google.GoogleLocationRemoteDataSourceImpl
@@ -32,6 +35,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RemoteDataSourceModule {
+
+    @Singleton
+    @Provides
+    fun provideFirebaseFcmRemoteDataSource(firebaseTokenService: FirebaseTokenService):FirebaseFcmRemoteDataSource{
+        return FirebaseFcmRemoteDataSourceImpl(firebaseTokenService)
+
+    }
     @Singleton
     @Provides
     fun provideNaverLocationRemoteDataSource(naverLocationSearchService: NaverLocationSearchService) : NaverLocationRemoteDataSource {

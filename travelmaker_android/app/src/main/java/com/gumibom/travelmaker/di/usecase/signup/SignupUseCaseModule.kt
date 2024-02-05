@@ -8,6 +8,7 @@ import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
+import com.gumibom.travelmaker.domain.signup.SaveUserInfoUseCase
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 
 import dagger.Module
@@ -48,6 +49,11 @@ class SignupUseCaseModule {
     @Provides
     fun provideCheckDuplicatedNicknameUseCase(signupRepository: SignupRepository) : CheckDuplicatedNicknameUseCase {
         return CheckDuplicatedNicknameUseCase(signupRepository)
+    }
+    @Singleton
+    @Provides
+    fun provideSaveUserInfoUseCase(userRepository: SignupRepository) : SaveUserInfoUseCase {
+        return SaveUserInfoUseCase((userRepository))
     }
 
 }
