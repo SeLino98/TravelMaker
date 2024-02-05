@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.meetingPost.service;
 
+import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
@@ -48,6 +49,13 @@ public class MeetingPostService {
         responseDTO.setDDay(ChronoUnit.DAYS.between(responseDTO.getMeetingPost().getDeadline(), LocalDateTime.now()) - 1);
 
         return ResponseEntity.ok(responseDTO);
+    }
+
+    // 미팅 생성을 위해 필요한 데이터를 찾아서 DTO로 감쌈
+    @Transactional
+    public DetailMeetingPostResForMeetingDto meetingPostDetailRead(Long id){
+        DetailMeetingPostResForMeetingDto responseDTO = new DetailMeetingPostResForMeetingDto(meetingPostRepository.findOne(id));
+        return responseDTO;
     }
 
     // 반경 n km 안에 존재하는 모임글들의 정보 반환 // 위치랑 meetingPost id

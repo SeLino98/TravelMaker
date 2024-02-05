@@ -1,6 +1,7 @@
 package com.ssafy.gumibom.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
@@ -116,6 +117,18 @@ public class User {
     public boolean isEnabled() {
         return true;
     }
+
+    public void setMeetingApplier(MeetingApplier meetingApplier) {
+        this.meetingAppliers.add(meetingApplier);
+        meetingApplier.setUser(this);
+    }
+
+
+    public void setMeetingMember(MeetingMember meetingMember) {
+        this.meetingMembers.add(meetingMember);
+        meetingMember.setUser(this);
+    }
+
 
 //    @Builder
 //    public User(SignupRequestDto signupRequestDto){
