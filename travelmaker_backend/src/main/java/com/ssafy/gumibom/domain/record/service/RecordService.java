@@ -4,6 +4,7 @@ import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
 import com.ssafy.gumibom.domain.pamphlet.service.PersonalPamphletService;
 import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
+import com.ssafy.gumibom.domain.record.dto.request.UpdatePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.repository.RecordRepository;
@@ -66,5 +67,32 @@ public class RecordService {
         recordRepository.delete(pRecord);
     }
 
+    // 여행 기록 수정
+    @Transactional
+    public void updatePersonalRecord(MultipartFile image, MultipartFile video, UpdatePersonalRecordRequestDto uPRRDto) throws Exception {
+
+        PersonalPamphlet pPamphlet = pPamphletRepository.findByPamphletId(uPRRDto.getPamphletId());
+        PersonalRecord pRecord = (PersonalRecord) recordRepository.findOne(uPRRDto.getRecordId());
+
+        String imgUrl = "";
+        String videoUrl = "";
+
+        /**
+         * 새로 들어온 파일이 있다면,
+         * 1. S3에서 기존 파일 삭제
+         * 2. S3에 새로운 파일 업로드
+         */
+        if(image!=null) {
+            s3Service.deleteS3(pRecord.getImgUrl());
+            imgUrl = s3Service.uploadS3(image, "images");
+        }
+
+        if(video!=null) {
+            s3Service.deleteS3(pRecord.getVideoUrl());
+            videoUrl = s3Service.uploadS3(video, "videos");
+        }
+
+        pRecord.updateRecord(uPRRDto.getTitle(), imgUrl, videoUrl, uPRRDto.getText(), uPRRDto.getEmoji());
+    }
 
 }

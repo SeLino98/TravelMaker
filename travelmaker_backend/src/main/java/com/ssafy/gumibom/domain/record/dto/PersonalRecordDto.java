@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class PersonalRecordDto {
 
+    private Long recordId;
     private String title;
     private LocalDateTime createTime;
     private String imgUrl;
@@ -24,6 +25,7 @@ public class PersonalRecordDto {
     private Emoji emoji;
 
     public PersonalRecordDto(PersonalRecord record) {
+        this.recordId = record.getId();
         this.title = record.getTitle();
         this.createTime = record.getCreateTime();
         this.imgUrl = record.getImgUrl();
