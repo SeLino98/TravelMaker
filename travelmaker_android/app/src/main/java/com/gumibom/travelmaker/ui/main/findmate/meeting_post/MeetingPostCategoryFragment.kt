@@ -147,7 +147,9 @@ class MeetingPostCategoryFragment : Fragment() {
     }
 
     private fun createMeeting() {
+        binding.btnMeetingPostCreate.setOnClickListener {
 
+        }
     }
 
 

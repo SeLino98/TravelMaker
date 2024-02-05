@@ -5,6 +5,7 @@ import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
 import com.gumibom.travelmaker.data.api.meeting.MeetingService
+import com.gumibom.travelmaker.data.api.meeting_post.MeetingPostService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
@@ -19,12 +20,13 @@ import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.datasource.meeting_post.MeetingPostRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.datasource.meeting_post.MeetingPostRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
 
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
-import dagger.Binds
 
 import dagger.Module
 import dagger.Provides
@@ -75,5 +77,11 @@ class RemoteDataSourceModule {
     @Provides
     fun provideMeetingRemoteDataSource(meetingService: MeetingService) : MeetingRemoteDataSource {
         return MeetingRemoteDataSourceImpl(meetingService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMeetingPostRemoteDataSource(meetingPostService: MeetingPostService) : MeetingPostRemoteDataSource {
+        return MeetingPostRemoteDataSourceImpl(meetingPostService)
     }
 }

@@ -62,7 +62,7 @@
     <string name="login_find_password">비밀번호 찾기</string>
     <string name="find_mate_another_search">다른 장소도 검색해보세요.</string>
     <string name="meeting_post_title">모임 생성</string>
-    <string name="select_start_date">모임 시작 날짜를 선택해주세요.</string>
+    <string name="select_start_end_date">모임 시작, 종료 날짜를 선택해주세요.</string>
     <string name="select_deadline_day">모집 마감 날짜를 선택해주세요.</string>
     <string name="meeting_post_description">장소는 아이콘, 날짜는 박스를 클릭해주세요.</string>
     <string name="meeting_picture_title">사진을 골라주세요.</string>

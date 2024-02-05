@@ -82,11 +82,17 @@ class MeetingPostDateFragment : Fragment() {
     private fun moveNextFragment() {
         binding.btnMeetingPostNext.setOnClickListener {
             val startDate = binding.tvMeetingStartDate.text.toString()
+            val endDate = binding.tvMeetingEndDate.text.toString()
             val deadLineDate = binding.tvMeetingDeadlineDate.text.toString()
             val deadLineTime = binding.tvMeetingDeadlineTime.text.toString()
             val meetingPlace = binding.tvMeetingPostPlace.text.toString()
 
-            if (startDate.isNotEmpty() && deadLineDate.isNotEmpty() && deadLineTime.isNotEmpty() && !meetingPlace.isNullOrEmpty()) {
+            if (startDate.isNotEmpty() && endDate.isNotEmpty() && deadLineDate.isNotEmpty() && deadLineTime.isNotEmpty() && !meetingPlace.isNullOrEmpty()) {
+                meetingPostViewModel.startDate = startDate
+                meetingPostViewModel.endDate = endDate
+                meetingPostViewModel.deadlineDate = deadLineDate
+                meetingPostViewModel.deadlineTime = deadLineTime
+
                 activity.navigateToNextFragment()
             } else {
                 Toast.makeText(requireContext(), NOT_ENOUGH_INPUT, Toast.LENGTH_SHORT).show()
@@ -103,6 +109,15 @@ class MeetingPostDateFragment : Fragment() {
                 // 빈 String이 아니면 text 추가
                 if (dateString.isNotEmpty()){
                     binding.tvMeetingStartDate.text = dateString
+                }
+            }
+        }
+
+        binding.tvMeetingEndDate.setOnClickListener {
+            datePickerHelper.pickDate { dateString ->
+                // 빈 String이 아니면 text 추가
+                if (dateString.isNotEmpty()){
+                    binding.tvMeetingEndDate.text = dateString
                 }
             }
         }

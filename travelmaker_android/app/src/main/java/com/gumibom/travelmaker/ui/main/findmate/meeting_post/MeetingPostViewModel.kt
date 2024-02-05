@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gumibom.travelmaker.data.dto.response.Position
 import com.gumibom.travelmaker.model.Address
+import com.gumibom.travelmaker.model.SendMeetingPost
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -25,11 +26,12 @@ class MeetingPostViewModel @Inject constructor(
     var authDate = ""
     var startDate = ""
     var endDate = ""
-    var position = Position()
+    // position은 viewModel address로 대체하자
     var maxMember = 0
     var minNative = 0
     var minTraveler = 0
-    var deadline = ""
+    var deadlineDate = ""
+    var deadlineTime = ""
     var categoryList = mutableListOf<String>()
     private val _imageUrlList = mutableListOf<String>()
 
@@ -50,6 +52,17 @@ class MeetingPostViewModel @Inject constructor(
 
         _urlLiveData.value = _imageUrlList
     }
+
+//    fun createMeeting() {
+//        val sendMeetingPost = SendMeetingPost(
+//            title,
+//            username,
+//            content,
+//            authDate,
+//
+//
+//        )
+//    }
 
 
 

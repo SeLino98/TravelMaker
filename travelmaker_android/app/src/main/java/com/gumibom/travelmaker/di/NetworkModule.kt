@@ -6,6 +6,7 @@ import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
 import com.gumibom.travelmaker.data.api.meeting.MeetingService
+import com.gumibom.travelmaker.data.api.meeting_post.MeetingPostService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
@@ -152,5 +153,11 @@ class NetworkModule {
     @Singleton
     fun provideMeetingService(@MainRetrofit retrofit : Retrofit) : MeetingService {
         return retrofit.create(MeetingService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMeetingPostService(@MainRetrofit retrofit : Retrofit) : MeetingPostService {
+        return retrofit.create(MeetingPostService::class.java)
     }
 }
