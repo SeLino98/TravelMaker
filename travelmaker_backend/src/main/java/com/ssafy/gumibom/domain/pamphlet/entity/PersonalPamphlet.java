@@ -1,6 +1,5 @@
 package com.ssafy.gumibom.domain.pamphlet.entity;
 
-import ch.qos.logback.core.testUtil.StringListAppender;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.user.entity.User;

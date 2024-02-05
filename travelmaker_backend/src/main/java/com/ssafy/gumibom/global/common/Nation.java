@@ -10,5 +10,4 @@ public class Nation {
 
     private String name;
 
-    private String nationImg;
 }
