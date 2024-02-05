@@ -1,6 +1,7 @@
 package com.ssafy.gumibom.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
@@ -95,6 +96,18 @@ public class User {
     // Gender enum 타입 정의
     public enum Gender {
         MALE, FEMALE
+    }
+
+
+    public void setMeetingApplier(MeetingApplier meetingApplier) {
+        this.meetingAppliers.add(meetingApplier);
+        meetingApplier.setUser(this);
+    }
+
+
+    public void setMeetingMember(MeetingMember meetingMember) {
+        this.meetingMembers.add(meetingMember);
+        meetingMember.setUser(this);
     }
 
 
