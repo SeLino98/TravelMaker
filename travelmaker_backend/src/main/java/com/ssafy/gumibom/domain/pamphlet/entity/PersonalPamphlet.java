@@ -4,6 +4,7 @@ import ch.qos.logback.core.testUtil.StringListAppender;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.user.entity.User;
+import com.ssafy.gumibom.global.util.StringListConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -20,8 +21,8 @@ public class PersonalPamphlet extends Pamphlet {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Convert(converter = StringListAppender.class)
-    private ArrayList<String> categories = new ArrayList<>();
+    @Convert(converter = StringListConverter.class)
+    private List<String> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalPamphlet", cascade = CascadeType.ALL)
     private List<PersonalRecord> personalRecords = new ArrayList<>();
@@ -46,19 +47,20 @@ public class PersonalPamphlet extends Pamphlet {
     }
 
     // 팜플렛 제목 및 기본 정보를 세팅하는 함수
-    public void setPamphlet(String title) {
+    public void setPamphlet(String title, List<String> categories) {
         this.title = title;
         this.createTime = LocalDateTime.now();
         this.love = 0;
+        this.categories = categories;
     }
 
 
     // 생성 메서드
     // 도메인 모델 패턴
 
-    public static PersonalPamphlet createPersonalPamphlet(User user, String title) {
+    public static PersonalPamphlet createPersonalPamphlet(User user, String title, List<String> categories) {
         PersonalPamphlet pPamphlet = new PersonalPamphlet();
-        pPamphlet.setPamphlet(title);
+        pPamphlet.setPamphlet(title, categories);
         pPamphlet.setUser(user);
 //        for(String category: categories) {
 //            pPamphlet.categories.add(category);

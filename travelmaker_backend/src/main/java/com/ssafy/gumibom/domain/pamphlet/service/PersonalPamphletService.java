@@ -27,7 +27,7 @@ public class PersonalPamphletService {
     public Long makePamphlet(MakePersonalPamphletRequestDto makePPReqDto) {
 
         User user = userRepository.findOne(makePPReqDto.getUserId());
-        PersonalPamphlet pPamphlet = PersonalPamphlet.createPersonalPamphlet(user, makePPReqDto.getTitle());
+        PersonalPamphlet pPamphlet = PersonalPamphlet.createPersonalPamphlet(user, makePPReqDto.getTitle(), makePPReqDto.getCategories());
 
         return pPamphletRepository.save(pPamphlet);
     }

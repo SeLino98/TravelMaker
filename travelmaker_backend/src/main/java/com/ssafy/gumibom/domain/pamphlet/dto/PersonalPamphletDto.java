@@ -1,8 +1,11 @@
 package com.ssafy.gumibom.domain.pamphlet.dto;
 
+import ch.qos.logback.core.testUtil.StringListAppender;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.record.dto.PersonalRecordDto;
 import com.ssafy.gumibom.domain.user.entity.User;
+import com.ssafy.gumibom.global.util.StringListConverter;
+import jakarta.persistence.Convert;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +25,9 @@ public class PersonalPamphletDto {
     private LocalDateTime createTime;
     private List<PersonalRecordDto> records;
 
+    @Convert(converter = StringListConverter.class)
+    private List<String> categories;
+
     public PersonalPamphletDto(PersonalPamphlet pPamphlet) {
         this.pamphletId = pPamphlet.getId();
         this.nickname = pPamphlet.getUser().getNickname();
@@ -31,6 +37,7 @@ public class PersonalPamphletDto {
         this.records = pPamphlet.getPersonalRecords().stream()
                 .map(record -> new PersonalRecordDto(record))
                 .collect(Collectors.toList());
+        this.categories = pPamphlet.getCategories();
     }
 
 }

@@ -9,6 +9,10 @@
 //import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 //
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
+//
 //@Component
 //@RequiredArgsConstructor
 //public class InitDB {
@@ -35,9 +39,9 @@
 //            em.persist(user2);
 //            em.persist(user3);
 //
-//            PersonalPamphlet personalPamphlet1 = PersonalPamphlet.createPersonalPamphlet(user1, "첫번째 개인 팜플렛!");
-//            PersonalPamphlet personalPamphlet2 = PersonalPamphlet.createPersonalPamphlet(user2, "두번째 개인 팜플렛!");
-//            PersonalPamphlet personalPamphlet3 = PersonalPamphlet.createPersonalPamphlet(user3, "세번째 개인 팜플렛!");
+//            PersonalPamphlet personalPamphlet1 = PersonalPamphlet.createPersonalPamphlet(user1, "첫번째 개인 팜플렛!", new ArrayList<>(Arrays.asList("맛집", "힐링")));
+//            PersonalPamphlet personalPamphlet2 = PersonalPamphlet.createPersonalPamphlet(user2, "두번째 개인 팜플렛!", new ArrayList<>(Arrays.asList("문화", "쇼핑")));
+//            PersonalPamphlet personalPamphlet3 = PersonalPamphlet.createPersonalPamphlet(user3, "세번째 개인 팜플렛!", new ArrayList<>(Arrays.asList("맛집", "자연")));
 //
 //            em.persist(personalPamphlet1);
 //            em.persist(personalPamphlet2);
