@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -14,9 +15,13 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.gumibom.travelmaker.R
+import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
+import com.gumibom.travelmaker.model.User
 import com.gumibom.travelmaker.ui.main.findmate.FindMateActivity
+import com.gumibom.travelmaker.ui.signup.SignupViewModel
 import com.gumibom.travelmaker.util.PermissionChecker
+import com.gumibom.travelmaker.util.SharedPreferencesUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,10 +34,11 @@ private const val TAG = "MainActivity_싸피"
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
+    private lateinit var sharedPreferencesUtil: SharedPreferencesUtil
     private val binding get() = _binding!!
     private lateinit var navController : NavController
-
-
+    private val viewModel : MainViewModel by viewModels()
+    private lateinit var user : User
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +48,11 @@ class MainActivity : AppCompatActivity() {
                     as NavHostFragment).navController
         }
         setContentView(binding.root)
+        sharedPreferencesUtil = SharedPreferencesUtil(this)
+        user = sharedPreferencesUtil.getUser();
         initToolbar()
         setFirebase()
+        observeViewModel()
         setNavigationMenuToolbar()
     }
     private fun setNavigationMenuToolbar(){
@@ -80,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             // token log 남기기
             Log.d(TAG, "token: ${task.result?:"task.result is null"}")
             if(task.result != null){
-                uploadToken(task.result!!)
+                viewModel.uploadToken(FcmTokenRequestDTO( user.userId,task.result!!) )
             }
         })
         createNotificationChannel(CHANNEL_ID, "travelmaker")
@@ -91,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+
     }
 
     fun navigationToGotoTravel() {
@@ -111,6 +121,15 @@ class MainActivity : AppCompatActivity() {
         navController.navigateUp()
     }
 
+    fun observeViewModel(){
+        viewModel.isUploadToken.observe(this){
+            if (it.isSuccess){
+                Log.d(TAG, "서버통신 성공 : ${it.isSuccess}")
+            }else{
+                Log.d(TAG, "실패 데스 : ${it.isSuccess}")
+            }
+        }
+    }
     fun moveGoogleMap() {
         val intent = Intent(this, FindMateActivity::class.java)
         startActivity(intent)
@@ -146,38 +165,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         // Notification Channel ID
         const val CHANNEL_ID = "travelmaker_channel" //mainActivity의 채널
-        //PendingIntent를 넘길 때 쓴다.
-//
-//        fun uploadToken(token: String) {
-//            Log.d(TAG, "uploadToken: $token")
-//        }
-
-        fun uploadToken(token:String){
-            // 새로운 토큰 수신 시 서버로 전송
-            //파이어베이스에 있는 현재 유저의 전화번호를 가져오고,
-            //현재 토큰 값과 함께 요청
-            //유저 테이블 세팅하고
-            Log.d(TAG, "uploadToken: asdfasdfasdfasdfasdf")
-//            val authUser = AuthUser()
-//            authUser.uid = LoginRepo().getUserUid()
-//            authUser.token = token
-//            Log.d(TAG, "uploadToken: ${authUser.toString()}")
-//            //보낸다.
-//            val storeService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
-//            storeService.uploadToken(authUser).enqueue(object : Callback<String> {
-//                override fun onResponse(call: Call<String>, response: Response<String>) {
-//                    if(response.isSuccessful){
-//                        val res = response.body()
-//                        Log.d(TAG, "onResponse: $res")
-//                    } else {
-//                        Log.d(TAG, "onResponse: Error Code ${response.code()}")
-//                    }
-//                }
-//                override fun onFailure(call: Call<String>, t: Throwable) {
-//                    Log.d(TAG, t.message ?: "토큰 정보 등록 중 통신오류")
-//                }
-//            })
-        }
 
     }
+
 }
+

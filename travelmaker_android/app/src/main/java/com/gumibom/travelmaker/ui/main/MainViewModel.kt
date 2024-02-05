@@ -9,12 +9,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
+import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
+import com.gumibom.travelmaker.domain.firebase.FirebaseFcmUploadTokenUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
 import com.gumibom.travelmaker.model.Address
+import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.ui.common.CommonViewModel
@@ -29,8 +33,8 @@ class MainViewModel @Inject constructor(
     private val getKakaoLocationUseCase: GetKakaoLocationUseCase,
     private val getMarkerPositionsUseCase : GetMarkerPositionsUseCase,
 
-    private val getPostDetailUseCase:GetPostDetailUseCase
-
+    private val getPostDetailUseCase:GetPostDetailUseCase,
+    private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase
 ) : ViewModel(), CommonViewModel {
 
     var address : Address? = null
@@ -64,6 +68,14 @@ class MainViewModel @Inject constructor(
     fun getPostDetail(pos:Long){
         viewModelScope.launch {
             _postDTO.value = getPostDetailUseCase.getPostDetail(pos)
+        }
+    }
+
+    private val _isUploadToken = MutableLiveData<BooleanResponse>()
+    val isUploadToken:LiveData<BooleanResponse> = _isUploadToken
+    fun uploadToken(firebaseFcmTokenRequestDTO: FcmTokenRequestDTO){
+        viewModelScope.launch {
+            _isUploadToken.value = firebaseFcmUploadTokenUseCase.uploadToken(firebaseFcmTokenRequestDTO)
         }
     }
 
