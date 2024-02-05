@@ -27,20 +27,19 @@ class MainFragment : Fragment() {
     private fun initButtonClickListener(){
         binding.btnLookForMate.setOnClickListener {
             //activity. 버튼 이동로직들이 fragment에 있는데, activity에서 버튼 이동 관리하는 게 맞는건가?
-//            activity.navigationToNextFragment()
             activity.moveGoogleMap()
         }
         binding.btnCreateMyPamphlet.setOnClickListener {
-
+            activity.navigationToGotoTravel()
         }
         binding.btnLookAroundPamphlet.setOnClickListener {
-
+            activity.navigationToLookAroundPam()
         }
-//        binding.btnMyGroup.setOnClickListener {
-//
-//        }
+        binding.btnMyGroup.setOnClickListener {
+            activity.navigationToGroupMSG()
+        }
         binding.btnReadMyRecord.setOnClickListener {
-
+            activity.navigationToReadMyRecord()
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
