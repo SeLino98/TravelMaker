@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -50,10 +52,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         sharedPreferencesUtil = SharedPreferencesUtil(this)
         user = sharedPreferencesUtil.getUser();
-        initToolbar()
         setFirebase()
         observeViewModel()
         setNavigationMenuToolbar()
+        initToolbar()
     }
     private fun setNavigationMenuToolbar(){
         //프래그먼트가 ~~ 일 땐 ~~로
@@ -61,10 +63,12 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.mainFragment -> {
+                    Log.d(TAG, "setNavigationMenuToolbar: 1")
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.inflateMenu(R.menu.menu_main) // 새 메뉴 설정
-                    binding.toolbar.title = "TEST"
+                    binding.toolbar.title = "메인 페이지"
                     binding.toolbar.navigationIcon = null
+                    Log.d(TAG, "setNavigationMenuToolbar: 2")
                 }
                 R.id.mainMyGroupFragment, R.id.mainFindMateFragment -> {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
@@ -102,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         notificationManager.createNotificationChannel(channel)
 
     }
-
     fun navigationToGotoTravel() {
 //        navController.navigate(R.id.action_mainFindMateFragment_to_mainFindMateDetailFragment)
         navController.navigate(R.id.action_mainFragment_to_mainGoTravelFragment)
@@ -135,10 +138,20 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+
+    }
     private fun initToolbar(){
+
         binding.toolbar.setNavigationOnClickListener {
             // Handle navigation icon press
         }
+        val imageView = findViewById<ImageView>(R.id.my_custom_icon)
+        imageView.setOnClickListener {
+            Log.d(TAG, "toolbarMypageClickListener: 123123123123")
+        }
+
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_notify -> {
@@ -149,12 +162,9 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "initToolbar:SEARYCDGC")
                     true
                 }
-                R.id.action_my_page -> {
-                    Log.d(TAG, "initToolbar:_inho!")
-                    true
-                }
                 else -> false
             }
+
         }
     }
     override fun onDestroy() {
