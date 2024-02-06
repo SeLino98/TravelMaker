@@ -15,6 +15,10 @@
         <action
             android:id="@+id/action_mainFragment_to_mainMyGroupFragment"
             app:destination="@id/mainMyGroupFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mainMyPageFragment"
+            app:destination="@id/mainMyPageFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/mainFindMateFragment"
@@ -50,5 +54,9 @@
         android:name="com.gumibom.travelmaker.ui.main.mygroup.MainMyGroupFragment"
         android:label="fragment_main_my_group"
         tools:layout="@layout/fragment_main_my_group" />
+    <fragment
+        android:id="@+id/mainMyPageFragment"
+        android:name="com.gumibom.travelmaker.ui.main.mypage.MainMyPageFragment"
+        android:label="MainMyPageFragment" />
 
 </navigation>

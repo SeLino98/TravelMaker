@@ -42,9 +42,8 @@ class MainMyPageFragment:Fragment() {
         // 마이페이지에서 일어나는 주요 기능
 
         // 1. 뒤로가기 버튼 클릭 -> 메인화면으로 다시 이동
-        previousBtn()
         // 2. 프로필사진 변경 버튼 클릭 -> 프로필사진 변경
-
+        mypageProfilePicEdit()
         // 3. 닉네임 변경 -> edittext 를 눌러서 고침 (liveData)
         mypageNicknameEdit()
         // 4. 이메일 변경 -> edittext 를 눌러서 고침 (liveData)
@@ -55,33 +54,25 @@ class MainMyPageFragment:Fragment() {
         mypageLogout()
         // 7. 회원탈퇴 버튼 클릭 -> '정말 탈퇴하겠습니까?' 모달 나오면서 '탈퇴' 클릭 -> 탈퇴
         mypageWithdrawal()
+        // 8. 신뢰도 수준 보여주는 함수 <- 신뢰도 점수 구간에 맞게 drawable에서 img_trust_n 사진을 찾아서 그려줌
+//        mypageTrustLevel()
     }
 
-    private fun previousBtn() {
-        val btnMypagePrevious  = binding.ibMypagePrevious
-        // 뒤로가기 누르면, 뒤로가서 메인화면으로 감
-        btnMypagePrevious.setOnClickListener {
-            activity.navigationPop()
-        }
+
+    private fun mypageProfilePicEdit(){
+        val btnPicEdit = binding.ivMypageProfileEdit
     }
 
     private fun mypageNicknameEdit(){
         val nicknameContent = binding.etMypageNickname
+//        val btnNicknameEdit
         // 수정 함수 이므로, 유효성 검사 필요
-        nicknameContent.onFocusChangeListener = View.OnFocusChangeListener{view, hasFocus ->
-            // 포커스가 없을때 --> 유효성 검사 수행
-            if (!hasFocus){
-                // 닉네임 유효성 검사
-                if (validateNickname(nicknameContent.text.toString())){
-                    // 변경된 닉네임이 유효하다면 ---> 할일: 닉네임 변경을 업데이트
-                }
-            }
-        }
+
     }
 
     private fun validateNickname(nickname:String): Boolean{
         if (nickname.isBlank()){
-            Toast.makeText(context,"닉네임은 공백일 수 없습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"닉네임을 작성해주세요", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -90,19 +81,12 @@ class MainMyPageFragment:Fragment() {
     private fun mypageEmailEdit(){
         val emailContent = binding.etMypageEmail
         // 수정 함수 이므로, 유효성 검사 필요
-        emailContent.onFocusChangeListener = View.OnFocusChangeListener{view, hasFocus ->
-            if (!hasFocus) {
-                // 이메일 유효성 검사
-                if (validateEmail(emailContent.text.toString())){
-                    // 변경된 이메일이 유효하다면 ---> 할일: 이메일 변경을 업데이트
-                }
-            }
-        }
+
     }
 
     private fun validateEmail(email:String): Boolean{
         if (email.isBlank()){
-            Toast.makeText(context,"이메일은 공백일 수 없습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"이메일을 작성해주세요", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -115,7 +99,7 @@ class MainMyPageFragment:Fragment() {
     }
 
     private fun mypageWithdrawal(){
-        val btnWithdrawal = binding.btnMypageWithdrawal
+        val btnWithdrawal = binding.btnMypageDeleteUser
         // 회원탈퇴 로직
     }
 }

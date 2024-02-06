@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setNavigationMenuToolbar()
     }
     private fun setNavigationMenuToolbar(){
+        val mypage =
         //프래그먼트가 ~~ 일 땐 ~~로
         //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -54,10 +55,10 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.title = "TEST"
                     binding.toolbar.navigationIcon = null
                 }
-                R.id.mainMyGroupFragment, R.id.mainFindMateFragment -> {
+                R.id.mainMyGroupFragment, R.id.mainFindMateFragment,R.id.mainMyPageFragment -> {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
-                    binding.toolbar.title = "HHHH"
+                    binding.toolbar.title = getString(R.string.mypage_title)
                     binding.toolbar.setNavigationOnClickListener {
                         Log.d(TAG, "setNavigationMenuToolbar: ")
                         navController.navigateUp()
@@ -116,6 +117,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.action_notify -> {
                     Log.d(TAG, "initToolbar: Noyigiyu")
+                    navController.navigate(R.id.action_mainFragment_to_mainMyPageFragment)
                     true
                 }
                 R.id.action_search -> {
@@ -124,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.action_my_page -> {
                     Log.d(TAG, "initToolbar:_inho!")
+
                     true
                 }
                 else -> false
