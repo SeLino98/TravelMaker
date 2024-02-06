@@ -18,6 +18,10 @@ public class PersonalRecord extends Record {
     @JoinColumn(name = "pamphlet_id")
     private PersonalPamphlet personalPamphlet;
 
+    public void updateRecord(String title, String imgUrl, String videoUrl, String text, Emoji emoji) {
+        this.setRecord(title, imgUrl, videoUrl, text, emoji);
+    }
+
     // 연관관계 편의 메서드
     @Override
     protected void setPamphlet(Pamphlet pamphlet) {

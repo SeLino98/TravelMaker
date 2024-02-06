@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Position;
+import com.ssafy.gumibom.global.util.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class MeetingPost {
 
     //    @JsonIgnore
 //    @OneToMany(mappedBy = "meeting_post")
-    @ElementCollection
+    @Convert(converter = StringListConverter.class)
     private List<String> categories = new ArrayList<>();
 
     private String title;
@@ -51,7 +52,7 @@ public class MeetingPost {
     @Embedded
     private Position position;
 
-    public MeetingPost(WriteMeetingPostRequestDTO requestDTO) {
+    public MeetingPost(String mainImgUrl, String subImgUrl, String thirdImgUrl, WriteMeetingPostRequestDTO requestDTO) {
 
         this.title = requestDTO.getTitle();
         this.content = requestDTO.getContent();
@@ -63,9 +64,9 @@ public class MeetingPost {
         this.travelerMin = requestDTO.getTravelerMin();
         this.memberMax = requestDTO.getMemberMax();
         this.status = false;
-        this.imgUrlMain = requestDTO.getImgUrlMain();
-        this.imgUrlSub = requestDTO.getImgUrlSub();
-        this.imgUrlThr = requestDTO.getImgUrlThr();
+        this.imgUrlMain = mainImgUrl;
+        this.imgUrlSub = subImgUrl;
+        this.imgUrlThr = thirdImgUrl;
         this.categories = requestDTO.getCategories();
         this.position = requestDTO.getPosition();
     }
@@ -74,22 +75,25 @@ public class MeetingPost {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
-        meetingApplier.setIsNative(position.getTown() == user.getTown());
+        if(position != null) meetingApplier.setIsNative(position.getTown() == user.getTown());
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
     }
 
-    public static MeetingPost createMeetingPost(WriteMeetingPostRequestDTO requestDTO, User author
-    ) {
+    public static MeetingPost createMeetingPost(
+            String mainImgUrl,
+            String subImgUrl,
+            String thirdImgUrl,
+            WriteMeetingPostRequestDTO requestDTO, User author) {
 
-        MeetingPost meetingPost = new MeetingPost(requestDTO);
+        MeetingPost meetingPost = new MeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO);
 
         meetingPost.addApplier(author, true, requestDTO.getPosition());
 
         return meetingPost;
     }
 
-    public MeetingPost updateMeetingPost(WriteMeetingPostRequestDTO requestDTO) {
+    public MeetingPost updateMeetingPost(String mainImgUrl, String subImgUrl, String thirdImgUrl, WriteMeetingPostRequestDTO requestDTO) {
 
         this.title = requestDTO.getTitle();
         this.content = requestDTO.getContent();
@@ -108,9 +112,9 @@ public class MeetingPost {
         this.nativeMin = requestDTO.getNativeMin();
         this.travelerMin = requestDTO.getTravelerMin();
         this.memberMax = requestDTO.getMemberMax();
-        this.imgUrlMain = requestDTO.getImgUrlMain();
-        this.imgUrlSub = requestDTO.getImgUrlSub();
-        this.imgUrlThr = requestDTO.getImgUrlThr();
+        this.imgUrlMain = mainImgUrl;
+        this.imgUrlSub = subImgUrl;
+        this.imgUrlThr = thirdImgUrl;
         this.categories = requestDTO.getCategories();
         this.position = requestDTO.getPosition();
 

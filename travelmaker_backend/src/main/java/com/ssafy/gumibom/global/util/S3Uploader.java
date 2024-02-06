@@ -55,7 +55,7 @@ public class S3Uploader {
     }
 
     // S3에 있는 파일 삭제
-    private void deleteS3(String filePath) throws Exception {
+    public void deleteS3(String filePath) throws Exception {
         try {
             String key = filePath.substring(56); // 폴더, 파일 확장자
 

@@ -4,10 +4,12 @@ import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
 import com.ssafy.gumibom.domain.pamphlet.service.PersonalPamphletService;
 import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
+import com.ssafy.gumibom.domain.record.dto.request.UpdatePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.repository.RecordRepository;
 import com.ssafy.gumibom.global.common.Emoji;
+import com.ssafy.gumibom.global.util.S3Service;
 import com.ssafy.gumibom.global.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,10 +28,9 @@ public class RecordService {
     private final RecordRepository recordRepository;
     private final PersonalPamphletRepository pPamphletRepository;
 
-    @Autowired
-    private S3Uploader s3Uploader;
+    private final S3Service s3Service;
 
-    // 개인 팜플렛에 개인 기록 저장
+    // 개인 팜플렛에 여행 기록 저장
     @Transactional
     public Long makePersonalRecord(MultipartFile image, MultipartFile video, SavePersonalRecordRequestDto dto) throws IOException {
 
@@ -39,8 +41,8 @@ public class RecordService {
         String text = dto.getText();
         Emoji emoji = dto.getEmoji();
 
-        if(image!=null) imgUrl = uploadImage(image);
-        if(video!=null) videoUrl = uploadVideo(video);
+        if(image!=null) imgUrl = s3Service.uploadS3(image, "images");
+        if(video!=null) videoUrl = s3Service.uploadS3(video, "videos");
 
         PersonalRecord pRecord = PersonalRecord.createPersonalRecord(title, imgUrl, videoUrl, text, pPamphlet, emoji);
         recordRepository.save(pRecord);
@@ -48,30 +50,49 @@ public class RecordService {
         return pRecord.getId();
     }
 
-    // S3 이미지 업로드 테스트용 함수
+    // 여행 기록 삭제
     @Transactional
-    public String uploadImage(MultipartFile image) throws IOException {
-        String storedImageFileName = "";
+    public void removePersonalRecord(Long pamphletId, Long recordId) throws Exception {
 
-        // 이미지 파일이 넘어온다면 -> S3에 업로드 후 record에 이미지 저장
-        if(image != null) {
-            storedImageFileName = s3Uploader.uploadFileToS3(image, "images");
-        }
+        PersonalPamphlet pPamphlet = pPamphletRepository.findByPamphletId(pamphletId);
+        PersonalRecord pRecord = (PersonalRecord) recordRepository.findOne(recordId);
 
-        return storedImageFileName;
+        String imgUrl = pRecord.getImgUrl();
+        String videoUrl = pRecord.getVideoUrl();
+
+        if(!Objects.equals(imgUrl, "")) s3Service.deleteS3(imgUrl);
+        if(!Objects.equals(videoUrl, "")) s3Service.deleteS3(videoUrl);
+
+        pPamphlet.removeRecord(pRecord);
+        recordRepository.delete(pRecord);
     }
 
-    // S3 영상 업로드 테스트용 함수
+    // 여행 기록 수정
     @Transactional
-    public String uploadVideo(MultipartFile video) throws IOException {
-        String storedImageFileName = "";
+    public void updatePersonalRecord(MultipartFile image, MultipartFile video, UpdatePersonalRecordRequestDto uPRRDto) throws Exception {
 
-        // 이미지 파일이 넘어온다면 -> S3에 업로드 후 record에 이미지 저장
-        if(video != null) {
-            storedImageFileName = s3Uploader.uploadFileToS3(video, "videos");
+        PersonalPamphlet pPamphlet = pPamphletRepository.findByPamphletId(uPRRDto.getPamphletId());
+        PersonalRecord pRecord = (PersonalRecord) recordRepository.findOne(uPRRDto.getRecordId());
+
+        String imgUrl = "";
+        String videoUrl = "";
+
+        /**
+         * 새로 들어온 파일이 있다면,
+         * 1. S3에서 기존 파일 삭제
+         * 2. S3에 새로운 파일 업로드
+         */
+        if(image!=null) {
+            s3Service.deleteS3(pRecord.getImgUrl());
+            imgUrl = s3Service.uploadS3(image, "images");
         }
 
-        return storedImageFileName;
+        if(video!=null) {
+            s3Service.deleteS3(pRecord.getVideoUrl());
+            videoUrl = s3Service.uploadS3(video, "videos");
+        }
+
+        pRecord.updateRecord(uPRRDto.getTitle(), imgUrl, videoUrl, uPRRDto.getText(), uPRRDto.getEmoji());
     }
 
 }

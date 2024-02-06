@@ -24,6 +24,7 @@ public class PersonalPamphletDto {
     private Integer love;
     private LocalDateTime createTime;
     private List<PersonalRecordDto> records;
+    private Boolean isFinish;
 
     @Convert(converter = StringListConverter.class)
     private List<String> categories;
@@ -38,6 +39,7 @@ public class PersonalPamphletDto {
                 .map(record -> new PersonalRecordDto(record))
                 .collect(Collectors.toList());
         this.categories = pPamphlet.getCategories();
+        this.isFinish = pPamphlet.getIsFinish();
     }
 
 }

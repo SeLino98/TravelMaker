@@ -4,10 +4,13 @@ import com.ssafy.gumibom.domain.pamphlet.dto.PersonalPamphletDto;
 import com.ssafy.gumibom.domain.pamphlet.dto.request.MakePersonalPamphletRequestDto;
 import com.ssafy.gumibom.domain.pamphlet.dto.response.MakePersonalPamphletResponseDto;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
+import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
 import com.ssafy.gumibom.domain.pamphlet.service.PersonalPamphletService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +23,19 @@ public class PersonalPamphletController {
 
     private final PersonalPamphletService pPamphletService;
 
-    @Operation(summary = "개인 팜플렛 생성 ")
+    @Operation(summary = "개인 팜플렛 생성")
     @PostMapping
     public @ResponseBody MakePersonalPamphletResponseDto makePersonalPamphlet(@RequestBody MakePersonalPamphletRequestDto makePPReqDto) {
         Long pId = pPamphletService.makePamphlet(makePPReqDto);
 
         return new MakePersonalPamphletResponseDto(true, "개인 팜플렛 생성 성공", pId);
+    }
+
+    @Operation(summary = "개인 팜플렛 종료")
+    @PutMapping("/{pamphletId}")
+    public ResponseEntity<?> finishPersonalPamphlet(@PathVariable("pamphletId") Long pamphletId) {
+        pPamphletService.finishPamphlet(pamphletId);
+        return ResponseEntity.ok("해당 개인 팜플렛이 종료되었습니다.");
     }
 
     @Operation(summary = "특정 개인 팜플렛 조회")
