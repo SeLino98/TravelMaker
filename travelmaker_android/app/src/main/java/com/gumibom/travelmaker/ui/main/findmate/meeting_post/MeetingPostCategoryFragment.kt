@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.ui.main.findmate.meeting_post
 
 import android.R
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.gumibom.travelmaker.constant.FAIL_CREATE_MEETING_POST
 import com.gumibom.travelmaker.constant.NOT_ENOUGH_INPUT
 import com.gumibom.travelmaker.constant.SUCCESS_CREATE_MEETING_POST
 import com.gumibom.travelmaker.databinding.FragmentMeetingPostCategoryBinding
+import com.gumibom.travelmaker.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MeetingPostCategoryFrag_싸피"
@@ -70,10 +72,18 @@ class MeetingPostCategoryFragment : Fragment() {
         meetingPostViewModel.isSuccess.observe(viewLifecycleOwner) { message ->
             if (message.isNotEmpty()) {
                 Toast.makeText(requireContext(), SUCCESS_CREATE_MEETING_POST, Toast.LENGTH_SHORT).show()
-                activity.finish()
+
+                val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(intent)
+
             } else {
                 Toast.makeText(requireContext(), FAIL_CREATE_MEETING_POST, Toast.LENGTH_SHORT).show()
-                activity.finish()
+                val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(intent)
             }
         }
     }
