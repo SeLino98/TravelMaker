@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             // token log 남기기
             Log.d(TAG, "token: ${task.result?:"task.result is null"}")
             if(task.result != null){
-                viewModel.uploadToken(FcmTokenRequestDTO( user.userId,task.result!!) )
+                viewModel.uploadToken(FcmTokenRequestDTO("wnddnjs823",task.result!!) )
             }
         })
         createNotificationChannel(CHANNEL_ID, "travelmaker")
