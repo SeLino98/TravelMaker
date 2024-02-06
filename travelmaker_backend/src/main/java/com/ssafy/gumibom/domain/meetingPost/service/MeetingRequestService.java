@@ -1,6 +1,9 @@
 package com.ssafy.gumibom.domain.meetingPost.service;
 
 import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.ReceivedRequestResponseDto;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.SentRequestResponseDto;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingRequest;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -43,5 +48,21 @@ public class MeetingRequestService {
         meetingRequestRepository.save(meetingRequest);
 
         return ResponseEntity.ok("모임 요청이 완료되었습니다.");
+    }
+
+    public ShowAllJoinRequestResponseDto showAllJoinRequest(Long userId) {
+
+        List<MeetingRequest> sentRequests = meetingRequestRepository.findSentByUserId(userId);
+        List<MeetingRequest> receivedRequests = meetingRequestRepository.findReceivedByUserId(userId);
+
+        List<ReceivedRequestResponseDto> receivedRequestsDto = receivedRequests.stream()
+                .map(req -> new ReceivedRequestResponseDto(req))
+                .collect(Collectors.toList());
+
+        List<SentRequestResponseDto> sentRequestsDto = sentRequests.stream()
+                .map(req -> new SentRequestResponseDto(req))
+                .collect(Collectors.toList());
+
+        return new ShowAllJoinRequestResponseDto(receivedRequestsDto, sentRequestsDto);
     }
 }

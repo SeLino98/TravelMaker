@@ -3,6 +3,7 @@ package com.ssafy.gumibom.domain.meetingPost.controller;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingRequestService;
 import com.ssafy.gumibom.domain.user.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Tag(name = "Meeting Post", description = "모임글 관련 api")
 @RestController
@@ -22,7 +24,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MeetingPostController {
 
-    private final UserService userService;
     private final MeetingPostService meetingPostService;
     private final MeetingRequestService meetingRequestService;
 
@@ -97,5 +98,13 @@ public class MeetingPostController {
     @PostMapping("/response-join/refuse")
     public void refuseRequestJoinMeeting() {
 
+    }
+
+
+    // 사용자 -> 모임 요청 보낸거, 받은거 조회 (추후 User Controller로 이전)
+    @Operation(summary = "모임 요청 조회")
+    @GetMapping("/all-request/{userId}")
+    public @ResponseBody ShowAllJoinRequestResponseDto showAllJoinRequest(@PathVariable("userId") Long userId) {
+        return meetingRequestService.showAllJoinRequest(userId);
     }
 }
