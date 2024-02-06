@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.meeting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.dto.req.MeetingCreateReqDto;
+import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.pamphlet.entity.MeetingPamphlet;
 import com.ssafy.gumibom.global.common.Position;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,20 +39,25 @@ public class Meeting {
 
     @JsonIgnore
     @OneToMany(mappedBy = "meeting")
-    private List<MeetingMember> meetingMembers;
+    private List<MeetingMember> meetingMembers= new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "pamphlet_id")
     private MeetingPamphlet meetingPamphlet;
 
 
-    public Meeting(MeetingCreateReqDto meetingCreateReqDto) {
-        this.title = meetingCreateReqDto.getTitle();
-        this.startDate = meetingCreateReqDto.getStartDate();
-        this.endDate = meetingCreateReqDto.getEndDate();
-        this.imgUrl = meetingCreateReqDto.getImgUrl();
-        this.categories = meetingCreateReqDto.getCategories();
+    public Meeting(DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto) {
+        this.title = detailMeetingPostResForMeetingDto.getTitle();
+        this.startDate = detailMeetingPostResForMeetingDto.getStartDate();
+        this.endDate = detailMeetingPostResForMeetingDto.getEndDate();
+        this.imgUrl = detailMeetingPostResForMeetingDto.getImgUrl();
+        this.categories = detailMeetingPostResForMeetingDto.getCategories();
+//        this.meetingMembers = detailMeetingPostResForMeetingDto.getMembers();
         this.status = true;
-        this.position = meetingCreateReqDto.getPosition();
+        this.position = detailMeetingPostResForMeetingDto.getPosition();
+    }
+
+    public void finishMeeting(){
+        this.status = false;
     }
 }

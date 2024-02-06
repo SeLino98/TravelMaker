@@ -32,4 +32,8 @@ public class MeetingMember {
         this.meeting = meeting;
     }
 
+    public void setIsNative(Boolean isNative){
+        this.isNative = isNative;
+    }
+
 }
