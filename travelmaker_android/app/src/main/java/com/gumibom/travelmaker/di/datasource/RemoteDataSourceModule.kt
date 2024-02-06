@@ -40,8 +40,8 @@ class RemoteDataSourceModule {
     @Provides
     fun provideFirebaseFcmRemoteDataSource(firebaseTokenService: FirebaseTokenService):FirebaseFcmRemoteDataSource{
         return FirebaseFcmRemoteDataSourceImpl(firebaseTokenService)
-
     }
+
     @Singleton
     @Provides
     fun provideNaverLocationRemoteDataSource(naverLocationSearchService: NaverLocationSearchService) : NaverLocationRemoteDataSource {
@@ -76,4 +76,7 @@ class RemoteDataSourceModule {
     fun provideMeetingRemoteDataSource(meetingService: MeetingService) : MeetingRemoteDataSource {
         return MeetingRemoteDataSourceImpl(meetingService)
     }
+
+
+
 }

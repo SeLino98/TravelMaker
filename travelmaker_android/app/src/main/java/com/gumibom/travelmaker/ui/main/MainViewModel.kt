@@ -9,10 +9,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
+import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
+import com.gumibom.travelmaker.domain.firebase.FirebaseAcceptCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseFcmUploadTokenUseCase
+import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
@@ -32,10 +35,21 @@ class MainViewModel @Inject constructor(
     private val getGoogleLocationUseCase: GetGoogleLocationUseCase,
     private val getKakaoLocationUseCase: GetKakaoLocationUseCase,
     private val getMarkerPositionsUseCase : GetMarkerPositionsUseCase,
-
+    private val requestGroupUseCase: FirebaseRequestGroupUseCase,
+    private val acceptCrewUseCase: FirebaseAcceptCrewUseCase,
     private val getPostDetailUseCase:GetPostDetailUseCase,
     private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase
 ) : ViewModel(), CommonViewModel {
+
+
+
+    private val _isRequestSuccess = MutableLiveData<BooleanResponse>()
+    val isRequestSuccess :LiveData<BooleanResponse> = _isRequestSuccess
+    fun requestGroup(firebaseDTO: FcmRequestGroupDTO){
+        viewModelScope.launch {
+            _isRequestSuccess.value = requestGroupUseCase.requestGroup(firebaseDTO)
+        }
+    }
 
     var address : Address? = null
 

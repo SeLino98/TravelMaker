@@ -70,6 +70,10 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         selectCategory()
         setBottomSheet()
         moveMeetingPost()
+//        mainViewModel.
+        /**
+         *
+         * */
     }
     private fun setBottomSheet(){
         val standardBottomSheet = binding.bts.bottomSheetLayout

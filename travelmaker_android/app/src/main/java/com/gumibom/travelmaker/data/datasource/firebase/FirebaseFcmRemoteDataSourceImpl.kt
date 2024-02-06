@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.datasource.firebase
 
 import com.gumibom.travelmaker.data.api.firebase.FirebaseTokenService
+import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import retrofit2.Response
@@ -12,6 +13,14 @@ class FirebaseFcmRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun uploadToken(fcmTokenRequestDTO: FcmTokenRequestDTO): Response<IsSuccessResponseDTO> {
         return firebaseTokenService.uploadToken(fcmTokenRequestDTO)
+    }
+
+    override suspend fun groupRequest(fcmRequestGroup: FcmRequestGroupDTO): Response<IsSuccessResponseDTO> {
+        return firebaseTokenService.groupRequest(fcmRequestGroup)
+    }
+
+    override suspend fun acceptCrew(fcmRequestGroup: FcmRequestGroupDTO): Response<IsSuccessResponseDTO> {
+        return  firebaseTokenService.acceptCrew(fcmRequestGroup)
     }
 
 

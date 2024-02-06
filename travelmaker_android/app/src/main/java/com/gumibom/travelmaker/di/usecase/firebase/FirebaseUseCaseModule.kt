@@ -2,7 +2,9 @@ package com.gumibom.travelmaker.di.usecase.firebase
 
 import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepository
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
+import com.gumibom.travelmaker.domain.firebase.FirebaseAcceptCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseFcmUploadTokenUseCase
+import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import dagger.Module
 import dagger.Provides
@@ -19,5 +21,20 @@ class FirebaseUseCaseModule {
     fun provideFirebaseFcmTokenUseCase(firebaseFcmRepository: FirebaseFcmRepository) : FirebaseFcmUploadTokenUseCase {
         return FirebaseFcmUploadTokenUseCase(firebaseFcmRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideFcmGroupRequestUseCase(firebaseFcmRepository: FirebaseFcmRepository) : FirebaseRequestGroupUseCase{
+        return FirebaseRequestGroupUseCase(firebaseFcmRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFcmAcceptCrew(firebaseFcmRepository: FirebaseFcmRepository) : FirebaseAcceptCrewUseCase{
+        return FirebaseAcceptCrewUseCase(firebaseFcmRepository)
+    }
+
+
+
 
 }
