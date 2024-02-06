@@ -14,7 +14,6 @@ interface MeetingPostService {
     @Multipart
     @POST("/meeting-post/write")
     suspend fun createMeeting(
-        @Header("Authorization") token : String,
         @Part imgUrlMain : MultipartBody.Part,
         @Part imgUrlSub : MultipartBody.Part?,
         @Part imgUrlThr : MultipartBody.Part?,

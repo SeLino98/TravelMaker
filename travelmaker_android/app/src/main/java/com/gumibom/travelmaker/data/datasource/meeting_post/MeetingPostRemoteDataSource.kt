@@ -9,7 +9,6 @@ import retrofit2.Response
 interface MeetingPostRemoteDataSource {
 
     suspend fun createMeeting(
-        token : String,
         imgUrlMain : MultipartBody.Part,
         imgUrlSub : MultipartBody.Part?,
         imgUrlThr : MultipartBody.Part?,

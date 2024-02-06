@@ -12,6 +12,7 @@ import com.gumibom.travelmaker.data.api.meeting_post.MeetingPostService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
+import com.gumibom.travelmaker.util.AccessTokenInterceptor
 import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.Module
 import dagger.Provides
@@ -46,6 +47,17 @@ class NetworkModule {
     @Retention(AnnotationRetention.BINARY)
     annotation class MainRetrofit
 
+    /**
+     * Logging용, Interceptor용 OkHttp 구분 하기
+     */
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class LoggingOkHttpClient
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class AccessTokenOkHttpClient
+
     @Provides
     @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -54,11 +66,32 @@ class NetworkModule {
         }
     }
 
+    /**
+     * TokenInterceptor 인스턴스 생성
+     */
     @Provides
     @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideAccessTokenInterceptor(): AccessTokenInterceptor {
+        return AccessTokenInterceptor()
+    }
+
+    // HTTP Logging용 OkHttpClient 제공
+    @Provides
+    @Singleton
+    @LoggingOkHttpClient
+    fun provideInterceptorOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addNetworkInterceptor(httpLoggingInterceptor)
+            .build()
+    }
+
+    // AccessToken 인터셉터용 OkHttpClient 제공
+    @Provides
+    @Singleton
+    @AccessTokenOkHttpClient
+    fun provideAccessTokenOkHttpClient(accessTokenInterceptor: AccessTokenInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(accessTokenInterceptor) // AccessToken 인터셉터 추가
             .build()
     }
 
@@ -86,7 +119,7 @@ class NetworkModule {
     @Singleton
     @NaverRetrofit
     fun provideNaverRetrofit(
-        okHttpClient: OkHttpClient,
+        @LoggingOkHttpClient okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(ApplicationClass.NAVER_LOCATION_SEARCH_URL)
@@ -98,7 +131,7 @@ class NetworkModule {
     @Singleton
     @MainRetrofit
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
+        @AccessTokenOkHttpClient okHttpClient: OkHttpClient,
         scalarsConverterFactory : ScalarsConverterFactory,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder()
@@ -112,7 +145,7 @@ class NetworkModule {
     @Singleton
     @GoogleRetrofit
     fun provideGoogleRetrofit(
-        okHttpClient: OkHttpClient,
+        @LoggingOkHttpClient okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(ApplicationClass.GOOGLE_GEOCODE_URL)
@@ -124,7 +157,7 @@ class NetworkModule {
     @Singleton
     @KakaoRetrofit
     fun provideKakaoRetrofit(
-        okHttpClient: OkHttpClient,
+        @LoggingOkHttpClient okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(ApplicationClass.KAKAO_LOCATION_SEARCH_URL)

@@ -47,7 +47,6 @@ class PostMeetingUseCase @Inject constructor(
         Log.d(TAG, "createMeeting: $imgUrlMain")
 
         val response = meetingPostRepositoryImpl.createMeeting(
-            ApplicationClass.JWT_TOKEN,
             imgUrlMain!!,
             imgUrlSub,
             imgUrlThr,

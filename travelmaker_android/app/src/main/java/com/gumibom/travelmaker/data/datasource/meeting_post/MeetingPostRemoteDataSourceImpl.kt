@@ -12,14 +12,13 @@ class MeetingPostRemoteDataSourceImpl @Inject constructor(
 ) : MeetingPostRemoteDataSource {
 
     override suspend fun createMeeting(
-        token : String,
         imgUrlMain: MultipartBody.Part,
         imgUrlSub: MultipartBody.Part?,
         imgUrlThr: MultipartBody.Part?,
         meetingPostRequestDTO: RequestBody
     ): Response<String> {
         return meetingPostService.createMeeting(
-            token, imgUrlMain, imgUrlSub, imgUrlThr, meetingPostRequestDTO,
+            imgUrlMain, imgUrlSub, imgUrlThr, meetingPostRequestDTO,
         )
     }
 }
