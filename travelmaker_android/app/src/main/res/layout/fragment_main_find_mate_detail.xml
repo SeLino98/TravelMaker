@@ -52,9 +52,7 @@
 
                         <View
                             android:id="@+id/divider"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider"
+                            style="@style/DividerStyle"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_title" />
@@ -188,7 +186,7 @@
                             android:id="@+id/rc_chip_list"
                             android:layout_width="409dp"
                             android:layout_height="30dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -218,14 +216,11 @@
 
                         <View
                             android:id="@+id/divider2"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginStart="1dp"
+                            style="@style/DividerStyle"
                             android:layout_marginTop="40dp"
-                            android:layout_marginEnd="1dp"
-                            android:layout_marginBottom="41dp"
+
                             android:background="?android:attr/listDivider"
-                            app:layout_constraintBottom_toBottomOf="@+id/rc_chip_list"
+                            app:layout_constraintBottom_toTopOf="@+id/rc_chip_list"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>

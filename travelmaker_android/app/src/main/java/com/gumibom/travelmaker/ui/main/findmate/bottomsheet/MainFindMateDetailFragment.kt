@@ -34,6 +34,11 @@ class MainFindMateDetailFragment : BottomSheetDialogFragment() {
         activity = context as MainActivity
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setApplyGroup()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,17 +47,14 @@ class MainFindMateDetailFragment : BottomSheetDialogFragment() {
         _binding = FragmentMainFindMateDetailBinding.inflate(inflater,container,false)
         return binding.root
     }
-    private fun setBottomSheet(){
-//        val postDetail =
-//        val imageUrls = getImageUrls(postDetail)
-//        val adapter = ImageAdapter(imageUrls)
-//        recyclerView.adapter = adapter //
+    private fun setApplyGroup(){
+        binding.btnApplyGroup.setOnClickListener {
+            //firebase 연동하기
 
-        //chhip
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setBottomSheet()
+            //그룹 id랑 현재 로그인 한 유저 id 전송하기
+
+
+        }
     }
 
     companion object {
