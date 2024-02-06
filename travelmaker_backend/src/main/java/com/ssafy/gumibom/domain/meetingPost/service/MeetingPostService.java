@@ -6,7 +6,7 @@ import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
-import com.ssafy.gumibom.global.util.S3Service;
+import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

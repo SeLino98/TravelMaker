@@ -2,17 +2,13 @@ package com.ssafy.gumibom.domain.record.service;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
-import com.ssafy.gumibom.domain.pamphlet.service.PersonalPamphletService;
 import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.dto.request.UpdatePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
-import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.repository.RecordRepository;
 import com.ssafy.gumibom.global.common.Emoji;
-import com.ssafy.gumibom.global.util.S3Service;
-import com.ssafy.gumibom.global.util.S3Uploader;
+import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
