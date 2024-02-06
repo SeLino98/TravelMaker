@@ -31,12 +31,9 @@ public class UserService {
     public JwtToken login(String loginId, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginId, password);
 
-        System.out.println(authenticationToken);
-
         // 검증
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        System.out.println(authentication);
         // jwt 토큰 생성
         JwtToken token = jwtTokenProvider.generateToken(authentication);
 
