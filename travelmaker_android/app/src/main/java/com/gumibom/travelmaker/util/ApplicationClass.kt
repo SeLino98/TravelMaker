@@ -36,6 +36,7 @@ class ApplicationClass : Application(){
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"
         const val KAKAO_LOCATION_SEARCH_URL = "https://dapi.kakao.com"
+        const val JWT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3bmRkbmpzODIzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE3MDcyNzg1MzZ9.y6MtgTg8en8h7SfMqhH3h8t3GaGTI08KC4UmCKbXgUQ"
 
         fun uploadToken(token:String){
             // 새로운 토큰 수신 시 서버로 전송

@@ -68,11 +68,27 @@
         android:id="@+id/mainGoTravelFragment"
         android:name="com.gumibom.travelmaker.ui.main.gotravel.MainGoTravelFragment"
         android:label="fragment_main_go_travel"
-        tools:layout="@layout/fragment_main_go_travel" />
+        tools:layout="@layout/fragment_main_go_travel" >
+        <action
+            android:id="@+id/action_mainGoTravelFragment_to_makePamphletFragment"
+            app:destination="@id/makePamphletFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainLookPamphletsFragment"
         android:name="com.gumibom.travelmaker.ui.main.lookpamphlets.MainLookPamphletsFragment"
         android:label="fragment_main_look_pamphlets"
         tools:layout="@layout/fragment_main_look_pamphlets" />
+    <fragment
+        android:id="@+id/makePamphletFragment"
+        android:name="com.gumibom.travelmaker.ui.main.gotravel.MakePamphletFragment"
+        android:label="MakePamphletFragment" >
+        <action
+            android:id="@+id/action_makePamphletFragment_to_startPamphletFragment"
+            app:destination="@id/startPamphletFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startPamphletFragment"
+        android:name="com.gumibom.travelmaker.ui.main.gotravel.StartPamphletFragment"
+        android:label="StartPamphletFragment" />
 
 </navigation>

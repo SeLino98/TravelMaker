@@ -1,6 +1,8 @@
 package com.gumibom.travelmaker.di
 
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.gumibom.travelmaker.data.api.firebase.FirebaseTokenService
 import com.gumibom.travelmaker.data.api.google.GoogleLocationSearchService
 import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
@@ -19,6 +21,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -61,8 +64,22 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGsonConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .setLenient()  // JSON 파싱을 더 관대하게 처리
+            .create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideScalarsConverterFactory(): ScalarsConverterFactory {
+        return ScalarsConverterFactory.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGsonConverterFactory(gson : Gson): GsonConverterFactory {
+        return GsonConverterFactory.create(gson)
     }
 
     @Provides
@@ -82,10 +99,12 @@ class NetworkModule {
     @MainRetrofit
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
+        scalarsConverterFactory : ScalarsConverterFactory,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(ApplicationClass.BASE_URL)
         .client(okHttpClient)
+        .addConverterFactory(scalarsConverterFactory)
         .addConverterFactory(gsonConverterFactory)
         .build()
 

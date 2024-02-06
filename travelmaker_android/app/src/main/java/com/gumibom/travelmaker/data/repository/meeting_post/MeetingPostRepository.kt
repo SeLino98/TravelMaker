@@ -8,9 +8,10 @@ import retrofit2.Response
 interface MeetingPostRepository {
 
     suspend fun createMeeting(
-        meetingPostRequestDTO : RequestBody,
+        token : String,
         imgUrlMain : MultipartBody.Part,
         imgUrlSub : MultipartBody.Part?,
-        imgUrlThr : MultipartBody.Part?
+        imgUrlThr : MultipartBody.Part?,
+        meetingPostRequestDTO : RequestBody
     ) : Response<String>
 }

@@ -107,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
         mAuth!!.signInWithCredential(credential).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 val googleUser = mAuth!!.currentUser
+
                 Log.d(TAG, "firebaseAuthWithGoogle: ${googleUser?.displayName}")
                 Log.d(TAG, "firebaseAuthWithGoogle: ${googleUser?.email}")
 

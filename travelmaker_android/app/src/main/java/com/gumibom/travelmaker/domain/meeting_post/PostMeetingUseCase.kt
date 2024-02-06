@@ -7,6 +7,7 @@ import com.gumibom.travelmaker.data.dto.request.MeetingPostRequestDTO
 import com.gumibom.travelmaker.data.dto.response.Position
 import com.gumibom.travelmaker.data.repository.meeting_post.MeetingPostRepository
 import com.gumibom.travelmaker.model.SendMeetingPost
+import com.gumibom.travelmaker.util.ApplicationClass
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -32,24 +33,27 @@ class PostMeetingUseCase @Inject constructor(
         for (index in 0 until imageUrlList.size) {
             when (index) {
                 0 -> {
-                    imgUrlMain = convertMultipart(imageUrlList[index])
+                    imgUrlMain = convertMultipart(imageUrlList[index], index)
                 }
                 1 -> {
-                    imgUrlSub = convertMultipart(imageUrlList[index])
+                    imgUrlSub = convertMultipart(imageUrlList[index], index)
                 }
                 else -> {
-                    imgUrlThr = convertMultipart(imageUrlList[index])
+                    imgUrlThr = convertMultipart(imageUrlList[index], index)
                 }
             }
         }
+        Log.d(TAG, "createMeeting: $requestBody")
+        Log.d(TAG, "createMeeting: $imgUrlMain")
 
         val response = meetingPostRepositoryImpl.createMeeting(
-            requestBody,
+            ApplicationClass.JWT_TOKEN,
             imgUrlMain!!,
             imgUrlSub,
-            imgUrlThr
+            imgUrlThr,
+            requestBody
         )
-        Log.d(TAG, "createMeeting: ${response.body()}")
+        Log.d(TAG, "createMeeting: ${response}")
     }
 
     /**
@@ -142,12 +146,17 @@ class PostMeetingUseCase @Inject constructor(
         return null
     }
 
-    private fun convertMultipart(filePath : String) : MultipartBody.Part {
+    private fun convertMultipart(filePath : String, index : Int) : MultipartBody.Part? {
         // file을 MultipartBody.part로 변환
         val file = File(filePath)
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
 
-        return MultipartBody.Part.createFormData("image", file.name, requestFile)
+        return when(index) {
+            0 -> MultipartBody.Part.createFormData("mainImage", file.name, requestFile)
+            1 -> MultipartBody.Part.createFormData("subImage", file.name, requestFile)
+            2 -> MultipartBody.Part.createFormData("thirdImage", file.name, requestFile)
+            else -> null
+        }
     }
 
 }

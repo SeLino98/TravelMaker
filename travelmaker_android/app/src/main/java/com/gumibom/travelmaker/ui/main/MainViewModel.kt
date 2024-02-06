@@ -85,7 +85,7 @@ class MainViewModel @Inject constructor(
     fun getCategoryMarkers(markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO) {
         viewModelScope.launch {
             // TODO 마커 리스트로 고쳐야하나?
-            _markerCategoryList.value = getMarkerCategoryPositionsUseCase.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
+            _markerList.value = getMarkerCategoryPositionsUseCase.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
         }
     }
 

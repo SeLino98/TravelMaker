@@ -14,16 +14,18 @@ class MeetingPostRepositoryImpl @Inject constructor(
     // 모임 생성 api
 
     override suspend fun createMeeting(
-        meetingPostRequestDTO: RequestBody,
+        token : String,
         imgUrlMain: MultipartBody.Part,
         imgUrlSub: MultipartBody.Part?,
-        imgUrlThr: MultipartBody.Part?
+        imgUrlThr: MultipartBody.Part?,
+        meetingPostRequestDTO: RequestBody,
     ): Response<String> {
         return meetingPostRemoteDataSourceImpl.createMeeting(
-            meetingPostRequestDTO,
+            token,
             imgUrlMain,
             imgUrlSub,
-            imgUrlThr
+            imgUrlThr,
+            meetingPostRequestDTO
         )
     }
 }

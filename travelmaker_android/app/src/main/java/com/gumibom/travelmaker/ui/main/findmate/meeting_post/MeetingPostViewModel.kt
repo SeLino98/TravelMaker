@@ -24,7 +24,7 @@ class MeetingPostViewModel @Inject constructor(
      * 모임 생성 데이터 모음
      */
     var title = ""
-    var username = ""
+    var username = "wnddnjs823"
     var content = ""
     var authDate = ""
     var startDate = ""
