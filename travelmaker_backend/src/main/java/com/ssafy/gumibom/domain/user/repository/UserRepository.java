@@ -56,6 +56,34 @@ public class UserRepository {
         }
     }
 
+    public Boolean existUsersByNickName(String nickName) {
+        try {
+            User user = em.createQuery("select u from User u where u.nickname = :nickName", User.class)
+                    .setParameter("nickName", nickName)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        } catch (NonUniqueResultException e) {
+//            throw new IllegalStateException("해당 전화번호는 이미 가입되어 있습니다.");
+            return true;
+        }
+    }
+
+    public Boolean existUsersByLoginID(String loginID) {
+        try {
+            User user = em.createQuery("select u from User u where u.username = :loginID", User.class)
+                    .setParameter("loginID", loginID)
+                    .getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        } catch (NonUniqueResultException e) {
+//            throw new IllegalStateException("해당 전화번호는 이미 가입되어 있습니다.");
+            return true;
+        }
+    }
+
 
 //    public void update(User user) {
 //

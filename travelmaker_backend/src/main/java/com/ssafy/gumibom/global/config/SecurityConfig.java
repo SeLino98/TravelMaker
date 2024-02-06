@@ -62,14 +62,14 @@ public class SecurityConfig {
                 })))
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(AbstractHttpConfigurer::disable)
-                .csrf((auth)->auth.disable())
+//                .csrf((auth)->auth.disable())
                 .formLogin((auth)->auth.disable())
                 .httpBasic((auth)->auth.disable())
 
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 //                        .requestMatchers("/**").permitAll()
-                        .requestMatchers("/login", "/", "/join").permitAll()
+                        .requestMatchers("/login", "/", "/join", "/join/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()) // 그 외 인증 없이 접근X
 //                .exceptionHandling((exceptionHandling) -> //컨트롤러의 예외처리를 담당하는 exception handler와는 다름.
