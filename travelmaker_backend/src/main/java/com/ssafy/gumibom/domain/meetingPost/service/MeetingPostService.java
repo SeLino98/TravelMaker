@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meetingPost.service;
 
-import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.DetailOfMeetingPostResponseDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.user.entity.User;

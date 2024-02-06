@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
-@Table(name = "meeting_request", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id", "meeting_post_id"})
-})
 @Getter
 public class MeetingRequest {
 
@@ -23,13 +20,23 @@ public class MeetingRequest {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User respondent;
-
-//    private boolean isHead;
+    @JoinColumn(referencedColumnName = "user_id", name = "acceptor_id")
+    private User acceptor;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(referencedColumnName = "user_id", name = "requestor_id")
     private User requestor;
+
+
+    // 연관관계 편의 메서드
+    public void setAcceptor(User acceptor) {
+        this.acceptor = acceptor;
+        acceptor.getReceivedRequests().add(this);
+    }
+
+    public void setRequestor(User requestor) {
+        this.requestor = requestor;
+        requestor.getSentRequests().add(this);
+    }
 }

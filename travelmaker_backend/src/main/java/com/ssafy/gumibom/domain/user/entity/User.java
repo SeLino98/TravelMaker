@@ -74,13 +74,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PersonalPamphlet> personalPamphlets = new ArrayList<>();
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<MeetingRequest> requests = new ArrayList<>();
-//
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<MeetingRequest> personalPamphlets = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "requestor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingRequest> sentRequests = new ArrayList<>(); // 요청자로서 보낸 모임 요청들
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "acceptor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingRequest> receivedRequests = new ArrayList<>(); // 방장으로서 받은 모임 요청들
 
 
     @JsonIgnore

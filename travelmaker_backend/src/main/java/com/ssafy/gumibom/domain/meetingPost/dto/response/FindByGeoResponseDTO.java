@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meetingPost.dto;
+package com.ssafy.gumibom.domain.meetingPost.dto.response;
 
 import com.ssafy.gumibom.global.common.Position;
 import lombok.*;

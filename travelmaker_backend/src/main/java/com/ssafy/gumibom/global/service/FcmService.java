@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class FirebaseCloudMessagingService {
+public class FcmService {
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/travelmaker2/messages:send";
     private final ObjectMapper objectMapper;

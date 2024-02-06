@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meetingPost.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Position;
 import com.ssafy.gumibom.global.util.StringListConverter;
@@ -47,8 +47,6 @@ public class MeetingPost {
     @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "meeting_post", cascade = CascadeType.ALL)
     @Embedded
     private Position position;
 

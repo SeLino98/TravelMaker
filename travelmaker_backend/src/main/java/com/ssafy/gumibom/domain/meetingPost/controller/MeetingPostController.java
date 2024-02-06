@@ -1,7 +1,8 @@
 package com.ssafy.gumibom.domain.meetingPost.controller;
 
-import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoRequestDTO;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import com.ssafy.gumibom.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Tag(name = "Meeting Post", description = "모임글 관련 api")
 @RestController
@@ -79,4 +79,21 @@ public class MeetingPostController {
         return ResponseEntity.ok("모임글이 삭제되었습니다.");
     }
 
+    @Operation(summary = "모임글에 참여 요청")
+    @PostMapping("/request-join")
+    public ResponseEntity<?> requestJoinMeeting(@RequestBody RequestJoinMeetingRequestDTO rJMRDto) {
+
+    }
+
+    @Operation(summary = "참여 요청 수락")
+    @PostMapping("/response-join/accept")
+    public void acceptRequestJoinMeeting() {
+
+    }
+
+    @Operation(summary = "참여 요청 거절")
+    @PostMapping("/response-join/refuse")
+    public void refuseRequestJoinMeeting() {
+
+    }
 }
