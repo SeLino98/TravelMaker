@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.meetingPost.controller;
 
 import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.ResAboutReqJoinMeetingRequestDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
@@ -90,13 +91,13 @@ public class MeetingPostController {
 
     @Operation(summary = "참여 요청 수락")
     @PostMapping("/response-join/accept")
-    public void acceptRequestJoinMeeting() {
+    public void acceptRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) {
 
     }
 
     @Operation(summary = "참여 요청 거절")
     @PostMapping("/response-join/refuse")
-    public void refuseRequestJoinMeeting() {
+    public void refuseRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) {
 
     }
 

@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 @Getter
 public class SentRequestResponseDto {
 
+    private Long requestId;
+
     private String requestorName;
 
     private String acceptorName;
@@ -17,6 +19,8 @@ public class SentRequestResponseDto {
     private LocalDateTime meetingPostDeadline;
 
     public SentRequestResponseDto(MeetingRequest request) {
+        this.requestId = request.getId();
+
         this.requestorName = request.getRequestor().getNickname();
 
         this.acceptorName = request.getAcceptor().getNickname();

@@ -21,6 +21,8 @@ public class MeetingRequestRepository {
         em.remove(req);
     }
 
+    public  MeetingRequest findOne(Long id) { em.find(MeetingRequest.class, id); }
+
     public List<MeetingRequest> findSentByUserId(Long id) {
         return em.createQuery(
                 "select mr from MeetingRequest mr "+
