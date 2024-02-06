@@ -52,3 +52,5 @@ const val NOT_ENOUGH_INPUT = "빠진 입력이 있어요\n다시 한번 확인�
 
 // 팜플렛 생성 메시지
 const val NOT_ALLOW_TITLE = "제목을 확인해주세요."
+const val SUCCESS_CREATE_MEETING_POST = "모임 생성에 성공하였습니다."
+const val FAIL_CREATE_MEETING_POST = "모임 생성에 실패하였습니다."

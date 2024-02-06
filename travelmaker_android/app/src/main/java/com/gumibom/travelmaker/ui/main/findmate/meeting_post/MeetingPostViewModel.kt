@@ -45,6 +45,9 @@ class MeetingPostViewModel @Inject constructor(
     private val _urlLiveData = MutableLiveData<MutableList<String>>()
     val urlLiveData : LiveData<MutableList<String>> = _urlLiveData
 
+    private val _isSuccess = MutableLiveData<String>()
+    val isSuccess : LiveData<String> = _isSuccess
+
     fun meetingSelectAddress(address : Address) {
         _selectMeetingAddress.value = address
     }
@@ -74,9 +77,8 @@ class MeetingPostViewModel @Inject constructor(
         )
         Log.d(TAG, "createMeeting: $sendMeetingPost")
         viewModelScope.launch {
-            postMeetingUseCase.createMeeting(sendMeetingPost, _imageUrlList)
+            _isSuccess.value = postMeetingUseCase.createMeeting(sendMeetingPost, _imageUrlList)
         }
-
     }
 
 

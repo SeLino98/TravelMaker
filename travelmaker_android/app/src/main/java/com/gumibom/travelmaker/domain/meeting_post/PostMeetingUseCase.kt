@@ -23,7 +23,7 @@ class PostMeetingUseCase @Inject constructor(
     private val meetingPostRepositoryImpl: MeetingPostRepository
 ) {
 
-    suspend fun createMeeting(sendMeeting : SendMeetingPost, imageUrlList : MutableList<String>) {
+    suspend fun createMeeting(sendMeeting : SendMeetingPost, imageUrlList : MutableList<String>) : String {
         val requestBody = transformModelToDto(sendMeeting)
 
         var imgUrlMain : MultipartBody.Part? = null
@@ -43,8 +43,6 @@ class PostMeetingUseCase @Inject constructor(
                 }
             }
         }
-        Log.d(TAG, "createMeeting: $requestBody")
-        Log.d(TAG, "createMeeting: $imgUrlMain")
 
         val response = meetingPostRepositoryImpl.createMeeting(
             imgUrlMain!!,
@@ -52,7 +50,15 @@ class PostMeetingUseCase @Inject constructor(
             imgUrlThr,
             requestBody
         )
-        Log.d(TAG, "createMeeting: ${response}")
+
+        if (response.isSuccessful) {
+            val body = response.body()
+
+            if (body != null) {
+                return body
+            }
+        }
+        return ""
     }
 
     /**

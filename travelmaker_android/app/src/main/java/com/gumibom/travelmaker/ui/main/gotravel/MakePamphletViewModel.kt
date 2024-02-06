@@ -9,8 +9,7 @@ class MakePamphletViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private val _categoryList = mutableListOf<String>()
-    val category get() = _categoryList
+    val categoryList = mutableListOf<String>()
 
     fun setCategoryList() {
 

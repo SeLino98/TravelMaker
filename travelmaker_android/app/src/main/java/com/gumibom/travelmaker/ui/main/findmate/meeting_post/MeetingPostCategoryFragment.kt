@@ -16,7 +16,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.gumibom.travelmaker.constant.FAIL_CREATE_MEETING_POST
 import com.gumibom.travelmaker.constant.NOT_ENOUGH_INPUT
+import com.gumibom.travelmaker.constant.SUCCESS_CREATE_MEETING_POST
 import com.gumibom.travelmaker.databinding.FragmentMeetingPostCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +60,22 @@ class MeetingPostCategoryFragment : Fragment() {
         setSpinner()
         selectCategory()
         createMeeting()
+        observeFinish()
+    }
+
+    /**
+     * 모임 생성에 성공하면 페이지를 종료한다.
+     */
+    private fun observeFinish() {
+        meetingPostViewModel.isSuccess.observe(viewLifecycleOwner) { message ->
+            if (message.isNotEmpty()) {
+                Toast.makeText(requireContext(), SUCCESS_CREATE_MEETING_POST, Toast.LENGTH_SHORT).show()
+                activity.finish()
+            } else {
+                Toast.makeText(requireContext(), FAIL_CREATE_MEETING_POST, Toast.LENGTH_SHORT).show()
+                activity.finish()
+            }
+        }
     }
 
     /**
@@ -140,10 +158,13 @@ class MeetingPostCategoryFragment : Fragment() {
         for (index in 0 until chipGroup1.childCount) {
             val chip = chipGroup1.getChildAt(index) as? Chip
             chip?.setOnClickListener {
+                val chipText = chipMap.getValue(chip.text.toString())
                 // Chip 클릭 시 실행할 코드
                 if (chip.isChecked) {
-                    val chipText = chipMap.getValue(chip.text.toString())
                     meetingPostViewModel.categoryList.add(chipText)
+                    Log.d(TAG, "selectCategory: ${meetingPostViewModel.categoryList}")
+                } else {
+                    meetingPostViewModel.categoryList.remove(chipText)
                 }
             }
         }
@@ -151,10 +172,12 @@ class MeetingPostCategoryFragment : Fragment() {
         for (index in 0 until chipGroup2.childCount) {
             val chip = chipGroup2.getChildAt(index) as? Chip
             chip?.setOnClickListener {
+                val chipText = chipMap.getValue(chip.text.toString())
                 // Chip 클릭 시 실행할 코드
                 if (chip.isChecked) {
-                    val chipText = chipMap.getValue(chip.text.toString())
                     meetingPostViewModel.categoryList.add(chipText)
+                } else {
+                    meetingPostViewModel.categoryList.remove(chipText)
                 }
             }
         }
@@ -169,6 +192,7 @@ class MeetingPostCategoryFragment : Fragment() {
                 meetingPostViewModel.minTraveler != 0 ) {
                 // 모두 입력되었으면 서버에 통신
                 meetingPostViewModel.createMeeting()
+
             } else {
                 Toast.makeText(requireContext(), NOT_ENOUGH_INPUT, Toast.LENGTH_SHORT).show()
             }
