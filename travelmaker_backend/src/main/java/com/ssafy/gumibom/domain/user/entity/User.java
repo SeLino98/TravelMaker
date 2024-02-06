@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingRequest;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.user.dto.req.SignupRequestDto;
 import com.ssafy.gumibom.global.common.Category;
@@ -75,7 +76,12 @@ public class User {
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<MeetingPost> meetingPosts;
+//    private List<MeetingRequest> requests = new ArrayList<>();
+//
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<MeetingRequest> personalPamphlets = new ArrayList<>();
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
