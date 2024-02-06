@@ -303,20 +303,29 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val active = binding.chipMapActive
         val picture = binding.chipMapPicture
         val nature = binding.chipMapNature
+        val shopping = binding.chipMapShopping
+        val rest = binding.chipMapRest
 
-        val categoryList : List<Chip> = listOf(taste, healing, culture, active, picture, nature)
+        val categoryList : List<Chip> = listOf(taste, healing, culture, active, picture, nature, shopping, rest)
+
+        val chipMap = mapOf<String, String>("맛집" to "taste", "힐링" to "healing", "문화" to "culture", "활동" to "active",
+            "사진" to "picture", "자연" to "nature", "쇼핑" to "shopping", "휴식" to "rest")
 
         binding.ivMapFiltering.setOnClickListener {
             val filterCategories = mutableListOf<String>()
 
             for (category in categoryList) {
                 // chip이 선택되어 있으면
-                if (category.isCheckable) {
-                    filterCategories.add(category.text.toString())
+                if (category.isChecked) {
+                    filterCategories.add(chipMap.getValue(category.text.toString()))
                 }
             }
 
             // TODO 여기서 서버 통신으로 필터링
+            val markerCategoryPositionDTO = MarkerCategoryPositionRequestDTO(
+                mainViewModel.currentLatitude, mainViewModel.currentLongitude, 3.0, filterCategories
+            )
+            mainViewModel.getCategoryMarkers(markerCategoryPositionDTO)
         }
     }
     companion object {

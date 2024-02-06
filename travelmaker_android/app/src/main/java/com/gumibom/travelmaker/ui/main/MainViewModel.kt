@@ -84,6 +84,7 @@ class MainViewModel @Inject constructor(
     // 내 근방 위치 모임 카테고리 필터링
     fun getCategoryMarkers(markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO) {
         viewModelScope.launch {
+            // TODO 마커 리스트로 고쳐야하나?
             _markerCategoryList.value = getMarkerCategoryPositionsUseCase.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
         }
     }

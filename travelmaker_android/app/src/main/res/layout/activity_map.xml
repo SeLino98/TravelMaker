@@ -76,13 +76,13 @@
                 android:text="@string/sign_chip_nature" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_shopping"
+                android:id="@+id/chip_map_shopping"
                 style="@style/chipRegular"
                 android:text="@string/sign_chip_shopping"
                 android:layout_marginStart="10dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_rest"
+                android:id="@+id/chip_map_rest"
                 style="@style/chipRegular"
                 android:text="@string/chip_rest" />
         </com.google.android.material.chip.ChipGroup>
