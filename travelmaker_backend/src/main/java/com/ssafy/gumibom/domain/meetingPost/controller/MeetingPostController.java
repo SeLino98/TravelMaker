@@ -7,6 +7,7 @@ import com.ssafy.gumibom.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Tag(name = "Meeting Post", description = "모임글 관련 api")
 @RestController
 @RequestMapping("/meeting-post")
@@ -37,6 +39,10 @@ public class MeetingPostController {
             @RequestPart(required = false) MultipartFile thirdImage,
             @RequestPart WriteMeetingPostRequestDTO requestDTO) throws IOException {
 
+        log.info("username: "+requestDTO.getUsername());
+        log.info(requestDTO.getTitle());
+        log.info(requestDTO.getContent());
+        log.info("authdate: "+String.valueOf(requestDTO.getEndDate()));
 //        meetingPostService.write(requestDTO);
 //        return "redirect:/meeting-post";
         return meetingPostService.write(mainImage, subImage, thirdImage, requestDTO);
