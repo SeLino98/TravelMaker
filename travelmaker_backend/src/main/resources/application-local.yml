@@ -39,4 +39,4 @@ cloud:
 
 
 jwt:
-  secret: (9CwhdSpnN4wYYfVqTEJJnhSu9ROczC12/iKwwVt/8hpIvVXjy8jxJ6LlRjaU2P7P7bM8MZJQaIe9hgm1mMK6bcjUtPa9/JBgDLlqgIJeW3Js+gHtqW1s7Q==)
+  secret: ENC(9CwhdSpnN4wYYfVqTEJJnhSu9ROczC12/iKwwVt/8hpIvVXjy8jxJ6LlRjaU2P7P7bM8MZJQaIe9hgm1mMK6bcjUtPa9/JBgDLlqgIJeW3Js+gHtqW1s7Q==)
