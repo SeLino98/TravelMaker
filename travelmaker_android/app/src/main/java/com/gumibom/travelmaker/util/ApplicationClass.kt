@@ -36,7 +36,7 @@ class ApplicationClass : Application(){
         const val GOOGLE_GEOCODE_URL = "https://maps.googleapis.com"
         const val NAVER_LOCATION_SEARCH_URL = "https://openapi.naver.com"
         const val KAKAO_LOCATION_SEARCH_URL = "https://dapi.kakao.com"
-        const val JWT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3bmRkbmpzODIzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE3MDcyOTU2MjF9.80Qd-4De6WigsFejZlRB0effuTy6xl8IWrs5qgFPWtA"
+        const val JWT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3bmRkbmpzODIzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE3MDczMTc0MjJ9.gkWnCmoVRpOrKqSk4SnxFSJ7XxxgefGsQPzyuTiOjzk"
 
 
         fun uploadToken(token:String){
