@@ -114,6 +114,8 @@ class LoginFragment  : Fragment(){
             } else {
                 loginViewModel.login(loginRequestDTO)
                 ApplicationClass.sharedPreferencesUtil.addUser(user)
+                /**Main -> Intent*/
+
             }
         }
     }

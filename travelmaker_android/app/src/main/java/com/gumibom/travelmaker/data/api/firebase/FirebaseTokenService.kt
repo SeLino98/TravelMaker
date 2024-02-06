@@ -1,6 +1,6 @@
 package com.gumibom.travelmaker.data.api.firebase
 
-import com.gumibom.travelmaker.data.dto.google.GoogleLocationDTO
+import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import retrofit2.Response
@@ -15,6 +15,16 @@ interface FirebaseTokenService {
         @Body fcmTokenRequestDTO: FcmTokenRequestDTO
     ):Response<IsSuccessResponseDTO>
 
+    //모임 요청
+    @POST("meeting-post/request")
+    suspend fun groupRequest(
+        @Body fcmRequestGroup: FcmRequestGroupDTO
+    ) : Response<IsSuccessResponseDTO>
+
+    @POST("meeting-post/accept")
+    suspend fun acceptCrew(
+        @Body fcmRequestGroup: FcmRequestGroupDTO
+    ) : Response<IsSuccessResponseDTO>
 //        @Query("userId") userId:Long,
 //        @Query("fcmToken") fcmToken:String
 

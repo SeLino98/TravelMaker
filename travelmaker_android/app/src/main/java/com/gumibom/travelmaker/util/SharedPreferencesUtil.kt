@@ -8,12 +8,9 @@ import javax.inject.Inject
 
 private const val TAG = "SharedPreferencesUtil_싸피"
 class SharedPreferencesUtil (context : Context) {
-
     val SHARED_PREFERENCES_NAME = "travelMaker_preference"
-
     var preferences: SharedPreferences =
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-
     // sharedpreference에 로그인 정보 저장하기
     fun addUser(user : User){
         val editor = preferences.edit()
@@ -21,10 +18,8 @@ class SharedPreferencesUtil (context : Context) {
         editor.putString("password", user.password)
         editor.apply()
     }
-
     fun getUser(): User {
         val loginId = preferences.getString("loginId", "")
-
         return if (loginId != ""){
             val password = preferences.getString("password", "")
             User(loginId!!, password!!)
@@ -32,26 +27,21 @@ class SharedPreferencesUtil (context : Context) {
             User()
         }
     }
-
     fun deleteUser(){
         //preference 지우기
         val editor = preferences.edit()
         editor.clear()
         editor.apply()
     }
-
     fun addGoogleEmail(email : String) {
         val editor = preferences.edit()
         editor.putString("googleEmail", email)
         editor.apply()
     }
-
     fun getGoogleEmail() : Boolean {
         val isEmail = preferences.getString("googleEmail", "")
-
         return isEmail != ""
     }
-
     fun deleteGoogleEmail() {
         //preference 지우기
         val editor = preferences.edit()

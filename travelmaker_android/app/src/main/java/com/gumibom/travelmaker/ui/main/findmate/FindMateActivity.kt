@@ -3,8 +3,10 @@ package com.gumibom.travelmaker.ui.main.findmate
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.DENIED_LOCATION_PERMISSION
@@ -67,8 +70,51 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
         selectPlace()
         selectCategory()
-
+        setBottomSheet()
         moveMeetingPost()
+//        mainViewModel.
+        /**
+         *
+         * */
+    }
+    private fun setBottomSheet(){
+        val standardBottomSheet = binding.bts.bottomSheetLayout
+        val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
+        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED;
+        standardBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                val screenHeight = Resources.getSystem().displayMetrics.heightPixels
+                val halfHeight = screenHeight / 2
+                val currentTop = screenHeight - bottomSheet.top
+                val bottomToHalfSize = halfHeight+0/2;
+                val halfToTop = (halfHeight+screenHeight)/2;
+                when (currentTop) {
+                    in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state =
+                        BottomSheetBehavior.STATE_COLLAPSED
+                    in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state =
+                        BottomSheetBehavior.STATE_HALF_EXPANDED
+                    in halfToTop  until  screenHeight -> standardBottomSheetBehavior.state =
+                        BottomSheetBehavior.STATE_EXPANDED
+                }
+                Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
+            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                }
+            }
+        })
     }
 
     /**
@@ -304,8 +350,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val active = binding.chipMapActive
         val picture = binding.chipMapPicture
         val nature = binding.chipMapNature
-        val shopping = binding.chipMapShopping
-        val rest = binding.chipMapRest
+        val shopping = binding.chipShopping
+        val rest = binding.chipRest
 
         val categoryList : List<Chip> = listOf(taste, healing, culture, active, picture, nature, shopping, rest)
 
