@@ -67,15 +67,22 @@ public class MeetingRequestService {
         return new ShowAllJoinRequestResponseDto(receivedRequestsDto, sentRequestsDto);
     }
 
-    public ResponseEntity<?> acceptRequest(ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+    @Transactional
+    public ResponseEntity<?> resAboutRequest(ResAboutReqJoinMeetingRequestDto rARJMRDto, Boolean isAccept) throws IOException {
         User requestor = userRepository.findOne(rARJMRDto.getRequestorId());
         MeetingPost meetingPost = meetingPostRepository.findOne(rARJMRDto.getMeetingPostId());
         MeetingRequest request = meetingRequestRepository.findOne(rARJMRDto.getRequestId());
 
-        meetingPost.addApplier(requestor, false, null); // 게시글에 meetingApplier로 추가
-        fcmService.sendMessageTo(requestor.getFcmtoken(), "모임 승낙", meetingPost.getTitle()+" 모임에 참여자가 되었습니다."); // FCM 토큰으로 노티 전달
+        if(isAccept) meetingPost.addApplier(requestor, false, null); // 게시글에 meetingApplier로 추가
+
+        String messageTitle = (isAccept) ? "모임 승낙" : "모임 거절";
+        String messageBody = meetingPost.getTitle();
+        messageBody += (isAccept) ? " 모임 참여자가 되었습니다." : "모임 요청을 거절당했습니다.";
+        String responseMessage = (isAccept) ? "모임 요청을 승낙했습니다." : "모임 요청을 거절했습니다.";
+
+        fcmService.sendMessageTo(requestor.getFcmtoken(), messageTitle, messageBody); // FCM 토큰으로 노티 전달
         meetingRequestRepository.delete(request);
 
-        return ResponseEntity.ok("모임 요청을 승낙했습니다.");
+        return ResponseEntity.ok(responseMessage);
     }
 }

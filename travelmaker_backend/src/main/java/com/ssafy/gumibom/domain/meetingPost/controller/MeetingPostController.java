@@ -91,14 +91,14 @@ public class MeetingPostController {
 
     @Operation(summary = "참여 요청 수락")
     @PostMapping("/response-join/accept")
-    public void acceptRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) {
-
+    public ResponseEntity<?> acceptRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+        return meetingRequestService.resAboutRequest(rARJMRDto, true);
     }
 
     @Operation(summary = "참여 요청 거절")
     @PostMapping("/response-join/refuse")
-    public void refuseRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) {
-
+    public ResponseEntity<?> refuseRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+        return meetingRequestService.resAboutRequest(rARJMRDto, false);
     }
 
 
