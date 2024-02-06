@@ -1,6 +1,8 @@
 package com.ssafy.gumibom.domain.meetingPost.dto;
 
 import com.ssafy.gumibom.global.common.Position;
+import com.ssafy.gumibom.global.util.StringListConverter;
+import jakarta.persistence.Convert;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
@@ -32,10 +34,8 @@ public class WriteMeetingPostRequestDTO {
     private LocalDateTime endDate;
     private Position position;
     private LocalDateTime deadline;
-    private String imgUrlMain;
-    private String imgUrlSub;
-    private String imgUrlThr;
 
     @NotEmpty(message = "카테고리를 하나 이상 선택해주세요!")
+    @Convert(converter = StringListConverter.class)
     private List<String> categories;
 }
