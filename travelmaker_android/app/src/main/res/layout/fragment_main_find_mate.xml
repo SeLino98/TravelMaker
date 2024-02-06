@@ -115,9 +115,9 @@
     </LinearLayout>
     <!-- Persistent Bottom Sheet -->
     <!-- behavior 속성을 여기서 적용합니다 -->
+
     <include
         android:id="@+id/bts"
         layout="@layout/fragment_main_find_mate_detail"/>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
