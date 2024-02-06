@@ -110,6 +110,10 @@ public class User {
         return Collections.singletonList(authority);
     }
 
+    public void updateFCM(String fcmtoken) {
+        this.fcmtoken = fcmtoken;
+    }
+
     public boolean isAccountNonExpired() {
         return true;
     }
