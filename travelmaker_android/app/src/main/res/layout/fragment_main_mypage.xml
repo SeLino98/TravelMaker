@@ -47,8 +47,6 @@
 
     </FrameLayout>
 
-
-
     <EditText
         android:id="@+id/et_mypage_email"
 
@@ -73,6 +71,7 @@
         android:layout_marginTop="208dp"
         />
 
+<!-- 닉네임은 ... textview로 고쳐야함. 닉네임은 회원가입후 수정 불가했음!!!   -->
     <EditText
         android:id="@+id/et_mypage_nickname"
 
@@ -98,10 +97,6 @@
 
         />
 
-
-
-
-
     <FrameLayout
         android:id="@+id/fl_mypage_trustlevel"
 
@@ -114,71 +109,71 @@
         app:layout_constraintBottom_toBottomOf="parent"
         >
 
+    <Button
+        android:id="@+id/btn_myinfo_edit"
 
-        <Button
-            android:id="@+id/btn_myinfo_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_edit_personal_info"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_gravity="start|bottom"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:text="@string/mypage_edit_personal_info"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:layout_gravity="start|bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="20dp"
-            />
+    <Button
+        android:id="@+id/btn_mypage_logout"
 
-        <Button
-            android:id="@+id/btn_mypage_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_logout"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:text="@string/mypage_logout"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="20dp"
-            />
+    <Button
+        android:id="@+id/btn_mypage_delete_user"
 
-        <Button
-            android:id="@+id/btn_mypage_delete_user"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:text="@string/mypage_withdrawal"
-            android:textColor="@color/light_gray"
-            android:textSize="20sp"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_withdrawal"
+        android:textColor="@color/light_gray"
+        android:textSize="20sp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        />
     </FrameLayout>
-
 
     <Button
         android:id="@+id/btn_mypage_check_my_trustlevel"
 
-        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="나의 신뢰도 확인하기"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/iv_mypage_trustlevel"
+        android:text="나의 신뢰도 확인"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/lottie_my_trustlevel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         />
 
-    <ImageView
-        android:id="@+id/iv_mypage_trustlevel"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_my_trustlevel"
 
-        android:layout_width="wrap_content"
-        android:layout_height="272dp"
-        android:src="@drawable/img_trust_8"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        app:lottie_repeatCount="10"
+        android:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="mypage_trustlevel3.json"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
