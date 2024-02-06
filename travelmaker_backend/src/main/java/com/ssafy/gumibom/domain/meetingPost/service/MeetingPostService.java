@@ -3,6 +3,7 @@ package com.ssafy.gumibom.domain.meetingPost.service;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.DetailOfMeetingPostResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
+import com.ssafy.gumibom.domain.meetingPost.repository.MeetingApplierRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
@@ -27,6 +28,7 @@ public class MeetingPostService {
 
     private final UserRepository userRepository;
     private final MeetingPostRepository meetingPostRepository;
+    private final MeetingApplierRepository meetingApplierRepository;
 
     private final S3Service s3Service;
 
@@ -54,6 +56,7 @@ public class MeetingPostService {
         log.info("데드라인: " +meetingPost.getDeadline());
         log.info("마감 날짜: " +meetingPost.getEndDate());
 
+        meetingApplierRepository.save(meetingPost.getAppliers().get(0)); // 모임장 db에 저장
         meetingPostRepository.save(meetingPost);
 
         return ResponseEntity.ok("모임글 작성 성공");

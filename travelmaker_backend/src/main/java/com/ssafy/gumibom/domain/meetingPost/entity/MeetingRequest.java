@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class MeetingRequest {
 
     @Id
@@ -38,5 +40,16 @@ public class MeetingRequest {
     public void setRequestor(User requestor) {
         this.requestor = requestor;
         requestor.getSentRequests().add(this);
+    }
+
+    // 생성 메서드
+    public static MeetingRequest createRequest(MeetingPost meetingPost, User requestor, User acceptor) {
+        MeetingRequest request = new MeetingRequest();
+
+        request.meetingPost = meetingPost;
+        request.setAcceptor(acceptor);
+        request.setRequestor(requestor);
+
+        return request;
     }
 }

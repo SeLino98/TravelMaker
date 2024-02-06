@@ -4,6 +4,7 @@ import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
+import com.ssafy.gumibom.domain.meetingPost.service.MeetingRequestService;
 import com.ssafy.gumibom.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,6 +24,7 @@ public class MeetingPostController {
 
     private final UserService userService;
     private final MeetingPostService meetingPostService;
+    private final MeetingRequestService meetingRequestService;
 
     // 모임글 작성
     @Operation(summary = "모임글 작성")
@@ -81,8 +83,8 @@ public class MeetingPostController {
 
     @Operation(summary = "모임글에 참여 요청")
     @PostMapping("/request-join")
-    public ResponseEntity<?> requestJoinMeeting(@RequestBody RequestJoinMeetingRequestDTO rJMRDto) {
-
+    public ResponseEntity<?> requestJoinMeeting(@RequestBody RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
+        return meetingRequestService.requestJoin(rJMRDto);
     }
 
     @Operation(summary = "참여 요청 수락")

@@ -119,6 +119,13 @@ public class MeetingPost {
         return this;
     }
 
+    public User getHead() {
+        for(MeetingApplier applier: this.appliers) {
+            if(applier.getIsHead()) return applier.getUser();
+        }
+        return null;
+    }
+
     public void updateMeetingPostStatus(Boolean newStatus) {
         this.status = newStatus;
     }

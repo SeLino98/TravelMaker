@@ -7,11 +7,6 @@ import lombok.Getter;
 @Getter
 public class Position { // 모임 장소
 
-//    @Id
-//    @GeneratedValue
-//    @Column(name = "position_id")
-    private Long id;
-
 //    @Column(name = "position_name")
     private String name;
 
