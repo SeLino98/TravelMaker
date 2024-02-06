@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
-    MeetingDetailResDto findByIdAndMeetingPostId(Long meetingId, Long meetingPostId);
+//    MeetingDetailResDto findByIdAndMeetingPostId(Long meetingId, Long meetingPostId);
 
-    public List<Meeting> findByUserId(Long userId);
+//    public List<Meeting> findByUserId(Long userId);
 }
 
 

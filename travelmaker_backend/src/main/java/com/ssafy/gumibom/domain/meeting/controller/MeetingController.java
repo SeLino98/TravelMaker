@@ -20,24 +20,24 @@ public class MeetingController {
     private final MeetingService meetingService;
     private final MeetingPostService meetingPostService;
 
-    @PostMapping("/{meetingPostId}")
-    public ResponseEntity<Long> createMeeting(@PathVariable Long meetingPostId) {
-        DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
-        MeetingCreateReqDto meetingCreateReqDto = new MeetingCreateReqDto(detailMeetingPostResForMeetingDto);
-        Long id = meetingService.createMeeting(meetingCreateReqDto);
-        return ResponseEntity.ok(id);
-    }
+//    @PostMapping("/{meetingPostId}")
+//    public ResponseEntity<Long> createMeeting(@PathVariable Long meetingPostId) {
+//        DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
+//        MeetingCreateReqDto meetingCreateReqDto = new MeetingCreateReqDto(detailMeetingPostResForMeetingDto);
+//        Long id = meetingService.createMeeting(meetingCreateReqDto);
+//        return ResponseEntity.ok(id);
+//    }
+//
+//    @GetMapping("/{userId}")
+//    public ResponseEntity<List<MeetingResDto>> getMeetingsByUserId(@PathVariable Long userId) {
+//        List<MeetingResDto> meetings = meetingService.getMeetingsByUserId(userId);
+//        return ResponseEntity.ok(meetings);
+//    }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<MeetingResDto>> getMeetingsByUserId(@PathVariable Long userId) {
-        List<MeetingResDto> meetings = meetingService.getMeetingsByUserId(userId);
-        return ResponseEntity.ok(meetings);
-    }
-
-    @GetMapping("/{meetingPostId}/{meetingId}")
-    public ResponseEntity<MeetingDetailResDto> meetingDetail(MeetingDetailReqDto meetingDetailReqDto){
-        MeetingDetailResDto meetingDetailResDto = meetingService.getMeetingByMeetingId(meetingDetailReqDto);
-        return ResponseEntity.ok(meetingDetailResDto);
-    }
+//    @GetMapping("/{meetingPostId}/{meetingId}")
+//    public ResponseEntity<MeetingDetailResDto> meetingDetail(MeetingDetailReqDto meetingDetailReqDto) {
+//        MeetingDetailResDto meetingDetailResDto = meetingService.getMeetingByMeetingId(meetingDetailReqDto);
+//        return ResponseEntity.ok(meetingDetailResDto);
+//    }
 
 }

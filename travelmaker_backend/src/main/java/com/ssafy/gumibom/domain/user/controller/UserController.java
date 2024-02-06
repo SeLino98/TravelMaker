@@ -32,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok(userService.checkPhoneNumExists(phonenum));
     }
 
-    @PostMapping("/mypage")
+    @GetMapping("/mypage")
     public ResponseEntity<?> mypage(@RequestParam String userLoginId) {
         return ResponseEntity.ok(userService.inquiryMyPage(userLoginId));
     }

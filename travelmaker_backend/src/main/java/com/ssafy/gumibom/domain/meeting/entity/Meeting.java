@@ -3,7 +3,6 @@ package com.ssafy.gumibom.domain.meeting.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.dto.req.MeetingCreateReqDto;
 import com.ssafy.gumibom.domain.pamphlet.entity.MeetingPamphlet;
-import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Position;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Meeting {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "meeting_id")
     private Long id;
 

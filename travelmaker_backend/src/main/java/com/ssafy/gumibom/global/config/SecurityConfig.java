@@ -68,10 +68,10 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
-                        .requestMatchers("/**").permitAll()
+//                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/login", "/", "/join").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated()) // 그 외 인증 없이 접근X
 //                .exceptionHandling((exceptionHandling) -> //컨트롤러의 예외처리를 담당하는 exception handler와는 다름.
 //                        exceptionHandling
 //                                .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -89,15 +89,6 @@ public class SecurityConfig {
 
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-//                .authorizeHttpRequests((authorizeRequests)->
-//                        authorizeRequests
-//                                //users 포함한 end point 보안 적용 X
-//                                .requestMatchers("/users/**").permitAll() // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정하겠다.
-//                                .requestMatchers("/error/**").permitAll()
-//                                .requestMatchers(PathRequest.toH2Console()).permitAll()// h2-console, favicon.ico 요청 인증 무시
-//                                .requestMatchers("/favicon.ico").permitAll()
-//                                .anyRequest().authenticated() // 그 외 인증 없이 접근X
-//                )
 //                .exceptionHandling((exceptionHandling)->exceptionHandling
 //                        .accessDeniedHandler(jwtAccessDeniedHandler)
 //                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
