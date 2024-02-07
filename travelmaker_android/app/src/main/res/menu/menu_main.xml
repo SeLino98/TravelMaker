@@ -13,8 +13,9 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_my_page"
-        android:title="Custom View"
+        android:title="Mypage"
         app:showAsAction="always"
         android:enabled="true"
         app:actionLayout="@layout/toolbar_my_page_image" />
+
 </menu>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">`
+
+    <FrameLayout
+        android:id="@+id/fl_mypage_profile_picture"
+
+        android:layout_width="168dp"
+        android:layout_height="168dp"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/iv_mypage_profile_frame"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_empty_profile_circle"
+            />
+
+        <ImageView
+            android:id="@+id/iv_mypage_profile_img"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_alba_round"
+            android:layout_margin="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_mypage_profile_edit"
+
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_picture_add"
+            android:layout_gravity="bottom|end"
+
+            android:clickable="true"
+            />
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/et_mypage_email"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/mypage_email"
+        android:textColorHint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fl_mypage_profile_picture"
+        android:layout_marginStart="32dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_mypage_email_edit"
+
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_profile_edit2"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/et_mypage_email"
+        android:layout_marginTop="208dp"
+        />
+
+<!-- 닉네임은 ... textview로 고쳐야함. 닉네임은 회원가입후 수정 불가했음!!!   -->
+    <EditText
+        android:id="@+id/et_mypage_nickname"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/mypage_nickname"
+        android:textColorHint="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/et_mypage_email"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="32dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_mypage_nickname_edit"
+
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_profile_edit2"
+        android:clickable="true"
+        app:layout_constraintStart_toEndOf="@id/et_mypage_nickname"
+        app:layout_constraintTop_toBottomOf="@id/et_mypage_email"
+        android:layout_marginTop="14dp"
+
+        />
+
+    <FrameLayout
+        android:id="@+id/fl_mypage_trustlevel"
+
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+    <Button
+        android:id="@+id/btn_myinfo_edit"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_edit_personal_info"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_gravity="start|bottom"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_mypage_logout"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_logout"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_mypage_delete_user"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:text="@string/mypage_withdrawal"
+        android:textColor="@color/light_gray"
+        android:textSize="20sp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_mypage_check_my_trustlevel"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나의 신뢰도 확인"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/lottie_my_trustlevel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_my_trustlevel"
+
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        app:lottie_repeatCount="10"
+        android:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="mypage_trustlevel3.json"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="296dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

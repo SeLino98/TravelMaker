@@ -74,4 +74,13 @@
     <string name="record_pamphlet">다음과 같은 팜플렛에\n기록됩니다.</string>
     <!-- END -->
     <!-- 회원가입 성공메시지 -->
+
+    <!-- 마이페이지 -->
+    <string name="mypage_title">마이페이지</string>
+    <string name="mypage_nickname">개똥구리</string>
+    <string name="mypage_email">gaeddong-guriguri@gmail.com</string>
+    <string name="mypage_logout">로그아웃</string>
+    <string name="mypage_withdrawal">회원탈퇴</string>
+    <string name="mypage_edit_personal_info">개인정보\n수정하기</string>
+    <string name="mypage_trust_level">신뢰도</string>
 </resources>

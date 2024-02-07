@@ -10,12 +10,10 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_mainFindMateFragment"
-            app:destination="@id/mainFindMateFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_mainMyGroupFragment"
             app:destination="@id/mainMyGroupFragment" />
         <action
+
             android:id="@+id/action_mainFragment_to_mainGoTravelFragment"
             app:destination="@id/mainGoTravelFragment" />
         <action
@@ -24,42 +22,25 @@
         <action
             android:id="@+id/action_mainFragment_to_mainLookPamphletsFragment"
             app:destination="@id/mainLookPamphletsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/mainFindMateFragment"
-        android:name="com.gumibom.travelmaker.ui.main.findmate.MainFindMateFragment"
-        android:label="fragment_main_find_mate"
-        tools:layout="@layout/fragment_main_find_mate" >
         <action
-            android:id="@+id/action_mainFindMateFragment_to_mainFindMateDetailFragment"
-            app:destination="@id/mainFindMateDetailFragment" />
-        <action
-            android:id="@+id/action_mainFindMateFragment_to_findMateSearchFragment"
-            app:destination="@id/findMateSearchFragment" />
+            android:id="@+id/action_mainFragment_to_mainMyPageFragment"
+            app:destination="@id/mainMyPageFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/mainFindMateDetailFragment"
         android:name="com.gumibom.travelmaker.ui.main.findmate.bottomsheet.MainFindMateDetailFragment"
         android:label="fragment_main_find_mate_detail"
         tools:layout="@layout/fragment_main_find_mate_detail" />
-    <fragment
 
-        android:id="@+id/findMateSearchFragment"
-        android:name="com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment"
-        android:label="FindMateSearchFragment" >
-        <action
-            android:id="@+id/action_findMateSearchFragment_to_mainFindMateFragment"
-            app:popUpTo="@id/mainFindMateFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/mainFindMateFragment" />
-
-    </fragment>
     <fragment
         android:id="@+id/mainMyGroupFragment"
         android:name="com.gumibom.travelmaker.ui.main.mygroup.MainMyGroupFragment"
         android:label="fragment_main_my_group"
         tools:layout="@layout/fragment_main_my_group" />
     <fragment
+
         android:id="@+id/mainMyRecordFragment"
         android:name="com.gumibom.travelmaker.ui.main.myrecord.MainMyRecordFragment"
         android:label="fragment_main_my_record"
@@ -67,8 +48,7 @@
     <fragment
         android:id="@+id/mainGoTravelFragment"
         android:name="com.gumibom.travelmaker.ui.main.gotravel.MainGoTravelFragment"
-        android:label="fragment_main_go_travel"
-        tools:layout="@layout/fragment_main_go_travel" >
+        android:label="fragment_main_go_travel">
         <action
             android:id="@+id/action_mainGoTravelFragment_to_makePamphletFragment"
             app:destination="@id/makePamphletFragment" />
@@ -90,5 +70,9 @@
         android:id="@+id/startPamphletFragment"
         android:name="com.gumibom.travelmaker.ui.main.gotravel.StartPamphletFragment"
         android:label="StartPamphletFragment" />
+    <fragment
+        android:id="@+id/mainMyPageFragment"
+        android:name="com.gumibom.travelmaker.ui.main.mypage.MainMyPageFragment"
+        android:label="MainMyPageFragment" />
 
 </navigation>
