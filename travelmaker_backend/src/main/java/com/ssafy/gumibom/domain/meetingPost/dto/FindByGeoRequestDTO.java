@@ -10,19 +10,16 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-//@NoArgsConstructor
 @Builder
 public class FindByGeoRequestDTO {
 
     private Double latitude;
     private Double longitude;
-    //    @Builder.Default
-    private Double radius = 3.0;
-    //    @Builder.Default
-    private List<String> categories = new ArrayList<>(Arrays.asList("taste", "healing", "culture", "active", "picture", "nature"));
+    private Double radius;
+    private List<String> categories;
 
     public FindByGeoRequestDTO() {
         radius = 3.0;
-        categories = new ArrayList<>(Arrays.asList("taste", "healing", "culture", "active", "picture", "nature"));
+        categories = new ArrayList<>(Arrays.asList("taste", "healing", "culture", "active", "picture", "nature", "shopping", "rest"));
     }
 }
