@@ -1,7 +1,6 @@
 package com.ssafy.gumibom.domain.meetingPost.repository;
 
-import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
-import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoResponseDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.FindByGeoResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

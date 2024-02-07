@@ -6,7 +6,7 @@ import com.ssafy.gumibom.domain.user.dto.MyPageResponseDTO;
 import com.ssafy.gumibom.domain.user.dto.SignupRequestDto;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
-import com.ssafy.gumibom.global.util.S3Service;
+import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

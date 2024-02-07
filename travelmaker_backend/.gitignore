@@ -21,6 +21,8 @@ bin/
 application.properties
 application.yml
 
+travelmaker2-firebase-adminsdk-c71pd-6d0472b4c1.json
+
 .idea
 *.iws
 *.iml
