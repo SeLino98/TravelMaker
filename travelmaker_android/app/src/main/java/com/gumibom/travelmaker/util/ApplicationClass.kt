@@ -46,6 +46,6 @@ class ApplicationClass : Application(){
             //유저 테이블의 아이디와 토큰을 같이 보내서
             //아이디에 매칭되는 아이디에 토큰 테이블을 갱신한다,
         }
-    }
 
+    }
 }

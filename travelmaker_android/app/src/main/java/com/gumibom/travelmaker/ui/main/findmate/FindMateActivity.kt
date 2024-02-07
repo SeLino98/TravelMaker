@@ -33,6 +33,7 @@ import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
+import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostActivity
 import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
@@ -80,7 +81,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setBottomSheet(){
         val standardBottomSheet = binding.bts.bottomSheetLayout
         val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
-        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED;
+        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN;
         standardBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 val screenHeight = Resources.getSystem().displayMetrics.heightPixels
@@ -323,21 +324,20 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     private fun openMeetingDialog() {
         mMap.setOnMarkerClickListener { marker ->
-
-
             //바텀시트가 열리고 데이터를 받아서 띄운다.
-
             val markerPosition = marker.tag as MarkerPosition
             val meetingId = markerPosition.id
+            Log.d(TAG, "openMeetingDialog2: $meetingId")
             //아이디 넘겨서 데이터 받고
             mainViewModel.getPostDetail(meetingId)
+            Log.d(TAG, "openMeetingDialog1: $meetingId")
             //뿌리기
             mainViewModel.postDTO.observe(this){
-                //
-
+                var postDetail : PostDetail = it
+                println(postDetail.toString())
             }
-            Log.d(TAG, "openMeetingDialog: $meetingId")
 
+            Log.d(TAG, "openMeetingDialog: $meetingId")
 
             true
         }

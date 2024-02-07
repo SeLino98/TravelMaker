@@ -19,7 +19,8 @@ import com.gumibom.travelmaker.ui.signup.SignupViewModel
 
 
 private const val TAG = "SignupLocationAdapter_싸피"
-class SignupLocationAdapter(private val context : Context, private val viewModel : CommonViewModel)
+class SignupLocationAdapter(private val context : Context,
+                            private val viewModel : CommonViewModel)
     : ListAdapter<Address, SignupLocationAdapter.SignupLocationViewHolder>(SignupLocationDiffUtil()) {
 
     // 클릭한 아이템의 position을 갱신하기 위한 변수

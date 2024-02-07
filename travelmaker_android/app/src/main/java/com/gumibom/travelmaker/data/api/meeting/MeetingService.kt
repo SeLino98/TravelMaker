@@ -26,4 +26,7 @@ interface MeetingService {
     suspend fun getPostDetail(
         @Path("meetingPostId") id : Long
     ) : Response<MeetingPostDTO>
+
+
+
 }

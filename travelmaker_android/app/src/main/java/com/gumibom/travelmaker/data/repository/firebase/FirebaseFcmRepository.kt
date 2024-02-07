@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.data.repository.firebase
 
+import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
@@ -17,4 +18,10 @@ interface FirebaseFcmRepository {
     suspend fun acceptCrew(
         fcmRequestGroup: FcmRequestGroupDTO
     ):Response<IsSuccessResponseDTO>
+
+    suspend fun getAllRequestList(
+        userId : Long
+    ):Response<FcmGetNotifyListDTO>
+
+
 }

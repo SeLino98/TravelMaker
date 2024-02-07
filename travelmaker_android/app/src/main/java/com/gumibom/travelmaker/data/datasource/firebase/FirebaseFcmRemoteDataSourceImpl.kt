@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.datasource.firebase
 
 import com.gumibom.travelmaker.data.api.firebase.FirebaseTokenService
+import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
@@ -23,5 +24,12 @@ class FirebaseFcmRemoteDataSourceImpl @Inject constructor(
         return  firebaseTokenService.acceptCrew(fcmRequestGroup)
     }
 
+    override suspend fun refuseCrew(fcmRequestGroup: FcmRequestGroupDTO): Response<IsSuccessResponseDTO> {
+        return firebaseTokenService.refuseCrew(fcmRequestGroup)
+    }
+
+    override suspend fun getAllRequest(userid: Long): Response<FcmGetNotifyListDTO> {
+        return firebaseTokenService.getAllRequest(userid)
+    }
 
 }

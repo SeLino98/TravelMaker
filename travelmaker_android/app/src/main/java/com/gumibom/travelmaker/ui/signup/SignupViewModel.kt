@@ -41,6 +41,7 @@ class SignupViewModel @Inject constructor(
     private val saveUserInfoUseCase :SaveUserInfoUseCase
 ) : ViewModel(), CommonViewModel {
 
+
     /*
         변수 사용하는 공간 시작
      */
