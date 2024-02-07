@@ -22,10 +22,10 @@ interface MeetingService {
         @Body markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO
     ) : Response<MutableList<MarkerPositionResponseDTO>>
 
-    @GET("/meeting-post")
+    @GET("/meeting-post/{meetingPostId}")
     suspend fun getPostDetail(
-        @Path("meetingPostId") id : Long
-    ) : Response<MeetingPostDTO>
+        @Path("meetingPostId") id: Long
+    ): Response<MeetingPostDTO>
 
 
 
