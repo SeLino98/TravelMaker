@@ -114,15 +114,15 @@ public class User {
         return true;
     }
 
-    public boolean isAccountNonLocked() {
+    public Boolean isAccountNonLocked() {
         return true;
     }
 
-    public boolean isCredentialsNonExpired() {
+    public Boolean isCredentialsNonExpired() {
         return true;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return true;
     }
 

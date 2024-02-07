@@ -1,9 +1,7 @@
 package com.ssafy.gumibom.domain.meetingPost.dto;
 
-import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
-import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.global.common.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +16,7 @@ import java.util.List;
 @Builder
 @Getter
 public class DetailMeetingPostResForMeetingDto {
-
+    private Long id;
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -28,6 +26,7 @@ public class DetailMeetingPostResForMeetingDto {
     private List<MeetingApplier> members;
 
     public DetailMeetingPostResForMeetingDto(MeetingPost meetingPost){
+        this.id = meetingPost.getId();
         this.title = meetingPost.getTitle();
         this.startDate = meetingPost.getStartDate();
         this.endDate = meetingPost.getEndDate();

@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meeting.dto.res;
+package com.ssafy.gumibom.domain.meeting.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

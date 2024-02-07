@@ -37,6 +37,17 @@ cloud:
     stack:
       auto: false
 
+coolsms:
+  api:
+    key: ENC(BWNDQzGNvNMVFZOeaSbbR3zNcPlN4lz/hyHtobQPCS0=)
+    secret: ENC(Da7l7zpS5Ccm4OaZ9P2mFwkvD9ufexFg6ZIMlRXPlUTbksGzH4XDeIyVtr1Wagiu)
+    fromnumber : ENC(j2aEYLecCVWNIFo2pKulY89/JC2MJlmd)
+
+redis:
+  host: localhost
+  port: 6379
+  repositories:
+    enabled: false
 
 jwt:
   secret: ENC(iD/4Lj32YZAdHtLBznMbfeW9ugCbJ/wIhartzsBpSghIamYs5cA1yafvo7DVuTGKVijW7gF0RjSuFj/7oEBv6qY+47KgsAhuhpnCTjPZau0=)

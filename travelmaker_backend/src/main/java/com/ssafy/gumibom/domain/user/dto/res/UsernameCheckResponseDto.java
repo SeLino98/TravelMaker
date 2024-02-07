@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UsernameCheckResponseDto {
-    private boolean isAvailable;
+    private Boolean isAvailable;
     private String message;
 }
