@@ -38,33 +38,16 @@ public class MeetingPostRepository {
 
 
         // 위도 경도 따와서 기준 위치 근방 km 안인지, 아직 모집 중인지 확인 후 select
-        String jpql = "SELECT DISTINCT m FROM MeetingPost m " +
+        return em.createQuery("SELECT distinct m.id, m.position.latitude, m.position.longitude " +
+                        "FROM MeetingPost m join m.categories c " +
                         "WHERE m.status = false " +
-                        "AND (6371 * acos(cos(radians(:latitude)) * cos(radians(m.position.latitude)) * cos(radians(m.position.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(m.position.latitude)))) <= :upToKm ";
-
-        // 카테고리 필터링 조건을 동적으로 생성
-        StringBuilder categoryCondition = new StringBuilder("AND (");
-        for (int i = 0; i < categories.size(); i++) {
-            categoryCondition.append("CONCAT(',', m.categories, ',') LIKE :category").append(i);
-            if (i < categories.size() - 1) {
-                categoryCondition.append(" OR ");
-            }
-        }
-        categoryCondition.append(")");
-
-        jpql += categoryCondition.toString();
-
-        TypedQuery<FindByGeoResponseDTO> query = em.createQuery(jpql, FindByGeoResponseDTO.class);
-        query.setParameter("latitude", latitude)
+                        "AND (6371 * acos(cos(radians(:latitude)) * cos(radians(m.position.latitude)) * cos(radians(m.position.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(m.position.latitude)))) <= :upToKm " +
+                        "AND c in :categories", FindByGeoResponseDTO.class)
+                .setParameter("latitude", latitude)
                 .setParameter("longitude", longitude)
-                .setParameter("upToKm", upToKm);
-
-        // 각 카테고리에 대한 파라미터 설정
-        for (int i = 0; i < categories.size(); i++) {
-            query.setParameter("category" + i, "%," + categories.get(i) + ",%");
-        }
-
-        return query.getResultList();
+                .setParameter("upToKm", upToKm)
+                .setParameter("categories", categories)
+                .getResultList();
 
     }
 

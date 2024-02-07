@@ -26,7 +26,8 @@ public class MeetingPost {
 
     //    @JsonIgnore
 //    @OneToMany(mappedBy = "meeting_post")
-    @Convert(converter = StringListConverter.class)
+//    @Convert(converter = StringListConverter.class)
+    @ElementCollection
     private List<String> categories = new ArrayList<>();
 
     private String title;
