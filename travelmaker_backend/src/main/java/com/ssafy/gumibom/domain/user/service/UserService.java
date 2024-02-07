@@ -6,12 +6,14 @@ import com.ssafy.gumibom.domain.user.dto.MyPageResponseDTO;
 import com.ssafy.gumibom.domain.user.dto.SignupRequestDto;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
+import com.ssafy.gumibom.global.base.JwtTokenResponseDto;
 import com.ssafy.gumibom.global.util.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +74,7 @@ public class UserService {
 
     // fcm 토큰 저장
     @Transactional
-    public boolean updateFCMById(AccountModifyRequestDTO requestDTO) {
+    public Boolean updateFCMById(AccountModifyRequestDTO requestDTO) {
 
         User user = userRepository.findByUsername(requestDTO.getUserLoginId());
 
@@ -86,18 +88,42 @@ public class UserService {
 
     // 전화번호 중복 가입 체크
     @Transactional
-    public boolean checkPhoneNumExists(String phoneNum) {
+    public Boolean checkPhoneNumExists(String phoneNum) {
         return userRepository.existUsersByPhoneNum(phoneNum);
     }
 
     // 닉네임 중복 체크
-    public boolean checkNickNameExists(String nickName) {
+    public Boolean checkNickNameExists(String nickName) {
         return userRepository.existUsersByNickName(nickName);
     }
 
     // 로그인 아이디 중복 체크
-    public boolean checkLoginIDExists(String loginID) {
+    public Boolean checkLoginIDExists(String loginID) {
         return userRepository.existUsersByLoginID(loginID);
+    }
+
+    public String findLoginIDByPhoneNum(String phoneNum) {
+
+        boolean check = checkPhoneNumExists(phoneNum);
+        if (!check) throw new IllegalArgumentException("가입되지 않은 전화번호입니다.");
+        return userRepository.findByPhoneNum(phoneNum).getUsername();
+    }
+
+    public Boolean changePassword(String oldPassword, String newPassword) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+
+        User user = userRepository.findByUsername(currentUserName);
+        if (user != null && encoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(encoder.encode(newPassword));
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    public void deleteUserByUsername(String username) {
+        userRepository.deleteByUsername(username);
     }
 
     // mypage

@@ -3,19 +3,17 @@ package com.ssafy.gumibom.domain.user.dto;
 import com.ssafy.gumibom.domain.user.entity.Gender;
 import com.ssafy.gumibom.domain.user.entity.Role;
 import com.ssafy.gumibom.domain.user.entity.User;
-import com.ssafy.gumibom.global.common.Category;
-import com.ssafy.gumibom.global.common.Nation;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class SignupRequestDto {
 
 
@@ -35,7 +33,7 @@ public class SignupRequestDto {
     private Gender gender;
     private String birth;
     private String phone;
-//    private String profileImgURL;
+    //    private String profileImgURL;
     private String nation;
     private List<String> categories;
 

@@ -7,26 +7,24 @@ import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
     private final EntityManager em;
 
-    public void save(User user){
-        if(user.getId() == null){
+    public void save(User user) {
+        if (user.getId() == null) {
             em.persist(user);
         } else {
             em.merge(user);
         }
     }
 
-    public User findOne(Long id){
+    public User findOne(Long id) {
         return em.find(User.class, id);
     }
 
-    public void remove(User user){
+    public void remove(User user) {
         em.remove(user);
     }
 
@@ -42,6 +40,18 @@ public class UserRepository {
         }
     }
 
+    public User findByPhoneNum(String phoneNum) {
+        try {
+            return em.createQuery("select u from User u where u.phone = :phoneNum", User.class)
+                    .setParameter("phoneNum", phoneNum)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException e) {
+            throw new IllegalStateException("중복된 전화 번호가 있습니다.");
+        }
+    }
+
     public Boolean existUsersByPhoneNum(String phoneNum) {
         try {
             User user = em.createQuery("select u from User u where u.phone = :phoneNum", User.class)
@@ -54,6 +64,10 @@ public class UserRepository {
 //            throw new IllegalStateException("해당 전화번호는 이미 가입되어 있습니다.");
             return true;
         }
+    }
+
+    public void deleteByUsername(String username) {
+        em.remove(findByUsername(username));
     }
 
     public Boolean existUsersByNickName(String nickName) {

@@ -1,12 +1,9 @@
 package com.ssafy.gumibom.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
-import com.ssafy.gumibom.global.common.Category;
-import com.ssafy.gumibom.global.common.Nation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,15 +11,11 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -55,7 +48,8 @@ public class User {
     private String phone;
 
     @Lob
-    private String profileImgURL;;
+    private String profileImgURL;
+    ;
 
     private Double trust;
 
@@ -139,6 +133,10 @@ public class User {
     public void setMeetingMember(MeetingMember meetingMember) {
         this.meetingMembers.add(meetingMember);
         meetingMember.setUser(this);
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
