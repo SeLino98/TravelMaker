@@ -65,11 +65,12 @@ public class MeetingPostService {
 
     // 마커 클릭
     @Transactional
-    public ResponseEntity<?> meetingPostDetail(Long id) {
+    public ResponseEntity<?> meetingPostDetail(Long meetingPostId) {
 
-        DetailOfMeetingPostResponseDTO responseDTO = new DetailOfMeetingPostResponseDTO();
-        responseDTO.setMeetingPost(meetingPostRepository.findOne(id));
-        responseDTO.setDDay(ChronoUnit.DAYS.between(responseDTO.getMeetingPost().getDeadline(), LocalDateTime.now()) - 1);
+        MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
+        User head = meetingPost.getHead();
+
+        DetailOfMeetingPostResponseDTO responseDTO = new DetailOfMeetingPostResponseDTO(head, meetingPost);
 
         return ResponseEntity.ok(responseDTO);
     }
