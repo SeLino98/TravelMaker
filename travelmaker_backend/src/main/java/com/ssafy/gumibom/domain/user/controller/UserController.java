@@ -66,13 +66,10 @@ public class UserController {
         return ResponseEntity.ok(userService.inquiryMyPage(userLoginId));
     }
 
-<<<<<<< HEAD
-
-=======
     @Operation(summary = "fcm 토큰 갱신")
     @PutMapping("/user/renewal-fcm-token")
     public ResponseEntity<?> renewalFCM(@RequestBody AccountModifyRequestDTO requestDTO) {
         return ResponseEntity.ok(userService.updateFCMById(requestDTO));
     }
->>>>>>> 7cabfef57cebe818a50823ede72b4e648488dc15
+
 }
