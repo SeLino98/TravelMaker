@@ -1,5 +1,6 @@
-package com.ssafy.gumibom.global.util;
+package com.ssafy.gumibom.global.service;
 
+import com.ssafy.gumibom.global.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

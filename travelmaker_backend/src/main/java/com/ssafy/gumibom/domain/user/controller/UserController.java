@@ -95,4 +95,5 @@ public class UserController {
     public ResponseEntity<?> renewalFCM(@RequestBody AccountModifyRequestDTO requestDTO) {
         return ResponseEntity.ok(userService.updateFCMById(requestDTO));
     }
+
 }

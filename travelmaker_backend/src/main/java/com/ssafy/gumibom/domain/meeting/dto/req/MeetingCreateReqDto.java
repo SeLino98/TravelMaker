@@ -3,7 +3,6 @@ package com.ssafy.gumibom.domain.meeting.dto.req;
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
-import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.global.common.Position;

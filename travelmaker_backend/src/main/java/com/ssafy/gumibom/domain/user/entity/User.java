@@ -3,6 +3,8 @@ package com.ssafy.gumibom.domain.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingRequest;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -67,9 +69,14 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PersonalPamphlet> personalPamphlets;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<MeetingPost> meetingPosts;
+    @JsonIgnore
+    @OneToMany(mappedBy = "requestor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingRequest> sentRequests = new ArrayList<>(); // 요청자로서 보낸 모임 요청들
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "acceptor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingRequest> receivedRequests = new ArrayList<>(); // 방장으로서 받은 모임 요청들
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -112,15 +119,15 @@ public class User {
         return true;
     }
 
-    public boolean isAccountNonLocked() {
+    public Boolean isAccountNonLocked() {
         return true;
     }
 
-    public boolean isCredentialsNonExpired() {
+    public Boolean isCredentialsNonExpired() {
         return true;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return true;
     }
 

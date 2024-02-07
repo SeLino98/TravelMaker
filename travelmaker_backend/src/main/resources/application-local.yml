@@ -20,6 +20,10 @@ spring:
     username: ENC(T+t/J9bKTHnCGeP/jFP1mA==)
     password: ENC(WvjVw6nWFMuQSP2h5WSqQQ==)
     url: ENC(02uo3zxNIx+bygjXsHf9bfhvLK+CH/GJlpe/cphVSe/iT+y9WsaUtMdnujTYtnHO6u8cNZBQ8TBpOmB3NAC0ARx8OKfTip6zgObmbzjQLxo=)
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 server:
   port: 8080
@@ -37,6 +41,17 @@ cloud:
     stack:
       auto: false
 
+coolsms:
+  api:
+    key: ENC(BWNDQzGNvNMVFZOeaSbbR3zNcPlN4lz/hyHtobQPCS0=)
+    secret: ENC(Da7l7zpS5Ccm4OaZ9P2mFwkvD9ufexFg6ZIMlRXPlUTbksGzH4XDeIyVtr1Wagiu)
+    fromnumber : ENC(j2aEYLecCVWNIFo2pKulY89/JC2MJlmd)
+
+redis:
+  host: localhost
+  port: 6379
+  repositories:
+    enabled: false
 
 jwt:
   secret: ENC(iD/4Lj32YZAdHtLBznMbfeW9ugCbJ/wIhartzsBpSghIamYs5cA1yafvo7DVuTGKVijW7gF0RjSuFj/7oEBv6qY+47KgsAhuhpnCTjPZau0=)

@@ -1,13 +1,14 @@
 package com.ssafy.gumibom.domain.meetingPost.service;
 
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
-import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.DetailOfMeetingPostResponseDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
+import com.ssafy.gumibom.domain.meetingPost.repository.MeetingApplierRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
-import com.ssafy.gumibom.global.util.S3Service;
+import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class MeetingPostService {
 
     private final UserRepository userRepository;
     private final MeetingPostRepository meetingPostRepository;
+    private final MeetingApplierRepository meetingApplierRepository;
 
     private final S3Service s3Service;
 
@@ -55,6 +57,7 @@ public class MeetingPostService {
         log.info("데드라인: " +meetingPost.getDeadline());
         log.info("마감 날짜: " +meetingPost.getEndDate());
 
+        meetingApplierRepository.save(meetingPost.getAppliers().get(0)); // 모임장 db에 저장
         meetingPostRepository.save(meetingPost);
 
         return ResponseEntity.ok("모임글 작성 성공");
@@ -63,11 +66,12 @@ public class MeetingPostService {
 
     // 마커 클릭
     @Transactional
-    public ResponseEntity<?> meetingPostDetail(Long id) {
+    public ResponseEntity<DetailOfMeetingPostResponseDTO> meetingPostDetail(Long meetingPostId) {
 
-        DetailOfMeetingPostResponseDTO responseDTO = new DetailOfMeetingPostResponseDTO();
-        responseDTO.setMeetingPost(meetingPostRepository.findOne(id));
-        responseDTO.setDDay(ChronoUnit.DAYS.between(responseDTO.getMeetingPost().getDeadline(), LocalDateTime.now()) - 1);
+        MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
+        User head = meetingPost.getHead();
+
+        DetailOfMeetingPostResponseDTO responseDTO = new DetailOfMeetingPostResponseDTO(head, meetingPost);
 
         return ResponseEntity.ok(responseDTO);
     }
@@ -77,6 +81,14 @@ public class MeetingPostService {
     public DetailMeetingPostResForMeetingDto meetingPostDetailRead(Long id){
         DetailMeetingPostResForMeetingDto responseDTO = new DetailMeetingPostResForMeetingDto(meetingPostRepository.findOne(id));
         return responseDTO;
+    }
+
+    @Transactional
+    public Boolean finishMeetingPost(Long meetingPostId){
+        MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
+        meetingPost.updateMeetingPostStatus();
+        meetingPostRepository.save(meetingPost);
+        return meetingPost.getIsFinish();
     }
 
     // 반경 n km 안에 존재하는 모임글들의 정보 반환 // 위치랑 meetingPost id

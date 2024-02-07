@@ -6,7 +6,6 @@ import lombok.Getter;
 @Embeddable
 @Getter
 public class Position { // 모임 장소
-//    @Column(name = "position_name")
     private String name;
 
     private Double latitude;

@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meetingPost.dto;
+package com.ssafy.gumibom.domain.meetingPost.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

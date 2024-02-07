@@ -6,7 +6,6 @@ import com.ssafy.gumibom.domain.user.dto.MyPageResponseDTO;
 import com.ssafy.gumibom.domain.user.dto.SignupRequestDto;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
-import com.ssafy.gumibom.global.base.JwtTokenResponseDto;
 import com.ssafy.gumibom.global.util.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,6 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-
 
     // 로그인
     @Transactional
@@ -145,8 +143,6 @@ public class UserService {
                 .categories(user.getCategories())
                 .build();
     }
-
-
 
     /*
 

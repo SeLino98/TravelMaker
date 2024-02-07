@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meetingPost.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Position;
 import com.ssafy.gumibom.global.util.StringListConverter;
@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,7 +39,8 @@ public class MeetingPost {
     private Integer memberMax;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Boolean status;
+    @ColumnDefault("false")
+    private Boolean isFinish;
     private LocalDateTime deadline;
     private String imgUrlMain;
     private String imgUrlSub;
@@ -48,8 +50,6 @@ public class MeetingPost {
     @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "meeting_post", cascade = CascadeType.ALL)
     @Embedded
     private Position position;
 
@@ -64,7 +64,7 @@ public class MeetingPost {
         this.nativeMin = requestDTO.getNativeMin();
         this.travelerMin = requestDTO.getTravelerMin();
         this.memberMax = requestDTO.getMemberMax();
-        this.status = false;
+        this.isFinish = false;
         this.imgUrlMain = mainImgUrl;
         this.imgUrlSub = subImgUrl;
         this.imgUrlThr = thirdImgUrl;
@@ -72,11 +72,11 @@ public class MeetingPost {
         this.position = requestDTO.getPosition();
     }
 
-    public void addApplier(User user, Boolean isHead, Position position) {
+    public void addApplier(User user, Boolean isHead) {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
-        if(position != null) meetingApplier.setIsNative(position.getTown() == user.getTown());
+        if(position != null) meetingApplier.setIsNative(this.position.getTown().equals(user.getTown()));
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
     }
@@ -89,7 +89,7 @@ public class MeetingPost {
 
         MeetingPost meetingPost = new MeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO);
 
-        meetingPost.addApplier(author, true, requestDTO.getPosition());
+        meetingPost.addApplier(author, true);
 
         return meetingPost;
     }
@@ -103,9 +103,9 @@ public class MeetingPost {
         this.deadline = requestDTO.getDeadline();
         // 기간 변경에 따른 status 변경
         if (this.deadline != null) {
-            this.status = this.deadline.isBefore(LocalDateTime.now());
+            this.isFinish = this.deadline.isBefore(LocalDateTime.now());
         } else {
-            this.status = false;
+            this.isFinish = false;
         }
 
         this.startDate = requestDTO.getStartDate();
@@ -122,7 +122,14 @@ public class MeetingPost {
         return this;
     }
 
-    public void updateMeetingPostStatus(Boolean newStatus) {
-        this.status = newStatus;
+    public void updateMeetingPostStatus() {
+        this.isFinish = true;
+    }
+
+    public User getHead() {
+        for(MeetingApplier applier: this.appliers) {
+            if(applier.getIsHead()) return applier.getUser();
+        }
+        return null;
     }
 }
