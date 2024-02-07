@@ -318,7 +318,10 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             findMateSearchFragment.show(supportFragmentManager, "")
         }
     }
+    private fun settingBottomSheetUI( postDetail : PostDetail){
 
+
+    }
     /**
      * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
      */
@@ -335,6 +338,9 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             mainViewModel.postDTO.observe(this){
                 var postDetail : PostDetail = it
                 println(postDetail.toString())
+                Log.d(TAG, "openMeetingDialog: ${postDetail.toString()}")
+                Log.d(TAG, "openMeetingDialog: ${postDetail.title}")
+                settingBottomSheetUI(postDetail)
             }
 
             Log.d(TAG, "openMeetingDialog: $meetingId")
