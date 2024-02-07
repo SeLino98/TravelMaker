@@ -84,6 +84,14 @@ class MainActivity : AppCompatActivity() {
                     }
                     binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
                 }
+                R.id.mainMyRecordFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = getString(R.string.myRecord_title)
+                    binding.toolbar.setNavigationOnClickListener {
+                        navController.navigateUp()
+                    }
+                }
             }
         }
     }

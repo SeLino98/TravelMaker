@@ -1,12 +1,13 @@
 package com.gumibom.travelmaker.domain.meeting
 
+import android.util.Log
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import com.gumibom.travelmaker.data.dto.response.Position
 import com.gumibom.travelmaker.data.repository.meeting.MeetingRepository
 import com.gumibom.travelmaker.model.PostDetail
 import javax.inject.Inject
 
-private const val TAG = "GetPostDetailUseCase"
+private const val TAG = "GetPostDetailUseCase_싸피"
 class GetPostDetailUseCase @Inject constructor(
     private val meetingRepositoryImpl: MeetingRepository
 ){
@@ -15,8 +16,10 @@ class GetPostDetailUseCase @Inject constructor(
     // ViewModel에서 사용ㄷ회어허ㅏㄴ다 ㄴ알허 라ㅣ호
     suspend fun getPostDetail(postId:Long):PostDetail {
         val response = meetingRepositoryImpl.getPostDetail(postId)
+        Log.d(TAG, "response: $response")
         if (response.isSuccessful) {
             val body = response.body()
+            Log.d(TAG, "body: $body")
             if (body != null) {
                 return convertAddressModel(body)
             }

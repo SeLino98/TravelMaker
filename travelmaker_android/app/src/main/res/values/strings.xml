@@ -83,4 +83,7 @@
     <string name="mypage_withdrawal">회원탈퇴</string>
     <string name="mypage_edit_personal_info">개인정보\n수정하기</string>
     <string name="mypage_trust_level">신뢰도</string>
+
+    <!-- 내 기록 페이지 -->
+    <string name="myRecord_title">내 기록</string>
 </resources>
