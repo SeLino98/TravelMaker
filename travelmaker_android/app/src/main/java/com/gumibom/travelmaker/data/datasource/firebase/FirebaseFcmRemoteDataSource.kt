@@ -1,11 +1,13 @@
 package com.gumibom.travelmaker.data.datasource.firebase
 
+import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import retrofit2.Response
 
 interface FirebaseFcmRemoteDataSource {
+
     suspend fun uploadToken(
         fcmTokenRequestDTO: FcmTokenRequestDTO
     ):Response<IsSuccessResponseDTO>
@@ -17,5 +19,14 @@ interface FirebaseFcmRemoteDataSource {
     suspend fun acceptCrew(
         fcmRequestGroup: FcmRequestGroupDTO
     ):Response<IsSuccessResponseDTO>
+
+    suspend fun refuseCrew(
+        fcmRequestGroup: FcmRequestGroupDTO
+    ):Response<IsSuccessResponseDTO>
+
+    suspend fun getAllRequest(
+        userid:Long
+    ):Response<FcmGetNotifyListDTO>
+
 
 }

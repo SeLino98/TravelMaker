@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
+import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
@@ -20,6 +21,7 @@ import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 
 import com.gumibom.travelmaker.domain.firebase.FirebaseAcceptCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseFcmUploadTokenUseCase
+import com.gumibom.travelmaker.domain.firebase.FirebaseNotifyListUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
@@ -45,11 +47,18 @@ class MainViewModel @Inject constructor(
     private val requestGroupUseCase: FirebaseRequestGroupUseCase,
     private val acceptCrewUseCase: FirebaseAcceptCrewUseCase,
     private val getPostDetailUseCase:GetPostDetailUseCase,
+    private val firebaseNotifyListUseCase: FirebaseNotifyListUseCase,
     private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase
 
 ) : ViewModel(), CommonViewModel {
 
-
+    private val _isGetNotifyList = MutableLiveData<FcmGetNotifyListDTO>()
+    val isGetNotifyList : LiveData<FcmGetNotifyListDTO> = _isGetNotifyList
+    fun getNotifyList(userId: Long){
+        viewModelScope.launch {
+            _isGetNotifyList.value = firebaseNotifyListUseCase.getNotifyList(userId)
+        }
+    }
 
     private val _isRequestSuccess = MutableLiveData<BooleanResponse>()
     val isRequestSuccess :LiveData<BooleanResponse> = _isRequestSuccess
@@ -58,6 +67,11 @@ class MainViewModel @Inject constructor(
             _isRequestSuccess.value = requestGroupUseCase.requestGroup(firebaseDTO)
         }
     }
+
+    //모임장의 요청 승인 유즈케이스 만들기.
+
+    //모임장의 요청 거절 유즈케이스 만들기
+
 
     var address : Address? = null
 

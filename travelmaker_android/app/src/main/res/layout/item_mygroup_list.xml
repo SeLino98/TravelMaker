@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
              android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/iv_group_owner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_signup_profile_add"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_group_owner"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/ic_signup_profile_add"/>-->
 
-    <TextView
-        android:id="@+id/tv_left_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="마감기한"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="54dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_left_day"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="마감기한"-->
+<!--        tools:layout_editor_absoluteX="16dp"-->
+<!--        tools:layout_editor_absoluteY="54dp" />-->
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="82dp"
-        tools:srcCompat="@tools:sample/avatars" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout_editor_absoluteX="16dp"-->
+<!--        tools:layout_editor_absoluteY="82dp"-->
+<!--        tools:srcCompat="@tools:sample/avatars" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

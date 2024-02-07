@@ -15,26 +15,34 @@ private const val TAG = "FirebaseNotify"
 class FirebaseNotificationService : FirebaseMessagingService() {
 
     //새로운 토큰이 생성될 때마다 해당 콜백이 호출된다.
+    override fun onCreate() {
+        super.onCreate()
+        Log.i(TAG, "onCreate: aSDFASD")
+    }
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "onNewToken: ${token.toString()}")
-        sendRegistrationToServer()
+//        sendRegistrationToServer()
     }
     private fun sendRegistrationToServer(){
 
     }
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        Log.d(TAG, "From: ${message.from}")
         //메시지를 받았을 때 처리한다.
         var messageTitle = "title";
         var messageContent = "content";
         if (message.notification!=null){
-            //foreground
+            //foreground이 때 받은 메시지
             messageTitle= message.notification!!.title.toString()
             messageContent = message.notification!!.body.toString()
-        }else{// background 에 있을경우 혹은 foreground에 있을경우 두 경우 모두
+            Log.d(TAG, "data.message1: ${messageTitle}")
+            Log.d(TAG, "data.message2: ${messageTitle}")
+            Log.d(TAG, "data.message3: ${messageContent}")
+        }
+        if (message.data!=null){//백그라운드
             var data = message.data
-            Log.d(TAG, "data.message: ${data}")
             Log.d(TAG, "data.message: ${data.get("title")}")
             Log.d(TAG, "data.message: ${data.get("body")}")
             messageTitle = data.get("title").toString()
@@ -65,8 +73,9 @@ class FirebaseNotificationService : FirebaseMessagingService() {
             if (ActivityCompat.checkSelfPermission(
                     applicationContext,
                     android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
+                ) == PackageManager.PERMISSION_GRANTED
             ) {
+                Log.d(TAG, "NOTIFYASDF ASD")
                 notify(101, builder.build())
                 return
             }

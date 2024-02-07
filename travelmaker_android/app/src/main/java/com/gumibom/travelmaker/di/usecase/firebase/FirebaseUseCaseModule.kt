@@ -4,6 +4,7 @@ import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepository
 import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
 import com.gumibom.travelmaker.domain.firebase.FirebaseAcceptCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseFcmUploadTokenUseCase
+import com.gumibom.travelmaker.domain.firebase.FirebaseNotifyListUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import dagger.Module
@@ -34,7 +35,14 @@ class FirebaseUseCaseModule {
         return FirebaseAcceptCrewUseCase(firebaseFcmRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideFcmGetNotifyList(firebaseFcmRepository: FirebaseFcmRepository): FirebaseNotifyListUseCase{
 
+
+        return FirebaseNotifyListUseCase(firebaseFcmRepository)
+
+    }
 
 
 }

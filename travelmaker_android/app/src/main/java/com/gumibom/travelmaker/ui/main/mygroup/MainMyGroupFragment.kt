@@ -6,23 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gumibom.travelmaker.R
+import com.gumibom.travelmaker.databinding.FragmentMainMyGroupBinding
+import com.gumibom.travelmaker.databinding.FragmentStartPamphletBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainMyGroupFragment : Fragment() {
-
+    private var _binding :FragmentMainMyGroupBinding? = null
+    private val binding = _binding!!;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_my_group, container, false)
+        _binding = FragmentMainMyGroupBinding.inflate(inflater,container,false);
+
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+    }
 }
