@@ -30,6 +30,8 @@ public class MeetingRequest {
     @JoinColumn(referencedColumnName = "user_id", name = "requestor_id")
     private User requestor;
 
+    private Boolean whetherGetResponse; // 승낙 혹은 거절 응답을 받았는지 안받았는지
+
 
     // 연관관계 편의 메서드
     public void setAcceptor(User acceptor) {
@@ -42,6 +44,14 @@ public class MeetingRequest {
         requestor.getSentRequests().add(this);
     }
 
+    public void initWhetherGetResponse() {
+        this.whetherGetResponse = false;
+    }
+
+    public void getResponse() {
+        this.whetherGetResponse = true;
+    }
+
     // 생성 메서드
     public static MeetingRequest createRequest(MeetingPost meetingPost, User requestor, User acceptor) {
         MeetingRequest request = new MeetingRequest();
@@ -49,6 +59,7 @@ public class MeetingRequest {
         request.meetingPost = meetingPost;
         request.setAcceptor(acceptor);
         request.setRequestor(requestor);
+        request.initWhetherGetResponse();
 
         return request;
     }

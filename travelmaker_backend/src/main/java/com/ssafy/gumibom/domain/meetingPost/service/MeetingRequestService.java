@@ -73,7 +73,14 @@ public class MeetingRequestService {
         MeetingPost meetingPost = meetingPostRepository.findOne(rARJMRDto.getMeetingPostId());
         MeetingRequest request = meetingRequestRepository.findOne(rARJMRDto.getRequestId());
 
+        // 이미 응답을 받은 모임 요청이라면 -> 바로 리턴
+        if(request.getWhetherGetResponse()) {
+            ResponseEntity.badRequest();
+        }
+
         if(isAccept) meetingPost.addApplier(requestor, false, null); // 게시글에 meetingApplier로 추가
+
+        request.getResponse();
 
         String messageTitle = (isAccept) ? "모임 승낙" : "모임 거절";
         String messageBody = meetingPost.getTitle();
@@ -81,7 +88,6 @@ public class MeetingRequestService {
         String responseMessage = (isAccept) ? "모임 요청을 승낙했습니다." : "모임 요청을 거절했습니다.";
 
         fcmService.sendMessageTo(requestor.getFcmtoken(), messageTitle, messageBody); // FCM 토큰으로 노티 전달
-        meetingRequestRepository.delete(request);
 
         return ResponseEntity.ok(responseMessage);
     }

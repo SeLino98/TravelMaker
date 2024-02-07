@@ -6,6 +6,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.gson.JsonParseException;
 import com.ssafy.gumibom.global.common.FcmMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class FcmService {
@@ -42,13 +44,15 @@ public class FcmService {
     }
 
     private String getAccessToken() throws IOException {
-        String firebaseConfigPath = "firebase/travelmaker2-firebase-adminsdk-c71pd-6d0472b4c1.json";
+        String firebaseConfigPath = "/firebase/travelmaker2-firebase-adminsdk-c71pd-6d0472b4c1.json";
 
         GoogleCredentials googleCredentials = GoogleCredentials
                 .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
                 .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
 
         googleCredentials.refreshIfExpired();
+
+        log.info("fcm accesstoken: "+googleCredentials.getAccessToken().getTokenValue());
         return googleCredentials.getAccessToken().getTokenValue();
     }
 
@@ -57,7 +61,7 @@ public class FcmService {
 
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
-                        .token(targetToken)
+                        .token("f2TX390fQWK2PCGM0CS1jK:APA91bEtrEZ9_m0mlnpetlYTI5kJi3uBL3GraHhVrZyh-wMT2IhUmH6tfH2ko83JV2E00q_jV1AKrPAgQyNU8e9ObYh3i8KtYiP1yqop5AAM3owfXvarYuYZpbehmlu5kcv3Oytqi8x4")
                         .notification(FcmMessage.Notification.builder()
                                 .title(title)
                                 .body(body)
