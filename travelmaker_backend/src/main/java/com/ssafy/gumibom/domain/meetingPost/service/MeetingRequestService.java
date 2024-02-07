@@ -38,6 +38,11 @@ public class MeetingRequestService {
     @Transactional
     public ResponseEntity<?> requestJoin(RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
 
+        // 이미 해당 모임 게시글에 요청을 한 내역이 있는 경우
+        if(meetingRequestRepository.existRequest(rJMRDto.getRequestorId(), rJMRDto.getMeetingPostId())) {
+            return ResponseEntity.ok("해당 모임 게시글에 이미 요청한 적이 있습니다.");
+        }
+
         User requestor = userRepository.findOne(rJMRDto.getRequestorId());
         MeetingPost meetingPost = meetingPostRepository.findOne(rJMRDto.getMeetingPostId());
         User acceptor = meetingPost.getHead();
@@ -75,10 +80,10 @@ public class MeetingRequestService {
 
         // 이미 응답을 받은 모임 요청이라면 -> 바로 리턴
         if(request.getWhetherGetResponse()) {
-            ResponseEntity.badRequest();
+            return ResponseEntity.ok("이미 승낙/거절 응답을 받은 모임 요청입니다. ");
         }
 
-        if(isAccept) meetingPost.addApplier(requestor, false, null); // 게시글에 meetingApplier로 추가
+        if(isAccept) meetingPost.addApplier(requestor, false); // 게시글에 meetingApplier로 추가
 
         request.getResponse();
 
@@ -91,4 +96,5 @@ public class MeetingRequestService {
 
         return ResponseEntity.ok(responseMessage);
     }
+
 }

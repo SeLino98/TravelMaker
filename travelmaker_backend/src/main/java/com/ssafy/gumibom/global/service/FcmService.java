@@ -67,6 +67,10 @@ public class FcmService {
                                 .body(body)
                                 .image(null)
                                 .build())
+                        .data(FcmMessage.Data.builder()
+                                .title(title)
+                                .body(body)
+                                .build())
                         .build()).validateOnly(false).build();
 
         return objectMapper.writeValueAsString(fcmMessage);

@@ -69,11 +69,11 @@ public class MeetingPost {
         this.position = requestDTO.getPosition();
     }
 
-    public void addApplier(User user, Boolean isHead, Position position) {
+    public void addApplier(User user, Boolean isHead) {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
-        if(position != null) meetingApplier.setIsNative(position.getTown() == user.getTown());
+        if(position != null) meetingApplier.setIsNative(this.position.getTown() == user.getTown());
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
     }
@@ -86,7 +86,7 @@ public class MeetingPost {
 
         MeetingPost meetingPost = new MeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO);
 
-        meetingPost.addApplier(author, true, requestDTO.getPosition());
+        meetingPost.addApplier(author, true);
 
         return meetingPost;
     }

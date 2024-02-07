@@ -43,4 +43,16 @@ public class MeetingRequestRepository {
                 .getResultList();
     }
 
+    public Boolean existRequest(Long userId, Long meetingPostId) {
+        List<MeetingRequest> request = em.createQuery("select mr from MeetingRequest mr " +
+                        "where mr.requestor.id = :userId " +
+                        "and mr.meetingPost.id = :meetingPostId ", MeetingRequest.class)
+                .setParameter("userId", userId)
+                .setParameter("meetingPostId", meetingPostId)
+                .getResultList();
+
+        if(request.size()!=0) return true;
+        else return false;
+    }
+
 }

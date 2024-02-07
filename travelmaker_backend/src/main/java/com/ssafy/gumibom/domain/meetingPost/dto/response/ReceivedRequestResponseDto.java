@@ -11,6 +11,7 @@ public class ReceivedRequestResponseDto {
 
     private String acceptorName;
 
+    private Long requestorId;
     private String requestorName;
     private String requestorImg;
     private Double requestorBelief;
@@ -23,6 +24,7 @@ public class ReceivedRequestResponseDto {
 
         this.acceptorName = request.getAcceptor().getNickname();
 
+        this.requestorId = request.getRequestor().getId();
         this.requestorName = request.getRequestor().getNickname();
         this.requestorImg = request.getRequestor().getImgURL();
         this.requestorBelief = request.getRequestor().getBelief();
