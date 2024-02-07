@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 private const val TAG = "MainActivity_싸피"
 @AndroidEntryPoint
@@ -131,8 +132,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.isUploadToken.observe(this){
             if (it.isSuccess){
                 Log.d(TAG, "서버통신 성공 : ${it.isSuccess}")
+                Log.d(TAG, "observeViewModel: ${it.message}")
             }else{
                 Log.d(TAG, "실패 데스 : ${it.isSuccess}")
+                Log.d(TAG, "observeViewModel: ${it.message}")
             }
         }
     }
