@@ -28,6 +28,7 @@ import com.gumibom.travelmaker.BuildConfig
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.FAIL_GOOGLE_LOGIN
 import com.gumibom.travelmaker.databinding.ActivityLoginBinding
+import com.gumibom.travelmaker.model.GoogleUser
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.util.ApplicationClass
@@ -106,15 +107,20 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth!!.signInWithCredential(credential).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                val googleUser = mAuth!!.currentUser
+                val socialGoogleUser = mAuth!!.currentUser
 
-                Log.d(TAG, "firebaseAuthWithGoogle: ${googleUser?.displayName}")
-                Log.d(TAG, "firebaseAuthWithGoogle: ${googleUser?.email}")
+                Log.d(TAG, "firebaseAuthWithGoogle: ${socialGoogleUser?.displayName}")
+                Log.d(TAG, "firebaseAuthWithGoogle: ${socialGoogleUser?.email}")
+
+                val email = socialGoogleUser?.email ?: ""
+                val uId = socialGoogleUser?.uid ?: ""
+
+                val googleUser = GoogleUser(email, uId)
 
                 val isEmail = ApplicationClass.sharedPreferencesUtil.getGoogleEmail()
                 // 이메일이 저장되어 있지 않으면 회원가입 2번 페이지로 이동
                 if (!isEmail) {
-                    moveSignupActivity(googleUser?.email)
+                    moveSignupActivity(googleUser)
                 }
                 // 이메일이 저장되어 있으면 메인 화면으로 이동
                 else {
@@ -143,10 +149,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 회원가입 화면으로 넘어가는 함수
-    fun moveSignupActivity(email : String?) {
+    fun moveSignupActivity(googleUser : GoogleUser) {
         Log.d(TAG, "moveSignup: 처음부터 일로 오는거야? ")
         val intent = Intent(this, SignupActivity::class.java)
-        intent.putExtra("email", email ?: "")
+        intent.putExtra("googleUser", googleUser)
         startActivity(intent)
     }
 }
