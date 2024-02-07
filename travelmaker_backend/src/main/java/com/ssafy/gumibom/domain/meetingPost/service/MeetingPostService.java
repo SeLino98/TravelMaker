@@ -66,7 +66,7 @@ public class MeetingPostService {
 
     // 마커 클릭
     @Transactional
-    public ResponseEntity<?> meetingPostDetail(Long meetingPostId) {
+    public ResponseEntity<DetailOfMeetingPostResponseDTO> meetingPostDetail(Long meetingPostId) {
 
         MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
         User head = meetingPost.getHead();

@@ -1,9 +1,11 @@
 package com.ssafy.gumibom.domain.meetingPost.controller;
 
+import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.ResAboutReqJoinMeetingRequestDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.DetailOfMeetingPostResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingRequestService;
@@ -61,7 +63,7 @@ public class MeetingPostController {
 
     @Operation(summary = "마커 클릭 시 모임글 상세 조회")
     @GetMapping("/{meetingPostId}")
-    public ResponseEntity<?> clickMarker(@PathVariable("meetingPostId") Long meetingPostId) {
+    public ResponseEntity<DetailOfMeetingPostResponseDTO> clickMarker(@PathVariable("meetingPostId") Long meetingPostId) {
 
         return meetingPostService.meetingPostDetail(meetingPostId);
     }
