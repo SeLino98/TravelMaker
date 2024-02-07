@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meetingPost.dto;
+package com.ssafy.gumibom.domain.meetingPost.dto.request;
 
 import com.ssafy.gumibom.global.common.Position;
 import com.ssafy.gumibom.global.util.StringListConverter;

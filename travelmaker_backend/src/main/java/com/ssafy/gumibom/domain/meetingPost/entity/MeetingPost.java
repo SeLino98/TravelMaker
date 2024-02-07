@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meetingPost.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Position;
 import com.ssafy.gumibom.global.util.StringListConverter;
@@ -27,7 +27,8 @@ public class MeetingPost {
 
     //    @JsonIgnore
 //    @OneToMany(mappedBy = "meeting_post")
-    @Convert(converter = StringListConverter.class)
+//    @Convert(converter = StringListConverter.class)
+    @ElementCollection
     private List<String> categories = new ArrayList<>();
 
     private String title;
@@ -49,8 +50,6 @@ public class MeetingPost {
     @OneToMany(mappedBy = "meetingPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MeetingApplier> appliers = new ArrayList<>();
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "meeting_post", cascade = CascadeType.ALL)
     @Embedded
     private Position position;
 
@@ -73,11 +72,15 @@ public class MeetingPost {
         this.position = requestDTO.getPosition();
     }
 
-    public void addApplier(User user, Boolean isHead, Position position) {
+    public void addApplier(User user, Boolean isHead) {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
+<<<<<<< HEAD
         if(position != null) meetingApplier.setIsNative(position.getTown().equals(user.getTown()));
+=======
+        if(position != null) meetingApplier.setIsNative(this.position.getTown() == user.getTown());
+>>>>>>> 7cabfef57cebe818a50823ede72b4e648488dc15
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
     }
@@ -90,7 +93,7 @@ public class MeetingPost {
 
         MeetingPost meetingPost = new MeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO);
 
-        meetingPost.addApplier(author, true, requestDTO.getPosition());
+        meetingPost.addApplier(author, true);
 
         return meetingPost;
     }
@@ -123,7 +126,19 @@ public class MeetingPost {
         return this;
     }
 
+<<<<<<< HEAD
     public void updateMeetingPostStatus() {
         this.isFinish = true;
+=======
+    public User getHead() {
+        for(MeetingApplier applier: this.appliers) {
+            if(applier.getIsHead()) return applier.getUser();
+        }
+        return null;
+    }
+
+    public void updateMeetingPostStatus(Boolean newStatus) {
+        this.status = newStatus;
+>>>>>>> 7cabfef57cebe818a50823ede72b4e648488dc15
     }
 }

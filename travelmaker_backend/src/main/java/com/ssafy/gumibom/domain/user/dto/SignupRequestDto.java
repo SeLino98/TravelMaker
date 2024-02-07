@@ -35,7 +35,7 @@ public class SignupRequestDto {
     private Gender gender;
     private String birth;
     private String phone;
-    private String profileImgURL;
+//    private String profileImgURL;
     private String nation;
     private List<String> categories;
 
@@ -49,7 +49,6 @@ public class SignupRequestDto {
                 .gender(gender)
                 .birth(birth)
                 .phone(phone)
-                .profileImgURL(profileImgURL)
                 .nation(nation)
                 .categories(categories)
                 .role(Role.USER)

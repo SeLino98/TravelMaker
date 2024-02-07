@@ -1,8 +1,12 @@
 package com.ssafy.gumibom.domain.meetingPost.controller;
 
-import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoRequestDTO;
-import com.ssafy.gumibom.domain.meetingPost.dto.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.ResAboutReqJoinMeetingRequestDto;
+import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
+import com.ssafy.gumibom.domain.meetingPost.service.MeetingRequestService;
 import com.ssafy.gumibom.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,8 +27,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeetingPostController {
 
-    private final UserService userService;
     private final MeetingPostService meetingPostService;
+    private final MeetingRequestService meetingRequestService;
 
     // 모임글 작성
     @Operation(summary = "모임글 작성")
@@ -85,4 +89,29 @@ public class MeetingPostController {
         return ResponseEntity.ok("모임글이 삭제되었습니다.");
     }
 
+    @Operation(summary = "모임글에 참여 요청")
+    @PostMapping("/request-join")
+    public ResponseEntity<?> requestJoinMeeting(@RequestBody RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
+        return meetingRequestService.requestJoin(rJMRDto);
+    }
+
+    @Operation(summary = "참여 요청 수락")
+    @PostMapping("/response-join/accept")
+    public ResponseEntity<?> acceptRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+        return meetingRequestService.resAboutRequest(rARJMRDto, true);
+    }
+
+    @Operation(summary = "참여 요청 거절")
+    @PostMapping("/response-join/refuse")
+    public ResponseEntity<?> refuseRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+        return meetingRequestService.resAboutRequest(rARJMRDto, false);
+    }
+
+
+    // 사용자 -> 모임 요청 보낸거, 받은거 조회 (추후 User Controller로 이전)
+    @Operation(summary = "모임 요청 조회")
+    @GetMapping("/all-request/{userId}")
+    public @ResponseBody ShowAllJoinRequestResponseDto showAllJoinRequest(@PathVariable("userId") Long userId) {
+        return meetingRequestService.showAllJoinRequest(userId);
+    }
 }

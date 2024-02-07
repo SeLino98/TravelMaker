@@ -20,6 +20,10 @@ spring:
     username: ENC(35Ri/9f4Hv2XEb8/ajB5Xw==)
     password: ENC(c9UeCbXeIgt1eH80thMPuis3icfdciYJnf7n3/cm48k=)
     url: ENC(CCSipdikBLPbdGrvZudyMLFL+hIKfNrp2t6JGYS57Qlg4/7UFZ5z/kvr+WCb90pOJk5wR0wkKsAl3M74nizbX3KdO7TaHk3tlW5kmGsFOAkJfHDy5cIwycVsbMOqmt3zzHkVHpLTb4eT0AfZJ3VXnDlAocEJPDoBN9J6CYsFN5+EYfng1a53SwZgDgalWjvd7+56tIOY+/6K8XHjF4Ey7Q==)
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 server:
   port: 8080

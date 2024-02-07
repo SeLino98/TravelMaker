@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingRequest;
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.global.common.Category;
 import com.ssafy.gumibom.global.common.Nation;
@@ -73,9 +75,14 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PersonalPamphlet> personalPamphlets;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<MeetingPost> meetingPosts;
+    @JsonIgnore
+    @OneToMany(mappedBy = "requestor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingRequest> sentRequests = new ArrayList<>(); // 요청자로서 보낸 모임 요청들
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "acceptor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingRequest> receivedRequests = new ArrayList<>(); // 방장으로서 받은 모임 요청들
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -108,6 +115,10 @@ public class User {
 
         // 변환된 GrantedAuthority를 담은 컬렉션 반환
         return Collections.singletonList(authority);
+    }
+
+    public void updateFCM(String fcmtoken) {
+        this.fcmtoken = fcmtoken;
     }
 
     public boolean isAccountNonExpired() {

@@ -1,11 +1,11 @@
 package com.ssafy.gumibom.domain.meetingPost.repository;
 
-import com.ssafy.gumibom.domain.meetingPost.dto.DetailOfMeetingPostResponseDTO;
-import com.ssafy.gumibom.domain.meetingPost.dto.FindByGeoResponseDTO;
+import com.ssafy.gumibom.domain.meetingPost.dto.response.FindByGeoResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -35,8 +35,9 @@ public class MeetingPostRepository {
         em.flush();
         em.clear();
 
+
         // 위도 경도 따와서 기준 위치 근방 km 안인지, 아직 모집 중인지 확인 후 select
-        return em.createQuery("SELECT distinct m.id, m.position " +
+        return em.createQuery("SELECT distinct m.id, m.position.latitude, m.position.longitude " +
                         "FROM MeetingPost m join m.categories c " +
                         "WHERE m.isFinish = false " +
                         "AND (6371 * acos(cos(radians(:latitude)) * cos(radians(m.position.latitude)) * cos(radians(m.position.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(m.position.latitude)))) <= :upToKm " +
@@ -46,6 +47,7 @@ public class MeetingPostRepository {
                 .setParameter("upToKm", upToKm)
                 .setParameter("categories", categories)
                 .getResultList();
+
     }
 
 
