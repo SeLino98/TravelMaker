@@ -73,7 +73,7 @@ public class UserService {
 
     // fcm 토큰 저장
     @Transactional
-    public boolean updateFCMById(AccountModifyRequestDTO requestDTO) {
+    public Boolean updateFCMById(AccountModifyRequestDTO requestDTO) {
 
         User user = userRepository.findByUsername(requestDTO.getUserLoginId());
 
@@ -92,12 +92,12 @@ public class UserService {
     }
 
     // 닉네임 중복 체크
-    public boolean checkNickNameExists(String nickName) {
+    public Boolean checkNickNameExists(String nickName) {
         return userRepository.existUsersByNickName(nickName);
     }
 
     // 로그인 아이디 중복 체크
-    public boolean checkLoginIDExists(String loginID) {
+    public Boolean checkLoginIDExists(String loginID) {
         return userRepository.existUsersByLoginID(loginID);
     }
 
