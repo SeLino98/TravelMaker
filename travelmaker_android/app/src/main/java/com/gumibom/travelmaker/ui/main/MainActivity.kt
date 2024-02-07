@@ -53,6 +53,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         sharedPreferencesUtil = SharedPreferencesUtil(this)
 
+        //알림으로 온 매인엑티비티라면?? -> 알림리스트로 보내야 된다.
+        // Intent에서 추가 정보 확인하기
+        if (intent.getStringExtra("openNotifyFragment") == "notificationFragment") {
+            // NotificationFragment로 이동하는 로직 구현
+            // 네비게이션으로 Fragment 이동
+            navController.navigate(R.id.action_mainFragment_to_mainNotificationFragment)
+        }//노티피케이션으로 프래그먼트를 이동시킨다.
+
+
         /**
          * TODO Token을 가지고 서버에 User data를 전부받아서 저장
          */

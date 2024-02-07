@@ -49,8 +49,10 @@ class FirebaseNotificationService : FirebaseMessagingService() {
             messageContent = data.get("body").toString()
         }
 
-        val mainIntent = Intent(this,MainActivity::class.java).apply {
+        val mainIntent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            // 알림 클릭 시 NotificationFragment를 열기 위한 추가 정보를 Intent에 담는다.
+            putExtra("openNotifyFragment", "notificationFragment")
         }
         //Intent를 대기시킨다.
         //MainActivity를 flags의 설정을 한 인텐트에 대기시켜두고

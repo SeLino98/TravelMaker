@@ -53,9 +53,35 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationCallback: LocationCallback
     private lateinit var permissionChecker: PermissionChecker
 
-    private lateinit var findMateSearchFragment : FindMateSearchFragment
-    private val mainViewModel : MainViewModel by viewModels()
+    /**
+     * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
+     */
+    private fun openMeetingDialog() {
+        mMap.setOnMarkerClickListener { marker ->
+            //바텀시트가 열리고 데이터를 받아서 띄운다.
+            val markerPosition = marker.tag as MarkerPosition
+            val meetingId = markerPosition.id
+            Log.d(TAG, "openMeetingDialog2: $meetingId")
+            //아이디 넘겨서 데이터 받고
+            mainViewModel.getPostDetail(meetingId)
+            Log.d(TAG, "openMeetingDialog1: $meetingId")
+            //뿌리기
+            mainViewModel.postDTO.observe(this){
+                var postDetail : PostDetail = it
+                println(postDetail.toString())
+                Log.d(TAG, "openMeetingDialog: ${postDetail.toString()}")
+                Log.d(TAG, "openMeetingDialog: ${postDetail.title}")
+                settingBottomSheetUI(postDetail)
+            }
 
+            Log.d(TAG, "openMeetingDialog: $meetingId")
+
+            true
+        }
+    }
+    private lateinit var findMateSearchFragment : FindMateSearchFragment
+
+    private val mainViewModel : MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
@@ -78,6 +104,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
          *
          * */
     }
+
     private fun setBottomSheet(){
         val standardBottomSheet = binding.bts.bottomSheetLayout
         val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
@@ -118,6 +145,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         })
     }
 
+
     /**
      * 모임 생성 화면으로 넘어가기
      */
@@ -127,7 +155,6 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
     }
-
 
     // 구글 맵 초기화
     private fun googleMapInit() {
@@ -309,7 +336,6 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
-
     /**
      * 위치를 선택하여 검색할 수 있는 바텀 시트 다이얼로그 show
      */
@@ -321,32 +347,6 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun settingBottomSheetUI( postDetail : PostDetail){
 
 
-    }
-    /**
-     * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
-     */
-    private fun openMeetingDialog() {
-        mMap.setOnMarkerClickListener { marker ->
-            //바텀시트가 열리고 데이터를 받아서 띄운다.
-            val markerPosition = marker.tag as MarkerPosition
-            val meetingId = markerPosition.id
-            Log.d(TAG, "openMeetingDialog2: $meetingId")
-            //아이디 넘겨서 데이터 받고
-            mainViewModel.getPostDetail(meetingId)
-            Log.d(TAG, "openMeetingDialog1: $meetingId")
-            //뿌리기
-            mainViewModel.postDTO.observe(this){
-                var postDetail : PostDetail = it
-                println(postDetail.toString())
-                Log.d(TAG, "openMeetingDialog: ${postDetail.toString()}")
-                Log.d(TAG, "openMeetingDialog: ${postDetail.title}")
-                settingBottomSheetUI(postDetail)
-            }
-
-            Log.d(TAG, "openMeetingDialog: $meetingId")
-
-            true
-        }
     }
 
     /**
