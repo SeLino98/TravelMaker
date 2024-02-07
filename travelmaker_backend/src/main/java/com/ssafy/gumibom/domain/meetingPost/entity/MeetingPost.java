@@ -76,11 +76,7 @@ public class MeetingPost {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
-<<<<<<< HEAD
-        if(position != null) meetingApplier.setIsNative(position.getTown().equals(user.getTown()));
-=======
-        if(position != null) meetingApplier.setIsNative(this.position.getTown() == user.getTown());
->>>>>>> 7cabfef57cebe818a50823ede72b4e648488dc15
+        if(position != null) meetingApplier.setIsNative(this.position.getTown().equals(user.getTown()));
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
     }
@@ -126,19 +122,14 @@ public class MeetingPost {
         return this;
     }
 
-<<<<<<< HEAD
     public void updateMeetingPostStatus() {
         this.isFinish = true;
-=======
+    }
+
     public User getHead() {
         for(MeetingApplier applier: this.appliers) {
             if(applier.getIsHead()) return applier.getUser();
         }
         return null;
-    }
-
-    public void updateMeetingPostStatus(Boolean newStatus) {
-        this.status = newStatus;
->>>>>>> 7cabfef57cebe818a50823ede72b4e648488dc15
     }
 }
