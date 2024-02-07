@@ -64,6 +64,7 @@ class LoginFragment  : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         testClickEvent()
+        autoLogin()
         signup()
         moveFindIdPwFragment()
         login()
@@ -71,6 +72,21 @@ class LoginFragment  : Fragment(){
         observeLoginData()
 
     }
+
+    /**
+     * Jwt 토큰을 가지고 있을 시 자동 로그인
+     */
+    private fun autoLogin() {
+        val accessToken = ApplicationClass.sharedPreferencesUtil.getToken()
+
+        if (accessToken.isNotEmpty()) {
+            val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+        }
+    }
+
     private fun testClickEvent(){
         binding.btnTest.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
@@ -81,6 +97,7 @@ class LoginFragment  : Fragment(){
     // 회원가입 버튼 클릭 시 signupActivity로 넘어가는 함수
     private fun signup() {
         binding.btnLoginSignup.setOnClickListener {
+            // TODO
             activity.moveSignupActivity(null)
         }
     }
@@ -106,14 +123,12 @@ class LoginFragment  : Fragment(){
             val password = binding.tieLoginPassword.text.toString()
 
             val loginRequestDTO = LoginRequestDTO(id, password)  // 서버에게 보낼 DTO
-            val user = User(id, password) // 앱에 저장할 데이터
 
             // 아이디나 비밀번호가 비어있으면 다시 입력
             if (id.isEmpty() || password.isEmpty()) {
                 Toast.makeText(requireContext(), NO_LOGIN, Toast.LENGTH_SHORT).show()
             } else {
                 loginViewModel.login(loginRequestDTO)
-                ApplicationClass.sharedPreferencesUtil.addUser(user)
                 /**Main -> Intent*/
 
             }
@@ -129,16 +144,17 @@ class LoginFragment  : Fragment(){
 
     // LiveData를 관찰하여 로그인 성공 실패 여부를 확인하는 함수
     private fun observeLoginData() {
-        loginViewModel.isLogin.observe(viewLifecycleOwner){ response->
+        loginViewModel.isLogin.observe(viewLifecycleOwner){ jwtToken->
             // 성공시 메인 화면 이동
-            if (response.isSuccess) {
-                Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
+            if (jwtToken.accessToken.isNotEmpty()) {
+                Toast.makeText(requireContext(), SUCCESS_LOGIN, Toast.LENGTH_SHORT).show()
+                // 여기서 Jwt Token 저장
+                ApplicationClass.sharedPreferencesUtil.addToken(jwtToken.accessToken)
                 activity.moveMainActivity()
             }
-            // 실패시 저장했던 앱 유저 데이터 삭제
+
             else {
                 Toast.makeText(requireContext(), NO_LOGIN, Toast.LENGTH_SHORT).show()
-                ApplicationClass.sharedPreferencesUtil.deleteUser()
             }
         }
     }

@@ -51,7 +51,10 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
         sharedPreferencesUtil = SharedPreferencesUtil(this)
-        user = sharedPreferencesUtil.getUser();
+
+        /**
+         * TODO Token을 가지고 서버에 User data를 전부받아서 저장
+         */
         setFirebase()
         observeViewModel()
         setNavigationMenuToolbar()

@@ -12,25 +12,24 @@ class SharedPreferencesUtil (context : Context) {
     var preferences: SharedPreferences =
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
     // sharedpreference에 로그인 정보 저장하기
-    fun addUser(user : User){
+    fun addToken(accessToken : String){
         val editor = preferences.edit()
-        editor.putString("loginId", user.loginId)
-        editor.putString("password", user.password)
+        editor.putString("accessToken", accessToken)
         editor.apply()
     }
-    fun getUser(): User {
-        val loginId = preferences.getString("loginId", "")
-        return if (loginId != ""){
-            val password = preferences.getString("password", "")
-            User(loginId!!, password!!)
+    fun getToken(): String {
+        val accessToken = preferences.getString("accessToken", "")
+
+        return if (accessToken != ""){
+            accessToken!!
         }else{
-            User()
+            ""
         }
     }
-    fun deleteUser(){
+    fun deleteToken(){
         //preference 지우기
         val editor = preferences.edit()
-        editor.clear()
+        editor.remove("accessToken")
         editor.apply()
     }
     fun addGoogleEmail(email : String) {

@@ -74,8 +74,8 @@ class MainFindMateDetailFragment : BottomSheetDialogFragment() {
             //firebase 연동하기
             Log.d(TAG, "setApplyGroup: 1")
             //그룹 id랑 현재 로그인 한 유저 id 전송하기
-            val userid = sharedPreferences.getUser().userId.toString()
-            viewModel.requestGroup(FcmRequestGroupDTO(userid,5))
+//            val userid = sharedPreferences.getUser().userId.toString()
+//            viewModel.requestGroup(FcmRequestGroupDTO(userid,5))
             Log.d(TAG, "setApplyGroup: 2")
         }
     }

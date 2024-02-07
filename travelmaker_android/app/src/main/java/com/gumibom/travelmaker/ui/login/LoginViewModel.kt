@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.data.dto.request.LoginRequestDTO
 import com.gumibom.travelmaker.domain.login.LoginUseCase
 import com.gumibom.travelmaker.model.BooleanResponse
+import com.gumibom.travelmaker.model.JwtToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,8 +18,8 @@ class LoginViewModel @Inject constructor(
 ): ViewModel() {
 
 
-    private val _isLogin = MutableLiveData<BooleanResponse>()
-    val isLogin : LiveData<BooleanResponse> = _isLogin
+    private val _isLogin = MutableLiveData<JwtToken>()
+    val isLogin : LiveData<JwtToken> = _isLogin
 
     fun login(loginRequestDTO: LoginRequestDTO) {
         viewModelScope.launch {

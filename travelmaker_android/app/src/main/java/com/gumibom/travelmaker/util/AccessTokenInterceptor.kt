@@ -5,7 +5,7 @@ import okhttp3.Response
 
 class AccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        var token = ApplicationClass.JWT_TOKEN
+        var token = ApplicationClass.sharedPreferencesUtil.getToken()
 
         val request = chain.request()
             .newBuilder()
