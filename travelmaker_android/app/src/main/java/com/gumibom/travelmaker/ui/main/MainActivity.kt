@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
     }
     private fun setNavigationMenuToolbar(){
-        val mypage =
         //프래그먼트가 ~~ 일 땐 ~~로
         //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로
         navController.addOnDestinationChangedListener { _, destination, _ ->

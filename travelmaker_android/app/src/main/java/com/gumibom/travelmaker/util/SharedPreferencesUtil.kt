@@ -33,6 +33,23 @@ class SharedPreferencesUtil (context : Context) {
         editor.remove("accessToken")
         editor.apply()
     }
+
+    fun addLoginId(loginId : String) {
+        val editor = preferences.edit()
+        editor.putString("loginId", loginId)
+        editor.apply()
+    }
+
+    fun getLoginId() : String {
+        val loginId = preferences.getString("loginId", "")
+        return if (loginId != ""){
+            loginId!!
+        }else{
+            ""
+        }
+    }
+
+
     fun addGoogleEmail(email : String) {
         val editor = preferences.edit()
         editor.putString("googleEmail", email)

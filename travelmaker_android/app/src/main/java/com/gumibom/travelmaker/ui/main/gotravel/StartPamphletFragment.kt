@@ -87,6 +87,6 @@ class StartPamphletFragment : Fragment() {
      * 팜플렛을 만드는 함수
      */
     private fun makePamphlet() {
-        TODO("Not yet implemented")
+
     }
 }
