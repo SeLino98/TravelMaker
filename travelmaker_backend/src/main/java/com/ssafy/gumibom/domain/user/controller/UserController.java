@@ -32,9 +32,8 @@ public class UserController {
     }
 
     @Operation(summary = "회원가입")
-    @PostMapping(value = "/join", consumes =
-            {MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/join", consumes = {MediaType.APPLICATION_JSON_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE})
     public Long signup(@RequestPart SignupRequestDto requestDto, @RequestPart MultipartFile image) throws IOException {
         return userService.signup(requestDto, image);
     }
