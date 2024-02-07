@@ -6,10 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
-
-
-
-//    public List<Meeting> findByUserId(Long userId);
 }
 
 

@@ -6,7 +6,9 @@ import com.ssafy.gumibom.domain.user.dto.SignupRequestDto;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -24,7 +26,6 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-
 
     // 로그인
     @Transactional
@@ -45,7 +46,7 @@ public class UserService {
     @Transactional
     public Long signup(SignupRequestDto requestDto) {
 
-        boolean check = checkPhoneNumExists(requestDto.getPhone());
+        Boolean check = checkPhoneNumExists(requestDto.getPhone());
         if (check) throw new IllegalArgumentException("이미 가입된 전화번호입니다.");
 
         String encPwd = encoder.encode(requestDto.getPassword());
@@ -63,7 +64,7 @@ public class UserService {
 
     // 전화번호 중복 가입 체크
     @Transactional
-    public boolean checkPhoneNumExists(String phoneNum) {
+    public Boolean checkPhoneNumExists(String phoneNum) {
         return userRepository.existUsersByPhoneNum(phoneNum);
     }
 
@@ -86,8 +87,6 @@ public class UserService {
                 .categories(user.getCategories())
                 .build();
     }
-
-
 
     /*
 

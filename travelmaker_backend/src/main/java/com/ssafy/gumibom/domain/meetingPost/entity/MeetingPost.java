@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,7 +38,8 @@ public class MeetingPost {
     private Integer memberMax;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Boolean status;
+    @ColumnDefault("false")
+    private Boolean isFinish;
     private LocalDateTime deadline;
     private String imgUrlMain;
     private String imgUrlSub;
@@ -63,7 +65,7 @@ public class MeetingPost {
         this.nativeMin = requestDTO.getNativeMin();
         this.travelerMin = requestDTO.getTravelerMin();
         this.memberMax = requestDTO.getMemberMax();
-        this.status = false;
+        this.isFinish = false;
         this.imgUrlMain = mainImgUrl;
         this.imgUrlSub = subImgUrl;
         this.imgUrlThr = thirdImgUrl;
@@ -75,7 +77,7 @@ public class MeetingPost {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
-        if(position != null) meetingApplier.setIsNative(position.getTown() == user.getTown());
+        if(position != null) meetingApplier.setIsNative(position.getTown().equals(user.getTown()));
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
     }
@@ -102,9 +104,9 @@ public class MeetingPost {
         this.deadline = requestDTO.getDeadline();
         // 기간 변경에 따른 status 변경
         if (this.deadline != null) {
-            this.status = this.deadline.isBefore(LocalDateTime.now());
+            this.isFinish = this.deadline.isBefore(LocalDateTime.now());
         } else {
-            this.status = false;
+            this.isFinish = false;
         }
 
         this.startDate = requestDTO.getStartDate();
@@ -121,7 +123,7 @@ public class MeetingPost {
         return this;
     }
 
-    public void updateMeetingPostStatus(Boolean newStatus) {
-        this.status = newStatus;
+    public void updateMeetingPostStatus() {
+        this.isFinish = true;
     }
 }

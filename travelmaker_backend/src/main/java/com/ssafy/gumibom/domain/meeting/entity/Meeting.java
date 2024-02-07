@@ -1,7 +1,6 @@
 package com.ssafy.gumibom.domain.meeting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.gumibom.domain.meeting.dto.req.MeetingCreateReqDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.pamphlet.entity.MeetingPamphlet;
 import com.ssafy.gumibom.global.common.Position;
@@ -9,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +32,9 @@ public class Meeting {
     private String imgUrl;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Boolean status; // 모임 진행 중인지, 모임 완료되었는지
+
+    @ColumnDefault("false")
+    private Boolean isFinish; // 모임 진행 중인지, 모임 완료되었는지
 
     @Embedded
     private Position position;
@@ -53,11 +55,11 @@ public class Meeting {
         this.imgUrl = detailMeetingPostResForMeetingDto.getImgUrl();
         this.categories = detailMeetingPostResForMeetingDto.getCategories();
 //        this.meetingMembers = detailMeetingPostResForMeetingDto.getMembers();
-        this.status = true;
+        this.isFinish = true;
         this.position = detailMeetingPostResForMeetingDto.getPosition();
     }
 
     public void finishMeeting(){
-        this.status = false;
+        this.isFinish = true;
     }
 }

@@ -79,6 +79,14 @@ public class MeetingPostService {
         return responseDTO;
     }
 
+    @Transactional
+    public Boolean finishMeetingPost(Long meetingPostId){
+        MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
+        meetingPost.updateMeetingPostStatus();
+        meetingPostRepository.save(meetingPost);
+        return meetingPost.getIsFinish();
+    }
+
     // 반경 n km 안에 존재하는 모임글들의 정보 반환 // 위치랑 meetingPost id
     @Transactional
     public ResponseEntity<?> meetingPostRadius(Double latitude, Double longitude, Double radius, List<String> categories) {

@@ -36,4 +36,6 @@ public class UserController {
     public ResponseEntity<?> mypage(@RequestParam String userLoginId) {
         return ResponseEntity.ok(userService.inquiryMyPage(userLoginId));
     }
+
+
 }

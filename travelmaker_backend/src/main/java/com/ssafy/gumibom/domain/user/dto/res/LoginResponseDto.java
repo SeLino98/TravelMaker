@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class LoginResponseDto {
-    private boolean isSuccess;
+    private Boolean isSuccess;
     private String message;
     private String jwtToken;
 }
