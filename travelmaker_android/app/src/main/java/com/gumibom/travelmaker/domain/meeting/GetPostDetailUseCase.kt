@@ -25,21 +25,19 @@ class GetPostDetailUseCase @Inject constructor(
     }
     private fun convertAddressModel(body : MeetingPostDTO) : PostDetail{
         return PostDetail(
-            authDate = body.authDate ?: "",
-            categories = body.categories.orEmpty(), // Converts null to an empty list
-            content = body.content ?: "",
-            deadline = body.deadline ?: "",
-            endDate = body.endDate ?: "",
-            imgUrlMain = body.imgUrlMain ?: "",
-            imgUrlSub = body.imgUrlSub ?: "",
-            imgUrlThr = body.imgUrlThr ?: "",
-            memberMax = body.memberMax ?: 0,
-            nativeMin = body.nativeMin ?: 0,
-            positionName = body.position?.name?:"",
+            categories = body.categories!!,
+            dday = body.dday?:0,
+            headId = body.headId?:0,
+            mainImgUrl = body.mainImgUrl?:"", // String 필드는 null이 아니라고 가정
+            numOfNative = body.numOfNative ?: 0, // numOfNative가 null이면 0을 사용
+            numOfTraveler = body.numOfTraveler ?: 0, // numOfTraveler가 null이면 0을 사용
+            position = body.position ?: Position(0.0, 0.0,"",""), // position이 null이면 기본 Position 객체를 사용
+            postContent=body.postContent?:"",
+            postTitle = body.postTitle?:"",
+            profileImgUrl = body.profileImgUrl ?: "mainIMG",
             startDate = body.startDate ?: "",
-            title = body.title ?: "",
-            travelerMin = body.travelerMin ?: 0,
-            username = body.username ?: ""
+            subImgUrl = body.subImgUrl ?: "", // subImgUrl이 null이면 기본 값을 사용
+            thirdImgUrl = body.thirdImgUrl ?: "기본_세번째_이미지_URL"
         )
     }
 }

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -35,6 +36,8 @@ import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.ImageAdapter
+import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.chipAdapter
 import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostActivity
 import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
 import com.gumibom.travelmaker.util.PermissionChecker
@@ -47,12 +50,10 @@ private const val TAG = "FindMateActivity_싸피"
 class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding : ActivityMapBinding
-
     private lateinit var mMap : GoogleMap // 구글 맵
     private lateinit var fusedLocationClient: FusedLocationProviderClient // 효율적으로 위치정보를 제공
     private lateinit var locationCallback: LocationCallback
     private lateinit var permissionChecker: PermissionChecker
-
     /**
      * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
      */
@@ -70,81 +71,85 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
                 var postDetail : PostDetail = it
                 println(postDetail.toString())
                 Log.d(TAG, "openMeetingDialog: ${postDetail.toString()}")
-                Log.d(TAG, "openMeetingDialog: ${postDetail.title}")
                 settingBottomSheetUI(postDetail)
+                setBottomSheet()
             }
-
             Log.d(TAG, "openMeetingDialog: $meetingId")
-
             true
         }
     }
     private lateinit var findMateSearchFragment : FindMateSearchFragment
-
     private val mainViewModel : MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         permissionChecker = PermissionChecker(this) // 퍼미션 체커 객체 생성
         findMateSearchFragment = FindMateSearchFragment(mainViewModel)
-
         googleMapInit()
         getLatLng()
         requestLocationUpdates()
         observeLivaData()
-
         selectPlace()
         selectCategory()
-        setBottomSheet()
         moveMeetingPost()
 //        mainViewModel.
         /**
          *
          * */
     }
-
+    private fun settingBottomSheetUI( postDetail : PostDetail){
+        //리사이클러 뷰 이미지와 카테고리 이미지를 어뎁터에 올리고 띄운다.
+        // chipAdapter 설정
+        val chipAdapter = chipAdapter(postDetail.categories) // postDetailDTO에서 칩 리스트를 가져옵니다.
+        binding.bts.rcChipList.apply {
+            adapter = chipAdapter
+            layoutManager = LinearLayoutManager(this@FindMateActivity, LinearLayoutManager.HORIZONTAL, false)
+        }
+        //image 3개를 리스트로 담는다.
+        val imageUrls = listOf(postDetail.mainImgUrl, postDetail.subImgUrl, postDetail.thirdImgUrl)
+        var imageRealUrls : MutableList<String> = mutableListOf();
+        for (i in 0 .. 2){
+            if (imageUrls.get(i) != "" || imageUrls.get(i).isNullOrEmpty()){
+                imageRealUrls.add(imageUrls[i]);
+            }
+            Log.d(TAG, "setBottomSheetUI: ${imageUrls.get(i)}")
+            Log.d(TAG, "setBottomSheetUI: ${imageRealUrls.get(i)}")
+        }
+        val imageAdapter = ImageAdapter(imageRealUrls) // postDetailDTO에서 이미지 리스트를 가져옵니다.
+        binding.bts.rcDetailPlaceImage.apply {
+            adapter = imageAdapter
+            layoutManager = LinearLayoutManager(this@FindMateActivity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+    private var isUserDraggingBottomSheet = false
     private fun setBottomSheet(){
+        Log.d(TAG, "setBottomSheet: HIHIHISETBOTTOMSHEET!!")
         val standardBottomSheet = binding.bts.bottomSheetLayout
         val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
-        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN;
+        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         standardBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                val screenHeight = Resources.getSystem().displayMetrics.heightPixels
-                val halfHeight = screenHeight / 2
-                val currentTop = screenHeight - bottomSheet.top
-                val bottomToHalfSize = halfHeight+0/2;
-                val halfToTop = (halfHeight+screenHeight)/2;
-                when (currentTop) {
-                    in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state =
-                        BottomSheetBehavior.STATE_COLLAPSED
-                    in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state =
-                        BottomSheetBehavior.STATE_HALF_EXPANDED
-                    in halfToTop  until  screenHeight -> standardBottomSheetBehavior.state =
-                        BottomSheetBehavior.STATE_EXPANDED
-                }
-                Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
-            }
+//                if (!isUserDraggingBottomSheet) return // 사용자가 드래그하고 있지 않으면 리턴
+                bottomSheet.postDelayed({
+                    val screenHeight = Resources.getSystem().displayMetrics.heightPixels
+                    val halfHeight = screenHeight / 2
+                    val currentTop = screenHeight - bottomSheet.top
+                    val bottomToHalfSize = halfHeight + 0 / 2
+                    val halfToTop = (halfHeight + screenHeight) / 2
+                    when (currentTop) {
+                        in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                        in halfToTop until screenHeight -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                    Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
+                },500)
+             }
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
-                }
+//                isUserDraggingBottomSheet = newState == BottomSheetBehavior.STATE_DRAGGING || newState == BottomSheetBehavior.STATE_SETTLING
             }
         })
     }
-
 
     /**
      * 모임 생성 화면으로 넘어가기
@@ -161,7 +166,6 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
         // fusedLocation 초기화
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -325,16 +329,12 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             val markerPositionRequestDTO = MarkerPositionRequestDTO(
                 address.latitude, address.longitude, 3.0
             )
-
             mainViewModel.getMarkers(markerPositionRequestDTO)
             mainViewModel.currentLatitude = address.latitude
             mainViewModel.currentLongitude = address.longitude
-
             setMyLocation(location)
             binding.btnFindMatePlace.text = address.title
         }
-
-
     }
     /**
      * 위치를 선택하여 검색할 수 있는 바텀 시트 다이얼로그 show
@@ -344,10 +344,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             findMateSearchFragment.show(supportFragmentManager, "")
         }
     }
-    private fun settingBottomSheetUI( postDetail : PostDetail){
 
-
-    }
 
     /**
      * chip을 선택하고 필터링 버튼을 눌렀을 때 필터된 결과만 서버에서 가져옴

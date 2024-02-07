@@ -1,19 +1,17 @@
 package com.gumibom.travelmaker.data.dto.response
 
 data class MeetingPostDTO(
-    val authDate: String? = null,
-    val categories: List<String>? = emptyList(),
-    val content: String? = null,
-    val deadline: String? = null,
-    val endDate: String? = null,
-    val imgUrlMain: String? = null,
-    val imgUrlSub: String? = null,
-    val imgUrlThr: String? = null,
-    val memberMax: Int? = null,
-    val nativeMin: Int? = null,
-    val position: Position? = null, // Position도 기본값이 필요하며, 해당 클래스에도 기본값을 설정해야 합니다.
-    val startDate: String? = null,
-    val title: String? = null,
-    val travelerMin: Int? = null,
-    val username: String? = null
+    val categories: List<String> = emptyList(),
+    val dday: Int = 0,
+    val headId: Int = 0,
+    val mainImgUrl: String = "",
+    val numOfNative: Int = 0,
+    val numOfTraveler: Int = 0,
+    val position: Position = Position(0.0, 0.0,"name","town"), // Position 클래스의 기본값 예시, 실제 구현은 달라질 수 있음
+    val postContent: String = "",
+    val postTitle: String = "",
+    val profileImgUrl: String = "",
+    val startDate: String = "",
+    val subImgUrl: String = "",
+    val thirdImgUrl: String = ""
 )
