@@ -19,33 +19,24 @@ class GetMarkerCategoryPositionsUseCase @Inject constructor(
             val body = response.body() ?: mutableListOf()
 
             if (body.isNotEmpty()) {
-                markerPositionList = translateMarkerList(body)
+                markerPositionList = convertLocation(body)
             }
         }
         return markerPositionList
     }
 
-    /**
-     * MarkerPositionResponseDTO에 속성인
-     * id와 position의 null 체크
-     */
-    fun MarkerPositionResponseDTO.toMarkerPosition(): MarkerPosition? {
-        // 'let' 스코프 함수를 사용하여 id와 position이 모두 null이 아닐 때만 실행
-        return this.position?.let { position ->
-            this.id?.let { id ->
-                // id와 position이 모두 null이 아닌 경우 MarkerPosition 객체 생성
-                MarkerPosition(id, position)
-            }
-        }
-    }
+    private fun convertLocation(body : MutableList<MarkerPositionResponseDTO>) : MutableList<MarkerPosition>{
+        val markerList = mutableListOf<MarkerPosition>()
 
-    /**
-     * Null 체크를 하고 map으로 걸러서 새로운 List를 반환
-     */
-    private fun translateMarkerList(body : MutableList<MarkerPositionResponseDTO>) : List<MarkerPosition>{
-        val markerPositionList : List<MarkerPosition> = body.mapNotNull {
-            it.toMarkerPosition()
+        for (marker in body) {
+            val markerPosition = MarkerPosition(
+                marker.id ?: 0,
+                marker.latitude ?: 0.0,
+                marker.longitude ?: 0.0
+            )
+
+            markerList.add(markerPosition)
         }
-        return markerPositionList
+        return markerList
     }
 }

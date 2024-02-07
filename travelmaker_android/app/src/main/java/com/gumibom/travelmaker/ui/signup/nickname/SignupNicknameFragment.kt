@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.ui.signup.nickname
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentSignupNicknameBinding
+import com.gumibom.travelmaker.model.GoogleUser
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 import com.gumibom.travelmaker.util.SharedPreferencesUtil
@@ -40,8 +42,16 @@ class SignupNicknameFragment : Fragment(){
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val googleEmail = arguments?.getString("email")
-        signupViewModel.email = googleEmail
+        val googleUser = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable("googleUser", GoogleUser::class.java)
+        } else {
+            arguments?.getParcelable("googleUser")
+        }
+        signupViewModel.loginId = googleUser?.email
+        signupViewModel.email = googleUser?.email
+        signupViewModel.password = googleUser?.uId
+
+        Log.d(TAG, "googleLogin: ${signupViewModel.email}")
     }
     override fun onCreateView(
         inflater: LayoutInflater,

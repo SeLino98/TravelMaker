@@ -29,6 +29,7 @@ import com.gumibom.travelmaker.BuildConfig
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.databinding.ActivitySignupBinding
+import com.gumibom.travelmaker.model.GoogleUser
 import com.gumibom.travelmaker.util.PermissionChecker
 import com.gumibom.travelmaker.util.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,20 +67,27 @@ class SignupActivity : AppCompatActivity(){
                     Log.d(TAG, "onGranted: onGranted")
                 }
         }
-//        googleSignup()
+        googleSignup()
         // 프로그레스바 진행률 설정
         setProgressBar(0)
     }
     /// TODO: Back Stack 달기
 
     // 구글 로그인을 클릭했는데 처음 로그인한 사용자일 시
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun googleSignup() {
-        val googleEmail = intent.getStringExtra("email")
+
+        val googleUser = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // API 레벨 33 이상에서는 타입 파라미터를 명시적으로 제공
+            intent.getParcelableExtra("googleUser", GoogleUser::class.java)
+        } else {
+            // API 레벨 33 미만에서는 이전 방식의 getParcelable 사용
+            intent.getParcelableExtra("googleUser") as? GoogleUser
+        }
 
         // 구글 이메일을 인텐트로 성공적으로 받았다면
-        if (googleEmail != "") {
-            val bundle = bundleOf("email" to googleEmail)
-            signupViewModel.bundle = bundle
+        if (googleUser != null) {
+            val bundle = bundleOf("googleUser" to googleUser)
 
             // R.id.specific_fragment는 백 스택을 제거할 대상 프래그먼트의 ID입니다. 'true'는 이 프래그먼트를 포함하여 제거한다는 의미입니다.
             // 아이디 패스워드 프래그먼트는 구글 로그인 시 백스택에서 제거한다.

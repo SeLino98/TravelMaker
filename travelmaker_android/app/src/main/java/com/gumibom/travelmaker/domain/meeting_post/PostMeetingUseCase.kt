@@ -17,6 +17,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.TimeZone
 import javax.inject.Inject
+import kotlin.math.log
 
 private const val TAG = "PostMeetingUseCase_싸피"
 class PostMeetingUseCase @Inject constructor(
@@ -50,10 +51,10 @@ class PostMeetingUseCase @Inject constructor(
             imgUrlThr,
             requestBody
         )
-
+        Log.d(TAG, "response: $response")
         if (response.isSuccessful) {
             val body = response.body()
-
+            Log.d(TAG, "createMeeting: $body")
             if (body != null) {
                 return body
             }

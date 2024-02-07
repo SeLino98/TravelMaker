@@ -14,7 +14,8 @@ class SharedPreferencesUtil (context : Context) {
     // sharedpreference에 로그인 정보 저장하기
     fun addToken(accessToken : String){
         val editor = preferences.edit()
-        editor.putString("accessToken", accessToken)
+        val token = "Bearer $accessToken"
+        editor.putString("accessToken", token)
         editor.apply()
     }
     fun getToken(): String {

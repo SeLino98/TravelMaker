@@ -149,9 +149,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 회원가입 화면으로 넘어가는 함수
-    fun moveSignupActivity(googleUser : GoogleUser) {
+    fun moveSignupActivity(googleUser : GoogleUser?) {
         Log.d(TAG, "moveSignup: 처음부터 일로 오는거야? ")
         val intent = Intent(this, SignupActivity::class.java)
+
         intent.putExtra("googleUser", googleUser)
         startActivity(intent)
     }

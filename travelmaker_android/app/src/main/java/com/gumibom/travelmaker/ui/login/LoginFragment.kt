@@ -128,6 +128,7 @@ class LoginFragment  : Fragment(){
             if (id.isEmpty() || password.isEmpty()) {
                 Toast.makeText(requireContext(), NO_LOGIN, Toast.LENGTH_SHORT).show()
             } else {
+                Log.d(TAG, "login: $loginRequestDTO")
                 loginViewModel.login(loginRequestDTO)
                 /**Main -> Intent*/
 

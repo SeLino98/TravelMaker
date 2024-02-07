@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.signup
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -20,6 +21,7 @@ import com.gumibom.travelmaker.domain.signup.SaveUserInfoUseCase
 
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
+import com.gumibom.travelmaker.model.GoogleUser
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -42,6 +44,9 @@ class SignupViewModel @Inject constructor(
     /*
         변수 사용하는 공간 시작
      */
+    init {
+
+    }
 
     // 우건
     var bundle : Bundle? = null
@@ -201,6 +206,12 @@ class SignupViewModel @Inject constructor(
     private fun updateTimerUI(timeFormat : String, timerText : TextView) {
         timerText.text = timeFormat
     }
+
+    fun setIdPassword() {
+        val googleUser = bundle?.getBundle("googleUser")
+//        loginId = googleUser.e
+    }
+
     // 우건
 
 

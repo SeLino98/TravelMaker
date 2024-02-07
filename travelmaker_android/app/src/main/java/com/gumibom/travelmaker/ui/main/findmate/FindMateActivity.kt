@@ -259,6 +259,10 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val markerPositionRequestDTO = MarkerPositionRequestDTO(
             latitude, longitude, 3.0
         )
+        Log.d(TAG, "currentLatitude: ${mainViewModel.currentLatitude}")
+        Log.d(TAG, "currentLongitude: ${mainViewModel.currentLongitude}")
+        Log.d(TAG, "initLatitude: ${mainViewModel.initLatitude}")
+        Log.d(TAG, "initLongitude: ${mainViewModel.initLongitude}")
         mainViewModel.getMarkers(markerPositionRequestDTO)
 //        setMyLocation(location)
     }
@@ -278,9 +282,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             }  // 있다면
             else {
                 for (marker in markerPosition) {
-                    val location = LatLng(marker.position.latitude, marker.position.longitude)
-                    val title = marker.position.name
-                    val googleMarker = setMarker(location, title)
+                    val location = LatLng(marker.latitude, marker.longitude)
+                    val googleMarker = setMarker(location, "title")
 
                     googleMarker.tag = marker
                 }

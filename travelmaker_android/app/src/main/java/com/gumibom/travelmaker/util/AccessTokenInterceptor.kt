@@ -1,12 +1,14 @@
 package com.gumibom.travelmaker.util
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 
+private const val TAG = "AccessTokenInterceptor_싸피"
 class AccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var token = ApplicationClass.sharedPreferencesUtil.getToken()
-
+        Log.d(TAG, "intercept: $token")
         val request = chain.request()
             .newBuilder()
             .addHeader("Authorization", token)

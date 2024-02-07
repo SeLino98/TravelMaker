@@ -4,5 +4,6 @@ import com.gumibom.travelmaker.data.dto.response.Position
 
 data class MarkerPosition(
     val id : Long,
-    val position : Position
+    val latitude : Double,
+    val longitude : Double
 )

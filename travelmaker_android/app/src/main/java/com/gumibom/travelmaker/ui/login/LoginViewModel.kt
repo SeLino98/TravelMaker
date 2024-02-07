@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "LoginViewModel_싸피"
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
@@ -24,6 +26,7 @@ class LoginViewModel @Inject constructor(
     fun login(loginRequestDTO: LoginRequestDTO) {
         viewModelScope.launch {
             _isLogin.value = loginUseCase.login(loginRequestDTO)
+            Log.d(TAG, "login: ${_isLogin.value}")
         }
     }
 }
