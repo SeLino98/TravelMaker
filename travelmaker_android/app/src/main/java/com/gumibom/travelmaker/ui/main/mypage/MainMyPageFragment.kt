@@ -1,7 +1,11 @@
 package com.gumibom.travelmaker.ui.main.mypage
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -9,20 +13,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentMainMypageBinding
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
+import com.gumibom.travelmaker.ui.login.LoginActivity
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.util.ApplicationClass
 
 private const val TAG = "MainMyPageFragment_싸피"
 
 class MainMyPageFragment:Fragment() {
+
+    private val trustPoint = 800
+
     private var _binding:FragmentMainMypageBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity : MainActivity
+    lateinit var getResult: ActivityResultLauncher<Intent>
+    private var filePath = ""
+    private val myPageViewModel : MyPageViewModel by viewModels()
 
+//    private var trustPoint =
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach: ")
@@ -31,6 +53,16 @@ class MainMyPageFragment:Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // intent 결과를 받음
+        getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                // contentResolver로 filePath를 받는다.
+                filePath = getFilePathUri(it.data?.data!!)
+                Log.d(TAG, "onCreate: $filePath")
+                // ViewModel LiveData에 추가
+                myPageViewModel.updateProfilePicture(filePath)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -44,85 +76,138 @@ class MainMyPageFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
-        // 1. 뒤로가기 버튼 클릭 -> 메인화면으로 다시 이동
-        // 이미 toolbar에서 구현 되어있음.
 
-        // 2. 프로필사진 변경 버튼 클릭 -> 프로필사진 변경
-        selectMypagePicture()
-
-        // 4. 이메일 변경 -> edittext 를 눌러서 고침 (liveData)
-        editMyEmail()
-
-        // 5. 회원정보 수정 버튼 클릭 -> 회원정보 수정할 다이얼로그 뜸
+        observePicture() // 1. observePicture(): ok
+        selectMypagePicture() // 2. 프로필사진 변경 로직: ok
+        editMyEmail() // 3. 이메일 변경 -> edittext 를 눌러서 고침 (liveData)
+        // 4. 회원정보 수정 버튼 클릭 -> 회원정보 수정할 다이얼로그 뜸
         // 다이얼로그가 뜨게 하는 작업
         // 다이얼로그에 적힌 정보를 수정된 edittext 내용으로 업데이트 하게 하는 작업
         // 다이얼로그가 닫히게 하는 작업
-
-        // 6. 로그아웃 버튼 클릭 -> 로그인 상태에서 로그아웃 됨
-        logoutMyAccount()
-        // 7. 회원탈퇴 버튼 클릭 -> '정말 탈퇴하겠습니까?' 모달 나오면서 '탈퇴' 클릭 -> 탈퇴
-        deleteMyAccount()
-        // 8. 신뢰도 수준 보여주는 함수 <- 신뢰도 점수 구간에 맞게 drawable에서 img_trust_n 사진을 찾아서 그려줌
-        mypageCheckTrustLevel()
+        logoutMyAccount() // 5. 로그아웃 버튼 클릭 -> 로그인 상태에서 로그아웃 됨
+        deleteMyAccount() // 6. 회원탈퇴 버튼 클릭 -> '정말 탈퇴하겠습니까?' 모달 나오면서 '탈퇴' 클릭 -> 탈퇴
+        showMyTrustLevel() // 7. 신뢰도 수준 보여주는 함수 <- 신뢰도 점수 구간에 맞게 drawable에서 img_trust_n 사진을 찾아서 그려줌
     }
 
-    private fun mypageCheckTrustLevel(){
-        val btnCheckTrustLevel = binding.btnMypageCheckMyTrustlevel
-        val getMyTrustLevel = binding.lottieMyTrustlevel
-        val myTrustPoint = 700
-        // ex) 내 신뢰도 점수 == 700점/900점 : myTrustPoint.. 그 정보를 레포지토리 부터 데려와야함
-        btnCheckTrustLevel.setOnClickListener {
-            when {
-                myTrustPoint <= 200 -> {
-                    // 200점 이하일 때의 로직
-                }
-                myTrustPoint in 201..300 -> {
-                    // 201 ~ 300점일 때의 로직
-                }
-                myTrustPoint in 301..400 -> {
-                    // 301 ~ 400점일 때의 로직
-                }
-                myTrustPoint in 401..500 -> {
-                    // 401 ~ 500점일 때의 로직
-                }
-                myTrustPoint in 501..600 -> {
-                    // 501 ~ 600점일 때의 로직
-                }
-                myTrustPoint in 601..700 -> {
-                    // 601 ~ 700점일 때의 로직
-                }
-                myTrustPoint in 701..800 -> {
-                    // 701 ~ 800점일 때의 로직
-                }
-                myTrustPoint in 801..900 -> {
-                    // 801 ~ 900점일 때의 로직
-                }
-            }
-
+    /*
+    신뢰도 확인 버튼을 누르고 자신의 신뢰도를 그림으로 확인하는 로직
+     */
+    private fun showMyTrustLevel(){
+        val btnShowMeTrustLevel = binding.btnMypageCheckMyTrustlevel
+        btnShowMeTrustLevel.setOnClickListener{
+            // 버튼이 눌린 순간, lottie 이미지가 사라짐
+            binding.lottieMyTrustlevel.visibility = View.GONE
+            // ViewModel에서 신뢰도 점수에 따른 이미지 리소스 ID를 가져옴
+            val trustLevelImageId = myPageViewModel.updateAndGetTrustLevelImageId(trustPoint)
+            // 그 이미지 리소스 ID에 해당하는 이미지를 화면의 특정한 곳에 뿌려줌
+            binding.ivEmptyTrustLevelImg.setImageResource(trustLevelImageId)
+            binding.ivEmptyTrustLevelImg.visibility = View.VISIBLE
         }
     }
 
     /*
-    회원 프로필 사진 변경
+    회원 프로필 사진 변경 로직
+    플러스 버튼 누르면 ->
+        2-1. 권한체크
+        2-2. intent로 actionPick 생성
+        2-3. intent 타입을 image로 지정
+        2-4. 콜백함수 실행 -> 성공이면? 파일형태를 URL로 변경
     */
     private fun selectMypagePicture() {
         binding.ivMypageProfileEdit.setOnClickListener {
-            // 플러스 버튼 누르면 ->
-            // 1. 권한체크
-            // 2. intent로 actionPick 이란 것 생성
-            // 3. intent 타입을 image로 지정
-            // 4. 콜백함수 실행 -> 성공이면? 파일형태를 URL로 변경 (실패면?)}
+            if (!permissionGallery()) {
+                val intent  = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                getResult.launch(intent)
+            }
         }
     }
 
     /*
-    이메일 수정
+     * 안드로이드 SDK 33 이상일 떄와 미만일 때를 구분하여 권한 체크
+     */
+    private fun permissionGallery() : Boolean{
+        // 33 이상일 때
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val readImagePermission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_MEDIA_IMAGES)
+            val readVideoPermission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_MEDIA_VIDEO)
+
+            return if (readImagePermission == PackageManager.PERMISSION_DENIED || readVideoPermission == PackageManager.PERMISSION_DENIED){
+                ActivityCompat.requestPermissions(  // activity, permission 배열, requestCode
+                    activity, arrayOf(
+                        android.Manifest.permission.READ_MEDIA_IMAGES,
+                        android.Manifest.permission.READ_MEDIA_VIDEO),
+                    1
+                )
+                Log.d(TAG, "permissionGallery: 여기니?")
+                true
+            } else {
+                false
+            }
+            // 33 미만일 때
+        } else {
+            val writePermission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val readPermission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+
+            return if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED){
+                ActivityCompat.requestPermissions(  // activity, permission 배열, requestCode
+                    activity, arrayOf(
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                    1
+                )
+                Log.d(TAG, "permissionGallery: 여기니?")
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    /*
+    파일 경로를 찾는 함수
+    */
+    private fun getFilePathUri(uri: Uri) : String{
+        val buildName = Build.MANUFACTURER
+
+        // 샤오미 폰은 바로 경로 반환 가능
+        if (buildName.equals("Xiaomi")) {
+            return uri.path.toString()
+        }
+
+        var columnIndex = 0
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        var cursor = requireActivity().contentResolver.query(uri, proj, null, null, null)
+
+        if (cursor!!.moveToFirst()){
+            columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        }
+        return cursor.getString(columnIndex)
+    }
+
+    /*
+    observe로 관찰하다가, 새로운 사진이 들어올때 동그랗게 크롭해서 원래 frame에 넣어주기
+     */
+    private fun observePicture(){
+        myPageViewModel.urlLiveData.observe(viewLifecycleOwner) {
+            Glide.with(this)
+                .load(filePath)
+                .circleCrop()
+                .into(binding.ivMypageProfileImg)
+        }
+    }
+
+    /*
+    이메일 수정 로직
     */
 
     private fun editMyEmail(){
-        val emailContent = binding.etMypageEmail
+        val emailContent = binding.etMypageEmail.toString()
         val btnEmailEdit = binding.ivMypageEmailEdit
         // 수정 함수 이므로, 유효성 검사 필요
+        btnEmailEdit.setOnClickListener{
+            validateEmail(emailContent)
+        }
     }
     private fun validateEmail(email:String): Boolean{
         if (email.isBlank()){
@@ -133,18 +218,33 @@ class MainMyPageFragment:Fragment() {
     }
 
     /*
-    로그아웃
-     */
+    로그아웃 로직
+    */
+
     private fun logoutMyAccount(){
         val btnLogout = binding.btnMypageLogout
-        // 로그아웃 로직
+        btnLogout.setOnClickListener{
+            ApplicationClass.sharedPreferencesUtil.deleteToken()
+            var intent = Intent(requireContext(),LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+        }
 
     }
+
     /*
-    회원탈퇴
+    회원탈퇴 로직
     */
     private fun deleteMyAccount(){
-        val btnWithdrawal = binding.btnMypageDeleteUser
-        // 회원탈퇴 로직
+        val btnDeleteAccount = binding.btnMypageDeleteUser
+        btnDeleteAccount.setOnClickListener{
+            // 계정 삭제
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

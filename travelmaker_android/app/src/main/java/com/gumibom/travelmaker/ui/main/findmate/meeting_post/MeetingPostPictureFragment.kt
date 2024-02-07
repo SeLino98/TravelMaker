@@ -48,26 +48,22 @@ class MeetingPostPictureFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // intent 결과를 받음
         getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 // contentResolver로 filePath를 받는다.
                 filePath = getFilePathUri(it.data?.data!!)
                 Log.d(TAG, "onCreate: $filePath")
-                
                 // ViewModel LiveData에 추가
                 meetingPostViewModel.addImageUrl(filePath)
             }
         }
-
         // OnBackPressedCallback 인스턴스 생성 및 추가
         callback = object : OnBackPressedCallback(true) { // true는 콜백을 활성화 상태로 만듭니다.
             override fun handleOnBackPressed() {
                 activity.navigateToPreviousFragment()
             }
         }
-
         // OnBackPressedDispatcher에 콜백 추가
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
@@ -98,7 +94,7 @@ class MeetingPostPictureFragment : Fragment() {
         }
     }
 
-    /**
+    /*
      * 이미지 리싸이클러뷰 초기화 하는 함수
      */
     private fun setAdapter() {
@@ -115,7 +111,7 @@ class MeetingPostPictureFragment : Fragment() {
         }
     }
 
-    /**
+    /*
      * 다음 버튼 클릭 시 다음 화면 페이지 전환
      */
     private fun moveNextFragment() {
@@ -133,8 +129,7 @@ class MeetingPostPictureFragment : Fragment() {
             }
         }
     }
-
-    /**
+    /*
      * 버튼 클릭 시 갤러리를 여는 함수
      */
     private fun openGallery() {
