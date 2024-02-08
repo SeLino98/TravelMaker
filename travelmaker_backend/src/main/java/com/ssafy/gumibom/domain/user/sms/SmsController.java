@@ -27,6 +27,7 @@ public class SmsController {
             smsService.sendSms(requestDto);
             String message = "문자 발송이 정상적으로 완료되었습니다";
             SmsResponseDto responseDto = new SmsResponseDto(true, message);
+            log.info("string 문자 성공===================================");
             return ResponseEntity.ok(responseDto);
         } catch (CustomExceptions.Exception e) {
             log.info("string 문자 에러" + e.getMessage());
