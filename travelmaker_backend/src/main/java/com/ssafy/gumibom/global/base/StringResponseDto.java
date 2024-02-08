@@ -3,7 +3,6 @@ package com.ssafy.gumibom.global.base;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
 public class StringResponseDto extends BaseResponseDto {
 

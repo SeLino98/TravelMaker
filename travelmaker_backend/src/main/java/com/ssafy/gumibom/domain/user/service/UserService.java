@@ -6,7 +6,7 @@ import com.ssafy.gumibom.domain.user.dto.MyPageResponseDTO;
 import com.ssafy.gumibom.domain.user.dto.SignupRequestDto;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
-import com.ssafy.gumibom.global.util.S3Service;
+import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +29,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final S3Service s3Service;
-    private final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder  encoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -55,11 +55,12 @@ public class UserService {
         String imgUrl = "";
         if (image != null) imgUrl = s3Service.uploadS3(image, "images");
 
-        boolean check = checkPhoneNumExists(requestDto.getPhone());
-        if (check) throw new IllegalArgumentException("이미 가입된 전화번호입니다.");
+//        boolean check = checkPhoneNumExists(requestDto.getPhone());
+//        if (check) throw new IllegalArgumentException("이미 가입된 전화번호입니다.");
 
         String encPwd = encoder.encode(requestDto.getPassword());
-        userRepository.save(requestDto.toEntity(encPwd));
+        userRepository.save(requestDto.toEntity(encPwd).setProfileImgURL(imgUrl));
+
         User user = userRepository.findByUsername(requestDto.getUsername());
 
         if (user != null) {
@@ -107,12 +108,14 @@ public class UserService {
         return userRepository.findByPhoneNum(phoneNum).getUsername();
     }
 
-    public Boolean changePassword(String oldPassword, String newPassword) {
+    @Transactional
+    public Boolean changePassword(String newPassword) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
 
         User user = userRepository.findByUsername(currentUserName);
-        if (user != null && encoder.matches(oldPassword, user.getPassword())) {
+
+        if (user != null) {
             user.setPassword(encoder.encode(newPassword));
             userRepository.save(user);
             return true;

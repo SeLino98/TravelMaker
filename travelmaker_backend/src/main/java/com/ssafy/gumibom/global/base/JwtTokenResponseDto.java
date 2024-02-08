@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class JwtTokenResponseDto extends BaseResponseDto {
     private final JwtToken jwtToken;
     public JwtTokenResponseDto(Boolean isSuccess, String message, JwtToken jwtToken) {

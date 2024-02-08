@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.user.controller;
 
 import com.ssafy.gumibom.domain.user.dto.*;
 import com.ssafy.gumibom.domain.user.service.UserService;
+import com.ssafy.gumibom.global.base.BooleanResponseDto;
 import com.ssafy.gumibom.global.base.JwtTokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,9 +25,9 @@ public class UserController {
 
     @Operation(summary = "로그인")
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenResponseDto> loginSuccess(@RequestBody LoginRequestDTO requestDTO) {
+    public ResponseEntity<JwtToken> loginSuccess(@RequestBody LoginRequestDTO requestDTO) {
         JwtToken token = userService.login(requestDTO.getLoginId(), requestDTO.getPassword());
-        return ResponseEntity.ok(new JwtTokenResponseDto(true, "로그인 성공! jwt 토큰을 받으세요.", token));
+        return ResponseEntity.ok(token);
     }
 
     @Operation(summary = "회원가입")
@@ -40,21 +41,21 @@ public class UserController {
     @Operation(summary = "전화번호 중복 체크")
     @GetMapping("/join/check/phone-number-exists/{phonenum}")
     public ResponseEntity<?> checkPhoneNumDuplicate(@PathVariable String phonenum) {
-        return ResponseEntity.ok(userService.checkPhoneNumExists(phonenum));
+        return ResponseEntity.ok(new BooleanResponseDto(true, "전화번호 중복 체크 성공", userService.checkPhoneNumExists(phonenum)));
     }
 
     // 닉네임 중복 체크
     @Operation(summary = "닉네임 중복 체크")
     @GetMapping("/join/check/nickname-exists/{nickname}")
     public ResponseEntity<?> checkNickNameDuplicate(@PathVariable String nickname) {
-        return ResponseEntity.ok(userService.checkNickNameExists(nickname));
+        return ResponseEntity.ok(new BooleanResponseDto(true, "닉네임 중복 체크 성공", userService.checkNickNameExists(nickname)));
     }
 
     // Login ID 중복 체크
     @Operation(summary = "아이디 중복 체크")
     @GetMapping("/join/check/id-exists/{loginID}")
     public ResponseEntity<?> checkLoginIDDuplicate(@PathVariable String loginID) {
-        return ResponseEntity.ok(userService.checkLoginIDExists(loginID));
+        return ResponseEntity.ok(new BooleanResponseDto(true, "아이디 중복 체크 성공", userService.checkLoginIDExists(loginID)));
     }
 
     @Operation(summary = "전화 번호로 아이디 찾기")
@@ -63,15 +64,15 @@ public class UserController {
         return ResponseEntity.ok(userService.findLoginIDByPhoneNum(phoneNum));
     }
 
-    @Operation(summary = "비밀번호 변경")
+    @Operation(summary = "비밀번호 변경(/send, /confirm 을 거쳐 본인인증이 되고 나면 비밀번호 변경하는 창이 활성화되어 오는 곳입니다...")
     @PostMapping("/user/change-password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequestDto request) {
-        boolean success = userService.changePassword(request.getOldPassword(), request.getNewPassword());
+        boolean success = userService.changePassword(request.getNewPassword());
 
         if (success) {
             return ResponseEntity.ok().body("Password changed successfully");
         } else {
-            return ResponseEntity.badRequest().body("Invalid old password");
+            return ResponseEntity.badRequest().body("Invalid user");
         }
     }
 
@@ -93,7 +94,7 @@ public class UserController {
     @Operation(summary = "fcm 토큰 갱신")
     @PutMapping("/user/renewal-fcm-token")
     public ResponseEntity<?> renewalFCM(@RequestBody AccountModifyRequestDTO requestDTO) {
-        return ResponseEntity.ok(userService.updateFCMById(requestDTO));
+        return ResponseEntity.ok(new BooleanResponseDto(true, "fcm token 갱신 성공", userService.updateFCMById(requestDTO)));
     }
 
 }

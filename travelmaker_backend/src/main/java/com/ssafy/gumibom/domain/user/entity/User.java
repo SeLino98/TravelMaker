@@ -111,6 +111,11 @@ public class User {
         return Collections.singletonList(authority);
     }
 
+    public User setProfileImgURL(String profileImgURL) {
+        this.profileImgURL = profileImgURL;
+        return this;
+    }
+
     public void updateFCM(String fcmtoken) {
         this.fcmtoken = fcmtoken;
     }

@@ -3,12 +3,13 @@ package com.ssafy.gumibom.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PasswordChangeRequestDto {
-    private String oldPassword;
+//    private String oldPassword;
     private String newPassword;
 }
