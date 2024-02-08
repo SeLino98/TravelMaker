@@ -28,9 +28,11 @@ public class SmsController {
             String message = "문자 발송이 정상적으로 완료되었습니다";
             SmsResponseDto responseDto = new SmsResponseDto(true, message);
             log.info("string 문자 성공===================================");
+            log.error("왜안떠 이거");
             return ResponseEntity.ok(responseDto);
         } catch (CustomExceptions.Exception e) {
             log.info("string 문자 에러" + e.getMessage());
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + e.getMessage()+"@@@@@@@@@@@@@@@");
             return handleApiException(e, HttpStatus.BAD_REQUEST);
 
         }
