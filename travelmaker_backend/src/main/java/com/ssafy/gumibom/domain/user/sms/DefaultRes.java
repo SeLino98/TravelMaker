@@ -1,5 +1,9 @@
 package com.ssafy.gumibom.domain.user.sms;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
 public class DefaultRes<T> {
     private int statusCode;
     private String responseMessage;
