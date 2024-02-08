@@ -8,8 +8,10 @@ import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gumibom.travelmaker.databinding.DialogMainMypageEditMyinfoBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
+@AndroidEntryPoint
 class DialogMainMypageEditMyinfo:Fragment() {
     private val myPageViewModel: MyPageViewModel by viewModels()
     private var _binding:DialogMainMypageEditMyinfoBinding? = null

@@ -3,6 +3,7 @@ package com.gumibom.travelmaker.ui.main.gotravel
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.gumibom.travelmaker.databinding.FragmentMakePamphletBinding
 import com.gumibom.travelmaker.databinding.FragmentPamphletWelcomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "MakePamphletFragment_싸피"
 @AndroidEntryPoint
 class MakePamphletFragment : Fragment() {
 
@@ -36,6 +38,7 @@ class MakePamphletFragment : Fragment() {
 
         checkPamphletTitle()
         moveStartPamphlet()
+        uploadPamphletThumbnail()
     }
 
     private fun moveStartPamphlet() {
@@ -75,5 +78,14 @@ class MakePamphletFragment : Fragment() {
             }
 
         })
+    }
+
+    /**
+     * 팜플렛 썸네일을 등록하는 함수
+     */
+    private fun uploadPamphletThumbnail() {
+        binding.layoutThumbnailAdd.setOnClickListener {
+            Log.d(TAG, "test: ")
+        }
     }
 }
