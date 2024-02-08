@@ -70,7 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 //                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/login", "/", "/join", "/join/**").permitAll()
-                        .requestMatchers("/send", "/confirm").permitAll()
+                        .requestMatchers("/sms-certification/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()) // 그 외 인증 없이 접근X
 //                .exceptionHandling((exceptionHandling) -> //컨트롤러의 예외처리를 담당하는 exception handler와는 다름.
