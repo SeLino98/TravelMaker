@@ -27,6 +27,7 @@ import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
 import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
+import com.gumibom.travelmaker.domain.pamphlet.MakePamphletUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
 import com.gumibom.travelmaker.model.Address
@@ -50,7 +51,8 @@ class MainViewModel @Inject constructor(
     private val getPostDetailUseCase:GetPostDetailUseCase,
     private val firebaseNotifyListUseCase: FirebaseNotifyListUseCase,
     private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase,
-    private val getAllUserUseCase: GetAllUserUseCase
+    private val getAllUserUseCase: GetAllUserUseCase,
+    private val makePamphletUseCase: MakePamphletUseCase
 
 ) : ViewModel(), CommonViewModel {
 
@@ -107,6 +109,15 @@ class MainViewModel @Inject constructor(
 
     private val _user = MutableLiveData<User>()
     val user : LiveData<User> = _user
+
+    private val _message = MutableLiveData<String>()
+    val message : LiveData<String> = _message
+
+    private val _pamphletThumbnail = MutableLiveData<String>()
+    val pamphletThumbnail : LiveData<String> = _pamphletThumbnail
+
+    var pamphletTitle = ""
+    var pamphletCategory = mutableListOf<String>()
 
     //서버에서 마커를 클릭한 정보들을 가져옴 -> ui단에서 받은 데이터들을 저장하장
     fun getPostDetail(pos:Long){
@@ -165,6 +176,21 @@ class MainViewModel @Inject constructor(
 
     fun setSelectAddress(address : Address) {
         _selectAddress.value = address
+    }
+
+    fun setPamphletThumbnail(imageUrl : String) {
+        _pamphletThumbnail.value = imageUrl
+    }
+
+    fun makePamphlet() {
+        viewModelScope.launch {
+            val message = makePamphletUseCase.makePamphlet(
+                _user.value!!.userId,
+                pamphletTitle,
+                pamphletCategory,
+                _pamphletThumbnail.value!!
+            )
+        }
     }
 
 }

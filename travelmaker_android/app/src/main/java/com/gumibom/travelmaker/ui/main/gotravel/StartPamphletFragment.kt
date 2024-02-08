@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import com.gumibom.travelmaker.databinding.FragmentMakePamphletBinding
 import com.gumibom.travelmaker.databinding.FragmentStartPamphletBinding
+import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "StartPamphletFragment_싸피"
@@ -18,13 +21,10 @@ class StartPamphletFragment : Fragment() {
 
     private var _binding: FragmentStartPamphletBinding? = null
     private val binding get() = _binding!!
-    private val makePamphletViewModel : MakePamphletViewModel by viewModels()
-    private lateinit var title : String
+    private val mainViewModel : MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        title = arguments?.getString("pamphlet_title") ?: ""
     }
 
     override fun onCreateView(
@@ -41,7 +41,13 @@ class StartPamphletFragment : Fragment() {
 
         selectCategory()
         makePamphlet()
-        Log.d(TAG, "onViewCreated: $title")
+        observeMessage()
+    }
+
+    private fun observeMessage() {
+        mainViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**
@@ -61,10 +67,10 @@ class StartPamphletFragment : Fragment() {
                 val chipText = chipMap.getValue(chip.text.toString())
                 // Chip 클릭 시 실행할 코드
                 if (chip.isChecked) {
-                    makePamphletViewModel.categoryList.add(chipText)
-                    Log.d(TAG, "selectCategory: ${makePamphletViewModel.categoryList}")
+                    mainViewModel.pamphletCategory.add(chipText)
+
                 } else {
-                    makePamphletViewModel.categoryList.remove(chipText)
+                    mainViewModel.pamphletCategory.remove(chipText)
                 }
             }
         }
@@ -75,9 +81,9 @@ class StartPamphletFragment : Fragment() {
                 val chipText = chipMap.getValue(chip.text.toString())
                 // Chip 클릭 시 실행할 코드
                 if (chip.isChecked) {
-                    makePamphletViewModel.categoryList.add(chipText)
+                    mainViewModel.pamphletCategory.add(chipText)
                 } else {
-                    makePamphletViewModel.categoryList.remove(chipText)
+                    mainViewModel.pamphletCategory.remove(chipText)
                 }
             }
         }
@@ -87,6 +93,10 @@ class StartPamphletFragment : Fragment() {
      * 팜플렛을 만드는 함수
      */
     private fun makePamphlet() {
+        binding.btnPersonalPamphlet.setOnClickListener {
+            mainViewModel.makePamphlet()
 
+            // TODO Intent로 내 기록 페이지로 넘어가는 함수 구현
+        }
     }
 }

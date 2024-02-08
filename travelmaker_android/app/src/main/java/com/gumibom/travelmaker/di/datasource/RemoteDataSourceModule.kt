@@ -8,6 +8,7 @@ import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.api.meeting_post.MeetingPostService
 import com.gumibom.travelmaker.data.api.myPage.MyPageService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
+import com.gumibom.travelmaker.data.api.pamphlet.PamphletService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.data.datasource.firebase.FirebaseFcmRemoteDataSource
@@ -27,6 +28,8 @@ import com.gumibom.travelmaker.data.datasource.myPage.MyPageRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.myPage.MyPageRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.datasource.pamphlet.PamphletRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.pamphlet.PamphletRemoteDataSourceImpl
 
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
@@ -92,5 +95,11 @@ class RemoteDataSourceModule {
     @Provides
     fun provideMyPageRemoteDataSource(myPageService: MyPageService): MyPageRemoteDataSource {
         return MyPageRemoteDataSourceImpl(myPageService)
+    }
+
+    @Singleton
+    @Provides
+    fun providePamphletRemoteDataSource(pamphletService: PamphletService): PamphletRemoteDataSource {
+        return PamphletRemoteDataSourceImpl(pamphletService)
     }
 }

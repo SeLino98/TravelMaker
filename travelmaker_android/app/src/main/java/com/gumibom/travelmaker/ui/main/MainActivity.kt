@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeLiveData() {
         val profileImage = findViewById<ImageView>(R.id.my_custom_icon)
         viewModel.user.observe(this) { user ->
+            Log.d(TAG, "user: $user")
             if (user.profileImgURL.isNotEmpty()) {
                 Glide.with(this)
                     .load(user.profileImgURL)

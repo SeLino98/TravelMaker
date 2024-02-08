@@ -429,6 +429,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             for (category in categoryList) {
                 // chip이 선택되어 있으면
                 if (category.isChecked) {
+                    Log.d(TAG, "selectCategory: $filterCategories")
                     filterCategories.add(chipMap.getValue(category.text.toString()))
                 }
             }
