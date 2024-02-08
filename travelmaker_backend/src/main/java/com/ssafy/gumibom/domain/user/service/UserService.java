@@ -9,6 +9,7 @@ import com.ssafy.gumibom.domain.user.repository.UserRepository;
 import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -86,7 +87,6 @@ public class UserService {
 
 
     // 전화번호 중복 가입 체크
-    @Transactional
     public Boolean checkPhoneNumExists(String phoneNum) {
         return userRepository.existUsersByPhoneNum(phoneNum);
     }
@@ -133,19 +133,7 @@ public class UserService {
     public MyPageResponseDTO inquiryMyPage(String userLoginId) {
 //        return userRepository.findByUsername(userLoginId);
         User user = userRepository.findByUsername(userLoginId);
-        return MyPageResponseDTO.builder()
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .nickname(user.getNickname())
-                .gender(user.getGender())
-                .birth(user.getBirth())
-                .phone(user.getPhone())
-                .profileImgURL(user.getProfileImgURL())
-                .trust(user.getTrust())
-                .town(user.getTown())
-                .nation(user.getNation())
-                .categories(user.getCategories())
-                .build();
+        return MyPageResponseDTO.createMyPageResponseDTO(user);
     }
 
     /*

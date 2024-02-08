@@ -32,7 +32,9 @@ public class User{
     @Column(name = "user_id")
     private Long id;
 
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
 
     @Email
@@ -51,10 +53,12 @@ public class User{
     private String phone;
 
     @Lob
+    @NotEmpty
     private String profileImgURL;
 
     private Double trust;
 
+    @NotEmpty
     private String town;
 
     @Lob

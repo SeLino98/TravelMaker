@@ -1,6 +1,7 @@
 package com.ssafy.gumibom.domain.user.dto;
 
 import com.ssafy.gumibom.domain.user.entity.Gender;
+import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.global.common.Nation;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Email;
@@ -17,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class MyPageResponseDTO {
+
+    private Long userId;
 
     private String username;
 
@@ -42,4 +45,21 @@ public class MyPageResponseDTO {
     private String nation;
 
     private List<String> categories;
+
+    public static MyPageResponseDTO createMyPageResponseDTO(User user){
+        return MyPageResponseDTO.builder()
+                .userId(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .nickname(user.getNickname())
+                .gender(user.getGender())
+                .birth(user.getBirth())
+                .phone(user.getPhone())
+                .profileImgURL(user.getProfileImgURL())
+                .trust(user.getTrust())
+                .town(user.getTown())
+                .nation(user.getNation())
+                .categories(user.getCategories())
+                .build();
+    }
 }
