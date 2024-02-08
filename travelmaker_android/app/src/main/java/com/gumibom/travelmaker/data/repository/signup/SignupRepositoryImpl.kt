@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.data.repository.signup
 
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
+import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
 import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 
@@ -28,5 +29,9 @@ class SignupRepositoryImpl @Inject constructor(
 
     override suspend fun saveUserData(userInfo: UserRequestDTO): Response<IsSuccessResponseDTO> {
         return signupRemoteDataSourceImpl.saveUserData(userInfo)
+    }
+
+    override suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO): Response<Boolean> {
+        return signupRemoteDataSourceImpl.isCertificationNumber(phoneCertificationRequestDTO)
     }
 }

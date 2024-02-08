@@ -71,7 +71,7 @@
     <string name="meeting_post_member">모임 인원을 설정해주세요.</string>
     <string name="chip_rest">휴식</string>
     <string name="pamplet_welcome">환영합니다!\n순간의 감정이나 사진들을\n팜플렛에 기록해보세요!</string>
-    <string name="record_pamphlet">다음과 같은 팜플렛에\n기록됩니다.</string>
+    <string name="record_pamphlet">팜플렛 썸네일을 골라주세요.</string>
     <!-- END -->
     <!-- 회원가입 성공메시지 -->
 

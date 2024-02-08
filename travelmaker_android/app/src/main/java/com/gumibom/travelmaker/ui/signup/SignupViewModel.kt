@@ -178,9 +178,16 @@ class SignupViewModel @Inject constructor(
     // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
     fun sendPhoneNumber(phoneNumber : String) {
         viewModelScope.launch {
-
+            val dto = sendPhoneNumberUseCase.sendPhoneNumber(phoneNumber)
+            Log.d(TAG, "sendPhoneNumber: $dto")
         }
     }
+
+    // TODO 문자인증을 받고 번호가 맞는지 검증하는 함수
+    fun isCertification() {
+
+    }
+
 
     // 코루틴으로 3분 타이머를 동작하는 함수
     fun startTimer(textView : TextView) {

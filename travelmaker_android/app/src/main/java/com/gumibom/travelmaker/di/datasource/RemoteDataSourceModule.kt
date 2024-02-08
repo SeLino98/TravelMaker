@@ -6,6 +6,7 @@ import com.gumibom.travelmaker.data.api.kakao.KakaoLocationSearchService
 import com.gumibom.travelmaker.data.api.login.LoginService
 import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.api.meeting_post.MeetingPostService
+import com.gumibom.travelmaker.data.api.myPage.MyPageService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
@@ -22,6 +23,8 @@ import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.meeting_post.MeetingPostRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.meeting_post.MeetingPostRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.myPage.MyPageRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.myPage.MyPageRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSourceImpl
 
@@ -83,5 +86,11 @@ class RemoteDataSourceModule {
     @Provides
     fun provideMeetingPostRemoteDataSource(meetingPostService: MeetingPostService) : MeetingPostRemoteDataSource {
         return MeetingPostRemoteDataSourceImpl(meetingPostService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMyPageRemoteDataSource(myPageService: MyPageService): MyPageRemoteDataSource {
+        return MyPageRemoteDataSourceImpl(myPageService)
     }
 }

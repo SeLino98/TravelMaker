@@ -30,6 +30,17 @@
         app:layout_constraintStart_toEndOf="@id/btn_my_record_traveling"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_my_record_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="좌우 스크롤로 더 많은 팜플렛을 볼 수 있어요."
+        android:textColor="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="@id/btn_my_record_travel_finish"
+        app:layout_constraintTop_toBottomOf="@id/btn_my_record_travel_finish"
+        android:layout_marginTop="10dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_my_record"
         android:layout_width="0dp"
@@ -39,7 +50,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_my_record"
-        app:layout_constraintTop_toBottomOf="@id/btn_my_record_travel_finish" />
+        app:layout_constraintTop_toBottomOf="@id/tv_my_record_description" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

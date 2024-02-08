@@ -8,6 +8,7 @@ import com.gumibom.travelmaker.data.datasource.kakao.KakaoLocationRemoteDataSour
 import com.gumibom.travelmaker.data.datasource.login.LoginRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.meeting_post.MeetingPostRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.myPage.MyPageRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
@@ -24,6 +25,8 @@ import com.gumibom.travelmaker.data.repository.meeting.MeetingRepository
 import com.gumibom.travelmaker.data.repository.meeting.MeetingRepositoryImpl
 import com.gumibom.travelmaker.data.repository.meeting_post.MeetingPostRepository
 import com.gumibom.travelmaker.data.repository.meeting_post.MeetingPostRepositoryImpl
+import com.gumibom.travelmaker.data.repository.myPage.MyPageRepository
+import com.gumibom.travelmaker.data.repository.myPage.MyPageRepositoryImpl
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
 
@@ -91,5 +94,11 @@ class RepositoryModule {
     @Provides
     fun provideMeetingPostRepository(meetingPostRemoteDataSource : MeetingPostRemoteDataSource) : MeetingPostRepository {
         return MeetingPostRepositoryImpl(meetingPostRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMyPageRepository(myPageRemoteDataSource: MyPageRemoteDataSource) : MyPageRepository {
+        return MyPageRepositoryImpl(myPageRemoteDataSource)
     }
 }

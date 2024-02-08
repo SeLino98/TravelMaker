@@ -4,6 +4,7 @@ import com.gumibom.travelmaker.data.repository.google.GoogleLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 
 import com.gumibom.travelmaker.data.repository.signup.SignupRepository
+import com.gumibom.travelmaker.domain.signup.CheckCertificationUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.CheckSecretNumberUseCase
@@ -54,6 +55,12 @@ class SignupUseCaseModule {
     @Provides
     fun provideSaveUserInfoUseCase(userRepository: SignupRepository) : SaveUserInfoUseCase {
         return SaveUserInfoUseCase((userRepository))
+    }
+
+    @Singleton
+    @Provides
+    fun provideCheckCertificationUseCase(signupRepository: SignupRepository) : CheckCertificationUseCase {
+        return CheckCertificationUseCase(signupRepository)
     }
 
 }

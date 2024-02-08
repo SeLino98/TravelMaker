@@ -22,6 +22,7 @@ import com.gumibom.travelmaker.databinding.ActivityMainBinding
 import com.gumibom.travelmaker.model.User
 import com.gumibom.travelmaker.ui.main.findmate.FindMateActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import com.gumibom.travelmaker.util.ApplicationClass
 import com.gumibom.travelmaker.util.PermissionChecker
 import com.gumibom.travelmaker.util.SharedPreferencesUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,11 +42,12 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var navController : NavController
     private val viewModel : MainViewModel by viewModels()
-    private lateinit var user : User
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate: @#!@#!@#")
+        Log.d(TAG, "onCreate: ${ApplicationClass.sharedPreferencesUtil.getToken()}")
+
         _binding = ActivityMainBinding.inflate(layoutInflater).apply {
             navController = (supportFragmentManager.findFragmentById(R.id.fragment_container_main)
                     as NavHostFragment).navController
@@ -60,7 +62,16 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
         setNavigationMenuToolbar()
         initToolbar()
+        getLoginUserInfo()
     }
+
+    /**
+     * 메인 화면으로 넘어오면 로그인한 회원의 정보를 전부 받아오는 함수
+     */
+    private fun getLoginUserInfo() {
+
+    }
+
     private fun setNavigationMenuToolbar(){
         //프래그먼트가 ~~ 일 땐 ~~로
         //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로

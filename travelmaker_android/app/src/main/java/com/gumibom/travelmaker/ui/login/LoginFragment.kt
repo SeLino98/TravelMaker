@@ -97,7 +97,7 @@ class LoginFragment  : Fragment(){
     // 회원가입 버튼 클릭 시 signupActivity로 넘어가는 함수
     private fun signup() {
         binding.btnLoginSignup.setOnClickListener {
-//            activity.moveSignupActivity(null)
+            activity.moveSignupActivity(null)
         }
     }
 

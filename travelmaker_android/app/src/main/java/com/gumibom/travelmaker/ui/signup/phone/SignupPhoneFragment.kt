@@ -147,10 +147,10 @@ class SignupPhoneFragment : Fragment() {
         imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
     private fun backAndNextNaviBtn(){
-        binding.tvSignupPhonePrevious.setOnClickListener {
+        binding.btnSignupPhonePrevious.setOnClickListener {
             activity.navigateToPreviousFragment()
         }
-        binding.tvSignupPhoneNext.setOnClickListener {
+        binding.btnSignupPhoneNext.setOnClickListener {
             activity.navigateToNextFragment()
         }
     }
