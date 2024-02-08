@@ -28,7 +28,7 @@ public class PersonalPamphletController {
 
     @Operation(summary = "개인 팜플렛 생성")
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
-            MediaType.APPLICATION_JSON_VALUE})
+                MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody MakePersonalPamphletResponseDto makePersonalPamphlet(
             @RequestPart MultipartFile image,
             @RequestPart MakePersonalPamphletRequestDto makePPReqDto) throws IOException {

@@ -48,7 +48,7 @@ coolsms:
     fromnumber : ENC(j2aEYLecCVWNIFo2pKulY89/JC2MJlmd)
 
 redis:
-  host: 127.0.0.1
+  host: i10d202.p.ssafy.io
   port: 6379
   repositories:
     enabled: false
