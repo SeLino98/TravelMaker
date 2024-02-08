@@ -28,6 +28,8 @@ public class PersonalPamphlet extends Pamphlet {
 
     private Boolean isFinish;
 
+    private String repreImgUrl;
+
     // 연관관계 편의 메서드
     // 양방향 연결일 때 편하게 메서드로 세팅
 
@@ -47,12 +49,13 @@ public class PersonalPamphlet extends Pamphlet {
     }
 
     // 팜플렛 제목 및 기본 정보를 세팅하는 함수
-    public void setPamphlet(String title, List<String> categories) {
+    public void setPamphlet(String title, List<String> categories, String repreImgUrl) {
         this.title = title;
         this.createTime = LocalDateTime.now();
         this.love = 0;
         this.categories = categories;
         this.isFinish = false;
+        this.repreImgUrl = repreImgUrl;
     }
 
     // 개인 팜플렛을 종료시키는 함수 -> 변경 감지(dirty-checking)를 이용해 엔티티 수정
@@ -64,9 +67,12 @@ public class PersonalPamphlet extends Pamphlet {
     // 생성 메서드
     // 도메인 모델 패턴
 
-    public static PersonalPamphlet createPersonalPamphlet(User user, String title, List<String> categories) {
+    public static PersonalPamphlet createPersonalPamphlet(User user,
+                                                          String title,
+                                                          List<String> categories,
+                                                          String repreImgUrl) {
         PersonalPamphlet pPamphlet = new PersonalPamphlet();
-        pPamphlet.setPamphlet(title, categories);
+        pPamphlet.setPamphlet(title, categories, repreImgUrl);
         pPamphlet.setUser(user);
 //        for(String category: categories) {
 //            pPamphlet.categories.add(category);

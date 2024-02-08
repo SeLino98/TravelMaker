@@ -10,9 +10,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Personal Pamphlet", description = "개인 팜플렛 관련 api")
@@ -24,9 +27,12 @@ public class PersonalPamphletController {
     private final PersonalPamphletService pPamphletService;
 
     @Operation(summary = "개인 팜플렛 생성")
-    @PostMapping
-    public @ResponseBody MakePersonalPamphletResponseDto makePersonalPamphlet(@RequestBody MakePersonalPamphletRequestDto makePPReqDto) {
-        Long pId = pPamphletService.makePamphlet(makePPReqDto);
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody MakePersonalPamphletResponseDto makePersonalPamphlet(
+            @RequestPart MultipartFile image,
+            @RequestPart MakePersonalPamphletRequestDto makePPReqDto) throws IOException {
+        Long pId = pPamphletService.makePamphlet(image, makePPReqDto);
 
         return new MakePersonalPamphletResponseDto(true, "개인 팜플렛 생성 성공", pId);
     }
