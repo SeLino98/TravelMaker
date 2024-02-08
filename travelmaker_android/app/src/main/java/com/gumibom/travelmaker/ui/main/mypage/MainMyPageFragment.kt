@@ -44,7 +44,6 @@ class MainMyPageFragment:Fragment() {
     private var filePath = ""
     private val myPageViewModel : MyPageViewModel by viewModels()
 
-//    private var trustPoint =
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach: ")
@@ -81,14 +80,15 @@ class MainMyPageFragment:Fragment() {
         selectMypagePicture() // 2. 프로필사진 변경 로직: ok
         editMyEmail() // 3. 이메일 변경 -> edittext 를 눌러서 고침 (liveData)
         // 4. 회원정보 수정 버튼 클릭 -> 회원정보 수정할 다이얼로그 뜸
-        // 다이얼로그가 뜨게 하는 작업
-        // 다이얼로그에 적힌 정보를 수정된 edittext 내용으로 업데이트 하게 하는 작업
-        // 다이얼로그가 닫히게 하는 작업
-        logoutMyAccount() // 5. 로그아웃 버튼 클릭 -> 로그인 상태에서 로그아웃 됨
-        deleteMyAccount() // 6. 회원탈퇴 버튼 클릭 -> '정말 탈퇴하겠습니까?' 모달 나오면서 '탈퇴' 클릭 -> 탈퇴
-        showMyTrustLevel() // 7. 신뢰도 수준 보여주는 함수 <- 신뢰도 점수 구간에 맞게 drawable에서 img_trust_n 사진을 찾아서 그려줌
+        logoutMyAccount() // 5. 로그아웃 버튼 클릭 -> 로그인 상태에서 로그아웃 되는 로직: ok
+        showMyTrustLevel() // 7. 신뢰도 수준 보여주는 함수 <- 신뢰도 점수 구간에 맞게 drawable에서 img_trust_n 사진을 찾아서 그려줌: ok
     }
 
+    private fun goToEditMyInfo(){
+        val btnGoToEditMyInfo = binding.btnMyinfoEdit
+
+
+    }
     /*
     신뢰도 확인 버튼을 누르고 자신의 신뢰도를 그림으로 확인하는 로직
      */
@@ -199,16 +199,22 @@ class MainMyPageFragment:Fragment() {
 
     /*
     이메일 수정 로직
+    이메일et를 새로 치고, 이메일 수정 버튼을 누름
     */
 
     private fun editMyEmail(){
-        val emailContent = binding.etMypageEmail.toString()
+        val emailContent = binding.etMypageEmail
         val btnEmailEdit = binding.ivMypageEmailEdit
         // 수정 함수 이므로, 유효성 검사 필요
+        emailContent.setText("i_am_ddong_dog")
+        emailContent.setSelection(emailContent.text.length)
+
         btnEmailEdit.setOnClickListener{
-            validateEmail(emailContent)
+            emailContent.setSelection(emailContent.text.length)
+            validateEmail(emailContent.toString())
         }
     }
+    // 이메일이 비어있는지 확인하는 로직
     private fun validateEmail(email:String): Boolean{
         if (email.isBlank()){
             Toast.makeText(context,"이메일을 작성해주세요", Toast.LENGTH_SHORT).show()
@@ -221,6 +227,7 @@ class MainMyPageFragment:Fragment() {
     로그아웃 로직
     */
 
+    // 해야할 일: 첫화면으로 돌아가기는 하는데, 로그인은 유지되어서.. 다시 마이페이지에 들어갈수 있음.
     private fun logoutMyAccount(){
         val btnLogout = binding.btnMypageLogout
         btnLogout.setOnClickListener{
@@ -231,16 +238,6 @@ class MainMyPageFragment:Fragment() {
             startActivity(intent)
         }
 
-    }
-
-    /*
-    회원탈퇴 로직
-    */
-    private fun deleteMyAccount(){
-        val btnDeleteAccount = binding.btnMypageDeleteUser
-        btnDeleteAccount.setOnClickListener{
-            // 계정 삭제
-        }
     }
 
     override fun onDestroyView() {

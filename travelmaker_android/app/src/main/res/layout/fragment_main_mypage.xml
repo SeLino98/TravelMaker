@@ -2,7 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">`
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/btn_myinfo_edit"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:text="@string/mypage_edit_personal_info"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintTop_toBottomOf="@id/tv_mypage_nickname"
+        app:layout_constraintStart_toEndOf="@id/fl_mypage_profile_picture"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="84dp"
+        />
 
     <FrameLayout
         android:id="@+id/fl_mypage_profile_picture"
@@ -30,18 +46,16 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/img_alba_round"
+            android:src="@drawable/img_dog_round"
             android:layout_margin="16dp"
             />
 
         <ImageView
             android:id="@+id/iv_mypage_profile_edit"
-
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_picture_add"
             android:layout_gravity="bottom|end"
-
             android:clickable="true"
             />
 
@@ -49,14 +63,13 @@
 
     <EditText
         android:id="@+id/et_mypage_email"
-
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/mypage_email"
+        android:layout_height="40dp"
+        android:hint=""
         android:textColorHint="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fl_mypage_profile_picture"
-        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toEndOf="@id/fl_mypage_profile_picture"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
         />
 
     <ImageView
@@ -67,23 +80,21 @@
         android:src="@drawable/ic_profile_edit2"
         android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="44dp"
         app:layout_constraintStart_toEndOf="@id/et_mypage_email"
-        android:layout_marginTop="208dp"
         />
 
-<!-- 닉네임은 ... textview로 고쳐야함. 닉네임은 회원가입후 수정 불가했음!!!   -->
-    <EditText
-        android:id="@+id/et_mypage_nickname"
-
+    <TextView
+        android:id="@+id/tv_mypage_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/mypage_nickname"
-        android:textColorHint="@color/black"
+        android:text="@string/mypage_nickname"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/et_mypage_email"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toEndOf="@id/fl_mypage_profile_picture"
+        android:layout_marginTop="8dp"
         />
-
 
     <FrameLayout
         android:id="@+id/fl_mypage_trustlevel"
@@ -98,48 +109,18 @@
         >
 
     <Button
-        android:id="@+id/btn_myinfo_edit"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:text="@string/mypage_edit_personal_info"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:layout_gravity="start|bottom"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        />
-
-    <Button
         android:id="@+id/btn_mypage_logout"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.Material3.Button.TextButton"
         android:text="@string/mypage_logout"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
+        android:textSize="16sp"
+        android:layout_gravity="end|top"
+        android:layout_marginEnd="30dp"
         />
 
-    <Button
-        android:id="@+id/btn_mypage_delete_user"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:text="@string/mypage_withdrawal"
-        android:textColor="@color/light_gray"
-        android:textSize="20sp"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        />
     </FrameLayout>
-
-
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_my_trustlevel"
@@ -154,18 +135,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="240dp"
         />
 
     <ImageView
         android:id="@+id/iv_empty_trust_level_img"
 
-        android:layout_width="260dp"
-        android:layout_height="260dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="220dp"
         />
 
     <Button
@@ -178,7 +159,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="560dp"
+        android:layout_marginTop="500dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

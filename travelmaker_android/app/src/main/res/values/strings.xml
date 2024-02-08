@@ -77,13 +77,34 @@
 
     <!-- 마이페이지 -->
     <string name="mypage_title">마이페이지</string>
-    <string name="mypage_nickname">개똥구리</string>
-    <string name="mypage_email">gaeddong-guriguri@gmail.com</string>
+    <string name="mypage_nickname">나는야귀여운똥강아지</string>
+    <string name="mypage_userid">i_am_ddog_dog</string>
     <string name="mypage_logout">로그아웃</string>
     <string name="mypage_withdrawal">회원탈퇴</string>
     <string name="mypage_edit_personal_info">개인정보\n수정하기</string>
     <string name="mypage_trust_level">신뢰도</string>
 
+
     <!-- 내 기록 페이지 -->
     <string name="myRecord_title">내 기록</string>
+
+    <!-- 회원정보 수정하기 -->
+    <string name="edit_myinfo_title">회원정보 수정하기</string>
+    <string name="edit_myinfo_phone_number">전화번호</string>
+    <string name="edit_myinfo_birthday">생년월일</string>
+    <string name="edit_myinfo_categories">카테고리</string>
+    <string name="edit_myinfo_etc">기타등등</string>
+    <string name="return_to_mypage">돌아가기</string>
+    <string name="delete_my_account">탈퇴하기</string>
+
+    <!-- 체크박스 1 -->
+    <string name="edit_myinfo_checkbox1_taste">맛집</string>
+    <string name="edit_myinfo_checkbox2_healing">힐링</string>
+    <string name="edit_myinfo_checkbox3_culture">문화</string>
+    <string name="edit_myinfo_checkbox4_shopping">쇼핑</string>
+    <string name="edit_myinfo_checkbox5_active">활동</string>
+    <string name="edit_myinfo_checkbox6_picture">사진</string>
+    <string name="edit_myinfo_checkbox7_nature">자연</string>
+    <string name="edit_myinfo_checkbox8_rest">휴식</string>
+
 </resources>
