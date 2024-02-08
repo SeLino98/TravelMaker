@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.user.controller;
 
 import com.ssafy.gumibom.domain.user.dto.*;
 import com.ssafy.gumibom.domain.user.service.UserService;
+import com.ssafy.gumibom.global.base.BaseResponseDto;
 import com.ssafy.gumibom.global.base.BooleanResponseDto;
 import com.ssafy.gumibom.global.base.JwtTokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,8 +34,8 @@ public class UserController {
     @Operation(summary = "회원가입")
     @PostMapping(value = "/join", consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Long signup(@RequestPart SignupRequestDto requestDto, @RequestPart MultipartFile image) throws IOException {
-        return userService.signup(requestDto, image);
+    public ResponseEntity<?> signup(@RequestPart SignupRequestDto requestDto, @RequestPart MultipartFile image) throws IOException {
+        return ResponseEntity.ok(new BaseResponseDto(userService.signup(requestDto, image), "회원가입 성공!"));
     }
 
     // 전화번호 중복 체크
