@@ -28,7 +28,6 @@
         <action
             android:id="@+id/action_mainFragment_to_mainNotificationFragment"
             app:destination="@id/mainNotificationFragment" />
-
     </fragment>
 
     <fragment

@@ -4,6 +4,7 @@ import com.gumibom.travelmaker.data.api.firebase.FirebaseTokenService
 import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
+import com.gumibom.travelmaker.data.dto.request.FirebaseResponseRefuseAcceptDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import retrofit2.Response
 import javax.inject.Inject
@@ -20,11 +21,11 @@ class FirebaseFcmRemoteDataSourceImpl @Inject constructor(
         return firebaseTokenService.groupRequest(fcmRequestGroup)
     }
 
-    override suspend fun acceptCrew(fcmRequestGroup: FcmRequestGroupDTO): Response<IsSuccessResponseDTO> {
+    override suspend fun acceptCrew(fcmRequestGroup: FirebaseResponseRefuseAcceptDTO): Response<IsSuccessResponseDTO> {
         return  firebaseTokenService.acceptCrew(fcmRequestGroup)
     }
 
-    override suspend fun refuseCrew(fcmRequestGroup: FcmRequestGroupDTO): Response<IsSuccessResponseDTO> {
+    override suspend fun refuseCrew(fcmRequestGroup: FirebaseResponseRefuseAcceptDTO): Response<IsSuccessResponseDTO> {
         return firebaseTokenService.refuseCrew(fcmRequestGroup)
     }
 

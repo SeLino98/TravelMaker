@@ -14,4 +14,5 @@ interface MeetingPostRemoteDataSource {
         imgUrlThr : MultipartBody.Part?,
         meetingPostRequestDTO : RequestBody
     ) : Response<String>
+
 }

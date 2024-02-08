@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         /**
          * TODO Token을 가지고 서버에 User data를 전부받아서 저장
          */
+
         setFirebase()
         observeViewModel()
         setNavigationMenuToolbar()
@@ -172,8 +173,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_notify -> {
-                    Log.d(TAG, "initToolbar: Noyigiyu")
-
+                    navController.navigate(R.id.action_mainFragment_to_mainNotificationFragment)
                     true
                 }
                 R.id.action_search -> {
