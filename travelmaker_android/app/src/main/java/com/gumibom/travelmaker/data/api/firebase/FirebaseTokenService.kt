@@ -20,7 +20,7 @@ interface FirebaseTokenService {
     ):Response<IsSuccessResponseDTO>
 
     //모임 요청
-    @POST("meeting-post/request")
+    @POST("meeting-post/request-join")
     suspend fun groupRequest(
         @Body fcmRequestGroup: FcmRequestGroupDTO
     ) : Response<IsSuccessResponseDTO>
