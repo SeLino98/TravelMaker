@@ -20,16 +20,15 @@ class MyPageViewModel @Inject constructor(
 
 ): ViewModel() {
     var nickname = "개똥구리"
-
     private val _urlLiveData = MutableLiveData<String>()
     val urlLiveData : LiveData<String> = _urlLiveData
-
     private var _trustLevelImageId = MutableLiveData<Int>()
     val trustLevelImageId : LiveData<Int> = _trustLevelImageId
-
     fun updateProfilePicture(filePath:String){
         _urlLiveData.value = filePath
     }
+
+    var selectBirthDate = ""
 
     fun updateAndGetTrustLevelImageId(trustPoint: Int): Int {
         return when (trustPoint) {
