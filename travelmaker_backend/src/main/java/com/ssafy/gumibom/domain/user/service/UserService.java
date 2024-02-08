@@ -50,7 +50,7 @@ public class UserService {
 
     //회원가입
     @Transactional
-    public Long signup(SignupRequestDto requestDto, MultipartFile image) throws IOException {
+    public Boolean signup(SignupRequestDto requestDto, MultipartFile image) throws IOException {
 
         String imgUrl = "";
         if (image != null) imgUrl = s3Service.uploadS3(image, "images");
@@ -64,7 +64,7 @@ public class UserService {
         User user = userRepository.findByUsername(requestDto.getUsername());
 
         if (user != null) {
-            return user.getId();
+            return true;
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
