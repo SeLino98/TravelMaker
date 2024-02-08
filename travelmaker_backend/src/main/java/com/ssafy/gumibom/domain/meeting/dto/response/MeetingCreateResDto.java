@@ -4,7 +4,7 @@ import com.ssafy.gumibom.global.base.BaseResponseDto;
 import lombok.*;
 
 
-@Builder
+
 @Getter
 public class MeetingCreateResDto extends BaseResponseDto {
     public MeetingCreateResDto(Boolean isSuccess, String message) {
