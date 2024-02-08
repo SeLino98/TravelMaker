@@ -5,7 +5,7 @@ data class User(
     val username : String,
     val nickname : String,
     val birth : String,
-    val profileImgURL : String?,
+    val profileImgURL : String,
     val trust : Double,
     val town : String,
     val nation : String,

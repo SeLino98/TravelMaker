@@ -26,12 +26,14 @@ import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
+import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
 import com.gumibom.travelmaker.domain.signup.GetKakaoLocationUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
+import com.gumibom.travelmaker.model.User
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -47,7 +49,8 @@ class MainViewModel @Inject constructor(
     private val requestGroupUseCase: FirebaseRequestGroupUseCase,
     private val getPostDetailUseCase:GetPostDetailUseCase,
     private val firebaseNotifyListUseCase: FirebaseNotifyListUseCase,
-    private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase
+    private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase,
+    private val getAllUserUseCase: GetAllUserUseCase
 
 ) : ViewModel(), CommonViewModel {
 
@@ -102,6 +105,9 @@ class MainViewModel @Inject constructor(
     private val _postDTO = MutableLiveData<PostDetail>()
     val postDTO:LiveData<PostDetail> = _postDTO
 
+    private val _user = MutableLiveData<User>()
+    val user : LiveData<User> = _user
+
     //서버에서 마커를 클릭한 정보들을 가져옴 -> ui단에서 받은 데이터들을 저장하장
     fun getPostDetail(pos:Long){
         viewModelScope.launch {
@@ -146,6 +152,12 @@ class MainViewModel @Inject constructor(
     fun userSelectAddress(address : Address) {
         _selectAddress.value = address
         Log.d(TAG, "userSelectAddress: $address")
+    }
+
+    fun getAllUser() {
+        viewModelScope.launch {
+            _user.value = getAllUserUseCase.getMyUserInfo()
+        }
     }
     override fun setAddress(address: String) {
 

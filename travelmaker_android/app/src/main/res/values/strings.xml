@@ -7,6 +7,7 @@
     <string name="signup_complete">완료</string>
 
     <!-- 회원가입 1 아이디 와 패스워드  -->
+    
     <string name="signup_idpw_title">회원가입을 진행합니다.\n아이디와 패스워드를\n설정 해주세요.</string>
     <string name="signup_hint_id_msg">아이디</string>
     <string name="signup_hint_pw_msg">비밀번호</string>
