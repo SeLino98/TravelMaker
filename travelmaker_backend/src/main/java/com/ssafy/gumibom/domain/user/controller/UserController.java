@@ -81,7 +81,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(Principal principal) {
         String username = principal.getName(); // 현재 인증된 사용자의 사용자명을 가져옵니다.
         userService.deleteUserByUsername(username);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Password changed successfully");
     }
 
 

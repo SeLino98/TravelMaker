@@ -123,6 +123,7 @@ public class UserService {
         return false;
     }
 
+    @Transactional
     public void deleteUserByUsername(String username) {
         userRepository.deleteByUsername(username);
     }
