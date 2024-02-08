@@ -44,6 +44,8 @@ public class MeetingService {
                 .startDate(meeting.getStartDate())
                 .endDate(meeting.getEndDate())
                 .imgUrl(meeting.getImgUrl())
+                .isFinish(meeting.getIsFinish())
+                .members(meeting.getMeetingMembers())
                 .build();
     }
 
@@ -51,7 +53,7 @@ public class MeetingService {
     // 최소인원 충족 시 모임을 생성하는 메서드
     // 미충족시 예외처리
     @Transactional
-    public Long createMeeting(DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto) {
+    public void createMeeting(DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto) {
 //        Meeting 엔티티 생성
 //        if (detailMeetingPostResForMeetingDto.getNativeMin() <= meetingMemberRepositoryQuery.countByIsNativeTrue(detailMeetingPostResForMeetingDto.getId()) &&
 //                detailMeetingPostResForMeetingDto.getTravelerMin() <= meetingMemberRepositoryQuery.countByIsNativeFalse(detailMeetingPostResForMeetingDto.getId())) {
@@ -69,8 +71,6 @@ public class MeetingService {
         members.forEach(member -> {
             meetingMemberRepository.save(member);
         });
-
-        return meeting.getId();
     }
 
 

@@ -1,15 +1,21 @@
 package com.ssafy.gumibom.domain.meeting.controller;
 
+import com.ssafy.gumibom.domain.meeting.dto.response.MeetingCreateResDto;
+import com.ssafy.gumibom.domain.meeting.dto.response.MeetingFinishResponseDto;
 import com.ssafy.gumibom.domain.meeting.dto.response.MeetingResDto;
 import com.ssafy.gumibom.domain.meeting.service.MeetingService;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Meeting", description = "모임 관련 api")
 @RestController
 @RequestMapping("/meetings")
 @RequiredArgsConstructor
@@ -18,16 +24,22 @@ public class MeetingController {
     private final MeetingPostService meetingPostService;
 
     // 모임 생성
+    @Operation(summary = "모임 생성 api")
     @GetMapping("/new/{meetingPostId}")
-    public ResponseEntity<Long> createMeeting(@PathVariable Long meetingPostId) {
-
-        DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
-        meetingPostService.finishMeetingPost(meetingPostId);
-        Long id = meetingService.createMeeting(detailMeetingPostResForMeetingDto);
-        return ResponseEntity.ok(id);
+    public ResponseEntity<?> createMeeting(@PathVariable Long meetingPostId) {
+        try {
+            DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
+            meetingPostService.finishMeetingPost(meetingPostId);
+            meetingService.createMeeting(detailMeetingPostResForMeetingDto);
+            MeetingCreateResDto meetingCreateResDto = new MeetingCreateResDto(true,"모임이 성공적으로 시작됩니다.");
+            return ResponseEntity.ok(meetingCreateResDto);
+        } catch (Exception e) {
+            // 로깅, 오류 처리, 사용자 정의 예외에 따라 다름
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모임 생성 중 오류가 발생했습니다: " + e.getMessage());
+        }
     }
-
     // 내 모임 리스트 조회
+    @Operation(summary = "모임 리스트 조회 api")
     @GetMapping("/list/{userId}")
     public ResponseEntity<List<MeetingResDto>> getMeetingsByUserId(@PathVariable Long userId) {
         List<MeetingResDto> meetings = meetingService.getMeetingsByUserId(userId);
@@ -36,10 +48,12 @@ public class MeetingController {
 
 
     // 모임 종료
+    @Operation(summary = "모임 종료 api")
     @PutMapping("/{meetingId}")
-    public ResponseEntity<Boolean> finishMeeting(@PathVariable("meetingId") Long meetingId){
+    public ResponseEntity<MeetingFinishResponseDto> finishMeeting(@PathVariable("meetingId") Long meetingId){
         Boolean status = meetingService.finishMeeting(meetingId);
-        return ResponseEntity.ok(status);
+        MeetingFinishResponseDto meetingFinishResponseDto = new MeetingFinishResponseDto(status);
+        return ResponseEntity.ok(meetingFinishResponseDto);
     }
 
 //    @GetMapping("/{meetingPostId}/{meetingId}")
