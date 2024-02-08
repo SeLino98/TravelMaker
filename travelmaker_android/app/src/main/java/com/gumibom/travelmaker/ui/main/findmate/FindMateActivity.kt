@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -29,17 +31,22 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.DENIED_LOCATION_PERMISSION
+import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.ui.main.MainViewModel
+import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.ImageAdapter
+import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.chipAdapter
 import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostActivity
 import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
 import com.gumibom.travelmaker.util.PermissionChecker
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.notifyAll
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "FindMateActivity_싸피"
@@ -47,73 +54,138 @@ private const val TAG = "FindMateActivity_싸피"
 class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding : ActivityMapBinding
-
     private lateinit var mMap : GoogleMap // 구글 맵
     private lateinit var fusedLocationClient: FusedLocationProviderClient // 효율적으로 위치정보를 제공
     private lateinit var locationCallback: LocationCallback
     private lateinit var permissionChecker: PermissionChecker
-
     private lateinit var findMateSearchFragment : FindMateSearchFragment
     private val mainViewModel : MainViewModel by viewModels()
-
+    private var meetingId:Long =0;
+    /**
+     * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
+     */
+    private fun openMeetingDialog() {
+        mMap.setOnMarkerClickListener { marker ->
+            //바텀시트가 열리고 데이터를 받아서 띄운다.
+            val markerPosition = marker.tag as MarkerPosition
+            meetingId = markerPosition.id
+            Log.d(TAG, "openMeetingDialog2: $meetingId")
+            //아이디 넘겨서 데이터 받고
+            mainViewModel.getPostDetail(meetingId)
+            Log.d(TAG, "openMeetingDialog1: $meetingId")
+            //뿌리기
+            mainViewModel.postDTO.observe(this){
+                var postDetail : PostDetail = it
+                Log.d(TAG, "openMeetingDialog: ${postDetail.toString()}")
+                settingBottomSheetUI(postDetail)
+                setBottomSheet()
+            }
+            Log.d(TAG, "openMeetingDialog: $meetingId")
+            true
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         permissionChecker = PermissionChecker(this) // 퍼미션 체커 객체 생성
         findMateSearchFragment = FindMateSearchFragment(mainViewModel)
-
         googleMapInit()
         getLatLng()
         requestLocationUpdates()
         observeLivaData()
-
         selectPlace()
         selectCategory()
-        setBottomSheet()
         moveMeetingPost()
+
+
 //        mainViewModel.
         /**
          *
          * */
     }
+    private fun settingBottomSheetUI( postDetail : PostDetail){
+        //리사이클러 뷰 이미지와 카테고리 이미지를 어뎁터에 올리고 띄운다.
+        binding.bts.apply {
+            tvRecruitTitle.text = postDetail.postTitle
+            tvTravelPersonCnt.text = postDetail.numOfTraveler.toString()
+            tvLocalPersonCnt.text = postDetail.numOfNative.toString()
+            tvMaxPerson.text = (postDetail.numOfTraveler+postDetail.numOfNative).toString()
+            btnRecruitState.text = "D"+postDetail.dday.toString()
+            val startDateStr = postDetail.startDate.toString()
+            val formattedDate = formatStartDateWithRegex(startDateStr)
+            tvTripDay.text = formattedDate
+            tvDetailPostContent.text = postDetail.postContent.toString()
+            tvDetailPlaceTitle.text = postDetail.position.town+postDetail.position.name
+            Glide.with(this@FindMateActivity).load(postDetail.profileImgUrl).into(ivHeadProfile)
+        }
+        binding.bts.btnApplyGroup.setOnClickListener {
+            //firebase 연동하기
+            //그룹 id랑 현재 로그인 한 유저 id 전송하기
+            Log.d(TAG, "setApplyGroup: ")
+//          val userid = sharedPreferences.getUser().userId.toString()
+            mainViewModel.requestGroup(FcmRequestGroupDTO(1,meetingId))
+            Log.d(TAG, "setApplyGroup: 2")
+        }
+        // chipAdapter 설정
+        val chipAdapter = chipAdapter(postDetail.categories) // postDetailDTO에서 칩 리스트를 가져옵니다.
+        binding.bts.rcChipList.apply {
+            adapter = chipAdapter
+            layoutManager = LinearLayoutManager(this@FindMateActivity, LinearLayoutManager.HORIZONTAL, false)
+        }
+        //image 3개를 리스트로 담는다.
+        val imageUrls = listOf(postDetail.mainImgUrl, postDetail.subImgUrl, postDetail.thirdImgUrl)
+        var imageRealUrls : MutableList<String> = mutableListOf();
+        for (i in 0 .. 2){
+            if (imageUrls.get(i) != "" || imageUrls.get(i).isNullOrEmpty()){
+                imageRealUrls.add(imageUrls[i]);
+            }
+            Log.d(TAG, "setBottomSheetUI: ${imageUrls.get(i)}")
+            Log.d(TAG, "setBottomSheetUI: ${imageRealUrls.get(i)}")
+        }
+        val imageAdapter = ImageAdapter(imageRealUrls) // postDetailDTO에서 이미지 리스트를 가져옵니다.
+        binding.bts.rcDetailPlaceImage.apply {
+            adapter = imageAdapter
+            layoutManager = LinearLayoutManager(this@FindMateActivity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
     private fun setBottomSheet(){
+        
+        Log.d(TAG, "setBottomSheet: HIHIHISETBOTTOMSHEET!!")
+        var isFirstClick:Boolean = true; 
         val standardBottomSheet = binding.bts.bottomSheetLayout
         val standardBottomSheetBehavior = BottomSheetBehavior.from(standardBottomSheet)
-        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN;
+        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         standardBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                val screenHeight = Resources.getSystem().displayMetrics.heightPixels
-                val halfHeight = screenHeight / 2
-                val currentTop = screenHeight - bottomSheet.top
-                val bottomToHalfSize = halfHeight+0/2;
-                val halfToTop = (halfHeight+screenHeight)/2;
-                when (currentTop) {
-                    in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state =
-                        BottomSheetBehavior.STATE_COLLAPSED
-                    in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state =
-                        BottomSheetBehavior.STATE_HALF_EXPANDED
-                    in halfToTop  until  screenHeight -> standardBottomSheetBehavior.state =
-                        BottomSheetBehavior.STATE_EXPANDED
+//                if (!isUserDraggingBottomSheet) return // 사용자가 드래그하고 있지 않으면 리턴
+                bottomSheet.postDelayed({
+                    isFirstClick = false;
+                    val screenHeight = Resources.getSystem().displayMetrics.heightPixels
+                    val halfHeight = screenHeight / 2
+                    val currentTop = screenHeight - bottomSheet.top
+                    val bottomToHalfSize = halfHeight + 0 / 2
+                    val halfToTop = (halfHeight + screenHeight) / 2
+                    when (currentTop) {
+                        in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                        in halfToTop until screenHeight -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                },500)
+//                if (isFirstClick){
+//
+//                }else{
+//                    when (currentTop) {
+//                        in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//                        in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+//                        in halfToTop until screenHeight -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+//                    }
+//                    Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
                 }
-                Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
-            }
+//             }
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
-                }
+//                isUserDraggingBottomSheet = newState == BottomSheetBehavior.STATE_DRAGGING || newState == BottomSheetBehavior.STATE_SETTLING
+                Log.d(TAG, "onStateChanged: ${newState}")
             }
         })
     }
@@ -128,13 +200,11 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
     // 구글 맵 초기화
     private fun googleMapInit() {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.google_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
         // fusedLocation 초기화
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -226,7 +296,19 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+    fun formatStartDateWithRegex(startDateStr: String): String {
+        // Define a regex pattern to match the date format
+        val regexPattern = """(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):\d{2}\.\d{3}""".toRegex()
 
+        // Find a match for the regex in the input string
+        val matchResult = regexPattern.find(startDateStr)
+
+        // Extract the matched groups: Year, Month, Day, Hour, Minute
+        val (year, month, day, hour, minute) = matchResult?.destructured ?: return "Invalid Date Format"
+
+        // Format the extracted parts into the desired string format
+        return "Year: $year, Month: $month, Day: $day, Hour: $hour, Minute: $minute"
+    }
     private fun requestLocationUpdates() {
         val locationRequest = LocationRequest()
         locationRequest.interval = TimeUnit.MINUTES.toMillis(1) // 30분마다
@@ -269,7 +351,15 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun observeLivaData() {
-
+        mainViewModel.isRequestSuccess.observe(this){
+            if (it.isSuccess){
+                //요청 메세지를 성공적으로 보냈는가?
+                Log.d(TAG, "observeLiveData: ${it.isSuccess.toString()}")
+                Log.d(TAG, "observeLiveData: ${it.message}")
+            }else{
+                Log.d(TAG, "observeLiveData: ${it.message}")
+            }
+        }
         // 현재 위치의 변화가 있으면 마커 리스트를 받아서 마커 표시
         mainViewModel.markerList.observe(this) { markerPosition ->
             Log.d(TAG, "observeLivaData: $markerPosition")
@@ -298,18 +388,13 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             val markerPositionRequestDTO = MarkerPositionRequestDTO(
                 address.latitude, address.longitude, 3.0
             )
-
             mainViewModel.getMarkers(markerPositionRequestDTO)
             mainViewModel.currentLatitude = address.latitude
             mainViewModel.currentLongitude = address.longitude
-
             setMyLocation(location)
             binding.btnFindMatePlace.text = address.title
         }
-
-
     }
-
     /**
      * 위치를 선택하여 검색할 수 있는 바텀 시트 다이얼로그 show
      */
@@ -318,36 +403,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             findMateSearchFragment.show(supportFragmentManager, "")
         }
     }
-    private fun settingBottomSheetUI( postDetail : PostDetail){
 
-
-    }
-    /**
-     * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
-     */
-    private fun openMeetingDialog() {
-        mMap.setOnMarkerClickListener { marker ->
-            //바텀시트가 열리고 데이터를 받아서 띄운다.
-            val markerPosition = marker.tag as MarkerPosition
-            val meetingId = markerPosition.id
-            Log.d(TAG, "openMeetingDialog2: $meetingId")
-            //아이디 넘겨서 데이터 받고
-            mainViewModel.getPostDetail(meetingId)
-            Log.d(TAG, "openMeetingDialog1: $meetingId")
-            //뿌리기
-            mainViewModel.postDTO.observe(this){
-                var postDetail : PostDetail = it
-                println(postDetail.toString())
-                Log.d(TAG, "openMeetingDialog: ${postDetail.toString()}")
-                Log.d(TAG, "openMeetingDialog: ${postDetail.title}")
-                settingBottomSheetUI(postDetail)
-            }
-
-            Log.d(TAG, "openMeetingDialog: $meetingId")
-
-            true
-        }
-    }
 
     /**
      * chip을 선택하고 필터링 버튼을 눌렀을 때 필터된 결과만 서버에서 가져옴

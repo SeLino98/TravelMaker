@@ -35,7 +35,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
+                            android:layout_margin="4dp"
                             android:text="Button"
+                            android:textColor="@color/blue_gray"
                             app:layout_constraintBottom_toTopOf="@+id/divider"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -43,19 +45,23 @@
                             android:id="@+id/tv_recruit_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="192dp"
+                            android:layout_marginLeft="8dp"
                             android:padding="7dp"
                             android:text="TextView"
                             android:textSize="24dp"
                             app:layout_constraintBottom_toTopOf="@+id/divider"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.045"
+                            app:layout_constraintStart_toEndOf="@+id/btn_recruit_state" />
 
                         <View
                             android:id="@+id/divider"
                             style="@style/DividerStyle"
+                            android:layout_marginTop="4dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_title" />
+
                         <TextView
                             android:id="@+id/tv_recruit_person"
                             android:layout_width="wrap_content"
@@ -63,23 +69,28 @@
                             android:layout_marginStart="100dp"
                             android:layout_marginTop="12dp"
                             android:layout_marginEnd="111dp"
-                            android:text="TextView"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_place"
+                            android:text="모집 인원"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_head_profile"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/btn_recruit_state" />
+
                         <TextView
                             android:id="@+id/tv_trip_day_noti"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:text="TextView"
+                            android:text="여행 날짜"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_trip_day"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_trip_person" />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_max_person" />
+                        <!--app:layout_constraintTop_toBottomOf="@+id/tv_trip_person"
+                                 =>  app:layout_constraintTop_toBottomOf="@+id/tv_max_person"-->
                         <ImageView
-                            android:id="@+id/iv_place"
-                            android:layout_width="142dp"
-                            android:layout_height="142dp"
+                            android:id="@+id/iv_head_profile"
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
                             android:background="@drawable/ic_empty_profile_circle"
                             app:layout_constraintBottom_toTopOf="@+id/divider2"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -87,58 +98,66 @@
 
                         <TextView
                             android:id="@+id/tv_trip_day"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="16dp"
                             android:text="TextView"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_place"
-                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_head_profile"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tv_trip_day_noti"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_local_person1" />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_local_person_cnt" />
 
                         <TextView
                             android:id="@+id/tv_detail_place_noti"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="12dp"
-                            android:text="TextView"
+                            android:layout_marginTop="20dp"
+                            android:text="여행 장소"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_detail_place_title"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_trip_day_noti"/>
+                            app:layout_constraintTop_toBottomOf="@+id/tv_trip_day_noti" />
 
                         <TextView
                             android:id="@+id/tv_detail_place_title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="12dp"
                             android:text="TextView"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_place"
-                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_head_profile"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/tv_detail_place_noti"
                             app:layout_constraintTop_toBottomOf="@+id/tv_trip_day" />
 
 
                         <TextView
-                            android:id="@+id/tv_trip_person"
+                            android:id="@+id/tv_max_person"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="20dp"
-                            android:text="123123"
-                            app:layout_constraintStart_toEndOf="@+id/iv_trip_person"
+                            android:text="1"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_local_person"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/iv_max_person_cnt"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
 
                         <ImageView
-                            android:id="@+id/iv_trip_person"
+                            android:id="@+id/iv_max_person_cnt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:background="@drawable/ic_signup_profile_add"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_max_person"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
-
+                        <!-- iv_trip_person -->
                         <ImageView
                             android:id="@+id/iv_local_person"
                             android:layout_width="wrap_content"
@@ -147,55 +166,66 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="8dp"
                             android:background="@drawable/ic_signup_profile_add"
-                            app:layout_constraintStart_toEndOf="@+id/tv_trip_person"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_local_person_cnt"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/tv_max_person"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
 
                         <TextView
-                            android:id="@+id/tv_local_person1"
+                            android:id="@+id/tv_local_person_cnt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginStart="4dp"
-                            android:text="textadf"
+                            android:layout_marginTop="20dp"
+                            android:text="3"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_max_person"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/iv_local_person"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
+
                         <ImageView
-                                android:id="@+id/iv_max_person"
+                            android:id="@+id/iv_max_person"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="8dp"
                             android:background="@drawable/ic_signup_profile_add"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person"
-                            app:layout_constraintStart_toEndOf="@+id/tv_local_person1" />
+                            app:layout_constraintEnd_toStartOf="@+id/tv_travel_person_cnt"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/tv_local_person_cnt"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
 
                         <TextView
-                            android:id="@+id/tv_max_person"
+                            android:id="@+id/tv_travel_person_cnt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="20dp"
-                            android:text="textadf"
-                            app:layout_constraintEnd_toStartOf="@+id/iv_place"
-                            app:layout_constraintHorizontal_bias="0.0"
+                            android:text="4"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_head_profile"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/iv_max_person"
                             app:layout_constraintTop_toBottomOf="@+id/tv_recruit_person" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rc_chip_list"
                             android:layout_width="409dp"
-                            android:layout_height="30dp"
+                            android:layout_height="50dp"
                             android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_detail_place_noti" />
+                            app:layout_constraintTop_toBottomOf="@+id/divider2"
+                            tools:listitem="@layout/item_findmate_bts_chip" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rc_detail_place_image"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
                             android:orientation="horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +234,7 @@
                             tools:listitem="@layout/item_bottomsheet_image" />
 
                         <TextView
-                            android:id="@+id/textView9"
+                            android:id="@+id/tv_detail_post_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
@@ -218,11 +248,11 @@
                             android:id="@+id/divider2"
                             style="@style/DividerStyle"
                             android:layout_marginTop="40dp"
-
                             android:background="?android:attr/listDivider"
                             app:layout_constraintBottom_toTopOf="@+id/rc_chip_list"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_detail_place_title" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

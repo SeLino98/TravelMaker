@@ -25,7 +25,9 @@
         <action
             android:id="@+id/action_mainFragment_to_mainMyPageFragment"
             app:destination="@id/mainMyPageFragment" />
-
+        <action
+            android:id="@+id/action_mainFragment_to_mainNotificationFragment"
+            app:destination="@id/mainNotificationFragment" />
     </fragment>
 
     <fragment
@@ -74,5 +76,10 @@
         android:id="@+id/mainMyPageFragment"
         android:name="com.gumibom.travelmaker.ui.main.mypage.MainMyPageFragment"
         android:label="MainMyPageFragment" />
+    <fragment
+        android:id="@+id/mainNotificationFragment"
+        android:name="com.gumibom.travelmaker.ui.main.notification.MainNotificationFragment"
+        android:label="fragment_main_notification"
+        tools:layout="@layout/fragment_main_notification" />
 
 </navigation>

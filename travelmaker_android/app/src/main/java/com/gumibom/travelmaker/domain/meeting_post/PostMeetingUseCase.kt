@@ -7,7 +7,6 @@ import com.gumibom.travelmaker.data.dto.request.MeetingPostRequestDTO
 import com.gumibom.travelmaker.data.dto.response.Position
 import com.gumibom.travelmaker.data.repository.meeting_post.MeetingPostRepository
 import com.gumibom.travelmaker.model.SendMeetingPost
-import com.gumibom.travelmaker.util.ApplicationClass
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,7 +16,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.TimeZone
 import javax.inject.Inject
-import kotlin.math.log
 
 private const val TAG = "PostMeetingUseCase_싸피"
 class PostMeetingUseCase @Inject constructor(

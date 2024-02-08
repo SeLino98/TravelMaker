@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.domain.firebase
 
+import android.util.Log
 import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
@@ -7,6 +8,7 @@ import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepository
 import com.gumibom.travelmaker.model.BooleanResponse
 import javax.inject.Inject
 
+private const val TAG = "FirebaseNotifyListUseCa"
 class FirebaseNotifyListUseCase @Inject constructor(
     private val firebaseFcmRepository: FirebaseFcmRepository
 ) {
@@ -14,7 +16,9 @@ class FirebaseNotifyListUseCase @Inject constructor(
         val response = firebaseFcmRepository.getAllRequestList(userId)
         if (response.isSuccessful){
             return response.body()!!
+
         }
+        Log.d(TAG, "getNotifyList: ${response.body()}")
         return response.body()
     }
 
@@ -26,5 +30,5 @@ class FirebaseNotifyListUseCase @Inject constructor(
 //        }
 //        return BooleanResponse(false, "No response from server")
 //    }
-//
+
 }

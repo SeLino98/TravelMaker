@@ -45,7 +45,6 @@ class MainViewModel @Inject constructor(
     private val getMarkerPositionsUseCase : GetMarkerPositionsUseCase,
     private val getMarkerCategoryPositionsUseCase: GetMarkerCategoryPositionsUseCase,
     private val requestGroupUseCase: FirebaseRequestGroupUseCase,
-    private val acceptCrewUseCase: FirebaseAcceptCrewUseCase,
     private val getPostDetailUseCase:GetPostDetailUseCase,
     private val firebaseNotifyListUseCase: FirebaseNotifyListUseCase,
     private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase

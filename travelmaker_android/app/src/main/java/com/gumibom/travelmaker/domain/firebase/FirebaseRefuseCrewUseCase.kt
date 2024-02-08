@@ -7,11 +7,12 @@ import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepository
 import com.gumibom.travelmaker.model.BooleanResponse
 import javax.inject.Inject
 
-class FirebaseAcceptCrewUseCase @Inject constructor(
+class FirebaseRefuseCrewUseCase @Inject constructor(
     private val firebaseFcmRepository: FirebaseFcmRepository
-) {
-    suspend fun acceptCrew(fcmRequestGroupDTO: FirebaseResponseRefuseAcceptDTO):BooleanResponse{
-        val response = firebaseFcmRepository.acceptCrew(fcmRequestGroupDTO)
+){
+
+    suspend fun refuseCrew(fcmRequestGroupDTO: FirebaseResponseRefuseAcceptDTO):BooleanResponse{
+        val response = firebaseFcmRepository.refuseCrew(fcmRequestGroupDTO)
         if (response.isSuccessful){
             return convertFcmResult(response.body())
         }
