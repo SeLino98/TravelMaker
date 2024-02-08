@@ -7,10 +7,13 @@ import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
 
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
+import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +25,21 @@ public class PersonalPamphletService {
     private final PersonalPamphletRepository pPamphletRepository;
     private final UserRepository userRepository;
 
+    private final S3Service s3Service;
+
     // 개인 팜플렛 생성
     @Transactional
-    public Long makePamphlet(MakePersonalPamphletRequestDto makePPReqDto) {
+    public Long makePamphlet(MultipartFile image, MakePersonalPamphletRequestDto makePPReqDto) throws IOException {
 
         User user = userRepository.findOne(makePPReqDto.getUserId());
-        PersonalPamphlet pPamphlet = PersonalPamphlet.createPersonalPamphlet(user, makePPReqDto.getTitle(), makePPReqDto.getCategories());
+
+        String imgUrl = "";
+        if(image!=null) imgUrl = s3Service.uploadS3(image, "images");
+
+        PersonalPamphlet pPamphlet = PersonalPamphlet.createPersonalPamphlet(user,
+                makePPReqDto.getTitle(),
+                makePPReqDto.getCategories(),
+                imgUrl);
 
         return pPamphletRepository.save(pPamphlet);
     }
