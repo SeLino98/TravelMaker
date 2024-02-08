@@ -4,6 +4,7 @@ package com.ssafy.gumibom.domain.user.sms;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Sms", description = "문자 인증 관련 api")
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/sms-certification")
 public class SmsController {
     private final SmsService smsService;
@@ -27,7 +29,9 @@ public class SmsController {
             SmsResponseDto responseDto = new SmsResponseDto(true, message);
             return ResponseEntity.ok(responseDto);
         } catch (CustomExceptions.Exception e) {
+            log.info("string 문자 에러" + e.getMessage());
             return handleApiException(e, HttpStatus.BAD_REQUEST);
+
         }
     }
 

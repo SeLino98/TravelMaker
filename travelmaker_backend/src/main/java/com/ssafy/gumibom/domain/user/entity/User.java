@@ -26,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -34,6 +34,7 @@ public class User {
 
     private String username;
     private String password;
+
     @Email
     private String email;
 
@@ -51,7 +52,6 @@ public class User {
 
     @Lob
     private String profileImgURL;
-    ;
 
     private Double trust;
 

@@ -1,7 +1,7 @@
 package com.ssafy.gumibom.domain.meeting.service;
 
 
-import com.ssafy.gumibom.domain.meeting.dto.response.MeetingResDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingResponseDto;
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meeting.repository.MeetingMemberRepository;
@@ -26,7 +26,7 @@ public class MeetingService {
     private final MeetingRepositoryQuery meetingRepositoryQuery;
 
     // 사용자의 아이디를 통해 사용자가 진행했던 모임 조회
-    public List<MeetingResDto> getMeetingsByUserId(Long userId) {
+    public List<MeetingResponseDto> getMeetingsByUserId(Long userId) {
         // 사용자 ID로 Meeting 엔티티 검색
         List<Meeting> meetings = meetingRepositoryQuery.findByUserId(userId);
 
@@ -37,8 +37,8 @@ public class MeetingService {
     }
 
     // Meeting 엔티티를 MeetingResDto로 변환
-    private MeetingResDto convertToMeetingResDto(Meeting meeting) {
-        return MeetingResDto.builder()
+    private MeetingResponseDto convertToMeetingResDto(Meeting meeting) {
+        return MeetingResponseDto.builder()
                 .id(meeting.getId())
                 .title(meeting.getTitle())
                 .startDate(meeting.getStartDate())

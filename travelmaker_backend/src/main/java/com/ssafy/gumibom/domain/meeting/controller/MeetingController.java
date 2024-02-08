@@ -1,8 +1,8 @@
 package com.ssafy.gumibom.domain.meeting.controller;
 
-import com.ssafy.gumibom.domain.meeting.dto.response.MeetingCreateResDto;
-import com.ssafy.gumibom.domain.meeting.dto.response.MeetingFinishResponseDto;
-import com.ssafy.gumibom.domain.meeting.dto.response.MeetingResDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingCreateResponseDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingFinishResponseDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingResponseDto;
 import com.ssafy.gumibom.domain.meeting.service.MeetingService;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
@@ -31,8 +31,8 @@ public class MeetingController {
             DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
             meetingPostService.finishMeetingPost(meetingPostId);
             meetingService.createMeeting(detailMeetingPostResForMeetingDto);
-            MeetingCreateResDto meetingCreateResDto = new MeetingCreateResDto(true,"모임이 성공적으로 시작됩니다.");
-            return ResponseEntity.ok(meetingCreateResDto);
+            MeetingCreateResponseDto meetingCreateResponseDto = new MeetingCreateResponseDto(true,"모임이 성공적으로 시작됩니다.");
+            return ResponseEntity.ok(meetingCreateResponseDto);
         } catch (Exception e) {
             // 로깅, 오류 처리, 사용자 정의 예외에 따라 다름
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모임 생성 중 오류가 발생했습니다: " + e.getMessage());
@@ -41,8 +41,8 @@ public class MeetingController {
     // 내 모임 리스트 조회
     @Operation(summary = "모임 리스트 조회 api")
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<MeetingResDto>> getMeetingsByUserId(@PathVariable Long userId) {
-        List<MeetingResDto> meetings = meetingService.getMeetingsByUserId(userId);
+    public ResponseEntity<List<MeetingResponseDto>> getMeetingsByUserId(@PathVariable Long userId) {
+        List<MeetingResponseDto> meetings = meetingService.getMeetingsByUserId(userId);
         return ResponseEntity.ok(meetings);
     }
 

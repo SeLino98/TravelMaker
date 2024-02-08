@@ -1,4 +1,4 @@
-package com.ssafy.gumibom.domain.meeting.dto.response;
+package com.ssafy.gumibom.domain.meeting.dto;
 
 import com.ssafy.gumibom.global.base.BaseResponseDto;
 import lombok.*;
@@ -6,8 +6,8 @@ import lombok.*;
 
 
 @Getter
-public class MeetingCreateResDto extends BaseResponseDto {
-    public MeetingCreateResDto(Boolean isSuccess, String message) {
+public class MeetingCreateResponseDto extends BaseResponseDto {
+    public MeetingCreateResponseDto(Boolean isSuccess, String message) {
         super(isSuccess, message);
     }
 
