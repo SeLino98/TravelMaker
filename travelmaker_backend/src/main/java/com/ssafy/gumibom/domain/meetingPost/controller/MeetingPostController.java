@@ -1,6 +1,5 @@
 package com.ssafy.gumibom.domain.meetingPost.controller;
 
-import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.FindByGeoRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.RequestJoinMeetingRequestDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.ResAboutReqJoinMeetingRequestDto;
@@ -9,7 +8,7 @@ import com.ssafy.gumibom.domain.meetingPost.dto.response.DetailOfMeetingPostResp
 import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingRequestService;
-import com.ssafy.gumibom.domain.user.service.UserService;
+import com.ssafy.gumibom.global.base.BaseResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @Tag(name = "Meeting Post", description = "모임글 관련 api")
@@ -93,19 +91,19 @@ public class MeetingPostController {
 
     @Operation(summary = "모임글에 참여 요청")
     @PostMapping("/request-join")
-    public ResponseEntity<?> requestJoinMeeting(@RequestBody RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
+    public ResponseEntity<BaseResponseDto> requestJoinMeeting(@RequestBody RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
         return meetingRequestService.requestJoin(rJMRDto);
     }
 
     @Operation(summary = "참여 요청 수락")
     @PostMapping("/response-join/accept")
-    public ResponseEntity<?> acceptRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+    public ResponseEntity<BaseResponseDto> acceptRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
         return meetingRequestService.resAboutRequest(rARJMRDto, true);
     }
 
     @Operation(summary = "참여 요청 거절")
     @PostMapping("/response-join/refuse")
-    public ResponseEntity<?> refuseRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
+    public ResponseEntity<BaseResponseDto> refuseRequestJoinMeeting(@RequestBody ResAboutReqJoinMeetingRequestDto rARJMRDto) throws IOException {
         return meetingRequestService.resAboutRequest(rARJMRDto, false);
     }
 

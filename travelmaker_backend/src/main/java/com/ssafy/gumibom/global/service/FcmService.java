@@ -61,7 +61,7 @@ public class FcmService {
 
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
-                        .token("f2TX390fQWK2PCGM0CS1jK:APA91bEtrEZ9_m0mlnpetlYTI5kJi3uBL3GraHhVrZyh-wMT2IhUmH6tfH2ko83JV2E00q_jV1AKrPAgQyNU8e9ObYh3i8KtYiP1yqop5AAM3owfXvarYuYZpbehmlu5kcv3Oytqi8x4")
+                        .token(targetToken)
                         .notification(FcmMessage.Notification.builder()
                                 .title(title)
                                 .body(body)

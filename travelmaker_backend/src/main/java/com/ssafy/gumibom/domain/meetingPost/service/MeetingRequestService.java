@@ -11,6 +11,7 @@ import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingRequestRepository;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
+import com.ssafy.gumibom.global.base.BaseResponseDto;
 import com.ssafy.gumibom.global.service.FcmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,11 +37,12 @@ public class MeetingRequestService {
 
 
     @Transactional
-    public ResponseEntity<?> requestJoin(RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
+    public ResponseEntity<BaseResponseDto> requestJoin(RequestJoinMeetingRequestDTO rJMRDto) throws IOException {
 
         // 이미 해당 모임 게시글에 요청을 한 내역이 있는 경우
         if(meetingRequestRepository.existRequest(rJMRDto.getRequestorId(), rJMRDto.getMeetingPostId())) {
-            return ResponseEntity.ok("해당 모임 게시글에 이미 요청한 적이 있습니다.");
+//            return ResponseEntity.ok("해당 모임 게시글에 이미 요청한 적이 있습니다.");
+            return ResponseEntity.ok(new BaseResponseDto(false, "해당 모임 게시글에 이미 요청한 적이 있습니다."));
         }
 
         User requestor = userRepository.findOne(rJMRDto.getRequestorId());
@@ -53,7 +55,7 @@ public class MeetingRequestService {
 
         meetingRequestRepository.save(meetingRequest);
 
-        return ResponseEntity.ok("모임 요청이 완료되었습니다.");
+        return ResponseEntity.ok(new BaseResponseDto(true, "모임 요청이 완료되었습니다."));
     }
 
     public ShowAllJoinRequestResponseDto showAllJoinRequest(Long userId) {
@@ -73,14 +75,14 @@ public class MeetingRequestService {
     }
 
     @Transactional
-    public ResponseEntity<?> resAboutRequest(ResAboutReqJoinMeetingRequestDto rARJMRDto, Boolean isAccept) throws IOException {
+    public ResponseEntity<BaseResponseDto> resAboutRequest(ResAboutReqJoinMeetingRequestDto rARJMRDto, Boolean isAccept) throws IOException {
         User requestor = userRepository.findOne(rARJMRDto.getRequestorId());
         MeetingPost meetingPost = meetingPostRepository.findOne(rARJMRDto.getMeetingPostId());
         MeetingRequest request = meetingRequestRepository.findOne(rARJMRDto.getRequestId());
 
         // 이미 응답을 받은 모임 요청이라면 -> 바로 리턴
         if(request.getWhetherGetResponse()) {
-            return ResponseEntity.ok("이미 승낙/거절 응답을 받은 모임 요청입니다. ");
+            return ResponseEntity.ok(new BaseResponseDto(false, "이미 승낙/거절 응답을 받은 모임 요청입니다. "));
         }
 
         if(isAccept) meetingPost.addApplier(requestor, false); // 게시글에 meetingApplier로 추가
@@ -94,7 +96,7 @@ public class MeetingRequestService {
 
         fcmService.sendMessageTo(requestor.getFcmtoken(), messageTitle, messageBody); // FCM 토큰으로 노티 전달
 
-        return ResponseEntity.ok(responseMessage);
+        return ResponseEntity.ok(new BaseResponseDto(true, responseMessage));
     }
 
 }
