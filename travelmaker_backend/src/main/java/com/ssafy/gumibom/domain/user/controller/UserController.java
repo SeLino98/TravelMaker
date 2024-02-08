@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.user.controller;
 
 import com.ssafy.gumibom.domain.user.dto.*;
 import com.ssafy.gumibom.domain.user.service.UserService;
+import com.ssafy.gumibom.global.base.BaseResponseDto;
 import com.ssafy.gumibom.global.base.BooleanResponseDto;
 import com.ssafy.gumibom.global.base.JwtTokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,8 +34,8 @@ public class UserController {
     @Operation(summary = "회원가입")
     @PostMapping(value = "/join", consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Long signup(@RequestPart SignupRequestDto requestDto, @RequestPart MultipartFile image) throws IOException {
-        return userService.signup(requestDto, image);
+    public ResponseEntity<?> signup(@RequestPart SignupRequestDto requestDto, @RequestPart MultipartFile image) throws IOException {
+        return ResponseEntity.ok(new BaseResponseDto(userService.signup(requestDto, image), "회원가입 성공!"));
     }
 
     // 전화번호 중복 체크
@@ -77,18 +78,20 @@ public class UserController {
     }
 
     // 회원 탈퇴 API
+    @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/user/withdrawal")
     public ResponseEntity<?> deleteUser(Principal principal) {
         String username = principal.getName(); // 현재 인증된 사용자의 사용자명을 가져옵니다.
         userService.deleteUserByUsername(username);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Password changed successfully");
     }
 
 
     @Operation(summary = "마이페이지")
     @GetMapping("/mypage")
-    public ResponseEntity<?> mypage(@RequestParam String userLoginId) {
-        return ResponseEntity.ok(userService.inquiryMyPage(userLoginId));
+    public ResponseEntity<?> mypage(Principal principal) {
+        String username = principal.getName();
+        return ResponseEntity.ok(userService.inquiryMyPage(username));
     }
 
     @Operation(summary = "fcm 토큰 갱신")
