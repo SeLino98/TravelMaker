@@ -77,6 +77,7 @@ public class UserController {
     }
 
     // 회원 탈퇴 API
+    @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/user/withdrawal")
     public ResponseEntity<?> deleteUser(Principal principal) {
         String username = principal.getName(); // 현재 인증된 사용자의 사용자명을 가져옵니다.
@@ -87,8 +88,9 @@ public class UserController {
 
     @Operation(summary = "마이페이지")
     @GetMapping("/mypage")
-    public ResponseEntity<?> mypage(@RequestParam String userLoginId) {
-        return ResponseEntity.ok(userService.inquiryMyPage(userLoginId));
+    public ResponseEntity<?> mypage(Principal principal) {
+        String username = principal.getName();
+        return ResponseEntity.ok(userService.inquiryMyPage(username));
     }
 
     @Operation(summary = "fcm 토큰 갱신")
