@@ -8,6 +8,7 @@ import com.ssafy.gumibom.domain.meetingPost.repository.MeetingApplierRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
+import com.ssafy.gumibom.global.base.BaseResponseDto;
 import com.ssafy.gumibom.global.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class MeetingPostService {
     // 모임글 생성
 
     @Transactional
-    public ResponseEntity<?> write(
+    public ResponseEntity<BaseResponseDto> write(
             MultipartFile mainImage,
             MultipartFile subImage,
             MultipartFile thirdImage,
@@ -60,7 +61,7 @@ public class MeetingPostService {
         meetingApplierRepository.save(meetingPost.getAppliers().get(0)); // 모임장 db에 저장
         meetingPostRepository.save(meetingPost);
 
-        return ResponseEntity.ok("모임글 작성 성공");
+        return ResponseEntity.ok(new BaseResponseDto(true, "모임글 작성 성공"));
     }
 
 
@@ -99,10 +100,10 @@ public class MeetingPostService {
     }
 
     @Transactional
-    public ResponseEntity<?> modify(MultipartFile mainImage,
-                                    MultipartFile subImage,
-                                    MultipartFile thirdImage,
-                                    WriteMeetingPostRequestDTO requestDTO, Long id) throws IOException {
+    public ResponseEntity<BaseResponseDto> modify(MultipartFile mainImage,
+                                                  MultipartFile subImage,
+                                                  MultipartFile thirdImage,
+                                                  WriteMeetingPostRequestDTO requestDTO, Long id) throws IOException {
         MeetingPost originalMP = meetingPostRepository.findOne(id);
         if (originalMP == null) {
             throw new IllegalArgumentException("수정에 실패했습니다.");
@@ -117,7 +118,7 @@ public class MeetingPostService {
         if(mainImage!=null) thirdImgUrl = s3Service.uploadS3(thirdImage, "images");
 
         meetingPostRepository.save(originalMP.updateMeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO));
-        return ResponseEntity.ok("수정에 성공했습니다.");
+        return ResponseEntity.ok(new BaseResponseDto(true, "수정에 성공했습니다."));
     }
 
     @Transactional

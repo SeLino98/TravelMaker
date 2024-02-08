@@ -8,6 +8,7 @@ import com.ssafy.gumibom.domain.record.dto.response.SavePersonalRecordResponseDt
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import com.ssafy.gumibom.domain.record.service.RecordService;
+import com.ssafy.gumibom.global.base.BaseResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,37 +35,37 @@ public class RecordController {
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> savePersonalRecord(
+    public ResponseEntity<BaseResponseDto> savePersonalRecord(
             @RequestPart(required = false) MultipartFile image,
             @RequestPart(required = false) MultipartFile video,
             @RequestPart SavePersonalRecordRequestDto sPRRDto) throws IOException {
 
         Long recordId = recordService.makePersonalRecord(image, video, sPRRDto);
 
-        return ResponseEntity.ok("저장된 기록 id: "+recordId);
+        return ResponseEntity.ok(new BaseResponseDto(true, "저장된 기록 id: "+recordId));
     }
 
     @Operation(summary = "개인 팜플렛에 저장된 여행 기록을 삭제합니다.")
     @DeleteMapping
-    public ResponseEntity<?> removePersonalRecord(@RequestBody DeletePersonalRecordRequestDto dPRRDto) throws Exception {
+    public ResponseEntity<BaseResponseDto> removePersonalRecord(@RequestBody DeletePersonalRecordRequestDto dPRRDto) throws Exception {
 
         recordService.removePersonalRecord(dPRRDto.getPamphletId(), dPRRDto.getRecordId());
 
-        return ResponseEntity.ok("여행 기록을 삭제했습니다.");
+        return ResponseEntity.ok(new BaseResponseDto(true, "여행 기록을 삭제했습니다."));
     }
 
     @Operation(summary = "개인 팜플렛에 저장된 여행 기록을 수정합니다.")
     @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> updatePersonalRecord(
+    public ResponseEntity<BaseResponseDto> updatePersonalRecord(
             @RequestPart(required = false) MultipartFile image,
             @RequestPart(required = false) MultipartFile video,
             @RequestPart UpdatePersonalRecordRequestDto uPRRDto) throws Exception {
 
         recordService.updatePersonalRecord(image, video, uPRRDto);
 
-        return ResponseEntity.ok("여행 기록을 수정했습니다.");
+        return ResponseEntity.ok(new BaseResponseDto(true, "여행 기록을 수정했습니다."));
     }
 
 

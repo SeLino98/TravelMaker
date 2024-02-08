@@ -83,10 +83,10 @@ public class MeetingPostController {
 
     @Operation(summary = "모임글 삭제")
     @DeleteMapping("/{meetingPostId}")
-    public ResponseEntity<?> deleteMeetingPost(@PathVariable Long meetingPostId) {
+    public ResponseEntity<BaseResponseDto> deleteMeetingPost(@PathVariable Long meetingPostId) {
 
         meetingPostService.delete(meetingPostId);
-        return ResponseEntity.ok("모임글이 삭제되었습니다.");
+        return ResponseEntity.ok(new BaseResponseDto(true, "모임글이 삭제되었습니다."));
     }
 
     @Operation(summary = "모임글에 참여 요청")
