@@ -89,14 +89,14 @@ class MainActivity : AppCompatActivity() {
      */
     private fun observeLiveData() {
         val profileImage = findViewById<ImageView>(R.id.my_custom_icon)
-        viewModel.user.observe(this) { user ->
-            if (user.profileImgURL.isNotEmpty()) {
-                Glide.with(this)
-                    .load(user.profileImgURL)
-                    .circleCrop()
-                    .into(profileImage)
-            }
-        }
+//        viewModel.user.observe(this) { user ->
+//            if (user.profileImgURL.isNotEmpty()) {
+//                Glide.with(this)
+//                    .load(user.profileImgURL)
+//                    .circleCrop()
+//                    .into(profileImage)
+//            }
+//        }/** 여기 이미지가 널이면 널포인터 에러남 . */
     }
 
     private fun setNavigationMenuToolbar(){

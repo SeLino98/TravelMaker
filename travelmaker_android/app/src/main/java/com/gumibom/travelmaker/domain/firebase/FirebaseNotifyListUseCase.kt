@@ -15,8 +15,8 @@ class FirebaseNotifyListUseCase @Inject constructor(
     suspend fun getNotifyList(userId:Long):FcmGetNotifyListDTO?{
         val response = firebaseFcmRepository.getAllRequestList(userId)
         if (response.isSuccessful){
+            Log.d(TAG, "getNotifyList: ${response.body()}")
             return response.body()!!
-
         }
         Log.d(TAG, "getNotifyList: ${response.body()}")
         return response.body()

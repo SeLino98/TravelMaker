@@ -17,11 +17,13 @@ import com.gumibom.travelmaker.data.dto.request.MeetingPostRequestDTO
 import com.gumibom.travelmaker.domain.meeting.GetMarkerCategoryPositionsUseCase
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
+import com.gumibom.travelmaker.data.dto.request.FirebaseResponseRefuseAcceptDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 
 import com.gumibom.travelmaker.domain.firebase.FirebaseAcceptCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseFcmUploadTokenUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseNotifyListUseCase
+import com.gumibom.travelmaker.domain.firebase.FirebaseRefuseCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
@@ -50,7 +52,9 @@ class MainViewModel @Inject constructor(
     private val getPostDetailUseCase:GetPostDetailUseCase,
     private val firebaseNotifyListUseCase: FirebaseNotifyListUseCase,
     private val firebaseFcmUploadTokenUseCase: FirebaseFcmUploadTokenUseCase,
-    private val getAllUserUseCase: GetAllUserUseCase
+    private val getAllUserUseCase: GetAllUserUseCase,
+    private val firebaseFcmAcceptCrewUseCase: FirebaseAcceptCrewUseCase,
+    private val firebaseRefuseCrewUseCase: FirebaseRefuseCrewUseCase
 
 ) : ViewModel(), CommonViewModel {
 
@@ -59,6 +63,20 @@ class MainViewModel @Inject constructor(
     fun getNotifyList(userId: Long){
         viewModelScope.launch {
             _isGetNotifyList.value = firebaseNotifyListUseCase.getNotifyList(userId)
+        }
+    }
+    private val _isRequestAcceptCrew = MutableLiveData<BooleanResponse>()
+    val isRequestAcceptCrew : LiveData<BooleanResponse> = _isRequestAcceptCrew
+    fun acceptCrew(firebaseAcceptDTO: FirebaseResponseRefuseAcceptDTO){
+        viewModelScope.launch {
+            _isRequestAcceptCrew.value = firebaseFcmAcceptCrewUseCase.acceptCrew(firebaseAcceptDTO)
+        }
+    }
+    private val _isRequestRefuseCrew = MutableLiveData<BooleanResponse>()
+    val isRequestRefuseCrew :LiveData<BooleanResponse> = _isRequestRefuseCrew;
+    fun refuseCrew(firebaseRefuseDTO:FirebaseResponseRefuseAcceptDTO){
+        viewModelScope.launch {
+            _isRequestAcceptCrew.value = firebaseRefuseCrewUseCase.refuseCrew(firebaseRefuseDTO)
         }
     }
 
