@@ -12,7 +12,7 @@ import com.gumibom.travelmaker.databinding.ItemFcmNotifyReceivedListBinding
 import com.gumibom.travelmaker.model.NotifyReceiveItem
 import com.gumibom.travelmaker.ui.main.MainViewModel
 
-class MainFcmNotifyAdapter(private val context : Context,
+class MainFcmNotifyAdapter( private val context : Context,
                             private val viewModel: MainViewModel)
     : ListAdapter<ReceivedRequest, MainFcmNotifyAdapter.RequestViewHolder>(MainNotifyDiffUtil()) {
     // ViewBinding 타입을 변경하세요.

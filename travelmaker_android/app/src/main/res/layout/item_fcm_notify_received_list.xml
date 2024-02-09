@@ -44,23 +44,27 @@
 
         <TextView
             android:id="@+id/tv_requester_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:textSize="20dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_nims"
             app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintVertical_bias="0.27"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_nims"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="님의 "
+            android:text=" 님의 "
+            app:layout_constraintHorizontal_weight="0.8"
+            android:textColor="@color/light_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_group_id"
             app:layout_constraintHorizontal_bias="0.5"
@@ -70,9 +74,11 @@
 
         <TextView
             android:id="@+id/tv_group_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintHorizontal_weight="2.5"
             android:layout_height="wrap_content"
             android:text="GROUP_ID"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_description"
             app:layout_constraintHorizontal_bias="0.5"
@@ -82,9 +88,11 @@
 
         <TextView
             android:id="@+id/tv_description"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintHorizontal_weight="3.5"
             android:layout_height="wrap_content"
-            android:text="모임 요청이 왔습니다."
+            android:text=" 모임 요청이 왔습니다."
+            android:textColor="@color/light_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

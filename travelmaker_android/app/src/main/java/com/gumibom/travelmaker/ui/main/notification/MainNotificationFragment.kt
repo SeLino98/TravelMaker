@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
@@ -32,34 +33,62 @@ class MainNotificationFragment : Fragment() {
         activity = context as MainActivity
         sharedPreferences = SharedPreferencesUtil(activity)
     }
+    private lateinit var mainFcmNotifyAdapter: MainFcmNotifyAdapter
+    private lateinit var mainFcmSentNotifyAdapter: MainFcmNotifySentAdapter
+    private lateinit var getNotifyList:FcmGetNotifyListDTO
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getNotifyList(1)
 
         observeLiveData()
+        mainFcmNotifyAdapter = MainFcmNotifyAdapter(activity, viewModel)
+        mainFcmSentNotifyAdapter = MainFcmNotifySentAdapter(activity,viewModel)
 
+        var isSent : Boolean = true;
+        binding.btnMyResponseList.setOnClickListener {
+            isSent= false;
+            it.isSelected = true
+            binding.btnMyRequireList.isSelected = false
+            loadRecyclerView(isSent)
+        }
+        binding.btnMyRequireList.setOnClickListener {
+            it.isSelected = !it.isSelected
+            isSent = true
+            it.isSelected = true
+            binding.btnMyResponseList.isSelected = false
+            loadRecyclerView(isSent)
+        }
 //      setupTabLayout()
 
     }
+    private fun loadRecyclerView(isSent:Boolean){
+        if (isSent){//알림을 요청 받은 리스트를 띄운다
+            binding.rcNotifyList.adapter = mainFcmSentNotifyAdapter
+            binding.rcNotifyList.layoutManager = LinearLayoutManager(context)
+            if (getNotifyList.sentRequests != null){
+                mainFcmSentNotifyAdapter.submitList(getNotifyList.sentRequests)
+            }
+        }else{//알림을 요청보낸 리스트를 띄운다.
+            binding.rcNotifyList.adapter = mainFcmNotifyAdapter
+            binding.rcNotifyList.layoutManager = LinearLayoutManager(context)
+            if (getNotifyList.receivedRequests != null){
+                mainFcmNotifyAdapter.submitList(getNotifyList.receivedRequests)
+            }
+        }
+    }
     private fun observeLiveData(){
-        var getNotifyList : FcmGetNotifyListDTO? = null;
         viewModel.isGetNotifyList.observe(viewLifecycleOwner){
             if (it!=null){
                 Log.d(TAG, "observeLiveData: GDGD")
                 getNotifyList = it
                 Log.d(TAG, "observeLiveData: ${getNotifyList.toString()}")
+                binding.rcNotifyList.adapter = mainFcmNotifyAdapter
+                binding.rcNotifyList.layoutManager = LinearLayoutManager(context)
+                mainFcmNotifyAdapter.submitList(getNotifyList.receivedRequests)
+                binding.btnMyResponseList.isSelected = true
             }
         }
-
-    }
-    private fun updateAdapterForTabOne(){
-//        binding.rcNotifyList.adapter = mainFcmNotifyAdapter
-
-    }
-    private fun updateAdapterForTabTwo(){
-//        mainFcmNotifyAdapter.submitList()
-//        binding.rcNotifyList.adapter = mainFcmNotifyAdapter
     }
 
     override fun onCreateView(
