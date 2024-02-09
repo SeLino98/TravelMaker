@@ -26,15 +26,17 @@ public abstract class Record {
     private LocalDateTime createTime;
     private String imgUrl;
     private String videoUrl;
+    private String videoThumbnailUrl;
     private String text;
 
     @Convert(converter = EmojiConverter.class)
     private Emoji emoji;
 
-    protected void setRecord(String title, String imgUrl, String videoUrl, String text, Emoji emoji) {
+    protected void setRecord(String title, String imgUrl, String videoUrl, String videoThumbnailUrl, String text, Emoji emoji) {
         this.title = title;
         this.imgUrl = imgUrl;
         this.videoUrl = videoUrl;
+        this.videoThumbnailUrl = videoThumbnailUrl;
         this.text = text;
         this.createTime = LocalDateTime.now();
         this.emoji = emoji;

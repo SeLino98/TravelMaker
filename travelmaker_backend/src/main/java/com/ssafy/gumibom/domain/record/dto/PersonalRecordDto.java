@@ -19,6 +19,7 @@ public class PersonalRecordDto {
     private LocalDateTime createTime;
     private String imgUrl;
     private String videoUrl;
+    private String videoThumbnailUrl;
     private String text;
 
     @Convert(converter = EmojiConverter.class)
@@ -30,6 +31,7 @@ public class PersonalRecordDto {
         this.createTime = record.getCreateTime();
         this.imgUrl = record.getImgUrl();
         this.videoUrl = record.getVideoUrl();
+        this.videoThumbnailUrl = record.getVideoThumbnailUrl();
         this.text = record.getText();
         this.emoji = record.getEmoji();
     }
