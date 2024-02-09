@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:layout_gravity="center|top">
+    android:layout_gravity="center|top"
+    android:clipToPadding="false">
 
     <TextView
         android:id="@+id/tv_my_record_title"
@@ -26,23 +26,49 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/background_pamphlet"
-        android:scaleType="centerCrop"
+        android:elevation="20dp"
+        android:padding="7dp"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_my_record_title"
-        android:elevation="20dp"
         tools:src="@drawable/test" />
 
     <TextView
+        android:id="@+id/tv_item_my_record_create_time"
         style="@style/Text.Input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/iv_my_record_pamphlet"
+        app:layout_constraintTop_toBottomOf="@id/iv_my_record_pamphlet"
+        tools:text="2024-02-08" />
+
+    <TextView
+        android:id="@+id/tv_item_my_record_create_time_finish"
+        style="@style/Text.Input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_my_record_pamphlet"
         tools:text="2024-02-08" />
+
+    <Button
+        android:id="@+id/btn_my_record_complte"
+        style="@style/custom_material_textButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="완성하기"
+        android:textSize="18sp"
+        android:background="@drawable/background_button_certification_ripple"
+        app:layout_constraintEnd_toEndOf="@id/iv_my_record_pamphlet"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/iv_my_record_pamphlet" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
