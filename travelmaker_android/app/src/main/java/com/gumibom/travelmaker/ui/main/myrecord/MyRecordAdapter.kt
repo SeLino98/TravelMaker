@@ -17,27 +17,25 @@ import com.gumibom.travelmaker.databinding.ItemMyRecordBinding
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
 
 private const val TAG = "MyRecordAdapter_싸피"
-class MyRecordAdapter(private val context : Context, private val isFinish : Boolean) : ListAdapter<PamphletItem, MyRecordAdapter.MyRecordViewHolder>(MyRecordDiffUtil()) {
+class MyRecordAdapter(private val context : Context) : ListAdapter<PamphletItem, MyRecordAdapter.MyRecordViewHolder>(MyRecordDiffUtil()) {
 
     inner class MyRecordViewHolder(private val binding : ItemMyRecordBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : PamphletItem) {
             Log.d(TAG, "bind: 다시 만드니?")
             // 여행 중인 경우
-            if (!item.isFinish && !isFinish) {
+            if (!item.isFinish) {
                 setItem(item)
                 Log.d(TAG, "bind: 여행중")
-                binding.tvItemMyRecordCreateTimeFinish.visibility = View.GONE
                 binding.tvItemMyRecordCreateTime.visibility = View.VISIBLE
                 binding.btnMyRecordComplte.visibility = View.VISIBLE
             }
             // 여행 완료 인 경우
-//            else {
-//                setItem(item)
-//                Log.d(TAG, "bind: 여행완료")
-//                binding.tvItemMyRecordCreateTimeFinish.visibility = View.VISIBLE
-//                binding.tvItemMyRecordCreateTime.visibility = View.GONE
-//                binding.btnMyRecordComplte.visibility = View.GONE
-//            }
+            else {
+                setItem(item)
+                Log.d(TAG, "bind: 여행완료")
+                binding.tvItemMyRecordCreateTime.visibility = View.VISIBLE
+                binding.btnMyRecordComplte.visibility = View.GONE
+            }
         }
 
         private fun setItem(item : PamphletItem){

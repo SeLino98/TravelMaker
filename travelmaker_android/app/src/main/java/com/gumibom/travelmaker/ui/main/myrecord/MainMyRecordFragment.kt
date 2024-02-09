@@ -23,6 +23,7 @@ class MainMyRecordFragment : Fragment() {
 
     private val myRecordViewModel : MyRecordViewModel by viewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
+    private lateinit var adapter : MyRecordAdapter
 
     private var isFinish = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +53,22 @@ class MainMyRecordFragment : Fragment() {
      */
     private fun setAdapterInit() {
         Log.d(TAG, "setAdapterInit: 호출됨")
-        val adapter = MyRecordAdapter(requireContext(), isFinish)
+        adapter = MyRecordAdapter(requireContext())
         binding.rvMyRecord.adapter = adapter
 
         myRecordViewModel.getMyRecord(mainViewModel.user.value!!.userId)
 
-        myRecordViewModel.myRecord.observe(viewLifecycleOwner) { pamphletList ->
-            adapter.submitList(pamphletList.toMutableList())
+        myRecordViewModel.myRecordIng.observe(viewLifecycleOwner) { pamphletList ->
+            if (!isFinish) {
+                adapter.submitList(pamphletList.toMutableList())
+            }
+
+        }
+
+        myRecordViewModel.myRecordFinish.observe(viewLifecycleOwner) { pamphletList ->
+            if (isFinish) {
+                adapter.submitList(pamphletList.toMutableList())
+            }
         }
     }
 

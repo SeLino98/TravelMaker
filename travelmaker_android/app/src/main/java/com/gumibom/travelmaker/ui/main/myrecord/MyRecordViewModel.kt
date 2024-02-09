@@ -18,13 +18,35 @@ class MyRecordViewModel @Inject constructor(
     private val _isFinish = MutableLiveData<Boolean>()
     val isFinish : LiveData<Boolean> = _isFinish
 
-    private val _myRecord = MutableLiveData<List<PamphletItem>>()
-    val myRecord : LiveData<List<PamphletItem>> = _myRecord
+    private val _myRecordIng = MutableLiveData<List<PamphletItem>>()
+    val myRecordIng : LiveData<List<PamphletItem>> = _myRecordIng
+
+    private val _myRecordFinish = MutableLiveData<List<PamphletItem>>()
+    val myRecordFinish : LiveData<List<PamphletItem>> = _myRecordFinish
 
     fun getMyRecord(userId : Long) {
         viewModelScope.launch {
             val pamphletItemList = getMyRecordUseCase.getMyRecord(userId)
-            _myRecord.value = pamphletItemList
+
+            setTravelList(pamphletItemList)
         }
+    }
+
+    /**
+     * 여행 중, 여행 완료 리스트로 분리하는 함수
+     */
+    private fun setTravelList(pamphletList : List<PamphletItem>) {
+        val finishTravelList = mutableListOf<PamphletItem>()
+        val ingTravelList = mutableListOf<PamphletItem>()
+
+        for (pamphlet in pamphletList) {
+            if (pamphlet.isFinish) {
+                finishTravelList.add(pamphlet)
+            } else {
+                ingTravelList.add(pamphlet)
+            }
+        }
+        _myRecordFinish.value = finishTravelList
+        _myRecordIng.value = ingTravelList
     }
 }
