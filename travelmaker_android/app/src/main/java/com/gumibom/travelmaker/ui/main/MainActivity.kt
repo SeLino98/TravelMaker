@@ -131,6 +131,14 @@ class MainActivity : AppCompatActivity() {
                         navController.navigateUp()
                     }
                 }
+                R.id.mainGoTravelFragment, R.id.makePamphletFragment, R.id.startPamphletFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = getString(R.string.makePamphlet_title)
+                    binding.toolbar.setNavigationOnClickListener {
+                        navController.navigateUp()
+                    }
+                }
             }
         }
     }

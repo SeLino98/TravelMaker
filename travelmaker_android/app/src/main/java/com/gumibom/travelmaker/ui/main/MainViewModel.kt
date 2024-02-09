@@ -37,6 +37,7 @@ import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.model.User
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -182,15 +183,15 @@ class MainViewModel @Inject constructor(
         _pamphletThumbnail.value = imageUrl
     }
 
-    fun makePamphlet() {
-        viewModelScope.launch {
-            val message = makePamphletUseCase.makePamphlet(
+    suspend fun makePamphlet() : String {
+        return viewModelScope.async {
+            makePamphletUseCase.makePamphlet(
                 _user.value!!.userId,
                 pamphletTitle,
                 pamphletCategory,
                 _pamphletThumbnail.value!!
             )
-        }
+        }.await()
     }
 
 }

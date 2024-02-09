@@ -89,6 +89,9 @@
     <!-- 내 기록 페이지 -->
     <string name="myRecord_title">내 기록</string>
 
+    <!-- 팜플렛 만들기 -->
+    <string name="makePamphlet_title">팜플렛 만들기</string>
+
     <!-- 회원정보 수정하기 -->
     <string name="edit_myinfo_title">회원정보 수정하기</string>
     <string name="edit_myinfo_phone_number">전화번호</string>

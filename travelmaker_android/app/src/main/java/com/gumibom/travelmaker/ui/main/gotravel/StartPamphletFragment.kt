@@ -9,11 +9,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.google.android.material.chip.Chip
+import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentMakePamphletBinding
 import com.gumibom.travelmaker.databinding.FragmentStartPamphletBinding
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 private const val TAG = "StartPamphletFragment_싸피"
 @AndroidEntryPoint
@@ -94,9 +98,12 @@ class StartPamphletFragment : Fragment() {
      */
     private fun makePamphlet() {
         binding.btnPersonalPamphlet.setOnClickListener {
-            mainViewModel.makePamphlet()
+            lifecycleScope.launch {
+                val toastMessage = mainViewModel.makePamphlet()
 
-            // TODO Intent로 내 기록 페이지로 넘어가는 함수 구현
+                Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show()
+                Navigation.findNavController(it).navigate(R.id.action_startPamphletFragment_to_mainMyRecordFragment)
+            }
         }
     }
 }
