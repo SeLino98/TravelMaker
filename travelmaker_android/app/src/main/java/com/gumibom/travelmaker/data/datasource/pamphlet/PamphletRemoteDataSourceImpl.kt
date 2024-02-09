@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.datasource.pamphlet
 
 import com.gumibom.travelmaker.data.api.pamphlet.PamphletService
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.PamphletResponseDTO
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
 import okhttp3.MultipartBody
@@ -21,5 +22,9 @@ class PamphletRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getMyRecord(userId: Long): Response<List<PamphletItem>> {
         return pamphletService.getMyRecord(userId)
+    }
+
+    override suspend fun finishRecordMyPamphlet(pamphletId: Long): Response<IsSuccessResponseDTO> {
+        return pamphletService.finishRecordMyPamphlet(pamphletId)
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gumibom.travelmaker.domain.pamphlet.FinishTravelPamphletUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetMyRecordUseCase
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyRecordViewModel @Inject constructor(
-    private val getMyRecordUseCase: GetMyRecordUseCase
+    private val getMyRecordUseCase: GetMyRecordUseCase,
+    private val finishTravelPamphletUseCase: FinishTravelPamphletUseCase
 ) : ViewModel() {
 
     private val _isFinish = MutableLiveData<Boolean>()
@@ -49,4 +51,23 @@ class MyRecordViewModel @Inject constructor(
         _myRecordFinish.value = finishTravelList
         _myRecordIng.value = ingTravelList
     }
+
+    /**
+     * 여행 중인 팜플렛을 완료하는 함수
+     */
+    fun finishTravelPamphlet(pamphletId : Long, pamphlet : PamphletItem) {
+        viewModelScope.launch {
+            val message = finishTravelPamphletUseCase.finishRecordMyPamphlet(pamphletId) ?: ""
+
+            if (message.isNotEmpty()) {
+                // _myRecording이 null이면 빈 리스트 반환, 아니면 그냥 리스트 반환
+                val myRecordIng = _myRecordIng.value.orEmpty().toMutableList()
+
+                myRecordIng.remove(pamphlet)
+                _myRecordIng.value = myRecordIng
+            }
+
+        }
+    }
+
 }
