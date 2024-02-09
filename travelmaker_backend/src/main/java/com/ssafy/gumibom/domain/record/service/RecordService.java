@@ -2,6 +2,7 @@ package com.ssafy.gumibom.domain.record.service;
 
 import com.ssafy.gumibom.domain.pamphlet.entity.PersonalPamphlet;
 import com.ssafy.gumibom.domain.pamphlet.repository.PersonalPamphletRepository;
+import com.ssafy.gumibom.domain.record.dto.PersonalRecordDto;
 import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.dto.request.UpdatePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
@@ -14,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -89,6 +92,12 @@ public class RecordService {
         }
 
         pRecord.updateRecord(uPRRDto.getTitle(), imgUrl, videoUrl, uPRRDto.getText(), uPRRDto.getEmoji());
+    }
+
+    public List<PersonalRecordDto> showPersonalRecords(Long pamphletId) {
+        return recordRepository.findByPamphletId(pamphletId)
+                .stream().map(pr -> new PersonalRecordDto(pr))
+                .collect(Collectors.toList());
     }
 
 }

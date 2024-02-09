@@ -1,6 +1,7 @@
 package com.ssafy.gumibom.domain.record.controller;
 
 import com.ssafy.gumibom.domain.pamphlet.dto.request.MakePersonalPamphletRequestDto;
+import com.ssafy.gumibom.domain.record.dto.PersonalRecordDto;
 import com.ssafy.gumibom.domain.record.dto.request.DeletePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.dto.request.SavePersonalRecordRequestDto;
 import com.ssafy.gumibom.domain.record.dto.request.UpdatePersonalRecordRequestDto;
@@ -21,6 +22,7 @@ import retrofit2.Response;
 import retrofit2.http.Path;
 
 import java.io.IOException;
+import java.util.List;
 
 @Tag(name = "Record", description = "여행 기록 관련 api")
 @RestController
@@ -66,6 +68,13 @@ public class RecordController {
         recordService.updatePersonalRecord(image, video, uPRRDto);
 
         return ResponseEntity.ok(new BaseResponseDto(true, "여행 기록을 수정했습니다."));
+    }
+
+    @Operation(summary = "특정 개인 팜플렛의 여행 기록들을 조회합니다.")
+    @GetMapping("/{pamphletId}")
+    public ResponseEntity<List<PersonalRecordDto>> showPersonalRecords(@PathVariable("pamphletId") Long pamphletId) {
+
+        return ResponseEntity.ok(recordService.showPersonalRecords(pamphletId));
     }
 
 

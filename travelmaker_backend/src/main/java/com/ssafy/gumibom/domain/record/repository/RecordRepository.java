@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.record.repository;
 
+import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.entity.Record;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,14 @@ public class RecordRepository {
 
     public Record findOne(Long id) {
         return em.find(Record.class, id);
+    }
+
+    public List<PersonalRecord> findByPamphletId(Long id) {
+        return em.createQuery(
+                "select pr from PersonalRecord pr "+
+                        "where pr.personalPamphlet.id=:id", PersonalRecord.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 
     public List<Record> findAll() {

@@ -23,7 +23,7 @@ public class PersonalPamphletDto {
     private String title;
     private Integer love;
     private LocalDateTime createTime;
-    private List<PersonalRecordDto> records;
+//    private List<PersonalRecordDto> records;
     private Boolean isFinish;
     private String repreImgUrl;
 
@@ -36,9 +36,9 @@ public class PersonalPamphletDto {
         this.title = pPamphlet.getTitle();
         this.love = pPamphlet.getLove();
         this.createTime = pPamphlet.getCreateTime();
-        this.records = pPamphlet.getPersonalRecords().stream()
-                .map(record -> new PersonalRecordDto(record))
-                .collect(Collectors.toList());
+//        this.records = pPamphlet.getPersonalRecords().stream()
+//                .map(record -> new PersonalRecordDto(record))
+//                .collect(Collectors.toList());
         this.categories = pPamphlet.getCategories();
         this.isFinish = pPamphlet.getIsFinish();
         this.repreImgUrl = pPamphlet.getRepreImgUrl();
