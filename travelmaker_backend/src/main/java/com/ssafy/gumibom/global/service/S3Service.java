@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -21,15 +22,23 @@ public class S3Service {
     @Autowired
     private S3Uploader s3Uploader;
 
-    // S3 파일 업로드
+    // 멀티파트 파일 S3 업로드
     @Transactional
     public String uploadS3(MultipartFile file, String type) throws IOException {
         String storedFileName = "";
-
         if(file != null) {
             storedFileName = s3Uploader.uploadFileToS3(file, type);
         }
+        return storedFileName;
+    }
 
+    // 파일 S3 업로드
+    @Transactional
+    public String uploadS3(File file, String type) throws IOException {
+        String storedFileName = "";
+        if(file != null) {
+            storedFileName = s3Uploader.uploadFileToS3(file, type);
+        }
         return storedFileName;
     }
 

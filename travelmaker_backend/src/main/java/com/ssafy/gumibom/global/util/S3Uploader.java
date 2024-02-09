@@ -28,13 +28,18 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    // 로컬에 파일
+    // 멀티파트 파일을 파일로 변환 후 S3로 업로드
     public String uploadFileToS3(MultipartFile multipartFile, String filePath) throws IOException {
         // 1. MultipartFile -> File 변환
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패,,,"));
 
         return upload(uploadFile, filePath);
+    }
+
+    // 파일을 바로 S3로 업로드
+    public String uploadFileToS3(File file, String filePath) throws IOException {
+        return upload(file, filePath);
     }
 
     private String upload(File uploadFile, String filePath) {

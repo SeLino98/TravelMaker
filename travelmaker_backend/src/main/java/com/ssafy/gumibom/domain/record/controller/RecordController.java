@@ -40,7 +40,7 @@ public class RecordController {
     public ResponseEntity<BaseResponseDto> savePersonalRecord(
             @RequestPart(required = false) MultipartFile image,
             @RequestPart(required = false) MultipartFile video,
-            @RequestPart SavePersonalRecordRequestDto sPRRDto) throws IOException {
+            @RequestPart SavePersonalRecordRequestDto sPRRDto) throws Exception {
 
         Long recordId = recordService.makePersonalRecord(image, video, sPRRDto);
 
