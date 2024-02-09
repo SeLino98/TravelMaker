@@ -88,6 +88,7 @@ public class MeetingRequestService {
         if(isAccept) meetingPost.addApplier(requestor, false); // 게시글에 meetingApplier로 추가
 
         request.getResponse();
+        meetingRequestRepository.delete(request);
 
         String messageTitle = (isAccept) ? "모임 승낙" : "모임 거절";
         String messageBody = meetingPost.getTitle();
