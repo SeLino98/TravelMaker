@@ -17,9 +17,11 @@ import com.gumibom.travelmaker.databinding.ItemMyRecordBinding
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
 
 private const val TAG = "MyRecordAdapter_싸피"
-class MyRecordAdapter(private val context : Context) : ListAdapter<PamphletItem, MyRecordAdapter.MyRecordViewHolder>(MyRecordDiffUtil()) {
-
+class MyRecordAdapter(private val context : Context, private val myRecordViewModel: MyRecordViewModel) : ListAdapter<PamphletItem, MyRecordAdapter.MyRecordViewHolder>(MyRecordDiffUtil()) {
+    var itemClickListener: ItemClickListener? = null
     inner class MyRecordViewHolder(private val binding : ItemMyRecordBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
         fun bind(item : PamphletItem) {
             Log.d(TAG, "bind: 다시 만드니?")
             // 여행 중인 경우
@@ -36,6 +38,15 @@ class MyRecordAdapter(private val context : Context) : ListAdapter<PamphletItem,
                 binding.tvItemMyRecordCreateTime.visibility = View.VISIBLE
                 binding.btnMyRecordComplte.visibility = View.GONE
             }
+
+            binding.btnMyRecordComplte.setOnClickListener {
+                myRecordViewModel.finishTravelPamphlet(item.pamphletId, item)
+            }
+
+            binding.ivMyRecordPamphlet.setOnClickListener {
+                Log.d(TAG, "클릭: ")
+                moveDetailFragment(item.pamphletId)
+            }
         }
 
         private fun setItem(item : PamphletItem){
@@ -48,6 +59,14 @@ class MyRecordAdapter(private val context : Context) : ListAdapter<PamphletItem,
                 .placeholder(R.drawable.background_pamphlet)
                 .into(binding.ivMyRecordPamphlet)
             binding.tvItemMyRecordCreateTime.text = item.createTime
+        }
+
+        private fun moveDetailFragment(pamphletId : Long) {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                Log.d(TAG, "moveDetailFragment: 호출?")
+                itemClickListener?.moveRecordDetail(pamphletId, itemView)
+            }
         }
     }
 

@@ -139,6 +139,9 @@ class MainActivity : AppCompatActivity() {
                         navController.navigateUp()
                     }
                 }
+                R.id.myRecordDetail -> {
+                    binding.toolbar.menu.clear()
+                }
             }
         }
     }

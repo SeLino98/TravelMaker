@@ -117,6 +117,11 @@ dependencies {
 
     //lottie
     implementation 'com.airbnb.android:lottie:5.0.2'
+
+    // Exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.2'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.18.2'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.2'
 }
 kapt {
     correctErrorTypes = true

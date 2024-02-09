@@ -46,7 +46,11 @@
         android:id="@+id/mainMyRecordFragment"
         android:name="com.gumibom.travelmaker.ui.main.myrecord.MainMyRecordFragment"
         android:label="fragment_main_my_record"
-        tools:layout="@layout/fragment_main_my_record" />
+        tools:layout="@layout/fragment_main_my_record" >
+        <action
+            android:id="@+id/action_mainMyRecordFragment_to_myRecordDetail"
+            app:destination="@id/myRecordDetail" />
+    </fragment>
     <fragment
         android:id="@+id/mainGoTravelFragment"
         android:name="com.gumibom.travelmaker.ui.main.gotravel.MainGoTravelFragment"
@@ -87,5 +91,9 @@
         android:name="com.gumibom.travelmaker.ui.main.notification.MainNotificationFragment"
         android:label="fragment_main_notification"
         tools:layout="@layout/fragment_main_notification" />
+    <fragment
+        android:id="@+id/myRecordDetail"
+        android:name="com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetail"
+        android:label="MyRecordDetail" />
 
 </navigation>

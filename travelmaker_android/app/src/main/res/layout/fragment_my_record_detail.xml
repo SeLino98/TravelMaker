@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_record_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_my_record_detail"
+        />
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/player_view"
+        app:layout_constraintTop_toBottomOf="@id/rv_my_record_detail"
+        app:layout_constraintStart_toStartOf="@id/iv_my_record_detail"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        android:layout_height="300dp" />
+
+    <ImageView
+        android:id="@+id/iv_my_record_detail"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/rv_my_record_detail"
+        android:layout_marginTop="40dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/test" />
+
+    <ImageView
+        android:id="@+id/iv_my_record_detail_emoji"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintStart_toStartOf="@id/iv_my_record_detail"
+        app:layout_constraintTop_toTopOf="@id/iv_my_record_detail"
+        tools:src="@drawable/ic_calendar"
+        android:elevation="4dp"
+        />
+
+    <TextView
+        style="@style/Text.Input"
+        android:id="@+id/tv_my_record_detail_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:maxLines="2"
+        android:background="@drawable/background_record_text"
+        app:layout_constraintTop_toBottomOf="@id/iv_my_record_detail"
+        tools:text="아름다운 바다에서 한 컷"/>
+
+    <Button
+        android:id="@+id/btn_my_record_detail_update"
+        style="@style/custom_material_textButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/btn_my_record_detail_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_my_record_detail_delete"
+        style="@style/custom_material_textButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="삭제"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

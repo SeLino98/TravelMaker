@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentMainMypageBinding
 import com.gumibom.travelmaker.databinding.FragmentMyRecordBinding
@@ -16,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainMyRecordFragment_싸피"
 @AndroidEntryPoint
-class MainMyRecordFragment : Fragment() {
+class MainMyRecordFragment : Fragment(), ItemClickListener {
 
     private var _binding: FragmentMyRecordBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +55,9 @@ class MainMyRecordFragment : Fragment() {
      */
     private fun setAdapterInit() {
         Log.d(TAG, "setAdapterInit: 호출됨")
-        adapter = MyRecordAdapter(requireContext())
+        adapter = MyRecordAdapter(requireContext(), myRecordViewModel).apply {
+            itemClickListener = this@MainMyRecordFragment
+        }
         binding.rvMyRecord.adapter = adapter
 
         myRecordViewModel.getMyRecord(mainViewModel.user.value!!.userId)
@@ -91,6 +95,12 @@ class MainMyRecordFragment : Fragment() {
             isFinish = true
             setAdapterInit()
         }
+    }
+
+    override fun moveRecordDetail(pamphletId: Long, view: View) {
+        Log.d(TAG, "moveRecordDetail: 호출호출?")
+        val bundle = bundleOf("pamphletId" to pamphletId)
+        Navigation.findNavController(view).navigate(R.id.action_mainMyRecordFragment_to_myRecordDetail, bundle)
     }
 
 }
