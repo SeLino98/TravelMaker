@@ -28,16 +28,31 @@ class MainFcmNotifyAdapter( private val context : Context,
                 tvRequesterId.text = item.requestorName
                 tvGroupId.text = item.meetingPostTitle
                 btnNotifyYes.setOnClickListener {
-//                  // 수락 버튼 클릭 처리
+                    // 수락 버튼 클릭 처리
                     viewModel.acceptCrew(FirebaseResponseRefuseAcceptDTO(item.meetingPostId,item.requestId,item.requestorId))
+                    removeItem(adapterPosition)
                 }
                 btnNotifyNo.setOnClickListener {
                     // 거절 버튼 클릭 처리
-                    viewModel.acceptCrew(FirebaseResponseRefuseAcceptDTO(item.meetingPostId,item.requestId,item.requestorId))
+                    viewModel.refuseCrew(FirebaseResponseRefuseAcceptDTO(item.meetingPostId,item.requestId,item.requestorId))
                 }
             }
         }
     }
+
+    //리스트에서 제거.
+    override fun submitList(list: List<ReceivedRequest>?) {
+        super.submitList(list?.let { ArrayList(it) }) // 리스트의 깊은 복사본을 생성하여 전달
+        items = list ?: emptyList() // 어댑터의 리스트를 업데이트
+    }
+    private var items: List<ReceivedRequest> = emptyList() // 현재 리스트 상태 관리
+    private fun removeItem(position: Int) {
+        val newList = items.toMutableList() // 현재 리스트를 복사하여 새로운 리스트 생성
+        newList.removeAt(position) // 항목 제거
+        items = newList // 어댑터의 리스트를 업데이트
+        submitList(items) // 변경된 리스트를 submitList()에 전달하여 UI 업데이트
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequestViewHolder {
         // ViewBinding을 사용하여 레이아웃 인플레이트

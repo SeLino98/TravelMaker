@@ -69,6 +69,8 @@ class MainActivity : AppCompatActivity() {
          * TODO Token을 가지고 서버에 User data를 전부받아서 저장
          */
 
+        Log.d(TAG, "onCreate: ${sharedPreferencesUtil.getToken()}")
+
         setFirebase()
         observeViewModel()
         setNavigationMenuToolbar()
@@ -112,7 +114,9 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.navigationIcon = null
                     Log.d(TAG, "setNavigationMenuToolbar: 2")
                 }
-                R.id.mainMyGroupFragment, R.id.mainMyPageFragment -> {
+                R.id.mainMyGroupFragment, R.id.mainMyPageFragment,
+                R.id.mainGoTravelFragment,R.id.mainFindMateDetailFragment,
+                R.id.mainNotificationFragment-> {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.mypage_title)
@@ -220,6 +224,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
     }
     override fun onDestroy() {
         super.onDestroy()

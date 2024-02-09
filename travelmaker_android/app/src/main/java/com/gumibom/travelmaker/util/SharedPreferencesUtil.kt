@@ -18,9 +18,9 @@ class SharedPreferencesUtil (context : Context) {
         editor.putString("accessToken", token)
         editor.apply()
     }
+
     fun getToken(): String {
         val accessToken = preferences.getString("accessToken", "")
-
         return if (accessToken != ""){
             accessToken!!
         }else{

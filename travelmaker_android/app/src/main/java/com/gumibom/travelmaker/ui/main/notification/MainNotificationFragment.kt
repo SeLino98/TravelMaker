@@ -7,16 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
-import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 import com.gumibom.travelmaker.databinding.FragmentMainNotificationBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.util.SharedPreferencesUtil
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
@@ -36,10 +34,9 @@ class MainNotificationFragment : Fragment() {
     private lateinit var mainFcmNotifyAdapter: MainFcmNotifyAdapter
     private lateinit var mainFcmSentNotifyAdapter: MainFcmNotifySentAdapter
     private lateinit var getNotifyList:FcmGetNotifyListDTO
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getNotifyList(1)
 
         observeLiveData()
         mainFcmNotifyAdapter = MainFcmNotifyAdapter(activity, viewModel)
@@ -59,6 +56,7 @@ class MainNotificationFragment : Fragment() {
             binding.btnMyResponseList.isSelected = false
             loadRecyclerView(isSent)
         }
+
 //      setupTabLayout()
 
     }
@@ -78,6 +76,23 @@ class MainNotificationFragment : Fragment() {
         }
     }
     private fun observeLiveData(){
+        viewModel.user.observe(viewLifecycleOwner){
+            viewModel.getNotifyList(it.userId)
+        }
+        viewModel.isRequestAcceptCrew.observe(viewLifecycleOwner){
+            if (it.isSuccess){
+                Toast.makeText(activity, "참여요청을 수락했습니다.", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(activity, "서버와 통신을 실패했습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.isRequestRefuseCrew.observe(viewLifecycleOwner){
+            if (it.isSuccess){
+                Toast.makeText(activity, "참여요청을 거절했습니다.", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(activity, "서버와 통신을 실패했습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
         viewModel.isGetNotifyList.observe(viewLifecycleOwner){
             if (it!=null){
                 Log.d(TAG, "observeLiveData: GDGD")

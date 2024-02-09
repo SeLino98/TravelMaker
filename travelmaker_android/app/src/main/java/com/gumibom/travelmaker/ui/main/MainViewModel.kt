@@ -58,6 +58,8 @@ class MainViewModel @Inject constructor(
 
 ) : ViewModel(), CommonViewModel {
 
+
+    //모임 데이터들을 받아오는 로직
     private val _isGetNotifyList = MutableLiveData<FcmGetNotifyListDTO>()
     val isGetNotifyList : LiveData<FcmGetNotifyListDTO> = _isGetNotifyList
     fun getNotifyList(userId: Long){
@@ -65,6 +67,7 @@ class MainViewModel @Inject constructor(
             _isGetNotifyList.value = firebaseNotifyListUseCase.getNotifyList(userId)
         }
     }
+    //모임 요청 수락에 대한 로직
     private val _isRequestAcceptCrew = MutableLiveData<BooleanResponse>()
     val isRequestAcceptCrew : LiveData<BooleanResponse> = _isRequestAcceptCrew
     fun acceptCrew(firebaseAcceptDTO: FirebaseResponseRefuseAcceptDTO){
@@ -72,6 +75,7 @@ class MainViewModel @Inject constructor(
             _isRequestAcceptCrew.value = firebaseFcmAcceptCrewUseCase.acceptCrew(firebaseAcceptDTO)
         }
     }
+    //모임 요청 거절에 대한 로직
     private val _isRequestRefuseCrew = MutableLiveData<BooleanResponse>()
     val isRequestRefuseCrew :LiveData<BooleanResponse> = _isRequestRefuseCrew;
     fun refuseCrew(firebaseRefuseDTO:FirebaseResponseRefuseAcceptDTO){
@@ -79,7 +83,7 @@ class MainViewModel @Inject constructor(
             _isRequestAcceptCrew.value = firebaseRefuseCrewUseCase.refuseCrew(firebaseRefuseDTO)
         }
     }
-
+    //모임 요청에 대한 로직
     private val _isRequestSuccess = MutableLiveData<BooleanResponse>()
     val isRequestSuccess :LiveData<BooleanResponse> = _isRequestSuccess
     fun requestGroup(firebaseDTO: FcmRequestGroupDTO){
@@ -87,10 +91,6 @@ class MainViewModel @Inject constructor(
             _isRequestSuccess.value = requestGroupUseCase.requestGroup(firebaseDTO)
         }
     }
-
-    //모임장의 요청 승인 유즈케이스 만들기.
-
-    //모임장의 요청 거절 유즈케이스 만들기
 
 
     var address : Address? = null
