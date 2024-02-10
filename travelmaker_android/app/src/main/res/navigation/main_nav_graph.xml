@@ -94,6 +94,21 @@
     <fragment
         android:id="@+id/myRecordDetail"
         android:name="com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetail"
-        android:label="MyRecordDetail" />
+        android:label="MyRecordDetail" >
+        <action
+            android:id="@+id/action_myRecordDetail_to_makeMyRecordPictureFragment"
+            app:destination="@id/makeMyRecordPictureFragment" />
+        <action
+            android:id="@+id/action_myRecordDetail_to_makeMyRecordVideoFragment"
+            app:destination="@id/makeMyRecordVideoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeMyRecordPictureFragment"
+        android:name="com.gumibom.travelmaker.ui.main.myrecord.createRecord.MakeMyRecordPictureFragment"
+        android:label="MakeMyRecordPictureFragment" />
+    <fragment
+        android:id="@+id/makeMyRecordVideoFragment"
+        android:name="com.gumibom.travelmaker.ui.main.myrecord.createRecord.MakeMyRecordVideoFragment"
+        android:label="MakeMyRecordVideoFragment" />
 
 </navigation>

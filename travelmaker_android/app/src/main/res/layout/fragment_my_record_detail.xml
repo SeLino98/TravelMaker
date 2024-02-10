@@ -47,7 +47,7 @@
         android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="@id/iv_my_record_detail"
         app:layout_constraintTop_toTopOf="@id/iv_my_record_detail"
-        tools:src="@drawable/ic_calendar"
+        tools:src="@drawable/smile"
         android:elevation="4dp"
         />
 

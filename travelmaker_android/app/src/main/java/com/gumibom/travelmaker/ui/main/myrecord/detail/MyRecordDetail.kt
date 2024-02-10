@@ -46,4 +46,9 @@ class MyRecordDetail : Fragment() {
     private fun setInit() {
 
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
