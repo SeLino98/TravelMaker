@@ -10,11 +10,13 @@
     tools:ignore="RtlSymmetry">
 
     <ImageView
+        android:id="@+id/iv_item_my_record_detail"
         android:layout_width="120dp"
         android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:padding="4dp"
         tools:src="@drawable/test"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"/>

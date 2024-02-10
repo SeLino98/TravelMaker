@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.datasource.pamphlet
 
 import com.gumibom.travelmaker.data.api.pamphlet.PamphletService
+import com.gumibom.travelmaker.data.dto.request.DeleteRecordRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.PamphletResponseDTO
 import com.gumibom.travelmaker.data.dto.response.RecordResponseDTO
@@ -40,5 +41,9 @@ class PamphletRemoteDataSourceImpl @Inject constructor(
         makeRecordRequestDTO: RequestBody
     ): Response<IsSuccessResponseDTO> {
         return pamphletService.makeRecord(image, video, makeRecordRequestDTO)
+    }
+
+    override suspend fun deleteRecord(deleteRecordRequestDTO: DeleteRecordRequestDTO): Response<IsSuccessResponseDTO> {
+        return pamphletService.deleteRecord(deleteRecordRequestDTO)
     }
 }

@@ -3,6 +3,7 @@ package com.gumibom.travelmaker.di.usecase.pamphlet
 import com.gumibom.travelmaker.data.repository.myPage.MyPageRepository
 import com.gumibom.travelmaker.data.repository.pamphlet.PamphletRepository
 import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
+import com.gumibom.travelmaker.domain.pamphlet.DeleteRecordUseCase
 import com.gumibom.travelmaker.domain.pamphlet.FinishTravelPamphletUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetAllMyRecordUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetMyRecordUseCase
@@ -46,5 +47,11 @@ class PamphletUseCaseModule {
     @Provides
     fun provideMakeRecordUseCase(pamphletRepository: PamphletRepository) : MakeRecordUseCase {
         return MakeRecordUseCase(pamphletRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteRecordUseCase(pamphletRepository: PamphletRepository) : DeleteRecordUseCase {
+        return DeleteRecordUseCase(pamphletRepository)
     }
 }

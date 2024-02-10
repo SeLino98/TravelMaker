@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.data.datasource.pamphlet
 
+import com.gumibom.travelmaker.data.dto.request.DeleteRecordRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.PamphletResponseDTO
 import com.gumibom.travelmaker.data.dto.response.RecordResponseDTO
@@ -8,6 +9,7 @@ import com.gumibom.travelmaker.model.pamphlet.Record
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Path
 
 interface PamphletRemoteDataSource {
@@ -21,4 +23,6 @@ interface PamphletRemoteDataSource {
         image : MultipartBody.Part?,
         video : MultipartBody.Part?,
         makeRecordRequestDTO : RequestBody ) : Response<IsSuccessResponseDTO>
+
+    suspend fun deleteRecord(deleteRecordRequestDTO: DeleteRecordRequestDTO) : Response<IsSuccessResponseDTO>
 }

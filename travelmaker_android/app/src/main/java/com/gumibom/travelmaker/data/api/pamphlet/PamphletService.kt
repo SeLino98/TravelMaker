@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.data.api.pamphlet
 
+import com.gumibom.travelmaker.data.dto.request.DeleteRecordRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.PamphletResponseDTO
 import com.gumibom.travelmaker.data.dto.response.RecordResponseDTO
@@ -8,7 +9,10 @@ import com.gumibom.travelmaker.model.pamphlet.Record
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -39,4 +43,7 @@ interface PamphletService {
         @Part video : MultipartBody.Part?,
         @Part("sPRRDto") makeRecordRequestDTO : RequestBody
     ) : Response<IsSuccessResponseDTO>
+
+    @HTTP(method="DELETE", hasBody=true, path="/personal-record")
+    suspend fun deleteRecord(@Body deleteRecordRequestDTO: DeleteRecordRequestDTO) : Response<IsSuccessResponseDTO>
 }
