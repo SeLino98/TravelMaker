@@ -78,7 +78,7 @@ public class FFmpegConfig {
             ClassPathResource classPathResource = new ClassPathResource(ffprobeLocation);
             ffprobe = new FFprobe(classPathResource.getURL().getPath());
         } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
-            ffprobe = new FFprobe(ffmpegLocation);
+            ffprobe = new FFprobe(ffprobeLocation);
         }
 
         return ffprobe;

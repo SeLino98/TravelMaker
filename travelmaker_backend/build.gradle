@@ -55,6 +55,9 @@ dependencies {
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
 	// 영상 처리를 위한 ffmpeg 의존성 추가
 	implementation 'net.bramp.ffmpeg:ffmpeg:0.6.2'
+
+	implementation("ws.schild:jave-core:3.3.1")
+
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
