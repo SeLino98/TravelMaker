@@ -30,7 +30,7 @@ public class RecordService {
 
     private final S3Service s3Service;
 
-    private final ThumbnailProvider thumbnailProvider;
+//    private final ThumbnailProvider thumbnailProvider;
 
     // 개인 팜플렛에 여행 기록 저장
     @Transactional
