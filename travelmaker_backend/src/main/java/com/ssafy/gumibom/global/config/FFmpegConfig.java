@@ -27,30 +27,30 @@ public class FFmpegConfig {
 //        ClassPathResource classPathResource = new ClassPathResource(ffmpegLocation);
 //        return new FFmpeg(classPathResource.getURL().getPath());
 
-//        InputStream inputStream = new ClassPathResource(ffmpegLocation).getInputStream();
-//        File file = File.createTempFile("ffmpeg", ".exe");
-//
-//        try {
-//            FileUtils.copyInputStreamToFile(inputStream, file);
-//        } finally {
-//            IOUtils.closeQuietly(inputStream);
-//        }
-//
-//        return new FFmpeg(file.getPath());
+        InputStream inputStream = new ClassPathResource(ffmpegLocation).getInputStream();
+        File file = File.createTempFile("ffmpeg", ".exe");
 
-        FFmpeg ffMPeg = null;
-
-        String osName = System.getProperty("os.name");
-
-        // 운영체제가 Window인 경우 jar에 내장되어있는 ffmpeg 를 이용
-        if (osName.toLowerCase().contains("win")) {
-            ClassPathResource classPathResource = new ClassPathResource(ffmpegLocation);
-            ffMPeg = new FFmpeg(classPathResource.getURL().getPath());
-        } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
-            ffMPeg = new FFmpeg(ffmpegLocation);
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
 
-        return ffMPeg;
+        return new FFmpeg(file.getPath());
+
+//        FFmpeg ffMPeg = null;
+//
+//        String osName = System.getProperty("os.name");
+//
+//        // 운영체제가 Window인 경우 jar에 내장되어있는 ffmpeg 를 이용
+//        if (osName.toLowerCase().contains("win")) {
+//            ClassPathResource classPathResource = new ClassPathResource(ffmpegLocation);
+//            ffMPeg = new FFmpeg(classPathResource.getURL().getPath());
+//        } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
+//            ffMPeg = new FFmpeg(ffmpegLocation);
+//        }
+//
+//        return ffMPeg;
     }
 
     @Bean
@@ -58,29 +58,29 @@ public class FFmpegConfig {
 //        ClassPathResource classPathResource = new ClassPathResource(ffprobeLocation);
 //        return new FFprobe(classPathResource.getURL().getPath());
 
-//        InputStream inputStream = new ClassPathResource(ffprobeLocation).getInputStream();
-//        File file = File.createTempFile("ffprobe", ".exe");
-//
-//        try {
-//            FileUtils.copyInputStreamToFile(inputStream, file);
-//        } finally {
-//            IOUtils.closeQuietly(inputStream);
-//        }
-//
-//        return new FFprobe(file.getPath());
+        InputStream inputStream = new ClassPathResource(ffprobeLocation).getInputStream();
+        File file = File.createTempFile("ffprobe", ".exe");
 
-        FFprobe ffprobe = null;
-
-        String osName = System.getProperty("os.name");
-
-        // 운영체제가 Window인 경우 jar에 내장되어있는 ffmpeg 를 이용
-        if (osName.toLowerCase().contains("win")) {
-            ClassPathResource classPathResource = new ClassPathResource(ffprobeLocation);
-            ffprobe = new FFprobe(classPathResource.getURL().getPath());
-        } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
-            ffprobe = new FFprobe(ffmpegLocation);
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
 
-        return ffprobe;
+        return new FFprobe(file.getPath());
+
+//        FFprobe ffprobe = null;
+//
+//        String osName = System.getProperty("os.name");
+//
+//        // 운영체제가 Window인 경우 jar에 내장되어있는 ffmpeg 를 이용
+//        if (osName.toLowerCase().contains("win")) {
+//            ClassPathResource classPathResource = new ClassPathResource(ffprobeLocation);
+//            ffprobe = new FFprobe(classPathResource.getURL().getPath());
+//        } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
+//            ffprobe = new FFprobe(ffmpegLocation);
+//        }
+//
+//        return ffprobe;
     }
 }
