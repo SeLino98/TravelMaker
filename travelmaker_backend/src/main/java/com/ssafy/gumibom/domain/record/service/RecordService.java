@@ -9,7 +9,7 @@ import com.ssafy.gumibom.domain.record.entity.PersonalRecord;
 import com.ssafy.gumibom.domain.record.repository.RecordRepository;
 import com.ssafy.gumibom.global.common.Emoji;
 import com.ssafy.gumibom.global.service.S3Service;
-import com.ssafy.gumibom.global.util.ThumbnailProvider;
+//import com.ssafy.gumibom.global.util.ThumbnailProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,7 +98,7 @@ public class RecordService {
             s3Service.deleteS3(pRecord.getVideoUrl());
             videoUrl = s3Service.uploadS3(video, "videos");
             s3Service.deleteS3(pRecord.getVideoThumbnailUrl());
-            videoThumbnailUrl = s3Service.uploadS3(thumbnailProvider.extractThumbnail(video), "images");
+//            videoThumbnailUrl = s3Service.uploadS3(thumbnailProvider.extractThumbnail(video), "images");
         }
 
         pRecord.updateRecord(uPRRDto.getTitle(), imgUrl, videoUrl, videoThumbnailUrl, uPRRDto.getText(), uPRRDto.getEmoji());
