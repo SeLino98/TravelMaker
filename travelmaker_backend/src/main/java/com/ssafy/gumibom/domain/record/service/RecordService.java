@@ -47,7 +47,7 @@ public class RecordService {
         if(image!=null) imgUrl = s3Service.uploadS3(image, "images");
         if(video!=null) {
             videoUrl = s3Service.uploadS3(video, "videos");
-            videoThumbnailUrl = s3Service.uploadS3(thumbnailProvider.extractThumbnail(video), "images");
+//            videoThumbnailUrl = s3Service.uploadS3(thumbnailProvider.extractThumbnail(video), "images");
         }
 
         PersonalRecord pRecord = PersonalRecord.createPersonalRecord(title, imgUrl, videoUrl, videoThumbnailUrl, text, pPamphlet, emoji);
