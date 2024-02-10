@@ -4,7 +4,9 @@ import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFprobe;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.bytedeco.javacpp.Loader;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.aot.AotServices;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -16,11 +18,14 @@ import java.io.InputStream;
 @Configuration
 public class FFmpegConfig {
 
-    @Value("${ffmpeg.main.location}")
-    public String ffmpegLocation;
+//    @Value("${ffmpeg.main.location}")
+//    public String ffmpegLocation;
+//
+//    @Value("${ffmpeg.probe.location}")
+//    public String ffprobeLocation;
 
-    @Value("${ffmpeg.probe.location}")
-    public String ffprobeLocation;
+    public String ffmpegLocation = Loader.load(org.bytedeco.ffmpeg.ffmpeg.class);
+    public String ffprobeLocation = Loader.load(org.bytedeco.ffmpeg.ffprobe.class);
 
     @Bean
     public FFmpeg ffMpeg() throws IOException {

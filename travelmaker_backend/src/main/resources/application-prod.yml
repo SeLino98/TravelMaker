@@ -53,11 +53,11 @@ redis:
   repositories:
     enabled: false
 
-ffmpeg:
-  main:
-    location: /usr/bin/ffmpeg
-  probe:
-    location: /usr/bin/ffprobe
+#ffmpeg:
+#  main:
+#    location: /usr/bin/ffmpeg
+#  probe:
+#    location: /usr/bin/ffprobe
 
 jwt:
   secret: ENC(iD/4Lj32YZAdHtLBznMbfeW9ugCbJ/wIhartzsBpSghIamYs5cA1yafvo7DVuTGKVijW7gF0RjSuFj/7oEBv6qY+47KgsAhuhpnCTjPZau0=)
