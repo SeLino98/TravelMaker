@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -75,6 +76,14 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         getLoginUserInfo()
         observeLiveData()
+        backToNavigation()
+    }
+
+    /**
+     * 네비 게이션 뒤로 가는 함수
+     */
+    fun backToNavigation() {
+        navController.navigateUp()
     }
 
     /**
@@ -140,8 +149,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.myRecordDetail -> {
-                    binding.toolbar.menu.clear()
-                    binding.toolbar.inflateMenu(R.menu.top_app_bar)
+                    binding.toolbar.visibility = View.GONE
                 }
             }
         }

@@ -2,7 +2,9 @@ package com.gumibom.travelmaker.data.api.pamphlet
 
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.PamphletResponseDTO
+import com.gumibom.travelmaker.data.dto.response.RecordResponseDTO
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
+import com.gumibom.travelmaker.model.pamphlet.Record
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -26,4 +28,15 @@ interface PamphletService {
 
     @PUT("/personal-pamphlet/{pamphletId}")
     suspend fun finishRecordMyPamphlet(@Path("pamphletId") pamphletId : Long) : Response<IsSuccessResponseDTO>
+
+    @GET("/personal-record/{pamphletId}")
+    suspend fun getAllMyRecord(@Path("pamphletId") pamphletId: Long) : Response<MutableList<RecordResponseDTO>>
+
+    @Multipart
+    @POST("/personal-record")
+    suspend fun makeRecord(
+        @Part image : MultipartBody.Part?,
+        @Part video : MultipartBody.Part?,
+        @Part("sPRRDto") makeRecordRequestDTO : RequestBody
+    ) : Response<IsSuccessResponseDTO>
 }

@@ -4,8 +4,10 @@ import com.gumibom.travelmaker.data.repository.myPage.MyPageRepository
 import com.gumibom.travelmaker.data.repository.pamphlet.PamphletRepository
 import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
 import com.gumibom.travelmaker.domain.pamphlet.FinishTravelPamphletUseCase
+import com.gumibom.travelmaker.domain.pamphlet.GetAllMyRecordUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetMyRecordUseCase
 import com.gumibom.travelmaker.domain.pamphlet.MakePamphletUseCase
+import com.gumibom.travelmaker.domain.pamphlet.MakeRecordUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +34,17 @@ class PamphletUseCaseModule {
     @Provides
     fun provideFinishMyTravelPamphletUseCase(pamphletRepository: PamphletRepository) : FinishTravelPamphletUseCase {
         return FinishTravelPamphletUseCase(pamphletRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetAllMyRecordUseCase(pamphletRepository: PamphletRepository) : GetAllMyRecordUseCase {
+        return GetAllMyRecordUseCase(pamphletRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMakeRecordUseCase(pamphletRepository: PamphletRepository) : MakeRecordUseCase {
+        return MakeRecordUseCase(pamphletRepository)
     }
 }

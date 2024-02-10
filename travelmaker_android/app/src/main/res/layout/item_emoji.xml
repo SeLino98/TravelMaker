@@ -9,22 +9,26 @@
 
     <ImageView
         android:id="@+id/iv_item_emoji_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/iv_happy"
-        app:layout_constraintEnd_toEndOf="@id/iv_happy"
-        app:layout_constraintBottom_toTopOf="@id/iv_happy"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="@id/iv_emoji"
+        app:layout_constraintEnd_toEndOf="@id/iv_emoji"
+        app:layout_constraintBottom_toTopOf="@id/iv_emoji"
+        android:visibility="invisible"
         android:src="@drawable/ic_emoji_check"
-        android:visibility="gone"
+
         />
 
     <ImageView
-        android:id="@+id/iv_happy"
+        android:id="@+id/iv_emoji"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_margin="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
