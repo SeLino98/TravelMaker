@@ -110,5 +110,6 @@
     <string name="edit_myinfo_checkbox6_picture">사진</string>
     <string name="edit_myinfo_checkbox7_nature">자연</string>
     <string name="edit_myinfo_checkbox8_rest">휴식</string>
+    <string name="upload_picture_video">사진을 업로드 해보세요.</string>
 
 </resources>

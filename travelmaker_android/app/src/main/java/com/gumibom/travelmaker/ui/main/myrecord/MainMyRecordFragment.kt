@@ -98,7 +98,6 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
     }
 
     override fun moveRecordDetail(pamphletId: Long, view: View) {
-        Log.d(TAG, "moveRecordDetail: 호출호출?")
         val bundle = bundleOf("pamphletId" to pamphletId)
         Navigation.findNavController(view).navigate(R.id.action_mainMyRecordFragment_to_myRecordDetail, bundle)
     }

@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.myRecordDetail -> {
                     binding.toolbar.menu.clear()
+                    binding.toolbar.inflateMenu(R.menu.top_app_bar)
                 }
             }
         }

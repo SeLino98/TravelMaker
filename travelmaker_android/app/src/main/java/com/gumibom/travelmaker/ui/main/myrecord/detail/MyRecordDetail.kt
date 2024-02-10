@@ -36,5 +36,14 @@ class MyRecordDetail : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setInit()
+    }
+
+    /**
+     * 초기 세팅
+     */
+    private fun setInit() {
+
     }
 }
