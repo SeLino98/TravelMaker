@@ -27,16 +27,30 @@ public class FFmpegConfig {
 //        ClassPathResource classPathResource = new ClassPathResource(ffmpegLocation);
 //        return new FFmpeg(classPathResource.getURL().getPath());
 
-        InputStream inputStream = new ClassPathResource(ffmpegLocation).getInputStream();
-        File file = File.createTempFile("ffmpeg", ".exe");
+//        InputStream inputStream = new ClassPathResource(ffmpegLocation).getInputStream();
+//        File file = File.createTempFile("ffmpeg", ".exe");
+//
+//        try {
+//            FileUtils.copyInputStreamToFile(inputStream, file);
+//        } finally {
+//            IOUtils.closeQuietly(inputStream);
+//        }
+//
+//        return new FFmpeg(file.getPath());
 
-        try {
-            FileUtils.copyInputStreamToFile(inputStream, file);
-        } finally {
-            IOUtils.closeQuietly(inputStream);
+        FFmpeg ffMPeg = null;
+
+        String osName = System.getProperty("os.name");
+
+        // 운영체제가 Window인 경우 jar에 내장되어있는 ffmpeg 를 이용
+        if (osName.toLowerCase().contains("win")) {
+            ClassPathResource classPathResource = new ClassPathResource(ffmpegLocation);
+            ffMPeg = new FFmpeg(classPathResource.getURL().getPath());
+        } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
+            ffMPeg = new FFmpeg(ffmpegLocation);
         }
 
-        return new FFmpeg(file.getPath());
+        return ffMPeg;
     }
 
     @Bean
@@ -44,15 +58,29 @@ public class FFmpegConfig {
 //        ClassPathResource classPathResource = new ClassPathResource(ffprobeLocation);
 //        return new FFprobe(classPathResource.getURL().getPath());
 
-        InputStream inputStream = new ClassPathResource(ffprobeLocation).getInputStream();
-        File file = File.createTempFile("ffprobe", ".exe");
+//        InputStream inputStream = new ClassPathResource(ffprobeLocation).getInputStream();
+//        File file = File.createTempFile("ffprobe", ".exe");
+//
+//        try {
+//            FileUtils.copyInputStreamToFile(inputStream, file);
+//        } finally {
+//            IOUtils.closeQuietly(inputStream);
+//        }
+//
+//        return new FFprobe(file.getPath());
 
-        try {
-            FileUtils.copyInputStreamToFile(inputStream, file);
-        } finally {
-            IOUtils.closeQuietly(inputStream);
+        FFprobe ffprobe = null;
+
+        String osName = System.getProperty("os.name");
+
+        // 운영체제가 Window인 경우 jar에 내장되어있는 ffmpeg 를 이용
+        if (osName.toLowerCase().contains("win")) {
+            ClassPathResource classPathResource = new ClassPathResource(ffprobeLocation);
+            ffprobe = new FFprobe(classPathResource.getURL().getPath());
+        } else if(osName.toLowerCase().contains("unix") || osName.toLowerCase().contains("linux")) {
+            ffprobe = new FFprobe(ffmpegLocation);
         }
 
-        return new FFprobe(file.getPath());
+        return ffprobe;
     }
 }

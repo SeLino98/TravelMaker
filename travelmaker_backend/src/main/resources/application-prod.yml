@@ -55,9 +55,9 @@ redis:
 
 ffmpeg:
   main:
-    location: /ffmpeg/ffmpeg.exe
+    location: /usr/ffmpeg
   probe:
-    location: /ffmpeg/ffprobe.exe
+    location: /usr/ffprobe
 
 jwt:
   secret: ENC(iD/4Lj32YZAdHtLBznMbfeW9ugCbJ/wIhartzsBpSghIamYs5cA1yafvo7DVuTGKVijW7gF0RjSuFj/7oEBv6qY+47KgsAhuhpnCTjPZau0=)
