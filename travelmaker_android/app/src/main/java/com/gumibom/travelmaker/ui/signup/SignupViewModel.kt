@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
+import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
 
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
@@ -21,6 +22,7 @@ import com.gumibom.travelmaker.domain.signup.SaveUserInfoUseCase
 
 import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
+import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.GoogleUser
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -100,14 +102,13 @@ class SignupViewModel @Inject constructor(
             Log.d(TAG, "saveToUserDTO: ")
         }
     }
-    private val _isDupNick = MutableLiveData<IsSuccessResponseDTO>()
-    val isDupNick:LiveData<IsSuccessResponseDTO> = _isDupNick
+    private val _isDupNick = MutableLiveData<SignInResponseDTO>()
+    val isDupNick:LiveData<SignInResponseDTO> = _isDupNick
 
 
     fun checkDupNickName(nickName:String){
         viewModelScope.launch {
-            val isDuplicated = checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName)
-            _isDupNick.value = isDuplicated!!
+            _isDupNick.value = checkDuplicatedNicknameUseCase.checkDuplicatedNick(nickName)
         }
     }
     //인호 끝
@@ -222,13 +223,18 @@ class SignupViewModel @Inject constructor(
     // 우건
 
 
+
+    private val _isDuplicatedId = MutableLiveData<SignInResponseDTO>()
+    val isDuplicatedId : LiveData<SignInResponseDTO> = _isDuplicatedId
+
+
     // 지원
     fun checkId(id: String) {
         viewModelScope.launch {
         // '중복된 아이디' 인 지 의 기본값 = false: '중복이 아닌 아이디' 입니다.
 
         // '중복된 아이디'여부의 기본값 = false ==> '중복이 아닌 아이디' 입니다.
-            _isDuplicatedId.value = false
+            _isDuplicatedId.value = checkDuplicatedIdUseCase.checkDuplicatedId(id)
         }
     }
     fun checkNickname(nickname: String) {

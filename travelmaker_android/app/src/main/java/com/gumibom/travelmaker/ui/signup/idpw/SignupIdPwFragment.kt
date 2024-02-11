@@ -70,7 +70,7 @@ class SignupIdPwFragment : Fragment() {
 
     private fun observeData() {
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) { it ->
-            if (it == true) {
+            if (it.booleanValue) {
                 Toast.makeText(requireContext(), "중복된 아이디 입니다.", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(requireContext(), "가능한 아이디 입니다.", Toast.LENGTH_LONG).show()

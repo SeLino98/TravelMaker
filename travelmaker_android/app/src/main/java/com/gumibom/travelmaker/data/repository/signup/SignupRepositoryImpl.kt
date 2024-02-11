@@ -5,6 +5,7 @@ import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
 import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
+import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
 
 import retrofit2.Response
 import javax.inject.Inject
@@ -16,14 +17,14 @@ class SignupRepositoryImpl @Inject constructor(
     override suspend fun sendPhoneNumber(phoneNumber: String): Response<IsSuccessResponseDTO> {
         return signupRemoteDataSourceImpl.sendPhoneNumber(phoneNumber)
     }
-    override suspend fun checkDuplicatedId(id: String): Response<IsSuccessResponseDTO> {
+    override suspend fun checkDuplicatedId(id: String): Response<SignInResponseDTO> {
 
 
         return signupRemoteDataSourceImpl.checkDuplicatedId(id)
     }
 
 
-    override suspend fun checkDuplicateNickname(nickname: String): Response<IsSuccessResponseDTO> {
+    override suspend fun checkDuplicateNickname(nickname: String): Response<SignInResponseDTO> {
         return signupRemoteDataSourceImpl.checkDuplicateNickname(nickname)
     }
 
