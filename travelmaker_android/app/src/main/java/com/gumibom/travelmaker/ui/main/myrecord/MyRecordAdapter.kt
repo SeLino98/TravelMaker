@@ -51,7 +51,7 @@ class MyRecordAdapter(private val context : Context, private val myRecordViewMod
 
         private fun setItem(item : PamphletItem){
             binding.tvMyRecordTitle.text = item.title
-            // TODO 팜플렛 표지 넣기
+
             val imageUrl = item.repreImgUrl
             Glide.with(context)
                 .load(imageUrl)

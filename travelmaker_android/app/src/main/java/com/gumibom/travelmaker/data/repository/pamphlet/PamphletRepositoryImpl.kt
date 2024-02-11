@@ -46,4 +46,8 @@ class PamphletRepositoryImpl @Inject constructor(
     override suspend fun deleteRecord(deleteRecordRequestDTO: DeleteRecordRequestDTO): Response<IsSuccessResponseDTO> {
         return pamphletRemoteDataSourceImpl.deleteRecord(deleteRecordRequestDTO)
     }
+
+    override suspend fun getOtherPamphlet(userId: Long): Response<List<PamphletItem>> {
+        return pamphletRemoteDataSourceImpl.getOtherPamphlet(userId)
+    }
 }

@@ -46,4 +46,7 @@ interface PamphletService {
 
     @HTTP(method="DELETE", hasBody=true, path="/personal-record")
     suspend fun deleteRecord(@Body deleteRecordRequestDTO: DeleteRecordRequestDTO) : Response<IsSuccessResponseDTO>
+
+    @GET("personal-pamphlet/v3/{userId}")
+    suspend fun getOtherPamphlet(@Path("userId") userId : Long) : Response<List<PamphletItem>>
 }

@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.main.myrecord
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentMainMypageBinding
 import com.gumibom.travelmaker.databinding.FragmentMyRecordBinding
+import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,11 +28,18 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
     private val myRecordViewModel : MyRecordViewModel by viewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
     private lateinit var adapter : MyRecordAdapter
+    private lateinit var activity: MainActivity
 
     private var isFinish = false
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as MainActivity
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        activity.setNavigationMenuToolbar()
     }
 
     override fun onCreateView(

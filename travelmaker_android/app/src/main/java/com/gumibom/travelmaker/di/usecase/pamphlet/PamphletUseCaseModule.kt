@@ -7,6 +7,7 @@ import com.gumibom.travelmaker.domain.pamphlet.DeleteRecordUseCase
 import com.gumibom.travelmaker.domain.pamphlet.FinishTravelPamphletUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetAllMyRecordUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetMyRecordUseCase
+import com.gumibom.travelmaker.domain.pamphlet.GetOtherPamphletUseCase
 import com.gumibom.travelmaker.domain.pamphlet.MakePamphletUseCase
 import com.gumibom.travelmaker.domain.pamphlet.MakeRecordUseCase
 import dagger.Module
@@ -53,5 +54,11 @@ class PamphletUseCaseModule {
     @Provides
     fun provideDeleteRecordUseCase(pamphletRepository: PamphletRepository) : DeleteRecordUseCase {
         return DeleteRecordUseCase(pamphletRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetOtherPamphletUseCase(pamphletRepository: PamphletRepository) : GetOtherPamphletUseCase {
+        return GetOtherPamphletUseCase(pamphletRepository)
     }
 }

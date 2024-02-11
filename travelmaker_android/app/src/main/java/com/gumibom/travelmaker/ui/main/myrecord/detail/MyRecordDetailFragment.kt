@@ -1,14 +1,9 @@
 package com.gumibom.travelmaker.ui.main.myrecord.detail
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -17,28 +12,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
-import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.NO_RECORD
 import com.gumibom.travelmaker.data.dto.request.DeleteRecordRequestDTO
-import com.gumibom.travelmaker.databinding.FragmentMyRecordBinding
 import com.gumibom.travelmaker.databinding.FragmentMyRecordDetailBinding
 import com.gumibom.travelmaker.model.pamphlet.Record
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.main.MainActivity
-import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MyRecordDetail_싸피"
 @AndroidEntryPoint
-class MyRecordDetail : Fragment() {
+class MyRecordDetailFragment : Fragment() {
 
     private var _binding: FragmentMyRecordDetailBinding? = null
     private val binding get() = _binding!!
@@ -157,8 +144,6 @@ class MyRecordDetail : Fragment() {
             binding.playerView.visibility = View.VISIBLE
             binding.ivMyRecordDetail.visibility = View.INVISIBLE
 
-            val videoUri = Uri.parse(record.videoUrl)
-            Log.d(TAG, "setInitFragmentBody: $videoUri")
             initializePlayer(record.videoUrl)
 
             Glide.with(this)

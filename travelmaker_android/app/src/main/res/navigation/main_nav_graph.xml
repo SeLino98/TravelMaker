@@ -63,7 +63,7 @@
         android:id="@+id/mainLookPamphletsFragment"
         android:name="com.gumibom.travelmaker.ui.main.lookpamphlets.MainLookPamphletsFragment"
         android:label="fragment_main_look_pamphlets"
-        tools:layout="@layout/fragment_main_look_pamphlets" />
+        tools:layout="@layout/fragment_pamphlet" />
     <fragment
         android:id="@+id/makePamphletFragment"
         android:name="com.gumibom.travelmaker.ui.main.gotravel.MakePamphletFragment"
@@ -93,7 +93,7 @@
         tools:layout="@layout/fragment_main_notification" />
     <fragment
         android:id="@+id/myRecordDetail"
-        android:name="com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetail"
+        android:name="com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetailFragment"
         android:label="MyRecordDetail" >
         <action
             android:id="@+id/action_myRecordDetail_to_makeMyRecordPictureFragment"

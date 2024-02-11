@@ -25,4 +25,6 @@ interface PamphletRepository {
         makeRecordRequestDTO : RequestBody ) : Response<IsSuccessResponseDTO>
 
     suspend fun deleteRecord(deleteRecordRequestDTO: DeleteRecordRequestDTO) : Response<IsSuccessResponseDTO>
+
+    suspend fun getOtherPamphlet(userId : Long) : Response<List<PamphletItem>>
 }

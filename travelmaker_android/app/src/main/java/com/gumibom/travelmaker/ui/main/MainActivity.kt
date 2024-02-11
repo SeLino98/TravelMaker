@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setNavigationMenuToolbar(){
+    fun setNavigationMenuToolbar(){
         //프래그먼트가 ~~ 일 땐 ~~로
         //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -150,6 +150,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.myRecordDetail -> {
                     binding.toolbar.visibility = View.GONE
+                }
+
+                R.id.mainLookPamphletsFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = getString(R.string.lookPamphlet_title)
+                    binding.toolbar.setNavigationOnClickListener {
+                        navController.navigateUp()
+                    }
                 }
             }
         }
