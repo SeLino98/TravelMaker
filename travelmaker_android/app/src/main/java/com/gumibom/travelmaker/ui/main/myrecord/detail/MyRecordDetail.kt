@@ -17,6 +17,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.NO_RECORD
 import com.gumibom.travelmaker.data.dto.request.DeleteRecordRequestDTO
@@ -40,6 +48,11 @@ class MyRecordDetail : Fragment() {
     private var pamphletId : Long = 0
     private var recordId : Long = 0
 
+    private var playWhenReady = true
+    private var currentWindow = 0
+    private var playbackPosition = 0L
+    private var player : SimpleExoPlayer? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as MainActivity
@@ -48,7 +61,6 @@ class MyRecordDetail : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pamphletId = arguments?.getLong("pamphletId") ?: 0
-        Log.d(TAG, "onCreate: $pamphletId")
     }
 
     override fun onCreateView(
@@ -123,15 +135,36 @@ class MyRecordDetail : Fragment() {
      * 초기 리싸이클러뷰 밑에 화면 렌더링
      */
     private fun setInitFragmentBody(record : Record) {
-        // TODO 영상 기능 구현 시 if로 분기 처리
 
-        Glide.with(this)
-            .load(record.imgUrl)
-            .into(binding.ivMyRecordDetail)
+        // 이미지일 경우
+        if (record.videoUrl.isEmpty()) {
+//            releasePlayer() // ExoPlayer 해제
+            binding.playerView.visibility = View.GONE
+            binding.ivMyRecordDetail.visibility = View.VISIBLE
 
-        Glide.with(this)
-            .load(emojiDrawableId[record.emoji])
-            .into(binding.ivMyRecordDetailEmoji)
+            Glide.with(this)
+                .load(record.imgUrl)
+                .into(binding.ivMyRecordDetail)
+
+            Glide.with(this)
+                .load(emojiDrawableId[record.emoji])
+                .into(binding.ivMyRecordDetailEmoji)
+
+
+        }
+        // 비디오일 경우
+        else {
+            binding.playerView.visibility = View.VISIBLE
+            binding.ivMyRecordDetail.visibility = View.INVISIBLE
+
+            val videoUri = Uri.parse(record.videoUrl)
+            Log.d(TAG, "setInitFragmentBody: $videoUri")
+            initializePlayer(record.videoUrl)
+
+            Glide.with(this)
+                .load(emojiDrawableId[record.emoji])
+                .into(binding.ivMyRecordDetailEmoji)
+        }
 
         binding.tvMyRecordDetailText.text = record.text
     }
@@ -168,9 +201,40 @@ class MyRecordDetail : Fragment() {
         }
     }
 
+    /**
+     * 여기부터  Exoplayer 설정 함수
+     */
+    private fun initializePlayer(uri: String) {
+        player = SimpleExoPlayer.Builder(requireContext())
+            .build()
+            .also { exoPlayer ->
+                binding.playerView.player = exoPlayer
+
+                val mediaItem = MediaItem.fromUri(uri)
+                exoPlayer.setMediaItem(mediaItem)
+
+                exoPlayer.playWhenReady = playWhenReady
+                exoPlayer.seekTo(currentWindow, playbackPosition)
+                exoPlayer.prepare()
+                exoPlayer.play()
+            }
+    }
+
+    private fun releasePlayer() {
+        player?.run {
+            playbackPosition = this.currentPosition
+            currentWindow = this.currentWindowIndex
+            playWhenReady = this.playWhenReady
+            release()
+        }
+        player = null
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        releasePlayer()
+//        videoPlayer.releasePlayer() // ExoPlayer 해제
     }
 
     companion object {

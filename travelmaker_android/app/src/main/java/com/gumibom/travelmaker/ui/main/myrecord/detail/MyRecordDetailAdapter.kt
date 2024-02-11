@@ -28,9 +28,10 @@ class MyRecordDetailAdapter(private val context : Context, private val viewModel
                 Glide.with(context)
                     .load(item.imgUrl)
                     .into(binding.ivItemMyRecordDetail)
-            } else {
+
+            } else if (item.imgUrl.isNotEmpty() && item.videoUrl.isNotEmpty()) {
                 Glide.with(context)
-                    .load(R.drawable.video_thumbnail)
+                    .load(item.imgUrl)
                     .into(binding.ivItemMyRecordDetail)
             }
 

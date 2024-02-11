@@ -33,6 +33,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:background="@drawable/background_imageview_picture"
+            android:scaleType="centerCrop"
             android:clickable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

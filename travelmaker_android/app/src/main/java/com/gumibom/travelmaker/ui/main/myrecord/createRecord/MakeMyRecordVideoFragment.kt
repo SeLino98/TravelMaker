@@ -269,7 +269,10 @@ class MakeMyRecordVideoFragment : Fragment() {
             val bitmap = retriever.getFrameAtTime((thumbnailTime * 1000000).toLong(), MediaMetadataRetriever.OPTION_CLOSEST)
 
             // bitmap을 절대 경로 파일에 저장
-            val thumbnailFile = File(requireContext().cacheDir, "thumbnail.jpg")
+            val timestamp = System.currentTimeMillis()  // 중복을 피하기 위해 현재 시간을 넣어줌
+            val thumbnailFileName = "thumbnail_$timestamp.jpg"
+
+            val thumbnailFile = File(requireContext().cacheDir, thumbnailFileName)
             val fos = FileOutputStream(thumbnailFile)
             bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
             fos.close()
