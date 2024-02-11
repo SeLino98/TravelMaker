@@ -58,16 +58,18 @@ class SignupProfileFragment : Fragment() {
             signupActivity.navigateToPreviousFragment()
         }
         binding.tvSignupLocationNext.setOnClickListener {//완료 버튼 눌렀을 때
-            signupViewModel.saveToUserDTO()//DTO 통신
+
+            signupViewModel.saveUserInfoSaveProfileCategory("MultiImage로 변환하기 ",selectedChipName)
+            signupViewModel.saveUserInfoAllData()//DTO 통신
             //서버에 정상적으로 저장이 되면 ObserViewModel에서 isSignup값이 전환되고 자동으로 페이지가 넘어간다.
         }
     }
     private fun observeViewModel() {
         signupViewModel.isSignup.observe(viewLifecycleOwner){
-            if (it.isSuccess){//성공했다면? 화면전환
+            if (it.isSuccess){//회원가입이 성공했다면? 화면전환
                 signupActivity.navigateToNextFragment()
             }else{
-                Toast.makeText(activity, "회원가입 실패~!쓰 ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "회원가입을 실패했습니다. ", Toast.LENGTH_SHORT).show()
             }
         }
 //        signupViewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
@@ -92,6 +94,12 @@ class SignupProfileFragment : Fragment() {
                     2 -> deletePhotoFromProfile()
                 }
             }
+            if (profileFlag){
+                binding.tvSignupLocationNext.isEnabled = true
+            }else{
+                binding.tvSignupLocationNext.isEnabled = false
+            }
+
             //권한 체크
             Log.d(TAG, "selectPicture: GHDGDG")
 //            dispatchTakePicture()
@@ -100,6 +108,7 @@ class SignupProfileFragment : Fragment() {
             Log.d(TAG, "selectPicture: GHDGDG2222")
         }
     }
+
 
     private fun deletePhotoFromProfile() {
         profileFlag = false
@@ -146,23 +155,23 @@ class SignupProfileFragment : Fragment() {
             Log.d(TAG, "onActivityResult: ")
         }
     }
+    private lateinit var selectedChip:MutableList<Int>
+    private lateinit var selectedChipName : MutableList<String>
     private fun selectCategory(){
         val chipGroup: ChipGroup = binding.chipGroup1
         Log.d(TAG, "selectCategory:1")
         chipGroup.setOnCheckedStateChangeListener {
                 group, checkId ->
-            val selectedChip: List<Int> = checkId;
+            selectedChip= checkId;
             Log.d(TAG, "selectCategory: ${selectedChip}")
 
             if (selectedChip != null) {
                 for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
                     val selectedChipId = token //
                     val selctedName = group.findViewById<Chip>(selectedChipId)
+                    selectedChipName.add(selctedName.text.toString())
                     Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChip")
-                    Log.d(
-                        TAG,
-                        "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}"
-                    )
+                    Log.d(TAG, "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}")
                 }
             }
             //모든 칩들의 공통 특성 선택

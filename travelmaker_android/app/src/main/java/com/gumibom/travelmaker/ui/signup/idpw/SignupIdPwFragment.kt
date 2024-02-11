@@ -61,6 +61,10 @@ class SignupIdPwFragment : Fragment() {
         // 앞으로가기 버튼 기능을 특정한 경우에만 가능
         btnSignupNext.setOnClickListener {
             if (isNextPage) {
+
+                //ViewModel에 데이터 저장하는 로직을 담는다.
+
+
                 activity.navigateToNextFragment()
             } else {
                 btnSignupNext.setOnClickListener {}

@@ -8,10 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
+import com.gumibom.travelmaker.data.dto.request.RequestDto
+import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
-
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
@@ -24,6 +24,7 @@ import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.GoogleUser
+import com.gumibom.travelmaker.model.SignInUserDataRequest
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -43,7 +44,55 @@ class SignupViewModel @Inject constructor(
     private val saveUserInfoUseCase :SaveUserInfoUseCase
 ) : ViewModel(), CommonViewModel {
 
+    //모임 데이터들을 저장하는 유저데이터dto
+    private val _userDTO = MutableLiveData<SignInUserDataRequest>()
+    val userDTO :LiveData<SignInUserDataRequest> = _userDTO
 
+    //서버로 보낼 데이터
+    private val _userRequestDTO = MutableLiveData<SignInUserDataRequestDTO>()
+    val userRequestDTO : LiveData<SignInUserDataRequestDTO> = _userRequestDTO
+    fun saveUserInfoIDPW(userId:String,userPassword:String){
+        _userDTO.value!!.requestDto.email = userId;
+        _userDTO.value!!.requestDto.password = userPassword
+    }//page 1
+    fun saveUserInfoNick(nickName:String){
+        _userDTO.value!!.requestDto.nickname = nickName
+    }//page 2
+    fun saveUserInfoAddress(address:String){
+        //나눠서 저장 town이랑 address
+        _userDTO.value!!.requestDto.town = address
+        _userDTO.value!!.requestDto.nation = address
+    }//page 3
+    fun saveUserInfoGenderBirth(gender : String, birth:String ){
+        _userDTO.value!!.requestDto.gender = gender
+        _userDTO.value!!.requestDto.birth = birth
+    }//page 4
+    fun saveUserInfoSavePhoneNum(phone:String){
+        _userDTO.value!!.requestDto.phone = phone
+    }//page 5
+    fun saveUserInfoSaveProfileCategory(profileImage:String, categoryList : List<String>){
+        _userDTO.value!!.image = profileImage
+        _userDTO.value!!.requestDto.categories = categoryList
+    }//page 6
+    fun saveUserInfoAllData(){
+        _userRequestDTO.value = SignInUserDataRequestDTO(userDTO.value!!.image,
+            (RequestDto(birth = userDTO.value!!.requestDto.birth,
+                userDTO.value!!.requestDto.categories,
+                userDTO.value!!.requestDto.email,
+                userDTO.value!!.requestDto.gender,
+                userDTO.value!!.requestDto.nation,
+                userDTO.value!!.requestDto.nickname,
+                userDTO.value!!.requestDto.password,
+                userDTO.value!!.requestDto.phone,
+                userDTO.value!!.requestDto.town,
+                userDTO.value!!.requestDto.username)))//val /var
+        viewModelScope.launch{
+            //여따 LoginRequsetDTO 정보를 다 담아야 됨.
+            // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
+                isSignup.value = saveUserInfoUseCase.saveUserInfo(userRequestDTO.value!!)
+                Log.d(TAG, "saveToUserDTO: ")
+        }
+    }
     /*
         변수 사용하는 공간 시작
      */
@@ -70,38 +119,11 @@ class SignupViewModel @Inject constructor(
         _favoriteList.value = newList
     }
 
-    private lateinit var userInfo:UserRequestDTO
-    fun setUserDataToUserDTO(category: Int, userId: String,
-                             password: String, email: String,
-                             nickname: String, gender: Boolean,
-                             birth: String, phoneNum: String,
-                             imgURL: String, town: String,
-                             belief: Double) {
-        userInfo = UserRequestDTO(
-            category = category,
-            userId = userId,
-            password = password,
-            email = email,
-            nickname = nickname,
-            gender = gender,
-            birth = birth,
-            phoneNum = phoneNum,
-            imgURL = imgURL,
-            town = town,
-            belief = belief
-        )
-    }
+
     private val _isSignup = MutableLiveData<IsSuccessResponseDTO>()
             val isSignup = _isSignup
 
-    fun saveToUserDTO() {
-        //여따 LoginRequsetDTO 정보를 다 담아야 됨.
-       // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
-        viewModelScope.launch {
-            isSignup.value = saveUserInfoUseCase.saveUserInfo(userInfo)
-            Log.d(TAG, "saveToUserDTO: ")
-        }
-    }
+
     private val _isDupNick = MutableLiveData<SignInResponseDTO>()
     val isDupNick:LiveData<SignInResponseDTO> = _isDupNick
 
@@ -219,8 +241,6 @@ class SignupViewModel @Inject constructor(
         val googleUser = bundle?.getBundle("googleUser")
 //        loginId = googleUser.e
     }
-
-    // 우건
 
 
 

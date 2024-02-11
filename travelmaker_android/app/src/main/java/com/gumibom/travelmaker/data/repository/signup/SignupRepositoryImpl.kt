@@ -3,7 +3,7 @@ package com.gumibom.travelmaker.data.repository.signup
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
-import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
+import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
 
@@ -28,7 +28,7 @@ class SignupRepositoryImpl @Inject constructor(
         return signupRemoteDataSourceImpl.checkDuplicateNickname(nickname)
     }
 
-    override suspend fun saveUserData(userInfo: UserRequestDTO): Response<IsSuccessResponseDTO> {
+    override suspend fun saveUserData(userInfo: SignInUserDataRequestDTO): Response<IsSuccessResponseDTO> {
         return signupRemoteDataSourceImpl.saveUserData(userInfo)
     }
 

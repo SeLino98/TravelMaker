@@ -2,7 +2,7 @@ package com.gumibom.travelmaker.data.datasource.signup
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
-import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
+import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
 import retrofit2.Response
@@ -25,7 +25,7 @@ class SignupRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun saveUserData(userInfo: UserRequestDTO): Response<IsSuccessResponseDTO> {
+    override suspend fun saveUserData(userInfo: SignInUserDataRequestDTO): Response<IsSuccessResponseDTO> {
         return signupService.saveUserInfo(userInfo)
     }
 

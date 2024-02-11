@@ -1,7 +1,7 @@
 package com.gumibom.travelmaker.data.api.signup
 
 import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
-import com.gumibom.travelmaker.data.dto.request.UserRequestDTO
+import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
 import retrofit2.Response
@@ -29,9 +29,10 @@ interface SignupService {
     @GET("/join/check/nickname-exists/{nickname}")
     suspend fun checkDuplicatedNickName(@Path("nickname") nickname : String) : Response<SignInResponseDTO>
 
-    @POST("/users/join/reg-profile")
-    suspend fun saveUserInfo(@Body userInfo : UserRequestDTO) : Response<IsSuccessResponseDTO>
+    @POST("/join")
+    suspend fun saveUserInfo(@Body userInfo : SignInUserDataRequestDTO) : Response<IsSuccessResponseDTO>
 
     @POST("/sms-certification/confirm")
     fun isCertificationNumber(@Body phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<Boolean>
+
 }

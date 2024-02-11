@@ -18,6 +18,8 @@ import com.gumibom.travelmaker.domain.meeting.GetMarkerCategoryPositionsUseCase
 import com.gumibom.travelmaker.data.dto.request.FcmRequestGroupDTO
 import com.gumibom.travelmaker.data.dto.request.FcmTokenRequestDTO
 import com.gumibom.travelmaker.data.dto.request.FirebaseResponseRefuseAcceptDTO
+import com.gumibom.travelmaker.data.dto.request.RequestDto
+import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 
 import com.gumibom.travelmaker.domain.firebase.FirebaseAcceptCrewUseCase
@@ -35,6 +37,8 @@ import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
+import com.gumibom.travelmaker.model.RequestUserData
+import com.gumibom.travelmaker.model.SignInUserDataRequest
 import com.gumibom.travelmaker.model.User
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,6 +61,9 @@ class MainViewModel @Inject constructor(
     private val firebaseRefuseCrewUseCase: FirebaseRefuseCrewUseCase
 
 ) : ViewModel(), CommonViewModel {
+
+
+
 
 
     //모임 데이터들을 받아오는 로직

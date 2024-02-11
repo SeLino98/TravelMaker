@@ -63,4 +63,9 @@ class SignupUseCaseModule {
         return CheckCertificationUseCase(signupRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideSaveUserDataUseCase(signupRepository: SignupRepository):SaveUserInfoUseCase{
+        return SaveUserInfoUseCase(signupRepository)
+    }
 }
