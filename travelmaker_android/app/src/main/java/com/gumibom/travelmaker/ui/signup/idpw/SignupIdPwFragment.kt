@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,6 +132,7 @@ class SignupIdPwFragment : Fragment() {
     private fun isDupId(){
         binding.btnSignupId.setOnClickListener{
             val idContents = binding.etSignupId.text.toString()
+            Log.d(TAG, "isDupId: ${idContents}")
             signupViewModel.checkId(idContents)
         }
         // 1. 중복검사 버튼을 누를때마다 뷰모델에 liveData를 만들고

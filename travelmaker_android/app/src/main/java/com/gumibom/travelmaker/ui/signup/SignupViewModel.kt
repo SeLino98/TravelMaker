@@ -135,8 +135,7 @@ class SignupViewModel @Inject constructor(
     private var timerJob : Job? = null
 
     // 지원
-    private val _isDuplicatedId = MutableLiveData<Boolean>()
-    val isDuplicatedId : LiveData<Boolean> = _isDuplicatedId
+
 
     private val _isDuplicatedNickname = MutableLiveData<Boolean>()
     val isDuplicatedNickname : LiveData<Boolean> = _isDuplicatedNickname
