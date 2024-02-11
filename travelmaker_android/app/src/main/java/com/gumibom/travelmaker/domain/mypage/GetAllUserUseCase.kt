@@ -1,10 +1,12 @@
 package com.gumibom.travelmaker.domain.mypage
 
+import android.util.Log
 import com.gumibom.travelmaker.data.dto.response.UserResponseDTO
 import com.gumibom.travelmaker.data.repository.myPage.MyPageRepository
 import com.gumibom.travelmaker.model.User
 import javax.inject.Inject
 
+private const val TAG = "GetAllUserUseCase_싸피"
 class GetAllUserUseCase @Inject constructor(
     private val myPageRepositoryImpl: MyPageRepository
 ) {
@@ -12,7 +14,7 @@ class GetAllUserUseCase @Inject constructor(
 
     suspend fun getMyUserInfo() : User? {
         val response = myPageRepositoryImpl.getMyUserInfo()
-
+        Log.d(TAG, "getMyUserInfo: $response")
         if (response.isSuccessful) {
             val body = response.body()
 

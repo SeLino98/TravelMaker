@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.ui.main.myrecord.detail
 
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.gumibom.travelmaker.databinding.ItemMyRecordDetailBinding
 import com.gumibom.travelmaker.model.pamphlet.Record
 import com.gumibom.travelmaker.ui.main.myrecord.createRecord.MyRecordEmojiAdapter
 
+private const val TAG = "MyRecordDetailAdapter_싸피"
 class MyRecordDetailAdapter(private val context : Context, private val viewModel : MyRecordDetailViewModel) : ListAdapter<Record, MyRecordDetailAdapter.MyRecordDetailViewHolder>(MyRecordDetailDiffUtil()) {
 
     // 클릭한 아이템의 position을 갱신하기 위한 변수
@@ -21,7 +23,8 @@ class MyRecordDetailAdapter(private val context : Context, private val viewModel
 
     inner class MyRecordDetailViewHolder(private val binding : ItemMyRecordDetailBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : Record, position : Int) {
-            if (item.imgUrl.isNotEmpty()) {
+            Log.d(TAG, "myRecord: $item")
+            if (item.imgUrl.isNotEmpty() && item.videoUrl.isEmpty()) {
                 Glide.with(context)
                     .load(item.imgUrl)
                     .into(binding.ivItemMyRecordDetail)

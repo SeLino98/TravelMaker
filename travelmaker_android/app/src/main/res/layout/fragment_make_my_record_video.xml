@@ -76,7 +76,7 @@
         android:orientation="horizontal" />
 
     <Button
-        android:id="@+id/btn_make_my_record_picture"
+        android:id="@+id/btn_make_my_record_video"
         style="@style/Text.InTheBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
