@@ -44,6 +44,7 @@ class SignupViewModel @Inject constructor(
     private val saveUserInfoUseCase :SaveUserInfoUseCase
 ) : ViewModel(), CommonViewModel {
 
+
     //모임 데이터들을 저장하는 유저데이터dto
     private val _userDTO = MutableLiveData<SignInUserDataRequest>()
     val userDTO :LiveData<SignInUserDataRequest> = _userDTO
@@ -52,7 +53,7 @@ class SignupViewModel @Inject constructor(
     private val _userRequestDTO = MutableLiveData<SignInUserDataRequestDTO>()
     val userRequestDTO : LiveData<SignInUserDataRequestDTO> = _userRequestDTO
     fun saveUserInfoIDPW(userId:String,userPassword:String){
-        _userDTO.value!!.requestDto.email = userId;
+        _userDTO.value!!.requestDto.username = userId; //로그인 시 필요한 아이디
         _userDTO.value!!.requestDto.password = userPassword
     }//page 1
     fun saveUserInfoNick(nickName:String){
@@ -61,6 +62,9 @@ class SignupViewModel @Inject constructor(
     fun saveUserInfoAddress(address:String){
         //나눠서 저장 town이랑 address
         _userDTO.value!!.requestDto.town = address
+
+        //스플릿?
+
         _userDTO.value!!.requestDto.nation = address
     }//page 3
     fun saveUserInfoGenderBirth(gender : String, birth:String ){
@@ -71,7 +75,7 @@ class SignupViewModel @Inject constructor(
         _userDTO.value!!.requestDto.phone = phone
     }//page 5
     fun saveUserInfoSaveProfileCategory(profileImage:String, categoryList : List<String>){
-        _userDTO.value!!.image = profileImage
+        _userDTO.value!!.image = profileImage //멀티 파트로 저장.
         _userDTO.value!!.requestDto.categories = categoryList
     }//page 6
     fun saveUserInfoAllData(){

@@ -30,6 +30,6 @@ interface MeetingService {
 //    @POST("meeting/list/{userId}")
 //    suspend fun getGroupList(
 //        @Path("userId") userId:Long
-//    ) :Response<>
+//    ) :Response<sdsdvsfdfsd>
 
 }
