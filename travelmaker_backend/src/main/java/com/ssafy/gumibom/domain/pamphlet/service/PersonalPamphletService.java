@@ -73,7 +73,7 @@ public class PersonalPamphletService {
         List<PersonalPamphlet> allPersonalPamphlet = pPamphletRepository.findAll();
 
         for(PersonalPamphlet myPamphlet: myPersonalPamphlet) {
-            allPersonalPamphlet.remove(myPamphlet);
+            if(allPersonalPamphlet.contains(myPamphlet)) allPersonalPamphlet.remove(myPamphlet);
         }
 
         List<PersonalPamphletDto> allPersonPamphletDto = allPersonalPamphlet.stream()
