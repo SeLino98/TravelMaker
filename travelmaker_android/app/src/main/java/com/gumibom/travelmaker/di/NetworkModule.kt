@@ -11,6 +11,7 @@ import com.gumibom.travelmaker.data.api.meeting.MeetingService
 import com.gumibom.travelmaker.data.api.meeting_post.MeetingPostService
 import com.gumibom.travelmaker.data.api.myPage.MyPageService
 import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
+import com.gumibom.travelmaker.data.api.pamphlet.PamphletService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.util.AccessTokenInterceptor
@@ -218,5 +219,11 @@ class NetworkModule {
     @Singleton
     fun provideMyPageService(@MainRetrofit retrofit : Retrofit) : MyPageService {
         return retrofit.create(MyPageService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePamphletService(@MainRetrofit retrofit : Retrofit) : PamphletService {
+        return retrofit.create(PamphletService::class.java)
     }
 }

@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.gumibom.travelmaker.R
@@ -43,6 +44,15 @@ class ClickEventDialog(context: Context):AlertDialog.Builder(context){
         val contentView: TextView = dialog.findViewById(R.id.dialog_content)
         contentView.text = content
     }
+
+    fun setIgnoreTitleContent() {
+        val titleView: TextView = dialog.findViewById(R.id.dialog_title)
+        val contentView: TextView = dialog.findViewById(R.id.dialog_content)
+
+        titleView.visibility = View.GONE
+        contentView.visibility = View.GONE
+    }
+
     fun setPositiveBtnTitle(title :String){
         val btnView : Button = dialog.findViewById(R.id.dialog_content_yes)
         btnView.text= title

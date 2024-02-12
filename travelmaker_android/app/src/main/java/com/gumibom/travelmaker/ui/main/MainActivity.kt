@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -77,6 +78,14 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         getLoginUserInfo()
         observeLiveData()
+        backToNavigation()
+    }
+
+    /**
+     * 네비 게이션 뒤로 가는 함수
+     */
+    fun backToNavigation() {
+        navController.navigateUp()
     }
 
     /**
@@ -91,17 +100,18 @@ class MainActivity : AppCompatActivity() {
      */
     private fun observeLiveData() {
         val profileImage = findViewById<ImageView>(R.id.my_custom_icon)
-//        viewModel.user.observe(this) { user ->
-//            if (user.profileImgURL.isNotEmpty()) {
-//                Glide.with(this)
-//                    .load(user.profileImgURL)
-//                    .circleCrop()
-//                    .into(profileImage)
-//            }
-//        }/** 여기 이미지가 널이면 널포인터 에러남 . */
+        viewModel.user.observe(this) { user ->
+            Log.d(TAG, "user: $user")
+            if (user.profileImgURL.isNotEmpty()) {
+                Glide.with(this)
+                    .load(user.profileImgURL)
+                    .circleCrop()
+                    .into(profileImage)
+            }
+        }
     }
 
-    private fun setNavigationMenuToolbar(){
+    fun setNavigationMenuToolbar(){
         //프래그먼트가 ~~ 일 땐 ~~로
         //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -149,6 +159,26 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.menu.clear()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.myRecord_title)
+                    binding.toolbar.setNavigationOnClickListener {
+                        navController.navigateUp()
+                    }
+                }
+                R.id.mainGoTravelFragment, R.id.makePamphletFragment, R.id.startPamphletFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = getString(R.string.makePamphlet_title)
+                    binding.toolbar.setNavigationOnClickListener {
+                        navController.navigateUp()
+                    }
+                }
+                R.id.myRecordDetail -> {
+                    binding.toolbar.visibility = View.GONE
+                }
+
+                R.id.mainLookPamphletsFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = getString(R.string.lookPamphlet_title)
                     binding.toolbar.setNavigationOnClickListener {
                         navController.navigateUp()
                     }

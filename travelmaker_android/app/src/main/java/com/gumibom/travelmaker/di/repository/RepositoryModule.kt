@@ -10,6 +10,7 @@ import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.meeting_post.MeetingPostRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.myPage.MyPageRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.naver.NaverLocationRemoteDataSource
+import com.gumibom.travelmaker.data.datasource.pamphlet.PamphletRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSource
 import com.gumibom.travelmaker.data.datasource.signup.SignupRemoteDataSourceImpl
 import com.gumibom.travelmaker.data.repository.firebase.FirebaseFcmRepository
@@ -29,6 +30,8 @@ import com.gumibom.travelmaker.data.repository.myPage.MyPageRepository
 import com.gumibom.travelmaker.data.repository.myPage.MyPageRepositoryImpl
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepository
 import com.gumibom.travelmaker.data.repository.naver.NaverLocationRepositoryImpl
+import com.gumibom.travelmaker.data.repository.pamphlet.PamphletRepository
+import com.gumibom.travelmaker.data.repository.pamphlet.PamphletRepositoryImpl
 
 import com.gumibom.travelmaker.data.repository.signup.SignupRepository
 import com.gumibom.travelmaker.data.repository.signup.SignupRepositoryImpl
@@ -100,5 +103,11 @@ class RepositoryModule {
     @Provides
     fun provideMyPageRepository(myPageRemoteDataSource: MyPageRemoteDataSource) : MyPageRepository {
         return MyPageRepositoryImpl(myPageRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun providePamphletRepository(pamphletRemoteDataSource: PamphletRemoteDataSource) : PamphletRepository {
+        return PamphletRepositoryImpl(pamphletRemoteDataSource)
     }
 }
