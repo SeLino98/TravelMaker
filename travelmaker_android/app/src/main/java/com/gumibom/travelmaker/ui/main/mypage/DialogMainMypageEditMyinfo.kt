@@ -55,7 +55,6 @@ class DialogMainMypageEditMyinfo:Fragment() {
                 view, year, monthOfYear, dayOfMonth ->
             Log.d(com.gumibom.travelmaker.ui.signup.idpw.TAG, "선택된 날짜: $year-${monthOfYear + 1}-$dayOfMonth")
             myPageViewModel.selectBirthDate = datepicker.year.toString()
-
         })
         maxCalendar.set(2008, Calendar.JANUARY, 1)
         minCalendar.set(1924, Calendar.JANUARY, 1)
