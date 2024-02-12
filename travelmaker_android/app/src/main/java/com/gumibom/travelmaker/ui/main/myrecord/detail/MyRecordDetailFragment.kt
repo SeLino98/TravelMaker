@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ import com.gumibom.travelmaker.databinding.FragmentMyRecordDetailBinding
 import com.gumibom.travelmaker.model.pamphlet.Record
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MyRecordDetail_싸피"
@@ -30,6 +32,7 @@ class MyRecordDetailFragment : Fragment() {
     private var _binding: FragmentMyRecordDetailBinding? = null
     private val binding get() = _binding!!
     private val myRecordDetailViewModel : MyRecordDetailViewModel by viewModels()
+    private val mainViewModel : MainViewModel by activityViewModels()
     private lateinit var activity: MainActivity
     private lateinit var adapter : MyRecordDetailAdapter
     private var pamphletId : Long = 0

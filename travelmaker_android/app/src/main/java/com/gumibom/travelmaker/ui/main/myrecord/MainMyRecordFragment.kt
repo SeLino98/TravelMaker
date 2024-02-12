@@ -57,6 +57,7 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
         togglePamphlet()
     }
 
+
     /**
      * 리싸이클러뷰 초기화 (초기 상태는 여행 중)
      * 여행 중 버튼은 background_button_certification
@@ -93,6 +94,7 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
             travelingButton.setBackgroundResource(R.drawable.background_button_certification)
             travelFinishButton.setBackgroundResource(R.drawable.background_button)
 
+            mainViewModel.isFinish = false
             isFinish = false
             setAdapterInit()
         }
@@ -101,6 +103,7 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
             travelingButton.setBackgroundResource(R.drawable.background_button)
             travelFinishButton.setBackgroundResource(R.drawable.background_button_certification)
 
+            mainViewModel.isFinish = true
             isFinish = true
             setAdapterInit()
         }
@@ -109,6 +112,25 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
     override fun moveRecordDetail(pamphletId: Long, view: View) {
         val bundle = bundleOf("pamphletId" to pamphletId)
         Navigation.findNavController(view).navigate(R.id.action_mainMyRecordFragment_to_myRecordDetail, bundle)
+    }
+
+    /**
+     * detail에서 뒤로가기 했을 때 기존에 보고 있던 여행 중 여행완료
+     */
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+
+        val travelingButton = binding.btnMyRecordTraveling
+        val travelFinishButton = binding.btnMyRecordTravelFinish
+
+        if (mainViewModel.isFinish) {
+            travelingButton.setBackgroundResource(R.drawable.background_button)
+            travelFinishButton.setBackgroundResource(R.drawable.background_button_certification)
+        } else {
+            travelingButton.setBackgroundResource(R.drawable.background_button_certification)
+            travelFinishButton.setBackgroundResource(R.drawable.background_button)
+        }
     }
 
     override fun onDestroyView() {

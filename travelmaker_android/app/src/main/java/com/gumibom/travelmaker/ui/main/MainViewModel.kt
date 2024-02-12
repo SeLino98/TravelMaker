@@ -145,6 +145,8 @@ class MainViewModel @Inject constructor(
     var pamphletTitle = ""
     var pamphletCategory = mutableListOf<String>()
 
+    var isFinish = false
+
     //서버에서 마커를 클릭한 정보들을 가져옴 -> ui단에서 받은 데이터들을 저장하장
     fun getPostDetail(pos:Long){
         viewModelScope.launch {
