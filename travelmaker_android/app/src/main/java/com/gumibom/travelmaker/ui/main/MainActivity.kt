@@ -114,6 +114,9 @@ class MainActivity : AppCompatActivity() {
     fun setNavigationMenuToolbar(){
         //프래그먼트가 ~~ 일 땐 ~~로
         //프래그먼트가 ㅌㅌ 일 땐 ㅌㅌ 로
+
+
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.mainFragment -> {
@@ -122,6 +125,8 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.inflateMenu(R.menu.menu_main) // 새 메뉴 설정
                     binding.toolbar.title = "메인 페이지"
                     binding.toolbar.navigationIcon = null
+                    initToolbar()
+                    observeLiveData()
                     Log.d(TAG, "setNavigationMenuToolbar: 2")
                 }
                 R.id.mainGoTravelFragment,R.id.mainFindMateDetailFragment,
@@ -250,28 +255,18 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun initToolbar(){
-
-        binding.toolbar.setNavigationOnClickListener {
-            // Handle navigation icon press
-        }
         val imageView = findViewById<ImageView>(R.id.my_custom_icon)
         imageView.setOnClickListener {
             navController.navigate(R.id.action_mainFragment_to_mainMyPageFragment)
         }
-
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_notify -> {
                     navController.navigate(R.id.action_mainFragment_to_mainNotificationFragment)
                     true
                 }
-                R.id.action_search -> {
-                    Log.d(TAG, "initToolbar:SEARYCDGC")
-                    true
-                }
                 else -> false
             }
-
         }
 
     }

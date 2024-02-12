@@ -67,17 +67,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_signup_pw"
-
         style="@style/TextLabel"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:hint="@string/signup_label_pw"
-
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusTopStart="16dp"
-
         app:boxStrokeColor="@drawable/selector_input_layout_color"
         app:endIconMode="password_toggle"
         app:helperText="@string/signup_pw_helper_msg"

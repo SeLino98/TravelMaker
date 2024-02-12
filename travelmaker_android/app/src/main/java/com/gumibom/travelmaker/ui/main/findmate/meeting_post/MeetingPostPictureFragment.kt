@@ -140,7 +140,6 @@ class MeetingPostPictureFragment : Fragment() {
                 intent.type = "image/*"
                 getResult.launch(intent)
             }
-
         }
 
         binding.ivPictureAdd.setOnClickListener {

@@ -165,11 +165,9 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val imageUrls = listOf(postDetail.mainImgUrl, postDetail.subImgUrl, postDetail.thirdImgUrl)
         var imageRealUrls : MutableList<String> = mutableListOf();
         for (i in 0 .. 2){
-            if (imageUrls.get(i) != "" || imageUrls.get(i).isNullOrEmpty()){
+            if (imageUrls.get(i) != "" || !imageUrls.get(i).isNullOrEmpty()){
                 imageRealUrls.add(imageUrls[i]);
             }
-            Log.d(TAG, "setBottomSheetUI: ${imageUrls.get(i)}")
-            Log.d(TAG, "setBottomSheetUI: ${imageRealUrls.get(i)}")
         }
         val imageAdapter = ImageAdapter(imageRealUrls) // postDetailDTO에서 이미지 리스트를 가져옵니다.
         binding.bts.rcDetailPlaceImage.apply {
