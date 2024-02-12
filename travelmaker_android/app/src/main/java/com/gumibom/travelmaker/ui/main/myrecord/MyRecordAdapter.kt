@@ -64,7 +64,6 @@ class MyRecordAdapter(private val context : Context, private val myRecordViewMod
         private fun moveDetailFragment(pamphletId : Long) {
             val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                Log.d(TAG, "moveDetailFragment: 호출?")
                 itemClickListener?.moveRecordDetail(pamphletId, itemView)
             }
         }
