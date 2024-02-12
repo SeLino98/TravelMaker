@@ -51,11 +51,6 @@ class SignupUseCaseModule {
     fun provideCheckDuplicatedNicknameUseCase(signupRepository: SignupRepository) : CheckDuplicatedNicknameUseCase {
         return CheckDuplicatedNicknameUseCase(signupRepository)
     }
-    @Singleton
-    @Provides
-    fun provideSaveUserInfoUseCase(userRepository: SignupRepository) : SaveUserInfoUseCase {
-        return SaveUserInfoUseCase((userRepository))
-    }
 
     @Singleton
     @Provides

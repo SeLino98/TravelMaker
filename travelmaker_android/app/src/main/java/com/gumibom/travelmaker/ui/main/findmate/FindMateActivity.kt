@@ -4,7 +4,9 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -37,6 +39,7 @@ import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
+import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.ImageAdapter
 import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.chipAdapter
@@ -61,9 +64,11 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var findMateSearchFragment : FindMateSearchFragment
     private val mainViewModel : MainViewModel by viewModels()
     private var meetingId:Long =0;
+
     /**
      * 마커를 클릭했을 때 바텀 시트 다이얼로그 동작
      */
+
     private fun openMeetingDialog() {
         mMap.setOnMarkerClickListener { marker ->
             //바텀시트가 열리고 데이터를 받아서 띄운다.
@@ -97,7 +102,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         selectPlace()
         selectCategory()
         moveMeetingPost()
-
+        mainViewModel.getAllUser()
 
 //        mainViewModel.
         /**
@@ -119,13 +124,36 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             tvDetailPlaceTitle.text = postDetail.position.town+postDetail.position.name
             Glide.with(this@FindMateActivity).load(postDetail.profileImgUrl).into(ivHeadProfile)
         }
+
+        val userId:Int =mainViewModel.user.value!!.userId.toInt();
+        val postHeadId:Int =mainViewModel.postDTO.value!!.headId;
+        if (userId==postHeadId){
+            binding.bts.btnApplyGroup.text = "나의 모임입니다."
+            binding.bts.btnApplyGroup.isEnabled = false;
+        }else{
+            binding.bts.btnApplyGroup.text = "모임 신청하기"
+            binding.bts.btnApplyGroup.isEnabled = true
+        }
         binding.bts.btnApplyGroup.setOnClickListener {
             //firebase 연동하기
+            //다이얼로그 창 띄워서 한 번 더 확인하기.
+            val alertDialog = ClickEventDialog(this@FindMateActivity)
+            alertDialog.setTitle("잠시만요! \n 약속은 신뢰입니다!")
+            alertDialog.setMessage("")
+            alertDialog.setContent("모임 취소시 나의 신뢰도가 내려갈 수 있어요!")
+            alertDialog.setPositiveBtnTitle("신청")
+            alertDialog.setPositiveButtonListener {
+                mainViewModel.requestGroup(FcmRequestGroupDTO(mainViewModel.user.value!!.userId,meetingId))
+                Log.d(TAG, "setApplyGroup: 2")
+                alertDialog.clickDialogDissMiss()
+            }
+            alertDialog.setNegativeBtnTitle("취소")
+            alertDialog.setNegativeButtonListener {
+                alertDialog.clickDialogDissMiss()
+            }
+            alertDialog.clickDialogShow()
             //그룹 id랑 현재 로그인 한 유저 id 전송하기
-            Log.d(TAG, "setApplyGroup: ")
-//          val userid = sharedPreferences.getUser().userId.toString()
-            mainViewModel.requestGroup(FcmRequestGroupDTO(1,meetingId))
-            Log.d(TAG, "setApplyGroup: 2")
+
         }
         // chipAdapter 설정
         val chipAdapter = chipAdapter(postDetail.categories) // postDetailDTO에서 칩 리스트를 가져옵니다.
@@ -150,7 +178,6 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     private fun setBottomSheet(){
-        
         Log.d(TAG, "setBottomSheet: HIHIHISETBOTTOMSHEET!!")
         var isFirstClick:Boolean = true; 
         val standardBottomSheet = binding.bts.bottomSheetLayout
@@ -172,15 +199,6 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
                         in halfToTop until screenHeight -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                     }
                 },500)
-//                if (isFirstClick){
-//
-//                }else{
-//                    when (currentTop) {
-//                        in 0 until bottomToHalfSize -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//                        in bottomToHalfSize until halfToTop -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-//                        in halfToTop until screenHeight -> standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-//                    }
-//                    Log.d(TAG, "onSlide: _ ${screenHeight}-${halfHeight}:${currentTop}-${bottomToHalfSize}-${halfToTop} : PKEEKEKEKEK")
                 }
 //             }
             override fun onStateChanged(bottomSheet: View, newState: Int) {

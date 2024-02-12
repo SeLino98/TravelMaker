@@ -39,7 +39,6 @@ class MainFindMateDetailFragment(private val postDetailDTO: PostDetail) : Bottom
         setApplyGroup()
         observeLiveData()
 //        setBottomSheet()
-//
 //        setBottomSheetUI()
     }
 //    private fun setBottomSheetUI(){
