@@ -125,7 +125,7 @@ class MyRecordDetailFragment : Fragment() {
 
         // 이미지일 경우
         if (record.videoUrl.isEmpty()) {
-//            releasePlayer() // ExoPlayer 해제
+            releasePlayer() // ExoPlayer 해제
             binding.playerView.visibility = View.GONE
             binding.ivMyRecordDetail.visibility = View.VISIBLE
 

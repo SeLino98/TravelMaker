@@ -111,4 +111,14 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
         Navigation.findNavController(view).navigate(R.id.action_mainMyRecordFragment_to_myRecordDetail, bundle)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView: ")
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy: ")
+    }
 }
