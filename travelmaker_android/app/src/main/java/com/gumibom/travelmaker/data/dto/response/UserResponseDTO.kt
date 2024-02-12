@@ -9,7 +9,7 @@ data class UserResponseDTO(
     val birth : String,
     val phone : String,
     val profileImgURL : String?,
-    val trust : Double,
+    val trust : Double?,
     val town : String,
     val nation : String,
     val categories : List<String>

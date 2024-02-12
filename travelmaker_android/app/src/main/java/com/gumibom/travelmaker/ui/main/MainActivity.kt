@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.gumibom.travelmaker.R
@@ -73,13 +74,29 @@ class MainActivity : AppCompatActivity() {
         setNavigationMenuToolbar()
         initToolbar()
         getLoginUserInfo()
+        observeLiveData()
     }
 
     /**
      * 메인 화면으로 넘어오면 로그인한 회원의 정보를 전부 받아오는 함수
      */
     private fun getLoginUserInfo() {
+        viewModel.getAllUser()
+    }
 
+    /**
+     *  앱 상단 프로필 사진 업로드
+     */
+    private fun observeLiveData() {
+        val profileImage = findViewById<ImageView>(R.id.my_custom_icon)
+        viewModel.user.observe(this) { user ->
+            if (user.profileImgURL.isNotEmpty()) {
+                Glide.with(this)
+                    .load(user.profileImgURL)
+                    .circleCrop()
+                    .into(profileImage)
+            }
+        }
     }
 
     private fun setNavigationMenuToolbar(){

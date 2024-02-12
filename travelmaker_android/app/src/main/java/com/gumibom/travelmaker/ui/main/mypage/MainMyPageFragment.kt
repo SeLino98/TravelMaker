@@ -30,9 +30,11 @@ import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.login.LoginActivity
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.util.ApplicationClass
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainMyPageFragment_싸피"
 
+@AndroidEntryPoint
 class MainMyPageFragment:Fragment() {
 
     private val trustPoint = 800
