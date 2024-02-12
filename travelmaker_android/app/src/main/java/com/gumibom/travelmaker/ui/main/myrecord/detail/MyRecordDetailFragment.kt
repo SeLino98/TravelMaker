@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -37,6 +38,7 @@ class MyRecordDetailFragment : Fragment() {
     private lateinit var adapter : MyRecordDetailAdapter
     private var pamphletId : Long = 0
     private var recordId : Long = 0
+    private lateinit var callback: OnBackPressedCallback
 
     private var playWhenReady = true
     private var currentWindow = 0
@@ -51,6 +53,17 @@ class MyRecordDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pamphletId = arguments?.getLong("pamphletId") ?: 0
+
+        // OnBackPressedCallback 인스턴스 생성 및 추가
+        callback = object : OnBackPressedCallback(true) { // true는 콜백을 활성화 상태로 만듭니다.
+            override fun handleOnBackPressed() {
+                Log.d(TAG, "handleOnBackPressed: 클릭")
+                activity.navigationPop()
+                activity.setOriginToolbar()
+            }
+        }
+        // OnBackPressedDispatcher에 콜백 추가
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreateView(

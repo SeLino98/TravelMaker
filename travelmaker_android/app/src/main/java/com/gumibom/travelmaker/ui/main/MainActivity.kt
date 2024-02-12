@@ -187,6 +187,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setOriginToolbar() {
+        binding.toolbar.visibility = View.VISIBLE
+    }
+
     private fun setFirebase(){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
