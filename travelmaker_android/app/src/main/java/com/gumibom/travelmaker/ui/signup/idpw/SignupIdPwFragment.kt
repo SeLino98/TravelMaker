@@ -164,7 +164,7 @@ class SignupIdPwFragment : Fragment() {
                     binding.tilSignupPw.error = null
                 }
                 if (!isValidatePw(pwContent)) {
-                    binding.tilSignupPw.error = "영문, 숫자, 특수문자 포함 8자리 이상"
+                    binding.tilSignupPw.error = "영문, 숫자 포함 8자리 이상"
                 } else {
                     binding.tilSignupPw.error = null
                 }

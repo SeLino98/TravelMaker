@@ -114,9 +114,28 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.navigationIcon = null
                     Log.d(TAG, "setNavigationMenuToolbar: 2")
                 }
-                R.id.mainMyGroupFragment, R.id.mainMyPageFragment,
                 R.id.mainGoTravelFragment,R.id.mainFindMateDetailFragment,
                 R.id.mainNotificationFragment-> {
+                    binding.toolbar.menu.clear() // 기존 메뉴 제거
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = "알림 페이지"
+                    binding.toolbar.setNavigationOnClickListener {
+                        Log.d(TAG, "setNavigationMenuToolbar: ")
+                        navController.navigateUp()
+                    }
+                    binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
+                }
+                R.id.mainMyGroupFragment -> {
+                    binding.toolbar.menu.clear() // 기존 메뉴 제거
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = getString(R.string.my_group)
+                    binding.toolbar.setNavigationOnClickListener {
+                        Log.d(TAG, "setNavigationMenuToolbar: ")
+                        navController.navigateUp()
+                    }
+                    binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
+                }
+                R.id.mainMyPageFragment -> {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.mypage_title)
