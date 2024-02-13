@@ -166,11 +166,11 @@ class SignupViewModel @Inject constructor(
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
 
-    private val _isSendPhoneSuccess = MutableLiveData<Event<IsSuccessResponseDTO>>()
-    val isSendPhoneSuccess : LiveData<Event<IsSuccessResponseDTO>> = _isSendPhoneSuccess
+    private val _isSendPhoneSuccess = MutableLiveData<Event<Boolean>>()
+    val isSendPhoneSuccess : LiveData<Event<Boolean>> = _isSendPhoneSuccess
 
-    private val _isCertificationSuccess = MutableLiveData<Event<IsSuccessResponseDTO>>()
-    val isCertificationSuccess : LiveData<Event<IsSuccessResponseDTO>> = _isCertificationSuccess
+    private val _isCertificationSuccess = MutableLiveData<Event<Boolean>>()
+    val isCertificationSuccess : LiveData<Event<Boolean>> = _isCertificationSuccess
 
     // 타이머의 코루틴을 추적하는 변수
     private var timerJob : Job? = null
@@ -218,7 +218,7 @@ class SignupViewModel @Inject constructor(
     // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
     fun sendPhoneNumber(phoneNumberRequestDTO : PhoneNumberRequestDTO) {
         viewModelScope.launch {
-            val event = Event(sendPhoneNumberUseCase.sendPhoneNumber(phoneNumberRequestDTO)!!)
+            val event = Event(sendPhoneNumberUseCase.sendPhoneNumber(phoneNumberRequestDTO))
             _isSendPhoneSuccess.value = event
         }
     }
@@ -226,7 +226,7 @@ class SignupViewModel @Inject constructor(
     // TODO 문자인증을 받고 번호가 맞는지 검증하는 함수
     fun isCertification(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) {
         viewModelScope.launch {
-            val event = Event(checkCertificationUseCase.isCertificationNumber(phoneCertificationRequestDTO)!!)
+            val event = Event(checkCertificationUseCase.isCertificationNumber(phoneCertificationRequestDTO))
             _isCertificationSuccess.value = event
         }
     }

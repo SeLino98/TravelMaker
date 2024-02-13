@@ -60,6 +60,7 @@ class SignupPhoneFragment : Fragment() {
         phoneEditText = binding.tieSignupPhone
         certificationEditText = binding.tieSignupCertificationNumber
 
+        setInit()
         getCertificationNumber()
 
         checkSecretNumber()
@@ -70,23 +71,31 @@ class SignupPhoneFragment : Fragment() {
         Log.d(TAG, "onViewCreated: ")
     }
 
+    private fun setInit() {
+        isCertificationSuccess = false
+    }
+
     private fun observeLiveData() {
         signupViewModel.isSendPhoneSuccess.observe(viewLifecycleOwner) { event ->
-            if (event.getContentIfNotHandled() != null) {
+            val isSuccess = event.getContentIfNotHandled()
+
+            if (isSuccess != null && isSuccess) {
                 Log.d(TAG, "observeLiveData: 여기로 오니? null")
                 startTimer()
-            } else {
+            } else if (isSuccess != null && !isSuccess) {
                 Log.d(TAG, "observeLiveData: 여기로 오니?")
                 Toast.makeText(requireContext(), "인증 번호 전송 실패", Toast.LENGTH_SHORT).show()
             }
         }
 
         signupViewModel.isCertificationSuccess.observe(viewLifecycleOwner) { event ->
-            Log.d(TAG, "observeLiveData: 2")
-            if (event.getContentIfNotHandled() != null) {
+            val isSuccess = event.getContentIfNotHandled()
+
+            if (isSuccess != null && isSuccess) {
+                isCertificationSuccess = true
                 endTimer()
                 Toast.makeText(requireContext(), "문자 인증 성공", Toast.LENGTH_SHORT).show()
-            } else {
+            } else if (isSuccess != null && !isSuccess) {
                 Toast.makeText(requireContext(), "문자 인증 실패", Toast.LENGTH_SHORT).show()
             }
         }
@@ -104,8 +113,8 @@ class SignupPhoneFragment : Fragment() {
             // 정상 휴대폰 번호면 서버 통신
             if (phoneNumberError == null && phoneNumber.isNotEmpty()) {
                 Log.d(TAG, "getCertificationNumber: $phoneNumber")
+
                 val phoneNumberRequestDTO = PhoneNumberRequestDTO(phoneNumber, "")
-                signupViewModel.isToastShown = false
                 signupViewModel.sendPhoneNumber(phoneNumberRequestDTO)
             }
 
@@ -191,7 +200,6 @@ class SignupPhoneFragment : Fragment() {
         binding.btnSignupPhoneNext.setOnClickListener {
             if (isCertificationSuccess){
                 signupViewModel.phoneNumber = binding.tieSignupPhone.text.toString()
-                signupViewModel.isToastShown = true
                 activity.navigateToNextFragment()
             } else {
                 Toast.makeText(requireContext(), NOT_ALLOW_SMS, Toast.LENGTH_SHORT).show()

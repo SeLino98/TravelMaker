@@ -8,17 +8,15 @@ import javax.inject.Inject
 class CheckCertificationUseCase @Inject constructor(
     private val signupRepositoryImpl: SignupRepository
 ) {
-    suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : IsSuccessResponseDTO?{
+    suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Boolean{
         val response = signupRepositoryImpl.isCertificationNumber(phoneCertificationRequestDTO)
 
-        if (response.isSuccessful) {
-            val body = response.body()
+        var isSuccess = false
 
-            if (body != null) {
-                return body
-            }
+        if (response.isSuccessful) {
+            isSuccess = response.body()?.isSuccess == true
         }
-        return null
+        return isSuccess
     }
 
 }

@@ -10,12 +10,13 @@ private const val TAG = "SendPhoneNumberUseCase_싸피"
 class SendPhoneNumberUseCase @Inject constructor(
     private val signupRepositoryImpl : SignupRepository
 ) {
-    suspend fun sendPhoneNumber(phoneNumberRequestDTO : PhoneNumberRequestDTO) : IsSuccessResponseDTO? {
+    suspend fun sendPhoneNumber(phoneNumberRequestDTO : PhoneNumberRequestDTO) : Boolean {
         val response = signupRepositoryImpl.sendPhoneNumber(phoneNumberRequestDTO)
-        Log.d(TAG, "sendPhoneNumber: $response")
+        var isSuccess = false
+
         if (response.isSuccessful) {
-            return response.body()
+            isSuccess = response.body()?.isSuccess == true
         }
-        return null
+        return isSuccess
     }
 }
