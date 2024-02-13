@@ -8,6 +8,7 @@ import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDt
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ import java.util.List;
 public class MeetingController {
     private final MeetingService meetingService;
     private final MeetingPostService meetingPostService;
+
+    private final EntityManager em;
 
     // 모임 생성
     @Operation(summary = "모임 생성 api")

@@ -15,6 +15,8 @@ import java.util.List;
 public class DetailOfMeetingPostResponseDTO {
 
     private Long headId;
+    private String headNickname;
+    private Double headTrust;
     private String profileImgUrl;
 
     private String postTitle;
@@ -29,11 +31,16 @@ public class DetailOfMeetingPostResponseDTO {
     private Integer numOfNative;
     private Integer numOfTraveler;
 
+    private Boolean isFinish;
+    private Boolean isMeetingFinish;
+
     private Long dDay;
 
     public DetailOfMeetingPostResponseDTO(User head, MeetingPost meetingPost) {
 
         this.headId = head.getId();
+        this.headNickname = head.getNickname();
+        this.headTrust = head.getTrust();
         this.profileImgUrl = head.getProfileImgURL();
 
         this.postTitle = meetingPost.getTitle();
@@ -50,6 +57,9 @@ public class DetailOfMeetingPostResponseDTO {
         this.numOfTraveler = numOfNatAndTrav[1];
 
         this.dDay = ChronoUnit.DAYS.between(meetingPost.getDeadline(), LocalDateTime.now())-1;
+
+        this.isFinish = meetingPost.getIsFinish();
+        this.isMeetingFinish = meetingPost.getIsMeetingFinish();
     }
 
     public int[] calcNatAndTrav(List<MeetingApplier> appliers) {

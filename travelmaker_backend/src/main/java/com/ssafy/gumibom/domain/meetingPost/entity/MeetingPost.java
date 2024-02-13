@@ -41,6 +41,8 @@ public class MeetingPost {
     private LocalDateTime endDate;
     @ColumnDefault("false")
     private Boolean isFinish;
+    @ColumnDefault("false")
+    private Boolean isMeetingFinish;
     private LocalDateTime deadline;
     private String imgUrlMain;
     private String imgUrlSub;
@@ -65,6 +67,7 @@ public class MeetingPost {
         this.travelerMin = requestDTO.getTravelerMin();
         this.memberMax = requestDTO.getMemberMax();
         this.isFinish = false;
+        this.isMeetingFinish = false;
         this.imgUrlMain = mainImgUrl;
         this.imgUrlSub = subImgUrl;
         this.imgUrlThr = thirdImgUrl;
@@ -125,6 +128,7 @@ public class MeetingPost {
     public void updateMeetingPostStatus() {
         this.isFinish = true;
     }
+    public void updateMeetingStatus() { this.isMeetingFinish = true; }
 
     public User getHead() {
         for(MeetingApplier applier: this.appliers) {
