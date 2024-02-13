@@ -20,10 +20,10 @@ class SaveUserInfoUseCase @Inject constructor(
     suspend fun saveUserInfo(userdata: SignInUserDataRequestDTO): IsSuccessResponseDTO?{
         val requestBody = createRequestBody(userdata)
         var multiImage : MultipartBody.Part? = null
-        if (image.isNotEmpty()) {
-            multiImage = convertImageMultiPart(image)
+        if (userdata.image.isNotEmpty()) {
+            multiImage = convertImageMultiPart(userdata.image)
         }
-        val response = repository.saveUserData(userdata)
+        val response = repository.saveUserData(multiImage,requestBody)
         return if (response.isSuccessful){
             response.body()
         }else{
@@ -36,10 +36,11 @@ class SaveUserInfoUseCase @Inject constructor(
         return productJson.toRequestBody("application/json".toMediaTypeOrNull())
     }
 
-    private fun convertImageMultiPart(image : String): MultipartBody.Part {
+    private fun convertImageMultiPart(image : String): MultipartBody.Part {//이미지 저장하는 로직
         val file = File(image)
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
 
         return MultipartBody.Part.createFormData("image", file.name, requestFile)
     }
+
 }

@@ -4,10 +4,14 @@ import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
 import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -29,8 +33,22 @@ interface SignupService {
     @GET("/join/check/nickname-exists/{nickname}")
     suspend fun checkDuplicatedNickName(@Path("nickname") nickname : String) : Response<SignInResponseDTO>
 
+    @Multipart
     @POST("/join")
-    suspend fun saveUserInfo(@Body userInfo : SignInUserDataRequestDTO) : Response<IsSuccessResponseDTO>
+    suspend fun saveUserInfo(
+        @Part image : MultipartBody.Part?,
+        @Part("requestBody") requestBody : RequestBody
+    ) : Response<IsSuccessResponseDTO>
+
+
+//    @Multipart
+//    @POST("/meeting-post/write")
+//    suspend fun createMeeting(
+//        @Part imgUrlMain : MultipartBody.Part,
+//        @Part imgUrlSub : MultipartBody.Part?,
+//        @Part imgUrlThr : MultipartBody.Part?,
+//        @Part("requestDTO") meetingPostRequestDTO : RequestBody,
+//    ) : Response<String>
 
     @POST("/sms-certification/confirm")
     fun isCertificationNumber(@Body phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<Boolean>

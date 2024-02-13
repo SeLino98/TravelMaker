@@ -4,6 +4,9 @@ import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
 import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
+import okhttp3.MultipartBody
+import okhttp3.Request
+import okhttp3.RequestBody
 import retrofit2.Response
 
 interface SignupRepository {
@@ -14,7 +17,10 @@ interface SignupRepository {
 
     suspend fun checkDuplicateNickname(nickname:String) :Response<SignInResponseDTO> //닉네임 중복 체크
 
-    suspend fun saveUserData(userInfo: SignInUserDataRequestDTO) :Response<IsSuccessResponseDTO> //회원가입 데이터 저장
+
+    //유저 데이터 저장 하는 로직
+    suspend fun saveUserData(profileImage: MultipartBody.Part?, userInfo: RequestBody):Response<IsSuccessResponseDTO> //회원가입 데이터 저장
+
 
     suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<Boolean>
 }

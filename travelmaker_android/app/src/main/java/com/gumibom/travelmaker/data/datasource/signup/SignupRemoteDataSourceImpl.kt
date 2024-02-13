@@ -5,6 +5,8 @@ import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
 import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -25,8 +27,9 @@ class SignupRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun saveUserData(userInfo: SignInUserDataRequestDTO): Response<IsSuccessResponseDTO> {
-        return signupService.saveUserInfo(userInfo)
+    override suspend fun saveUserData(imageProfile: MultipartBody.Part?, userInfo: RequestBody): Response<IsSuccessResponseDTO> {
+
+        return signupService.saveUserInfo(imageProfile,userInfo)
     }
 
     override suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO): Response<Boolean> {
