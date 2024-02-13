@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.data.api.meeting
 
+import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
@@ -27,9 +28,12 @@ interface MeetingService {
         @Path("meetingPostId") id: Long
     ): Response<MeetingPostDTO>
 
-//    @POST("meeting/list/{userId}")
-//    suspend fun getGroupList(
-//        @Path("userId") userId:Long
-//    ) :Response<sdsdvsfdfsd>
+    @POST("meeting/list/{userId}")
+    suspend fun getGroupList(
+        @Path("userId") userId:Long
+    ):Response<List<MyMeetingGroupDTOItem>>
+
+
+
 
 }
