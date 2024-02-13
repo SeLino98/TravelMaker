@@ -96,15 +96,7 @@ class SignupViewModel @Inject constructor(
             // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
                 isSignup.value = saveUserInfoUseCase.saveUserInfo(userRequestDTO.value!!)
                 Log.d(TAG, "saveToUserDTO: ")
-
-
         }
-
-
-        
-
-
-
 
     }
     /*
