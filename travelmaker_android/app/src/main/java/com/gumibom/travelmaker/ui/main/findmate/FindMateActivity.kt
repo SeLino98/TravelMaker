@@ -391,7 +391,9 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             }  // 있다면
             else {
                 for (marker in markerPosition) {
+
                     val location = LatLng(marker.latitude, marker.longitude)
+                    Log.d(TAG, "observeLivaData: $location")
                     val googleMarker = setMarker(location, "title")
 
                     googleMarker.tag = marker
@@ -451,7 +453,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
                     filterCategories.add(chipMap.getValue(category.text.toString()))
                 }
             }
-
+            Log.d(TAG, "selectCategory: $filterCategories")
             // TODO 여기서 서버 통신으로 필터링
             val markerCategoryPositionDTO = MarkerCategoryPositionRequestDTO(
                 mainViewModel.currentLatitude, mainViewModel.currentLongitude, 3.0, filterCategories
