@@ -18,14 +18,13 @@ import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-const val TAG = "SignupIdPwFramgnet"
+const val TAG = "SignupIdPwFramgnet_싸피"
 @AndroidEntryPoint
 class SignupIdPwFragment : Fragment() {
-
     private lateinit var activity : SignupActivity
     private var _binding :FragmentSignupIdPwBinding? = null
     private val binding get() = _binding!!
-    private var isNextPage = false
+    private var isNextPage = false // 다음 페이지로 넘어갈지 결정하는 함수
     private val signupViewModel : SignupViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,18 +56,8 @@ class SignupIdPwFragment : Fragment() {
         signupPwCheck()
     }
     private fun backAndNextNaviBtn() {
-        val btnSignupNext = binding.btnSignup1Next
-        // 앞으로가기 버튼 기능을 특정한 경우에만 가능
-        btnSignupNext.setOnClickListener {
-            if (isNextPage) {
-
-                //ViewModel에 데이터 저장하는 로직을 담는다.
-
-
+        binding.tvSignupIdpwNext.setOnClickListener {
                 activity.navigateToNextFragment()
-            } else {
-                btnSignupNext.setOnClickListener {}
-            }
         }
     }
 
@@ -192,22 +181,16 @@ class SignupIdPwFragment : Fragment() {
     다음으로 넘어가는 버튼이 진해지고, isNextPage = true 로 변경
     */
     private fun setNextToggle() {
-        val idContent = binding.etSignupId.text.toString()
-        val pwContent = binding.etSignupPw.text.toString()
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
         val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
 
-        // ID와 PW의 입력 및 유효성 검사
-        val isIdValid = idContent.isNotEmpty() && isValidateId(idContent)
-        val isPwValid = pwContent.isNotEmpty() && isValidatePw(pwContent)
-
-        if (isIdValid && isPwValid) {
+        if (binding.tilSignupId.error == null && binding.tilSignupPw.error == null) {
             // 모든 조건이 충족되었을 때만 다음 버튼 활성화
-            binding.btnSignup1Next.setTextColor(activeColor)
+            binding.tvSignupIdpwNext.setTextColor(activeColor)
             isNextPage = true
         } else {
             // 하나라도 충족되지 않으면 비활성화
-            binding.btnSignup1Next.setTextColor(nonActiveColor)
+            binding.tvSignupIdpwNext.setTextColor(nonActiveColor)
             isNextPage = false
         }
     }

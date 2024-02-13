@@ -12,4 +12,8 @@ class MyPageRepositoryImpl @Inject constructor(
     override suspend fun getMyUserInfo(): Response<UserResponseDTO> {
         return myPageRemoteDataSourceImpl.getMyUserInfo()
     }
+
+    override suspend fun deleteMyInfo() {
+
+    }
 }

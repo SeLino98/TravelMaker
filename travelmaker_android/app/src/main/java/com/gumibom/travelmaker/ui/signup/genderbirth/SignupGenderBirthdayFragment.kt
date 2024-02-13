@@ -23,17 +23,13 @@ class SignupGenderBirthdayFragment : Fragment(){
     private lateinit var activity: SignupActivity;
     private val signupViewModel: SignupViewModel by viewModels()
     private var _binding:FragmentSignupGenderBirthdayBinding? = null
-
     private val binding get() = _binding!!
     private var isNextPage = false
     private var isGenderSelected = false
-    private var isBirthSelected = false
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,12 +39,9 @@ class SignupGenderBirthdayFragment : Fragment(){
         _binding = FragmentSignupGenderBirthdayBinding.inflate(inflater,container,false)
         Log.d(TAG, "onCreateView: ${_binding.toString()}")
         return binding.root
-
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isBirthSelected = true
         backAndNextNaviBtn()
         // A. 성별 버튼의 한쪽 선택하여 클릭시, 선택된 쪽의 색이 좀더 진해짐.
         setGenderBtnColorToggle()
@@ -56,25 +49,18 @@ class SignupGenderBirthdayFragment : Fragment(){
         // C. A,B 모두 제대로 선택시 <- 다음 버튼이 진해지고, isNextPage = true 됨
         setDatepicker()
         // D. 종료
-
     }
     private fun backAndNextNaviBtn() {
-        val btnSignupPrevious = binding.btnSignup4Previous
-        val btnSignupNext = binding.btnSignup4Next
+        val btnSignupPrevious = binding.tvSignupGenderbirthPrevious
+        val btnSignupNext = binding.tvSignupGenderbirthNext
 
         btnSignupPrevious.setOnClickListener{
             activity.navigateToPreviousFragment()
         }
-
         btnSignupNext.setOnClickListener {
-            if (isNextPage) {
-                activity.navigateToNextFragment()
-            }
+            activity.navigateToNextFragment()
         }
     }
-
-
-
     /*
     setGenderBtnColorToggle(){}
     manBtn 누르면 manBtn이 진해지고, womanBtn 누르면 wonmanBtn이 진해짐.
@@ -111,7 +97,6 @@ class SignupGenderBirthdayFragment : Fragment(){
         datepicker.init(1994, 10, 10, DatePicker.OnDateChangedListener {
                     view, year, monthOfYear, dayOfMonth ->
                 Log.d(TAG, "선택된 날짜: $year-${monthOfYear + 1}-$dayOfMonth")
-            isBirthSelected = true
             signupViewModel.selectBirthDate = datepicker.year.toString()
 
         })
@@ -119,24 +104,21 @@ class SignupGenderBirthdayFragment : Fragment(){
         minCalendar.set(1924, Calendar.JANUARY, 1)
         datepicker.maxDate = maxCalendar.timeInMillis
         datepicker.minDate = minCalendar.timeInMillis
-        setNextToggle()
     }
     private fun setNextToggle() {
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
         val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
 
-        if (isGenderSelected && isBirthSelected) {
+        if (isGenderSelected) {
             // 모든 조건이 충족되었을 때만 다음 버튼 활성화
-            binding.btnSignup4Next.setTextColor(activeColor)
+            binding.tvSignupGenderbirthNext.setTextColor(activeColor)
             isNextPage = true
         } else {
             // 하나라도 충족되지 않으면 비활성화
-            binding.btnSignup4Next.setTextColor(nonActiveColor)
+            binding.tvSignupGenderbirthNext.setTextColor(nonActiveColor)
             isNextPage = false
         }
     }
-
-
     /*
     onDestroyView()
     */
@@ -145,5 +127,4 @@ class SignupGenderBirthdayFragment : Fragment(){
         // 뷰 파괴시 메모리 누수를 방지하기 위해 _binding = null
         _binding= null
     }
-
 }

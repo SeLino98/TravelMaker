@@ -3,11 +3,14 @@ package com.gumibom.travelmaker.ui.main.mypage
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gumibom.travelmaker.databinding.DialogMainMypageEditMyinfoBinding
+import com.gumibom.travelmaker.databinding.FragmentPamphletBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
@@ -23,8 +26,18 @@ class DialogMainMypageEditMyinfo:Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = DialogMainMypageEditMyinfoBinding.inflate(inflater, container, false)
+        return binding.root
+
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // 1. 회원탈퇴

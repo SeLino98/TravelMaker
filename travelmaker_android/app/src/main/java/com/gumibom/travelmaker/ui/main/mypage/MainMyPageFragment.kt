@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -77,7 +78,7 @@ class MainMyPageFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: ")
-
+        goToEditMyInfo()
         observePicture() // 1. observePicture(): ok
         selectMypagePicture() // 2. 프로필사진 변경 로직: ok
         editMyEmail() // 3. 이메일 변경 -> edittext 를 눌러서 고침 (liveData)
@@ -88,6 +89,9 @@ class MainMyPageFragment:Fragment() {
 
     private fun goToEditMyInfo(){
         val btnGoToEditMyInfo = binding.btnMyinfoEdit
+        btnGoToEditMyInfo.setOnClickListener{
+            Navigation.findNavController(it).navigate(R.id.action_mainMyPageFragment_to_dialogMainMypageEditMyinfo)
+        }
 
 
     }
@@ -115,6 +119,8 @@ class MainMyPageFragment:Fragment() {
         2-3. intent 타입을 image로 지정
         2-4. 콜백함수 실행 -> 성공이면? 파일형태를 URL로 변경
     */
+
+
     private fun selectMypagePicture() {
         binding.ivMypageProfileEdit.setOnClickListener {
             if (!permissionGallery()) {

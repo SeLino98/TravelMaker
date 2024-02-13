@@ -85,7 +85,11 @@
     <fragment
         android:id="@+id/mainMyPageFragment"
         android:name="com.gumibom.travelmaker.ui.main.mypage.MainMyPageFragment"
-        android:label="MainMyPageFragment" />
+        android:label="MainMyPageFragment" >
+        <action
+            android:id="@+id/action_mainMyPageFragment_to_dialogMainMypageEditMyinfo"
+            app:destination="@id/dialogMainMypageEditMyinfo" />
+    </fragment>
     <fragment
         android:id="@+id/mainNotificationFragment"
         android:name="com.gumibom.travelmaker.ui.main.notification.MainNotificationFragment"
@@ -110,5 +114,9 @@
         android:id="@+id/makeMyRecordVideoFragment"
         android:name="com.gumibom.travelmaker.ui.main.myrecord.createRecord.MakeMyRecordVideoFragment"
         android:label="MakeMyRecordVideoFragment" />
+    <fragment
+        android:id="@+id/dialogMainMypageEditMyinfo"
+        android:name="com.gumibom.travelmaker.ui.main.mypage.DialogMainMypageEditMyinfo"
+        android:label="DialogMainMypageEditMyinfo" />
 
 </navigation>

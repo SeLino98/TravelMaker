@@ -26,15 +26,10 @@ import javax.inject.Inject
 private const val TAG = "SignupNicknameFramgnet"
 @AndroidEntryPoint
 class SignupNicknameFragment : Fragment(){
-
-
     private lateinit var activity : SignupActivity
-
     private var isNextPage = true
-
     private var _binding :FragmentSignupNicknameBinding? = null
     private val binding get() = _binding!!
-
     private val signupViewModel : SignupViewModel by viewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -65,13 +60,12 @@ class SignupNicknameFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         // Z. 이전/다음 버튼 활성화
         backAndNextNaviBtn()
-
         checkDuplicateNickName()
         observeViewModel()
     }
     private fun observeViewModel(){
         signupViewModel.isDupNick.observe(viewLifecycleOwner){
-            binding.btnSignup2Next.isEnabled = it.isSuccess
+            binding.tvSignupNicknameNext.isEnabled = it.isSuccess
         }
     }
     private fun checkDuplicateNickName(){
@@ -88,19 +82,15 @@ class SignupNicknameFragment : Fragment(){
 
     }
     private fun backAndNextNaviBtn(){
-        val btnSignupPrevious = binding.btnSignup2Previous
-        val btnSignupNext = binding.btnSignup2Next
+        val btnSignupPrevious = binding.tvSignupNicknamePrevious
+        val btnSignupNext = binding.tvSignupNicknameNext
         // 뒤로가기 버튼 기능은 늘 가능
         btnSignupPrevious.setOnClickListener {
             activity.navigateToPreviousFragment()
         // 앞으로가기 버튼 기능을 특정한 경우에만 가능
         }
         btnSignupNext.setOnClickListener {
-            if (isNextPage) {
                 activity.navigateToNextFragment()
-            } else {
-                btnSignupNext.setOnClickListener {}
-            }
         }
     }
 
@@ -146,9 +136,7 @@ class SignupNicknameFragment : Fragment(){
     */
 
     private fun isDupNickname(){
-        val isDupNicknameBtn = binding.btnSignupNickname
-
-        isDupNicknameBtn.setOnClickListener{
+        binding.btnSignupNickname.setOnClickListener{
             val nicknameContents = binding.etSignupNickname.text.toString()
             signupViewModel.checkNickname(nicknameContents)
         }
@@ -165,20 +153,18 @@ class SignupNicknameFragment : Fragment(){
     다음으로 넘어가는 버튼이 찐해지는 부모함수
     */
     private fun setNextToggle(){
-        val nicknameContent = binding.etSignupNickname.text.toString()
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
         val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-        val isNicknameValid = nicknameContent.isNotEmpty()
 
         signupViewModel.isDuplicatedNickname.observe(viewLifecycleOwner) {it ->
             Log.d(TAG, "setNextToggle: ")
-            if (isNicknameValid && binding.tilSignupNickname.error == null){
+            if (binding.tilSignupNickname.error == null){
                 // 이전 버튼의 색을 activeColor 로 변경하고, isNextPage 값을 true로 변경
-                binding.btnSignup2Next.setTextColor(activeColor)
+                binding.tvSignupNicknameNext.setTextColor(activeColor)
                 isNextPage = true
                 // 중복된 아이디가 맞는 경우
             } else {
-                binding.btnSignup2Next.setTextColor(nonActiveColor)
+                binding.tvSignupNicknameNext.setTextColor(nonActiveColor)
                 isNextPage = false
             }
         }

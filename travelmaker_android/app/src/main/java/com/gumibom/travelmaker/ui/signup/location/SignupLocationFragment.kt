@@ -137,7 +137,6 @@ class SignupLocationFragment : Fragment() {
 
     // 다음 Text가 활성화 되는 함수
     private fun setNextTextToggle() {
-
         val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
         val notActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
         signupViewModel.address.observe(viewLifecycleOwner) { address ->

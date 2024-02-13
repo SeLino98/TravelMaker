@@ -5,4 +5,5 @@ import retrofit2.Response
 
 interface MyPageRemoteDataSource {
     suspend fun getMyUserInfo() : Response<UserResponseDTO>
+    suspend fun deleteMyInfo()
 }

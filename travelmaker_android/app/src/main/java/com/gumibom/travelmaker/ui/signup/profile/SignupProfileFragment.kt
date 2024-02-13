@@ -54,10 +54,10 @@ class SignupProfileFragment : Fragment() {
         // 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
     }
     private fun backAndNextNaviBtn(){
-        binding.tvSignupLocationPrevious.setOnClickListener {
+        binding.tvSignupProfilePrevious.setOnClickListener {
             signupActivity.navigateToPreviousFragment()
         }
-        binding.tvSignupLocationNext.setOnClickListener {//완료 버튼 눌렀을 때
+        binding.tvSignupProfileNext.setOnClickListener {//완료 버튼 눌렀을 때
 
             signupViewModel.saveUserInfoSaveProfileCategory("MultiImage로 변환하기 ",selectedChipName)
             signupViewModel.saveUserInfoAllData()//DTO 통신
@@ -95,9 +95,9 @@ class SignupProfileFragment : Fragment() {
                 }
             }
             if (profileFlag){
-                binding.tvSignupLocationNext.isEnabled = true
+                binding.tvSignupProfileNext.isEnabled = true
             }else{
-                binding.tvSignupLocationNext.isEnabled = false
+                binding.tvSignupProfileNext.isEnabled = false
             }
 
             //권한 체크

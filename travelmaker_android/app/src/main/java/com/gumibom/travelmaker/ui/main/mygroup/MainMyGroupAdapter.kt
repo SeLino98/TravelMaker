@@ -5,9 +5,11 @@ import android.widget.ListAdapter
 
 class MainMyGroupAdapter{
 
+
+
 }
 //    (private val context: Context, private val viewModel:MainViewModel)
-//    :ListAdapter<ASDASDDASDASDASDASDASDASDASD,MainMyGroupAdapter.GroupListViewHolder>(MainMyGroupDiffUtil()){
+//    :ListAdapter<,MainMyGroupAdapter.GroupListViewHolder>(MainMyGroupDiffUtil()){
 //
 //
 //
