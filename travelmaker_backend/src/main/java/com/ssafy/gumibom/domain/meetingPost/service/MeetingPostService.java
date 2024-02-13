@@ -134,16 +134,9 @@ public class MeetingPostService {
         List<MeetingPost> meetingPosts = meetingPostRepository.findByUserId(userId);
 
         return meetingPosts.stream()
-                .filter(Objects::nonNull)
-                .map(meetingPost -> {
-                    User head = meetingPost.getHead(); // MeetingPost 내부에서 head 사용자를 구함
-                    if (head != null) {
-                        return new DetailOfMeetingPostResponseDTO(head, meetingPost);
-                    } else {
-                        return null; // 혹은 head가 없는 경우를 처리하는 로직
-                    }
-                })
-                .filter(Objects::nonNull) // null이 아닌 결과만 필터링
+                // `getHead` 메서드의 결과가 null이 아닌 MeetingPost만 처리
+                .filter(meetingPost -> meetingPost.getHead() != null)
+                .map(meetingPost -> new DetailOfMeetingPostResponseDTO(meetingPost.getHead(), meetingPost))
                 .collect(Collectors.toList());
     }
 
