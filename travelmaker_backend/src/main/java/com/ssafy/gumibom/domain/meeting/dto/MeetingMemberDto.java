@@ -15,10 +15,10 @@ public class MeetingMemberDto {
     private Boolean isHead;
 
 
-    public MeetingMemberDto(MeetingMember member){
-        this.id = member.getId();
-        this.isHead = member.getIsHead();
-        this.isNative = member.getIsNative();
-
-    }
+//    public MeetingMemberDto(MeetingMember member){
+//        this.id = member.getId();
+//        this.isHead = member.getIsHead();
+//        this.isNative = member.getIsNative();
+//
+//    }
 }

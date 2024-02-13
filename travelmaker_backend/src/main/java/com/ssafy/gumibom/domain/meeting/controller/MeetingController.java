@@ -24,8 +24,6 @@ public class MeetingController {
     private final MeetingService meetingService;
     private final MeetingPostService meetingPostService;
 
-    private final EntityManager em;
-
     // 모임 생성
     @Operation(summary = "모임 생성 api")
     @GetMapping("/new/{meetingPostId}")
@@ -42,22 +40,22 @@ public class MeetingController {
         }
     }
     // 내 모임 리스트 조회
-    @Operation(summary = "모임 리스트 조회 api")
-    @GetMapping("/list/{userId}")
-    public ResponseEntity<List<MeetingDto>> getMeetingsByUserId(@PathVariable Long userId) {
-        List<MeetingDto> meetings = meetingService.getMeetingsByUserId(userId);
-        return ResponseEntity.ok(meetings);
-    }
+//    @Operation(summary = "모임 리스트 조회 api")
+//    @GetMapping("/list/{userId}")
+//    public ResponseEntity<List<MeetingDto>> getMeetingsByUserId(@PathVariable Long userId) {
+//        List<MeetingDto> meetings = meetingService.getMeetingsByUserId(userId);
+//        return ResponseEntity.ok(meetings);
+//    }
 
 
     // 모임 종료
-    @Operation(summary = "모임 종료 api")
-    @PutMapping("/{meetingId}")
-    public ResponseEntity<MeetingFinishResponseDto> finishMeeting(@PathVariable("meetingId") Long meetingId){
-        Boolean status = meetingService.finishMeeting(meetingId);
-        MeetingFinishResponseDto meetingFinishResponseDto = new MeetingFinishResponseDto(status);
-        return ResponseEntity.ok(meetingFinishResponseDto);
-    }
+//    @Operation(summary = "모임 종료 api")
+//    @PutMapping("/{meetingId}")
+//    public ResponseEntity<MeetingFinishResponseDto> finishMeeting(@PathVariable("meetingId") Long meetingId){
+//        Boolean status = meetingService.finishMeeting(meetingId);
+//        MeetingFinishResponseDto meetingFinishResponseDto = new MeetingFinishResponseDto(status);
+//        return ResponseEntity.ok(meetingFinishResponseDto);
+//    }
 
 //    @GetMapping("/{meetingPostId}/{meetingId}")
 //    public ResponseEntity<MeetingDetailResDto> meetingDetail(MeetingDetailReqDto meetingDetailReqDto) {

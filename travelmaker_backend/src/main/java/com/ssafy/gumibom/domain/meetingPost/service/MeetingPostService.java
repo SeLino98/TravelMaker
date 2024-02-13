@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -88,8 +90,14 @@ public class MeetingPostService {
     public Boolean finishMeetingPost(Long meetingPostId){
         MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
         meetingPost.updateMeetingPostStatus();
-        meetingPostRepository.save(meetingPost);
         return meetingPost.getIsFinish();
+    }
+
+    @Transactional
+    public Boolean finishMeeting(Long meetingPostId){
+        MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
+        meetingPost.updateMeetingStatus();
+        return meetingPost.getIsMeetingFinish();
     }
 
     // 반경 n km 안에 존재하는 모임글들의 정보 반환 // 위치랑 meetingPost id
@@ -120,6 +128,25 @@ public class MeetingPostService {
         meetingPostRepository.save(originalMP.updateMeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO));
         return ResponseEntity.ok(new BaseResponseDto(true, "수정에 성공했습니다."));
     }
+
+    // 사용자 ID로 MeetingPost를 조회하고 DetailOfMeetingPostResponseDTO로 변환하는 메소드
+    public List<DetailOfMeetingPostResponseDTO> getMeetingPostByUserId(Long userId) {
+        List<MeetingPost> meetingPosts = meetingPostRepository.findByUserId(userId);
+
+        return meetingPosts.stream()
+                .filter(Objects::nonNull)
+                .map(meetingPost -> {
+                    User head = meetingPost.getHead(); // MeetingPost 내부에서 head 사용자를 구함
+                    if (head != null) {
+                        return new DetailOfMeetingPostResponseDTO(head, meetingPost);
+                    } else {
+                        return null; // 혹은 head가 없는 경우를 처리하는 로직
+                    }
+                })
+                .filter(Objects::nonNull) // null이 아닌 결과만 필터링
+                .collect(Collectors.toList());
+    }
+
 
     @Transactional
     public void delete(Long id) {
