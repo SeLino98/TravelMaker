@@ -1,6 +1,9 @@
 package com.ssafy.gumibom.domain.meeting.dto;
 
+import com.ssafy.gumibom.domain.meeting.entity.Meeting;
+import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.user.dto.UserDto;
+import com.ssafy.gumibom.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,6 +14,11 @@ public class MeetingMemberDto {
     private Boolean isNative;
     private Boolean isHead;
 
-    private UserDto user;
-    private MeetingDto meeting;
+
+    public MeetingMemberDto(MeetingMember member){
+        this.id = member.getId();
+        this.isHead = member.getIsHead();
+        this.isNative = member.getIsNative();
+
+    }
 }
