@@ -112,7 +112,6 @@ class SignupViewModel @Inject constructor(
 
     // 우건
     var bundle : Bundle? = null
-    var isToastShown = false
     // 가변형 변수 자리
 
     var loginId : String? = null
@@ -120,6 +119,10 @@ class SignupViewModel @Inject constructor(
     var nickname : String? = null
     var email : String? = null
     var phoneNumber = ""
+    var selectNation = ""
+    var selectTown = ""
+    var selectGender = ""
+    var selectBirthDate = ""
 
     // 가변형 변수 자리
     // 가변형 변수 자리
@@ -149,16 +152,11 @@ class SignupViewModel @Inject constructor(
 
 // 우건
 
-    var selectAddress = ""
-    var selectGender = ""
-    var selectBirthDate = ""
+
     // 가변형 변수 자리
 
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
-
-    private val _naverAddressList = MutableLiveData<MutableList<Address>>()
-    val naverAddressList : LiveData<MutableList<Address>> = _naverAddressList
 
     private val _kakaoAddressList = MutableLiveData<MutableList<Address>>()
     val kakaoAddressList : LiveData<MutableList<Address>> = _kakaoAddressList
