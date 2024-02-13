@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
+import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
 import com.gumibom.travelmaker.data.dto.request.FcmGetNotifyListDTO
 
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
@@ -29,6 +30,7 @@ import com.gumibom.travelmaker.domain.firebase.FirebaseRefuseCrewUseCase
 import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
+import com.gumibom.travelmaker.domain.meeting.GetMyMeetingGroupListUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
 import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
 import com.gumibom.travelmaker.domain.pamphlet.MakePamphletUseCase
@@ -61,12 +63,19 @@ class MainViewModel @Inject constructor(
     private val getAllUserUseCase: GetAllUserUseCase,
     private val firebaseFcmAcceptCrewUseCase: FirebaseAcceptCrewUseCase,
     private val firebaseRefuseCrewUseCase: FirebaseRefuseCrewUseCase,
-    private val makePamphletUseCase: MakePamphletUseCase
+    private val makePamphletUseCase: MakePamphletUseCase,
+    private val getMyMeetingGroupListUseCase: GetMyMeetingGroupListUseCase
 
 ) : ViewModel(), CommonViewModel {
 
+    private val _myMeetingGroupList = MutableLiveData<List<MyMeetingGroupDTOItem>>()
+    val myMeetingGroupList :LiveData<List<MyMeetingGroupDTOItem>> = _myMeetingGroupList
 
-
+    fun getMyMeetingGroupList(userId: Long){
+        viewModelScope.launch {
+            _myMeetingGroupList.value = getMyMeetingGroupListUseCase.getMyGroupList(userId)
+        }
+    }
 
 
     //모임 데이터들을 받아오는 로직

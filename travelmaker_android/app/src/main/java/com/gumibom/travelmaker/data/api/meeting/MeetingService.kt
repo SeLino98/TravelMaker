@@ -28,10 +28,12 @@ interface MeetingService {
         @Path("meetingPostId") id: Long
     ): Response<MeetingPostDTO>
 
+
+
     @POST("meeting/list/{userId}")
     suspend fun getGroupList(
         @Path("userId") userId:Long
-    ):Response<List<MyMeetingGroupDTOItem>>
+    ):Response<MutableList<MyMeetingGroupDTOItem>>
 
 
 

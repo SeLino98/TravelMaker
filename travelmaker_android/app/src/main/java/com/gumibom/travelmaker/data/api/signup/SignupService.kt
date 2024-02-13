@@ -53,4 +53,7 @@ interface SignupService {
     @POST("/sms-certification/confirm")
     fun isCertificationNumber(@Body phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<Boolean>
 
+
+
+
 }

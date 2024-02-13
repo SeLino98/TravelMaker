@@ -13,4 +13,5 @@ class MainNotifyDiffUtil  : DiffUtil.ItemCallback<ReceivedRequest>() {
     override fun areContentsTheSame(oldItem: ReceivedRequest, newItem: ReceivedRequest): Boolean {
         return oldItem.meetingPostId == newItem.meetingPostId
     }
+
 }

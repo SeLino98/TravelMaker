@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.di.usecase.meeting
 
 import com.gumibom.travelmaker.data.repository.meeting.MeetingRepository
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
+import com.gumibom.travelmaker.domain.meeting.GetMyMeetingGroupListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,4 +19,14 @@ class MeetingUseCaseModule {
     fun provideGetMarkerPositionsUseCase(meetingRepository: MeetingRepository) : GetMarkerPositionsUseCase {
         return GetMarkerPositionsUseCase(meetingRepository)
     }
+
+    //그룹 리스트 받는 싱글톤 힐트 추가.
+    @Singleton
+    @Provides
+    fun provideGetMyMeetingGroupUseCase(meetingRepository: MeetingRepository): GetMyMeetingGroupListUseCase{
+        return GetMyMeetingGroupListUseCase(meetingRepository)
+    }
+
+
+
 }
