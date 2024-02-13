@@ -1,7 +1,8 @@
 package com.ssafy.gumibom.domain.meeting.service;
 
 
-import com.ssafy.gumibom.domain.meeting.dto.MeetingResponseDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingMemberDto;
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meeting.entity.MeetingMember;
 import com.ssafy.gumibom.domain.meeting.repository.MeetingMemberRepository;
@@ -9,6 +10,8 @@ import com.ssafy.gumibom.domain.meeting.repository.MeetingRepository;
 import com.ssafy.gumibom.domain.meeting.repository.MeetingRepositoryQuery;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
+import com.ssafy.gumibom.domain.user.dto.UserDto;
+import com.ssafy.gumibom.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +29,7 @@ public class MeetingService {
     private final MeetingRepositoryQuery meetingRepositoryQuery;
 
     // 사용자의 아이디를 통해 사용자가 진행했던 모임 조회
-    public List<MeetingResponseDto> getMeetingsByUserId(Long userId) {
+    public List<MeetingDto> getMeetingsByUserId(Long userId) {
         // 사용자 ID로 Meeting 엔티티 검색
         List<Meeting> meetings = meetingRepositoryQuery.findByUserId(userId);
 
@@ -37,17 +40,50 @@ public class MeetingService {
     }
 
     // Meeting 엔티티를 MeetingResDto로 변환
-    private MeetingResponseDto convertToMeetingResDto(Meeting meeting) {
-        return MeetingResponseDto.builder()
+    private MeetingDto convertToMeetingResDto(Meeting meeting) {
+        List<MeetingMemberDto> memberDtos = meeting.getMeetingMembers().stream()
+                .map(this::convertToMeetingMemberDto)
+                .collect(Collectors.toList());
+
+        return MeetingDto.builder()
                 .id(meeting.getId())
                 .title(meeting.getTitle())
                 .startDate(meeting.getStartDate())
                 .endDate(meeting.getEndDate())
                 .imgUrl(meeting.getImgUrl())
                 .isFinish(meeting.getIsFinish())
-                .members(meeting.getMeetingMembers())
+                .members(memberDtos)
                 .build();
     }
+
+    private MeetingMemberDto convertToMeetingMemberDto(MeetingMember meetingMember) {
+        return MeetingMemberDto.builder()
+                .id(meetingMember.getId())
+                .isNative(meetingMember.getIsNative())
+                .isHead(meetingMember.getIsHead())
+                .user(convertToUserDto(meetingMember.getUser())) // 이 변환 메소드를 구현해야 합니다.
+                // .meeting() 여기에서 meeting을 설정하지 않는 것이 좋습니다. 순환 참조를 피하기 위해
+                .build();
+    }
+
+    private UserDto convertToUserDto(User user) {
+        return UserDto.builder()
+                .userId(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .nickname(user.getNickname())
+                .gender(user.getGender()) // Gender는 enum 타입으로, User 엔티티와 동일하게 매핑 가정
+                .birth(user.getBirth())
+                .phone(user.getPhone())
+                .profileImgURL(user.getProfileImgURL())
+                .trust(user.getTrust())
+                .town(user.getTown())
+                .nation(user.getNation())
+                .categories(user.getCategories())
+                .build();
+    }
+
+
 
     // 여행객 최소인원과 신청한 여행객 인원을 비교하고 현지인 최소인원과 신청한 현지인 인원을 비교하여
     // 최소인원 충족 시 모임을 생성하는 메서드
@@ -90,6 +126,7 @@ public class MeetingService {
         meeting.getMeetingMembers().add(member);
         // 여기에서 MeetingMember의 다른 필드를 설정할 수 있습니다.
         member.setIsNative(applier.getIsNative());
+        member.setIsHead(applier.getIsHead());
         return member;
     }
 

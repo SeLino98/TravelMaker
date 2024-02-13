@@ -22,6 +22,7 @@ public class MeetingMember {
     private User user;
 
     private Boolean isNative;
+    private Boolean isHead;
 
     public void setUser(User user) {
         this.user = user;
@@ -33,6 +34,10 @@ public class MeetingMember {
 
     public void setIsNative(Boolean isNative){
         this.isNative = isNative;
+    }
+
+    public void setIsHead(Boolean isHead){
+        this.isHead = isHead;
     }
 
 }

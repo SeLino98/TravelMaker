@@ -2,7 +2,7 @@ package com.ssafy.gumibom.domain.meeting.controller;
 
 import com.ssafy.gumibom.domain.meeting.dto.MeetingCreateResponseDto;
 import com.ssafy.gumibom.domain.meeting.dto.MeetingFinishResponseDto;
-import com.ssafy.gumibom.domain.meeting.dto.MeetingResponseDto;
+import com.ssafy.gumibom.domain.meeting.dto.MeetingDto;
 import com.ssafy.gumibom.domain.meeting.service.MeetingService;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.service.MeetingPostService;
@@ -41,8 +41,8 @@ public class MeetingController {
     // 내 모임 리스트 조회
     @Operation(summary = "모임 리스트 조회 api")
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<MeetingResponseDto>> getMeetingsByUserId(@PathVariable Long userId) {
-        List<MeetingResponseDto> meetings = meetingService.getMeetingsByUserId(userId);
+    public ResponseEntity<List<MeetingDto>> getMeetingsByUserId(@PathVariable Long userId) {
+        List<MeetingDto> meetings = meetingService.getMeetingsByUserId(userId);
         return ResponseEntity.ok(meetings);
     }
 
