@@ -13,6 +13,9 @@ import com.gumibom.travelmaker.ui.main.MainViewModel
 class MainFcmNotifySentAdapter
     (private val context:Context, private val viewModel: MainViewModel)
     :ListAdapter<SentRequest,MainFcmNotifySentAdapter.SentViewHolder>(MainNotifySentDiffUtil()){
+
+
+
     inner class SentViewHolder(private val binding : ItemFcmNotifyRequireListBinding):
     RecyclerView.ViewHolder(binding.root){
         fun bind(item:SentRequest){

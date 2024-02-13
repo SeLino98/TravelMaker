@@ -1,4 +1,14 @@
 package com.gumibom.travelmaker.ui.main.mygroup
 
-class MainMyGroupAdapter {
+import android.content.Context
+import android.widget.ListAdapter
+
+class MainMyGroupAdapter{
+
 }
+//    (private val context: Context, private val viewModel:MainViewModel)
+//    :ListAdapter<ASDASDDASDASDASDASDASDASDASD,MainMyGroupAdapter.GroupListViewHolder>(MainMyGroupDiffUtil()){
+//
+//
+//
+//}
