@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/tv_signup_location_title1"
         style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
         android:layout_marginTop="50dp"
         android:text="@string/sign_profile_guide"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
         android:layout_marginTop="30dp"
         android:id="@+id/cv_profile"
@@ -57,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profile_nickname" />
     <!--
@@ -128,7 +130,7 @@
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
-        android:id="@+id/tv_signup_location_previous"
+        android:id="@+id/tv_signup_profile_previous"
         style="@style/Text.Regular20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,13 +141,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tv_signup_location_next"
+        android:id="@+id/tv_signup_profile_next"
         style="@style/Text.Regular20.gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/signup_next"
         android:layout_marginEnd="25dp"
-        android:text="@string/signup_complete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_signup_location_previous" />
+        app:layout_constraintTop_toTopOf="@id/tv_signup_profile_previous" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

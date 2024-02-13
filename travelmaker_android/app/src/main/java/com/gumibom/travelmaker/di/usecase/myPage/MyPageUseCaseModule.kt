@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.di.usecase.myPage
 
 import com.gumibom.travelmaker.data.repository.myPage.MyPageRepository
+import com.gumibom.travelmaker.domain.mypage.DeleteUserUseCase
 import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
 import dagger.Module
 import dagger.Provides
@@ -15,5 +16,11 @@ class MyPageUseCaseModule {
     @Provides
     fun provideGetAllUserUseCase(myPageRepository: MyPageRepository) : GetAllUserUseCase {
         return GetAllUserUseCase(myPageRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteUserUseCase(myPageRepository: MyPageRepository) : DeleteUserUseCase {
+        return DeleteUserUseCase(myPageRepository)
     }
 }

@@ -32,14 +32,12 @@
         app:boxCornerRadiusTopStart="16dp"
         app:boxStrokeColor="@drawable/selector_input_layout_color"
         app:helperText="@string/signup_id_helper_msg"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45"
-
-        >
+        app:layout_constraintTop_toBottomOf="@id/tv_signup_id_pw_title"
+        android:layout_marginTop="50dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signup_id"
@@ -57,12 +55,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_duplicate_check"
         android:text="@string/signup_btn_check_dup_id"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.20"
-        app:layout_constraintStart_toEndOf="@+id/til_signup_id"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintStart_toEndOf="@id/til_signup_id"
+        app:layout_constraintTop_toBottomOf="@id/tv_signup_id_pw_title"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="10dp"/>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -81,12 +77,10 @@
         app:boxStrokeColor="@drawable/selector_input_layout_color"
         app:endIconMode="password_toggle"
         app:helperText="@string/signup_pw_helper_msg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@id/til_signup_id"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6">
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signup_pw"
@@ -100,19 +94,17 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <Button
-        android:id="@+id/btn_signup1_next"
-        style="@style/Widget.Material3.Button.TextButton"
+    <TextView
+        android:id="@+id/tv_signup_idpw_next"
+        style="@style/Text.Regular20.gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="@string/signup_next"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="25dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

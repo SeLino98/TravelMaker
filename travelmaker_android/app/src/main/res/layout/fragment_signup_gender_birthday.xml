@@ -73,36 +73,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
-    <Button
-        android:id="@+id/btn_signup4_previous"
-
-        style="@style/Widget.Material3.Button.TextButton"
+    <TextView
+        android:id="@+id/tv_signup_genderbirth_previous"
+        style="@style/Text.Regular20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="18dp"
         android:text="@string/signup_previous"
-
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_signup4_next"
-
-        style="@style/Widget.Material3.Button.TextButton"
+    <TextView
+        android:id="@+id/tv_signup_genderbirth_next"
+        style="@style/Text.Regular20.gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_next"
-
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="@id/tv_signup_genderbirth_previous" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

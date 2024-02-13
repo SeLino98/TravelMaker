@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.R.drawable
+import com.gumibom.travelmaker.domain.mypage.DeleteUserUseCase
 import com.gumibom.travelmaker.domain.mypage.GetUserTrustLevelUseCase
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ private const val TAG = "MyPageViewModel_싸피"
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-
+    private val deleteUserUseCase: DeleteUserUseCase
 ): ViewModel() {
     var nickname = "개똥구리"
     private val _urlLiveData = MutableLiveData<String>()
@@ -41,6 +42,11 @@ class MyPageViewModel @Inject constructor(
             in 700..799 -> R.drawable.img_trust_7
             in 800..899 -> R.drawable.img_trust_8
             else -> R.drawable.img_trust_9  // 900점 이상인 경우와 그 외 모든 경우
+        }
+    }
+    fun deleteAccount(){
+        viewModelScope.launch {
+            deleteUserUseCase.deleteMyInfo()
         }
     }
 

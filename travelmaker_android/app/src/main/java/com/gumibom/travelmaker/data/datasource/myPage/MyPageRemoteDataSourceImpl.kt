@@ -11,4 +11,7 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
     override suspend fun getMyUserInfo(): Response<UserResponseDTO> {
         return myPageService.getMyUserInfo()
     }
+
+    override suspend fun deleteMyInfo() {
+    }
 }
