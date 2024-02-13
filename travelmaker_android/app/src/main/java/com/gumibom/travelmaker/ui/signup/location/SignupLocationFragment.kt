@@ -84,7 +84,7 @@ class SignupLocationFragment : Fragment() {
             if (signupViewModel.selectTown.isNotEmpty() && signupViewModel.selectNation.isNotEmpty()) {
                 Log.d(TAG, "selectTown: ${signupViewModel.selectTown}")
                 Log.d(TAG, "selectNation: ${signupViewModel.selectNation}")
-                
+
                 activity.navigateToNextFragment()
             } else {
                 Toast.makeText(requireContext(), "동네를 선택해주세요.", Toast.LENGTH_SHORT).show()
