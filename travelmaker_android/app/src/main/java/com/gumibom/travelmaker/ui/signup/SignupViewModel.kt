@@ -79,6 +79,7 @@ class SignupViewModel @Inject constructor(
         _userDTO.value!!.requestDto.categories = categoryList
     }//page 6
     fun saveUserInfoAllData(){
+
         _userRequestDTO.value = SignInUserDataRequestDTO(userDTO.value!!.image,
             (RequestDto(birth = userDTO.value!!.requestDto.birth,
                 userDTO.value!!.requestDto.categories,
@@ -95,7 +96,16 @@ class SignupViewModel @Inject constructor(
             // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
                 isSignup.value = saveUserInfoUseCase.saveUserInfo(userRequestDTO.value!!)
                 Log.d(TAG, "saveToUserDTO: ")
+
+
         }
+
+
+        
+
+
+
+
     }
     /*
         변수 사용하는 공간 시작

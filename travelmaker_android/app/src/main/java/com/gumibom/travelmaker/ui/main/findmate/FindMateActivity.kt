@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.ui.main.findmate
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -8,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -110,6 +112,22 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
          * */
     }
     private fun settingBottomSheetUI( postDetail : PostDetail){
+        //이미지 클릭시 다이얼로그 띄운다.
+        binding.bts.ivHeadProfile.setOnClickListener {
+            val x = 1200.toInt()
+            val y = 1000.toInt()
+            val dialog: Dialog = Dialog(this)
+            val alertDialog = ClickEventDialog(this@FindMateActivity)
+            val view = LayoutInflater.from(this).inflate(R.layout.click_event_profile_dialog,null)
+            dialog.setContentView(view)
+            dialog.setCancelable(false);
+            dialog.window?.setLayout(x,y);
+            dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_click_event_backgound)
+            alertDialog.setTitle("김인호")
+            alertDialog.setMessage("")
+            alertDialog.clickDialogShow()
+        }
+
         //리사이클러 뷰 이미지와 카테고리 이미지를 어뎁터에 올리고 띄운다.
         binding.bts.apply {
             tvRecruitTitle.text = postDetail.postTitle

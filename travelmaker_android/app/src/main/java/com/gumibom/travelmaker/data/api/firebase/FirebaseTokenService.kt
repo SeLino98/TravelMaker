@@ -44,4 +44,5 @@ interface FirebaseTokenService {
 //        @Query("userId") userId:Long,
 //        @Query("fcmToken") fcmToken:String
 
+
 }
