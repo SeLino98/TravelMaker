@@ -42,6 +42,7 @@ import com.gumibom.travelmaker.databinding.ActivityMapBinding
 import com.gumibom.travelmaker.model.MarkerPosition
 import com.gumibom.travelmaker.model.PostDetail
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
+import com.gumibom.travelmaker.ui.dialog.ClickEventProflleDialog
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.ImageAdapter
 import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.chipAdapter
@@ -113,19 +114,14 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     private fun settingBottomSheetUI( postDetail : PostDetail){
         //이미지 클릭시 다이얼로그 띄운다.
+
         binding.bts.ivHeadProfile.setOnClickListener {
-            val x = 1200.toInt()
-            val y = 1000.toInt()
-            val dialog: Dialog = Dialog(this)
-            val alertDialog = ClickEventDialog(this@FindMateActivity)
-            val view = LayoutInflater.from(this).inflate(R.layout.click_event_profile_dialog,null)
-            dialog.setContentView(view)
-            dialog.setCancelable(false);
-            dialog.window?.setLayout(x,y);
-            dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_click_event_backgound)
+            val alertDialog = ClickEventProflleDialog(this@FindMateActivity)
+            Log.d(TAG, "settingBottomSheetUI: gdgd")
             alertDialog.setTitle("김인호")
             alertDialog.setMessage("")
             alertDialog.clickDialogShow()
+            Log.d(TAG, "settingBottomSheetUI: g123d")
         }
 
         //리사이클러 뷰 이미지와 카테고리 이미지를 어뎁터에 올리고 띄운다.
@@ -201,7 +197,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         standardBottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//                if (!isUserDraggingBottomSheet) return // 사용자가 드래그하고 있지 않으면 리턴
+                //if (!isUserDraggingBottomSheet) return // 사용자가 드래그하고 있지 않으면 리턴
                 bottomSheet.postDelayed({
                     isFirstClick = false;
                     val screenHeight = Resources.getSystem().displayMetrics.heightPixels
