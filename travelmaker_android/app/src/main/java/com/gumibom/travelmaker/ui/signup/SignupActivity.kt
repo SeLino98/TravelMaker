@@ -114,8 +114,6 @@ class SignupActivity : AppCompatActivity(){
     }
 
     fun navigateToPreviousFragment() {
-        Log.d(TAG, "navigateToPreviousFragment: ${signupViewModel.bundle}")
-
         // 구글 로그인이 아니면 뒤로가기 정상 동작
         if (signupViewModel.bundle == null) {
             navController.navigateUp()
@@ -129,7 +127,6 @@ class SignupActivity : AppCompatActivity(){
                 updateProgressBar(false)
             }
         }
-
     }
 
     // 회원가입 화면 프로그레스바 진행률

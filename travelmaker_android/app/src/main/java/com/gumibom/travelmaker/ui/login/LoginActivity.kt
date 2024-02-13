@@ -66,7 +66,11 @@ class LoginActivity : AppCompatActivity() {
     // 파이어베이스의 notification 권한을 체크하는 함수
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setFirebasePermission() {
-        permissionChecker.checkPermission()
+        val jwtToken = ApplicationClass.sharedPreferencesUtil.getToken()
+        Log.d(TAG, "setFirebasePermission: $jwtToken")
+        if (jwtToken.isEmpty()) {
+            permissionChecker.checkPermission()
+        }
     }
 
 

@@ -44,7 +44,6 @@ class PamphletDetailFragment : Fragment() {
         // OnBackPressedCallback 인스턴스 생성 및 추가
         callback = object : OnBackPressedCallback(true) { // true는 콜백을 활성화 상태로 만듭니다.
             override fun handleOnBackPressed() {
-                Log.d(TAG, "handleOnBackPressed: 클릭")
                 activity.navigationPop()
                 activity.setOriginToolbar()
             }

@@ -57,3 +57,6 @@ const val FAIL_CREATE_MEETING_POST = "모임 생성에 실패하였습니다."
 
 // 내 기록 메시지
 const val NO_RECORD = "아직 기록물이 없습니다.\n우측 상단에 아이콘을 눌러 기록을 추가해보세요."
+
+// 문자 인증 메시지
+const val NOT_ALLOW_SMS = "문자 인증을 다시 확인해주세요."
