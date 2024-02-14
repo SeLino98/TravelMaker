@@ -22,6 +22,7 @@ import com.gumibom.travelmaker.constant.NOT_ENOUGH_INPUT
 import com.gumibom.travelmaker.constant.SUCCESS_CREATE_MEETING_POST
 import com.gumibom.travelmaker.databinding.FragmentMeetingPostCategoryBinding
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MeetingPostCategoryFrag_싸피"
@@ -201,6 +202,8 @@ class MeetingPostCategoryFragment : Fragment() {
                 meetingPostViewModel.minNative != 0 &&
                 meetingPostViewModel.minTraveler != 0 ) {
                 // 모두 입력되었으면 서버에 통신
+                meetingPostViewModel.username = ApplicationClass.sharedPreferencesUtil.getLoginId()
+
                 meetingPostViewModel.createMeeting()
 
             } else {

@@ -8,10 +8,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
+import com.gumibom.travelmaker.data.dto.request.PhoneNumberRequestDTO
 import com.gumibom.travelmaker.data.dto.request.RequestDto
 import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
+import com.gumibom.travelmaker.domain.signup.CheckCertificationUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedIdUseCase
 import com.gumibom.travelmaker.domain.signup.CheckDuplicatedNicknameUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
@@ -26,6 +29,7 @@ import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.GoogleUser
 import com.gumibom.travelmaker.model.SignInUserDataRequest
 import com.gumibom.travelmaker.ui.common.CommonViewModel
+import com.gumibom.travelmaker.ui.common.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -41,7 +45,8 @@ class SignupViewModel @Inject constructor(
     private val checkDuplicatedIdUseCase: CheckDuplicatedIdUseCase,
     private val checkDuplicatedNicknameUseCase: CheckDuplicatedNicknameUseCase,
     private val getKakaoLocationUseCase: GetKakaoLocationUseCase,
-    private val saveUserInfoUseCase :SaveUserInfoUseCase
+    private val saveUserInfoUseCase :SaveUserInfoUseCase,
+    private val checkCertificationUseCase: CheckCertificationUseCase
 ) : ViewModel(), CommonViewModel {
 
 
@@ -72,6 +77,7 @@ class SignupViewModel @Inject constructor(
         _userDTO.value!!.requestDto.birth = birth
     }//page 4
     fun saveUserInfoSavePhoneNum(phone:String){
+        Log.d(TAG, "saveUserInfoSavePhoneNum: $phone")
         _userDTO.value!!.requestDto.phone = phone
     }//page 5
     fun saveUserInfoSaveProfileCategory(profileImage:String, categoryList : List<String>){
@@ -114,6 +120,11 @@ class SignupViewModel @Inject constructor(
     var password : String? = null
     var nickname : String? = null
     var email : String? = null
+    var phoneNumber = ""
+    var selectNation = ""
+    var selectTown = ""
+    var selectGender = ""
+    var selectBirthDate = ""
 
     // 가변형 변수 자리
     // 가변형 변수 자리
@@ -143,22 +154,23 @@ class SignupViewModel @Inject constructor(
 
 // 우건
 
-    var selectAddress = ""
-    var selectGender = ""
-    var selectBirthDate = ""
+
     // 가변형 변수 자리
 
     private val _address = MutableLiveData<String>()
     val address : LiveData<String> = _address
-
-    private val _naverAddressList = MutableLiveData<MutableList<Address>>()
-    val naverAddressList : LiveData<MutableList<Address>> = _naverAddressList
 
     private val _kakaoAddressList = MutableLiveData<MutableList<Address>>()
     val kakaoAddressList : LiveData<MutableList<Address>> = _kakaoAddressList
 
     private val _googleAddressList = MutableLiveData<MutableList<Address>>()
     val googleAddressList : LiveData<MutableList<Address>> = _googleAddressList
+
+    private val _isSendPhoneSuccess = MutableLiveData<Event<Boolean>>()
+    val isSendPhoneSuccess : LiveData<Event<Boolean>> = _isSendPhoneSuccess
+
+    private val _isCertificationSuccess = MutableLiveData<Event<Boolean>>()
+    val isCertificationSuccess : LiveData<Event<Boolean>> = _isCertificationSuccess
 
     // 타이머의 코루틴을 추적하는 변수
     private var timerJob : Job? = null
@@ -204,16 +216,19 @@ class SignupViewModel @Inject constructor(
     }
 
     // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
-    fun sendPhoneNumber(phoneNumber : String) {
+    fun sendPhoneNumber(phoneNumberRequestDTO : PhoneNumberRequestDTO) {
         viewModelScope.launch {
-            val dto = sendPhoneNumberUseCase.sendPhoneNumber(phoneNumber)
-            Log.d(TAG, "sendPhoneNumber: $dto")
+            val event = Event(sendPhoneNumberUseCase.sendPhoneNumber(phoneNumberRequestDTO))
+            _isSendPhoneSuccess.value = event
         }
     }
 
     // TODO 문자인증을 받고 번호가 맞는지 검증하는 함수
-    fun isCertification() {
-
+    fun isCertification(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) {
+        viewModelScope.launch {
+            val event = Event(checkCertificationUseCase.isCertificationNumber(phoneCertificationRequestDTO))
+            _isCertificationSuccess.value = event
+        }
     }
 
 

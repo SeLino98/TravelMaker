@@ -24,6 +24,11 @@
         <item name="android:textColor">@color/light_gray</item>
     </style>
 
+    <!-- map Chip -->
+    <style name="chipRegular.map" parent="chipRegular">
+        <item name="chipBackgroundColor">@color/text_main_color</item>
+    </style>
+
     <style name="Text.Regular" parent="android:TextAppearance">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black</item>

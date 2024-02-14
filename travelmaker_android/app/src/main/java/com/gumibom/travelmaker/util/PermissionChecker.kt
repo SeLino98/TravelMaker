@@ -49,7 +49,6 @@ class PermissionChecker (private val context : Context){
             Manifest.permission.READ_MEDIA_VIDEO,
         )
         if (checker.checkPermission(runtimePermissions)) {
-            checker.requestPermissionLauncher.launch(runtimePermissions)
             checker.permitted = object : PermissionListener {
                 override fun onGranted() {
                     //퍼미션 획득 성공일때

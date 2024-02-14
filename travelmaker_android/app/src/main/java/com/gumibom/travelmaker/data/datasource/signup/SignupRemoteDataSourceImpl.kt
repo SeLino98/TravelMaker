@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.data.datasource.signup
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
 import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
+import com.gumibom.travelmaker.data.dto.request.PhoneNumberRequestDTO
 import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
@@ -14,8 +15,8 @@ class SignupRemoteDataSourceImpl @Inject constructor(
     private val signupService : SignupService
 ): SignupRemoteDataSource {
 
-    override suspend fun sendPhoneNumber(phoneNumber: String): Response<IsSuccessResponseDTO> {
-        return signupService.sendPhoneNumber(phoneNumber)
+    override suspend fun sendPhoneNumber(phoneNumberRequestDTO: PhoneNumberRequestDTO): Response<IsSuccessResponseDTO> {
+        return signupService.sendPhoneNumber(phoneNumberRequestDTO)
     }
 
     override suspend fun checkDuplicatedId(id: String): Response<SignInResponseDTO> {
@@ -32,7 +33,7 @@ class SignupRemoteDataSourceImpl @Inject constructor(
         return signupService.saveUserInfo(imageProfile,userInfo)
     }
 
-    override suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO): Response<Boolean> {
+    override suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO): Response<IsSuccessResponseDTO> {
         return signupService.isCertificationNumber(phoneCertificationRequestDTO)
     }
 }

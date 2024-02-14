@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.api.signup
 
 import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
+import com.gumibom.travelmaker.data.dto.request.PhoneNumberRequestDTO
 import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.SignInResponseDTO
@@ -17,10 +18,8 @@ import retrofit2.http.Query
 
 interface SignupService {
 
-    // TODO 서버에서 보내주는 Response를 보고 구현하기
-    // 서버에서 휴대폰 번호를 전송하면 인증번호를 받는 api
     @POST("/sms-certification/send")
-    fun sendPhoneNumber(@Body phone : String) : Response<IsSuccessResponseDTO>
+    suspend fun sendPhoneNumber(@Body phoneNumberRequestDTO : PhoneNumberRequestDTO) : Response<IsSuccessResponseDTO>
 
     // 이 아이디가 서버에 이미 저장되어 있는지(즉, 중복된 아이디인지) 체크하는 api
     // Boolean Value DTO 따로 만들어야 됨.
@@ -51,7 +50,7 @@ interface SignupService {
 //    ) : Response<String>
 
     @POST("/sms-certification/confirm")
-    fun isCertificationNumber(@Body phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<Boolean>
+    suspend fun isCertificationNumber(@Body phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<IsSuccessResponseDTO>
 
 
 
