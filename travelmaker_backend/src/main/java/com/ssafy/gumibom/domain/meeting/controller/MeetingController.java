@@ -25,20 +25,20 @@ public class MeetingController {
     private final MeetingPostService meetingPostService;
 
     // 모임 생성
-    @Operation(summary = "모임 생성 api")
-    @GetMapping("/new/{meetingPostId}")
-    public ResponseEntity<?> createMeeting(@PathVariable Long meetingPostId) {
-        try {
-            DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
-            meetingPostService.finishMeetingPost(meetingPostId);
-            meetingService.createMeeting(detailMeetingPostResForMeetingDto);
-            MeetingCreateResponseDto meetingCreateResponseDto = new MeetingCreateResponseDto(true,"모임이 성공적으로 시작됩니다.");
-            return ResponseEntity.ok(meetingCreateResponseDto);
-        } catch (Exception e) {
-            // 로깅, 오류 처리, 사용자 정의 예외에 따라 다름
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모임 생성 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
+//    @Operation(summary = "모임 생성 api")
+//    @GetMapping("/new/{meetingPostId}")
+//    public ResponseEntity<?> createMeeting(@PathVariable Long meetingPostId) {
+//        try {
+//            DetailMeetingPostResForMeetingDto detailMeetingPostResForMeetingDto = meetingPostService.meetingPostDetailRead(meetingPostId);
+//            meetingPostService.finishMeetingPost(meetingPostId);
+//            meetingService.createMeeting(detailMeetingPostResForMeetingDto);
+//            MeetingCreateResponseDto meetingCreateResponseDto = new MeetingCreateResponseDto(true,"모임이 성공적으로 시작됩니다.");
+//            return ResponseEntity.ok(meetingCreateResponseDto);
+//        } catch (Exception e) {
+//            // 로깅, 오류 처리, 사용자 정의 예외에 따라 다름
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모임 생성 중 오류가 발생했습니다: " + e.getMessage());
+//        }
+//    }
     // 내 모임 리스트 조회
 //    @Operation(summary = "모임 리스트 조회 api")
 //    @GetMapping("/list/{userId}")

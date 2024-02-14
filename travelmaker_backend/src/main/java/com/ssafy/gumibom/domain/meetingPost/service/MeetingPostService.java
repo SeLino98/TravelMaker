@@ -3,6 +3,7 @@ package com.ssafy.gumibom.domain.meetingPost.service;
 import com.ssafy.gumibom.domain.meetingPost.dto.DetailMeetingPostResForMeetingDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.DetailOfMeetingPostResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.dto.request.WriteMeetingPostRequestDTO;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingApplierRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
@@ -134,16 +135,21 @@ public class MeetingPostService {
         List<MeetingPost> meetingPosts = meetingPostRepository.findByUserId(userId);
 
         return meetingPosts.stream()
-                // `getHead` 메서드의 결과가 null이 아닌 MeetingPost만 처리
-                .filter(meetingPost -> meetingPost.getHead() != null)
                 .map(meetingPost -> new DetailOfMeetingPostResponseDTO(meetingPost.getHead(), meetingPost))
                 .collect(Collectors.toList());
     }
 
-    public void leaveMeeting(){
+    @Transactional
+    public void leaveMeeting(Long userId, Long meetingPostId){
+        User findUser = userRepository.findOne(userId);
+        List<MeetingApplier> meetingAppliers = findUser.getMeetingAppliers();
+        for(MeetingApplier meetingApplier : meetingAppliers){
+            if(meetingApplier.getMeetingPost().getId() == meetingPostId){
+                meetingApplierRepository.leaveMeetingByUserIdAndMeetingPostId(meetingApplier);
+            };
+        }
 
     }
-
 
     @Transactional
     public void delete(Long id) {

@@ -28,15 +28,6 @@ public class MeetingApplierRepository {
                 .getResultList();
     }
 
-
-    //meetingPostId와 userId로 meetingApplier를 찾아서 삭제
-    public void leaveMeetingByUserIdAndMeetingPostId(Long userId, Long meetingPostId) {
-        em.createQuery("DELETE FROM MeetingApplier ma WHERE ma.user.id = :userId AND ma.meetingPost.id = :meetingPostId")
-                .setParameter("userId", userId)
-                .setParameter("meetingPostId", meetingPostId)
-                .executeUpdate();
-    }
-
     public void leaveMeetingByUserIdAndMeetingPostId(MeetingApplier applier) {
         em.remove(applier);
     }

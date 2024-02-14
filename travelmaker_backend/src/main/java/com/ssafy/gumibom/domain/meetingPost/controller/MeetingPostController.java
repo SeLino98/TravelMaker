@@ -137,4 +137,11 @@ public class MeetingPostController {
         meetingPostService.finishMeeting(meetingPostId);
         return ResponseEntity.ok(new BaseResponseDto(true, "모임 종료"));
     }
+
+    @Operation(summary = "모임 신청 취소 api")
+    @DeleteMapping("/delete/{userId}/{meetingPostId}")
+    public ResponseEntity<BaseResponseDto> leaveMeeting(@PathVariable("userId") Long userId, @PathVariable("meetingPostId") Long meetingPostId){
+        meetingPostService.leaveMeeting(userId, meetingPostId);
+        return ResponseEntity.ok(new BaseResponseDto(true, "모임 신청이 취소되었습니다."));
+    }
 }
