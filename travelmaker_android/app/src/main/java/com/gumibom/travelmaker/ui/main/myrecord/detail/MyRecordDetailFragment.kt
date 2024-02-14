@@ -132,6 +132,11 @@ class MyRecordDetailFragment : Fragment() {
      */
     private fun setInit() {
         myRecordDetailViewModel.getMyAllRecord(pamphletId)
+
+        if (mainViewModel.isFinish) {
+            binding.ivMyRecordDetailEdit.visibility = View.GONE
+            binding.btnMyRecordDetailUpdate.visibility = View.GONE
+        }
     }
 
     /**
