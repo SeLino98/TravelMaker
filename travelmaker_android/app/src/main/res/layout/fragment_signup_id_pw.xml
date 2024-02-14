@@ -93,11 +93,11 @@
 
     <TextView
         android:id="@+id/tv_signup_idpw_next"
-        style="@style/Text.Regular20.gray"
+        style="@style/Text.Regular20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_next"
-
+        android:background="@drawable/btn_ripple_effect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="18dp"

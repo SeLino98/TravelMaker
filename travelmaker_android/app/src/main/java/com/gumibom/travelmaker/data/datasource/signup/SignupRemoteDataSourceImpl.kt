@@ -28,9 +28,11 @@ class SignupRemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun saveUserData(imageProfile: MultipartBody.Part?, userInfo: RequestBody): Response<IsSuccessResponseDTO> {
-
-        return signupService.saveUserInfo(imageProfile,userInfo)
+    override suspend fun saveUserData(
+        userInfo: RequestBody,
+        imageProfile: MultipartBody.Part
+    ): Response<IsSuccessResponseDTO> {
+        return signupService.saveUserInfo(userInfo, imageProfile)
     }
 
     override suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO): Response<IsSuccessResponseDTO> {

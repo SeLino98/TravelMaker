@@ -97,12 +97,15 @@ class SignupNicknameFragment : Fragment(){
         // 앞으로가기 버튼 기능을 특정한 경우에만 가능
         }
         btnSignupNext.setOnClickListener {
-            if (isNextPage) {
-                signupViewModel.nickname = binding.etSignupNickname.text.toString()
+            val nickname = binding.etSignupNickname.text.toString()
+            if (isNextPage  && nickname.isNotEmpty()) {
+                signupViewModel.nickname = nickname
                 Log.d(TAG, "loginId: ${signupViewModel.loginId}")
                 Log.d(TAG, "password: ${signupViewModel.password}")
                 Log.d(TAG, "nickname: ${signupViewModel.nickname}")
                 activity.navigateToNextFragment()
+            } else {
+                Toast.makeText(requireContext(), "입력을 확인해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
     }

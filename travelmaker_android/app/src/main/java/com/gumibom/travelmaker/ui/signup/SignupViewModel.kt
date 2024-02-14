@@ -27,6 +27,7 @@ import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.GoogleUser
+import com.gumibom.travelmaker.model.RequestUserData
 import com.gumibom.travelmaker.model.SignInUserDataRequest
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import com.gumibom.travelmaker.ui.common.Event
@@ -60,8 +61,8 @@ class SignupViewModel @Inject constructor(
     var bundle : Bundle? = null
     // 가변형 변수 자리
 
-    var loginId : String? = null
-    var password : String? = null
+    var loginId : String = ""
+    var password : String = ""
     var nickname : String = ""
     var email : String? = null
     var phoneNumber = ""
@@ -69,6 +70,8 @@ class SignupViewModel @Inject constructor(
     var selectTown = ""
     var selectGender = ""
     var selectBirthDate = ""
+    var profileImage = ""
+    var categoryList = mutableListOf<String>()
 
     // 가변형 변수 자리
     // 가변형 변수 자리
@@ -82,7 +85,7 @@ class SignupViewModel @Inject constructor(
 
 
     private val _isSignup = MutableLiveData<IsSuccessResponseDTO>()
-            val isSignup = _isSignup
+    val isSignup : LiveData<IsSuccessResponseDTO> = _isSignup
 
 
     private val _isDupNick = MutableLiveData<SignInResponseDTO>()
@@ -204,6 +207,12 @@ class SignupViewModel @Inject constructor(
 
         // '중복된 아이디'여부의 기본값 = false ==> '중복이 아닌 아이디' 입니다.
             _isDuplicatedId.value = checkDuplicatedIdUseCase.checkDuplicatedId(id)
+        }
+    }
+
+    fun signup(requestUserData: RequestUserData) {
+        viewModelScope.launch {
+            _isSignup.value = saveUserInfoUseCase.saveUserInfo(requestUserData, profileImage)
         }
     }
 }

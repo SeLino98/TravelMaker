@@ -7,25 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentSignupGenderBirthdayBinding
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
-import com.gumibom.travelmaker.ui.signup.idpw.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
+private const val TAG = "SignupGenderBirthdayFra_싸피"
 @AndroidEntryPoint
 class SignupGenderBirthdayFragment : Fragment(){
     private lateinit var activity: SignupActivity;
-    private val signupViewModel: SignupViewModel by viewModels()
+    private val signupViewModel: SignupViewModel by activityViewModels()
     private var _binding:FragmentSignupGenderBirthdayBinding? = null
     private val binding get() = _binding!!
     private var isNextPage = false
     private var isGenderSelected = false
+
+    private var gender = ""
+    private var birth = ""
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as SignupActivity
@@ -60,7 +65,12 @@ class SignupGenderBirthdayFragment : Fragment(){
         btnSignupNext.setOnClickListener {
             Log.d(TAG, "selectGender: ${signupViewModel.selectGender}")
             Log.d(TAG, "selectBirthDate: ${signupViewModel.selectBirthDate}")
-            activity.navigateToNextFragment()
+
+            if (isGenderSelected) {
+                activity.navigateToNextFragment()
+            } else {
+                Toast.makeText(requireContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     /*
@@ -76,7 +86,7 @@ class SignupGenderBirthdayFragment : Fragment(){
             manBtn.setBackgroundResource(R.drawable.btn_gender_selected)
             womanBtn.setBackgroundResource(R.drawable.btn_gender_selection)
             isGenderSelected = true
-            signupViewModel.selectGender = "남성"
+            signupViewModel.selectGender = "MALE"
             setNextToggle()
         }
         // 만약 womanBtn이 클릭된 경우
@@ -84,7 +94,7 @@ class SignupGenderBirthdayFragment : Fragment(){
             womanBtn.setBackgroundResource(R.drawable.btn_gender_selected)
             manBtn.setBackgroundResource(R.drawable.btn_gender_selection)
             isGenderSelected = true
-            signupViewModel.selectGender = "여성"
+            signupViewModel.selectGender = "FEMALE"
             setNextToggle()
         }
     }
@@ -108,18 +118,7 @@ class SignupGenderBirthdayFragment : Fragment(){
         datepicker.minDate = minCalendar.timeInMillis
     }
     private fun setNextToggle() {
-        val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
-        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-
-        if (isGenderSelected) {
-            // 모든 조건이 충족되었을 때만 다음 버튼 활성화
-            binding.tvSignupGenderbirthNext.setTextColor(activeColor)
-            isNextPage = true
-        } else {
-            // 하나라도 충족되지 않으면 비활성화
-            binding.tvSignupGenderbirthNext.setTextColor(nonActiveColor)
-            isNextPage = false
-        }
+        isNextPage = isGenderSelected
     }
     /*
     onDestroyView()

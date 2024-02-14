@@ -29,8 +29,11 @@ class SignupRepositoryImpl @Inject constructor(
         return signupRemoteDataSourceImpl.checkDuplicateNickname(nickname)
     }
 
-    override suspend fun saveUserData(imageProfile: MultipartBody.Part? ,userInfo: RequestBody): Response<IsSuccessResponseDTO> {
-        return signupRemoteDataSourceImpl.saveUserData(imageProfile,userInfo)
+    override suspend fun saveUserData(
+        userInfo: RequestBody,
+        profileImage: MultipartBody.Part
+    ): Response<IsSuccessResponseDTO> {
+        return signupRemoteDataSourceImpl.saveUserData(userInfo, profileImage)
     }
 
     override suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO): Response<IsSuccessResponseDTO> {

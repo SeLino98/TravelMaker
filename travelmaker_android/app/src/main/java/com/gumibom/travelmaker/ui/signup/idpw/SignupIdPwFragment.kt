@@ -43,6 +43,7 @@ class SignupIdPwFragment : Fragment() {
     // onViewCreated
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setInit()
         // Z. 이전/다음 버튼 활성화
         backAndNextNaviBtn()
         // Y. liveData가 지켜보다가 검사 돌리기
@@ -56,14 +57,23 @@ class SignupIdPwFragment : Fragment() {
         signupPwCheck()
         isDupId()
     }
+
+    private fun setInit() {
+        isNextPage = false
+    }
+
     private fun backAndNextNaviBtn() {
         binding.tvSignupIdpwNext.setOnClickListener {
-            signupViewModel.loginId = binding.etSignupId.text.toString()
-            signupViewModel.password = binding.etSignupPw.text.toString()
+            val loginId = binding.etSignupId.text.toString()
+            val password = binding.etSignupPw.text.toString()
 
-            Log.d(TAG, "loginId: ${signupViewModel.loginId}")
-            Log.d(TAG, "password: ${signupViewModel.password}")
-            activity.navigateToNextFragment()
+            if (isNextPage && loginId.isNotEmpty() && password.isNotEmpty()) {
+                signupViewModel.loginId = loginId
+                signupViewModel.password = password
+                activity.navigateToNextFragment()
+            } else {
+                Toast.makeText(requireContext(), "입력을 확인해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -72,6 +82,7 @@ class SignupIdPwFragment : Fragment() {
             if (it.booleanValue) {
                 Toast.makeText(requireContext(), "중복된 아이디 입니다.", Toast.LENGTH_LONG).show()
             } else {
+                isNextPage = true
                 Toast.makeText(requireContext(), "가능한 아이디 입니다.", Toast.LENGTH_LONG).show()
             }
         }
@@ -103,10 +114,6 @@ class SignupIdPwFragment : Fragment() {
                 } else {
                     binding.tilSignupId.error = null
                 }
-
-                // 해야할일: isDupId()에 값에 따라, tilSignupId.error 값도 결정되게 만들기. 근데 liveData에 연결되어서, 어케 해야할지..
-                setNextToggle()
-
             }
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -163,7 +170,6 @@ class SignupIdPwFragment : Fragment() {
                 } else {
                     binding.tilSignupPw.error = null
                 }
-                setNextToggle()
             }
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -182,24 +188,7 @@ class SignupIdPwFragment : Fragment() {
         }
         return true // 유효성 검사 통과
     }
-    /*
-    setNextToggle(){}
-    다음으로 넘어가는 버튼이 진해지고, isNextPage = true 로 변경
-    */
-    private fun setNextToggle() {
-        val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
-        val nonActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
 
-        if (binding.tilSignupId.error == null && binding.tilSignupPw.error == null) {
-            // 모든 조건이 충족되었을 때만 다음 버튼 활성화
-            binding.tvSignupIdpwNext.setTextColor(activeColor)
-            isNextPage = true
-        } else {
-            // 하나라도 충족되지 않으면 비활성화
-            binding.tvSignupIdpwNext.setTextColor(nonActiveColor)
-            isNextPage = false
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -14,6 +14,8 @@ import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,6 +27,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
+import com.gumibom.travelmaker.model.RequestUserData
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
@@ -32,21 +35,65 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 
-private const val TAG = "SignupProfileFragment"
+private const val TAG = "SignupProfileFragment_싸피"
 @AndroidEntryPoint
 class SignupProfileFragment : Fragment() {
     private val imagePickCode = 1000
     private val cameraRequestCode = 1002
-    private var profileFlag = false;
     private var _binding : FragmentSignupProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var signupActivity: SignupActivity
     private val signupViewModel: SignupViewModel by activityViewModels()
+
+    private lateinit var getImageResult : ActivityResultLauncher<Intent>
+    private lateinit var getCameraResult : ActivityResultLauncher<Intent>
+
+    private var filePath = ""
+    private var cameraPath = ""
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach:11 ")
         //Activity 연결
         signupActivity = context as SignupActivity
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // intent 결과를 받음
+        getImageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                data?.data?.let { uri ->
+                    filePath = getFilePathUri(uri)
+                    signupViewModel.profileImage = filePath
+
+                    Glide.with(this)
+                        .load(uri)
+                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                        .into(binding.ivProfile)
+                }
+            }
+        }
+
+        getCameraResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val bitmap = data?.extras?.get("data") as? Bitmap
+
+                bitmap?.let { bitmap ->
+                    cameraPath = getAbsolute(bitmap)
+                    signupViewModel.profileImage = cameraPath
+
+                    Glide.with(this)
+                        .load(bitmap)
+                        .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
+                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                        .into(binding.ivProfile)
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -60,24 +107,43 @@ class SignupProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        selectedChipName = mutableListOf()
 
-        selectCategoryFirst()
-        selectCategorySecond()
-
+        setInit()
         selectPicture()
+        selectCategory()
         observeViewModel()
         backAndNextNaviBtn()
         // 회원가입 완료 버튼을 누를 때 sharedPreference에 email이 null이 아니면 저장
     }
+
+    private fun setInit() {
+        binding.tvProfileNickname.text = signupViewModel.nickname
+    }
+
     private fun backAndNextNaviBtn(){
+        binding.tvSignupProfileNext.setOnClickListener {
+            if (signupViewModel.profileImage.isNotEmpty() && signupViewModel.categoryList.isNotEmpty()) {
+                val requestUserData = RequestUserData(
+                    signupViewModel.loginId,
+                    signupViewModel.password,
+                    signupViewModel.nickname,
+                    signupViewModel.email,
+                    signupViewModel.selectTown,
+                    signupViewModel.selectGender,
+                    signupViewModel.selectBirthDate,
+                    signupViewModel.phoneNumber,
+                    signupViewModel.selectNation,
+                    signupViewModel.categoryList,
+                )
+                signupViewModel.signup(requestUserData)
+            }
+        }
+
         binding.tvSignupProfilePrevious.setOnClickListener {
             signupActivity.navigateToPreviousFragment()
         }
 
-        binding.tvSignupProfileNext.setOnClickListener {//완료 버튼 눌렀을 때
 
-        }
     }
     private fun observeViewModel() {
         signupViewModel.isSignup.observe(viewLifecycleOwner){
@@ -87,12 +153,7 @@ class SignupProfileFragment : Fragment() {
                 Toast.makeText(activity, "회원가입을 실패했습니다. ", Toast.LENGTH_SHORT).show()
             }
         }
-//        signupViewModel.favoriteList.observe(viewLifecycleOwner) { favoriteList ->
-//            Log.d(TAG, "observeViewModel: ${favoriteList.toList()}")
-//        }
-        //1. viewModel에서 리스트로 받고 옵저버로 실시간 갱신
-        //2. 엘범 플래그는 구지? viewModel로 안빼도 될 듯
-        //3. 두 값이 체크 됐을 때 다음버튼 활성화
+
     }
     private fun selectPicture(){
         //+버튼 클릭 시
@@ -109,36 +170,30 @@ class SignupProfileFragment : Fragment() {
                     2 -> deletePhotoFromProfile()
                 }
             }
-            binding.tvSignupProfileNext.isEnabled = profileFlag
-
             //권한 체크
-            Log.d(TAG, "selectPicture: GHDGDG")
-//            dispatchTakePicture()
+
             pictureDialog.show()
-//            pictureDialog.clickDialogShow()
-            Log.d(TAG, "selectPicture: GHDGDG2222")
         }
     }
 
 
     private fun deletePhotoFromProfile() {
-        profileFlag = false
         binding.ivProfile.setBackgroundResource(R.drawable.ic_empty_profile_circle)
         binding.ivProfile.setImageResource(R.drawable.ic_empty_profile_circle)
     }
 
     private fun choosePhotoFromGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, imagePickCode)
-        profileFlag = true;
+
+        getImageResult.launch(galleryIntent)
     }
     private fun takePhotoFromCamera() {
         //권한을 설정하기
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(cameraIntent, cameraRequestCode)
-        profileFlag = true
+
+        getCameraResult.launch(cameraIntent)
     }
-    private fun getAbsolute(bitmap: Bitmap){
+    private fun getAbsolute(bitmap: Bitmap) : String {
         // bitmap을 절대 경로 파일에 저장
         val timestamp = System.currentTimeMillis()  // 중복을 피하기 위해 현재 시간을 넣어줌
         val thumbnailFileName = "thumbnail_$timestamp.jpg"
@@ -149,6 +204,8 @@ class SignupProfileFragment : Fragment() {
         val fos = FileOutputStream(thumbnailFile)
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
         fos.close()
+
+        return thumbnailFile.absolutePath
     }
 
     //빼올 떄?
@@ -173,85 +230,41 @@ class SignupProfileFragment : Fragment() {
     }
 
     /**
-     *
-     *
-     * */
+     * 카테고리를 설정하는 함수
+     */
+    private fun selectCategory() {
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                imagePickCode -> {
+        val chipMap = mapOf<String, String>("맛집" to "taste", "힐링" to "healing", "문화" to "culture", "활동" to "active",
+            "사진" to "picture", "자연" to "nature", "쇼핑" to "shopping", "휴식" to "rest")
 
-                    //비트맵을 파일 경로로 바꾸는 로직 기존 미팅 포스트?
+        val chipGroup1 = binding.chipGroup1
+        val chipGroup2 = binding.chipGroup2
 
-                    data?.data?.let { uri ->
-                        Glide.with(this)
-                            .load(uri)
-                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
-                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
-                            .into(binding.ivProfile)
-                    }
-                }
-                cameraRequestCode -> {
-
-                    //비트맵을 파일 경로로 바꾸는 로직
-                    val thumbnail = data?.extras?.get("data") as? Bitmap
-                    thumbnail?.let {
-                        Glide.with(this)
-                            .load(it)
-                            .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
-                            .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
-                            .into(binding.ivProfile)
-                    }
+        for (index in 0 until chipGroup1.childCount) {
+            val chip = chipGroup1.getChildAt(index) as? Chip
+            chip?.setOnClickListener {
+                val chipText = chipMap.getValue(chip.text.toString())
+                // Chip 클릭 시 실행할 코드
+                if (chip.isChecked) {
+                    signupViewModel.categoryList.add(chipText)
+                    Log.d(TAG, "selectCategory: ${signupViewModel.categoryList}")
+                } else {
+                    signupViewModel.categoryList.remove(chipText)
                 }
             }
-        }else{
-            Log.d(TAG, "onActivityResult: ")
         }
-    }
-    //칩 그룹주ㅇㄴㄻㄹㅇㄴ
-    private lateinit var selectedChip:MutableList<Int>
-    private lateinit var selectedChipName : MutableList<String>
-    private fun selectCategoryFirst(){
-        val chipGroup: ChipGroup = binding.chipGroup1
 
-        Log.d(TAG, "selectCategory:1")
-        chipGroup.setOnCheckedStateChangeListener {
-                group, checkId ->
-            selectedChip= checkId;
-            Log.d(TAG, "selectCategory: ${selectedChip}")
-            if (selectedChip != null) {
-                for (token  in selectedChip){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
-                    val selectedChipId = token //
-                    val selctedName = group.findViewById<Chip>(selectedChipId)
-                    selectedChipName.add(selctedName.text.toString())
-                    Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChip")
-                    Log.d(TAG, "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}")
+        for (index in 0 until chipGroup2.childCount) {
+            val chip = chipGroup2.getChildAt(index) as? Chip
+            chip?.setOnClickListener {
+                val chipText = chipMap.getValue(chip.text.toString())
+                // Chip 클릭 시 실행할 코드
+                if (chip.isChecked) {
+                    signupViewModel.categoryList.add(chipText)
+                } else {
+                    signupViewModel.categoryList.remove(chipText)
                 }
             }
-            //모든 칩들의 공통 특성 선택
-        }
-    }
-    private lateinit var selectedChipSecond:MutableList<Int>
-    private fun selectCategorySecond(){
-        val chipGroup: ChipGroup = binding.chipGroup2
-        selectedChipName = mutableListOf()
-        Log.d(TAG, "selectCategory:1")
-        chipGroup.setOnCheckedStateChangeListener {
-                group, checkId ->
-            selectedChipSecond= checkId;
-            Log.d(TAG, "selectCategory: ${selectedChipSecond}")
-            if (selectedChipSecond != null) {
-                for (token  in selectedChipSecond){ // 다 선택 됐고 다음 버튼을 눌렀을 때 현재 담아 있떤 리스트값들을 for문을 돌면서 유저 카테고리에 저장.
-                    val selectedChipId = token //
-                    val selctedName = group.findViewById<Chip>(selectedChipId)
-                    selectedChipName.add(selctedName.text.toString())
-                    Log.d(TAG, "Selected Chip ID: $selectedChipId, Text: $selectedChipSecond")
-                    Log.d(TAG, "selctedName: ${selctedName.text.toString()}, Text: ${selctedName.id.toString()}")
-                }
-            }
-            //모든 칩들의 공통 특성 선택
         }
     }
 

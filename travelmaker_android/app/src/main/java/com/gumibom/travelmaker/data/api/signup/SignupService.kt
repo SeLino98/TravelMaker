@@ -35,10 +35,9 @@ interface SignupService {
     @Multipart
     @POST("/join")
     suspend fun saveUserInfo(
-        @Part image : MultipartBody.Part?,
-        @Part("requestBody") requestBody : RequestBody
+        @Part("requestDto") requestBody : RequestBody,
+        @Part image : MultipartBody.Part
     ) : Response<IsSuccessResponseDTO>
-
 
 //    @Multipart
 //    @POST("/meeting-post/write")

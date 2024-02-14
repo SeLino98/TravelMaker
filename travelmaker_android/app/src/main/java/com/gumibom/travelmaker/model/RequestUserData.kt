@@ -1,14 +1,14 @@
 package com.gumibom.travelmaker.model
 
 data class RequestUserData(
-    var birth: String,
-    var categories: List<String>,
-    var email: String,
-    var gender: String,
-    var nation: String,
-    var nickname: String,
+    var username: String,
     var password: String,
-    var phone: String,
+    var nickname: String,
+    var email: String?,
     var town: String,
-    var username: String
+    var gender: String,
+    var birth: String,
+    var phone: String,
+    var nation: String,
+    var categories: List<String>
 )
