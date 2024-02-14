@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.repository.meeting
 
 import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
+import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
@@ -12,6 +13,10 @@ import javax.inject.Inject
 class MeetingRepositoryImpl @Inject constructor(
     private val meetingRemoteDataSourceImpl: MeetingRemoteDataSource
 ): MeetingRepository {
+    override suspend fun getGroupList(id: Long): Response<MutableList<MyMeetingGroupDTOItem>> {
+        return meetingRemoteDataSourceImpl.getGroupList(id)
+    }
+
     override suspend fun getPostDetail(id: Long): Response<MeetingPostDTO> {
         return meetingRemoteDataSourceImpl.getPostDetail(id)
     }

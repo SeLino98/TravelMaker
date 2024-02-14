@@ -4,16 +4,22 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
+import com.gumibom.travelmaker.constant.NOT_ALLOW_SMS
+import com.gumibom.travelmaker.data.dto.request.PhoneCertificationRequestDTO
+import com.gumibom.travelmaker.data.dto.request.PhoneNumberRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.databinding.FragmentSignupPhoneBinding
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
@@ -22,6 +28,7 @@ import kotlinx.coroutines.launch
 import dagger.hilt.android.AndroidEntryPoint
 
 
+private const val TAG = "SignupPhoneFragment_싸피"
 @AndroidEntryPoint
 class SignupPhoneFragment : Fragment() {
 
@@ -32,6 +39,8 @@ class SignupPhoneFragment : Fragment() {
     private lateinit var phoneEditText : TextInputEditText
     private lateinit var certificationEditText : TextInputEditText
     private lateinit var activity:SignupActivity
+    private var isCertificationSuccess = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,12 +60,45 @@ class SignupPhoneFragment : Fragment() {
         phoneEditText = binding.tieSignupPhone
         certificationEditText = binding.tieSignupCertificationNumber
 
+        setInit()
         getCertificationNumber()
 
         checkSecretNumber()
         phoneNumberCheck()
         backAndNextNaviBtn()
 
+        observeLiveData()
+        Log.d(TAG, "onViewCreated: ")
+    }
+
+    private fun setInit() {
+        isCertificationSuccess = false
+    }
+
+    private fun observeLiveData() {
+        signupViewModel.isSendPhoneSuccess.observe(viewLifecycleOwner) { event ->
+            val isSuccess = event.getContentIfNotHandled()
+
+            if (isSuccess != null && isSuccess) {
+                Log.d(TAG, "observeLiveData: 여기로 오니? null")
+                startTimer()
+            } else if (isSuccess != null && !isSuccess) {
+                Log.d(TAG, "observeLiveData: 여기로 오니?")
+                Toast.makeText(requireContext(), "인증 번호 전송 실패", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        signupViewModel.isCertificationSuccess.observe(viewLifecycleOwner) { event ->
+            val isSuccess = event.getContentIfNotHandled()
+
+            if (isSuccess != null && isSuccess) {
+                isCertificationSuccess = true
+                endTimer()
+                Toast.makeText(requireContext(), "문자 인증 성공", Toast.LENGTH_SHORT).show()
+            } else if (isSuccess != null && !isSuccess) {
+                Toast.makeText(requireContext(), "문자 인증 실패", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     /*
@@ -70,9 +112,10 @@ class SignupPhoneFragment : Fragment() {
 
             // 정상 휴대폰 번호면 서버 통신
             if (phoneNumberError == null && phoneNumber.isNotEmpty()) {
-                signupViewModel.sendPhoneNumber(phoneNumber)
+                Log.d(TAG, "getCertificationNumber: $phoneNumber")
 
-                startTimer()
+                val phoneNumberRequestDTO = PhoneNumberRequestDTO(phoneNumber, "")
+                signupViewModel.sendPhoneNumber(phoneNumberRequestDTO)
             }
 
         }
@@ -80,10 +123,14 @@ class SignupPhoneFragment : Fragment() {
 
     private fun checkSecretNumber() {
         binding.btnSignupCertificationNumber.setOnClickListener {
-            // TODO 여기서 서버에 인증 요청이 맞는지 확인하는 코드 작성하기
-            // TODO 인증이 성공하면 타이머 종료. 인증이 실패하면 타이머가 그대로 동작
-            // 인증하기가 성공하면 타이머 끄기
-            endTimer()
+            val phoneNumber = binding.tieSignupPhone.text.toString()
+            val certificationNumber = binding.tieSignupCertificationNumber.text.toString()
+
+            val phoneCertificationRequestDTO = PhoneCertificationRequestDTO(
+                phoneNumber,
+                certificationNumber
+            )
+            signupViewModel.isCertification(phoneCertificationRequestDTO)
         }
     }
 
@@ -151,7 +198,12 @@ class SignupPhoneFragment : Fragment() {
             activity.navigateToPreviousFragment()
         }
         binding.tvSignupPhonenumberNext.setOnClickListener {
-            activity.navigateToNextFragment()
+            if (isCertificationSuccess){
+                signupViewModel.phoneNumber = binding.tieSignupPhone.text.toString()
+                activity.navigateToNextFragment()
+            } else {
+                Toast.makeText(requireContext(), NOT_ALLOW_SMS, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

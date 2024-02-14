@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.ui.main.lookpamphlets
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -11,13 +12,20 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ItemPamphletBinding
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
+import com.gumibom.travelmaker.ui.main.myrecord.ItemClickListener
 
+private const val TAG = "LookPamphletAdapter_싸피"
 class LookPamphletAdapter(private val context : Context) : ListAdapter<PamphletItem, LookPamphletAdapter.LookPamphletViewHolder>(LookPamphletDiffUtil()) {
 
+    var itemClickListener: ItemClickListener? = null
     inner class LookPamphletViewHolder(private val binding : ItemPamphletBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : PamphletItem) {
             setItem(item)
             setCategoryAdapter(item)
+
+            binding.ivMyRecordPamphlet.setOnClickListener {
+                moveDetailFragment(item.pamphletId)
+            }
         }
 
         private fun setItem(item : PamphletItem){
@@ -39,6 +47,17 @@ class LookPamphletAdapter(private val context : Context) : ListAdapter<PamphletI
             val adapter = CategoryAdapter()
             binding.rvCategory.adapter = adapter
             adapter.submitList(item.categories)
+        }
+
+        /**
+         * Detail Fragment로 넘어가는 함수
+         */
+        private fun moveDetailFragment(pamphletId : Long) {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                Log.d(TAG, "moveDetailFragment: $itemClickListener")
+                itemClickListener?.moveRecordDetail(pamphletId, itemView)
+            }
         }
     }
 

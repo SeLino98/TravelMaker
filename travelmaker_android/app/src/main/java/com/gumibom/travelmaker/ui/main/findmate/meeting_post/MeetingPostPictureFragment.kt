@@ -155,7 +155,7 @@ class MeetingPostPictureFragment : Fragment() {
     /**
      * 파일 경로를 찾는 함수
      */
-    private fun getFilePathUri(uri: Uri) : String{
+    private fun getFilePathUri(uri: Uri) : String{ //URI를 String으로
         val buildName = Build.MANUFACTURER
 
         // 샤오미 폰은 바로 경로 반환 가능

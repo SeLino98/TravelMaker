@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gumibom.travelmaker.R
+import com.gumibom.travelmaker.constant.KOREAN_PATTERN
 import com.gumibom.travelmaker.databinding.ItemLocationListBinding
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.KakaoAddress
@@ -16,6 +17,7 @@ import com.gumibom.travelmaker.ui.common.CommonViewModel
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostViewModel
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
+import java.util.regex.Pattern
 
 
 private const val TAG = "SignupLocationAdapter_싸피"
@@ -58,7 +60,15 @@ class SignupLocationAdapter(private val context : Context,
                     // 만약 넘겨받은 viewModel이 SignupViewModel이면
                     if (viewModel is SignupViewModel) {
                         // 선택한 아이템의 주소를 ViewModel에 저장
-                        viewModel.setAddress(item.address)
+                        viewModel.selectTown = item.address
+
+                        // 주소가 한국이면
+                        if (isMatchingPattern(item.title, KOREAN_PATTERN)) {
+                            viewModel.setAddress(item.address)
+                            viewModel.selectNation = "Korea"
+                        } else {
+                            viewModel.selectNation = item.title
+                        }
                     }
 
                 } else {
@@ -70,6 +80,8 @@ class SignupLocationAdapter(private val context : Context,
                     if (viewModel is SignupViewModel) {
                         // 선택한 아이템의 주소를 ViewModel에서 초기화
                         viewModel.setAddress("")
+                        viewModel.selectTown = ""
+                        viewModel.selectNation = ""
                     }
                 }
 
@@ -84,6 +96,11 @@ class SignupLocationAdapter(private val context : Context,
             } else {
                 binding.itemLocationLayout.setBackgroundColor(notSelectColor)
             }
+        }
+
+        private fun isMatchingPattern(input: String, pattern: String): Boolean {
+            val matcher = Pattern.compile(pattern).matcher(input)
+            return matcher.matches()
         }
     }
 

@@ -60,18 +60,35 @@ class SignupLocationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setInit()
         setAdapter()
         searchLocation()
         setNextTextToggle()
         openNextPage()
         backAndNextNaviBtn()
     }
+
+    private fun setInit() {
+        signupViewModel.selectTown = ""
+        signupViewModel.selectNation = ""
+
+        signupViewModel.setAddress("")
+        isNextPage = false
+    }
+
     private fun backAndNextNaviBtn(){
         binding.tvSignupLocationPrevious.setOnClickListener {
             activity.navigateToPreviousFragment()
         }
         binding.tvSignupLocationNext.setOnClickListener {
-            activity.navigateToNextFragment()
+            if (signupViewModel.selectTown.isNotEmpty() && signupViewModel.selectNation.isNotEmpty()) {
+                Log.d(TAG, "selectTown: ${signupViewModel.selectTown}")
+                Log.d(TAG, "selectNation: ${signupViewModel.selectNation}")
+
+                activity.navigateToNextFragment()
+            } else {
+                Toast.makeText(requireContext(), "동네를 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     // 리싸이클러뷰 세팅
@@ -145,11 +162,10 @@ class SignupLocationFragment : Fragment() {
 
                 binding.tvSignupLocationNext.setTextColor(activeColor)
 
-//                signupViewModel.selectAddress = address
                 isNextPage = true
             } else {
                 binding.tvSignupLocationNext.setTextColor(notActiveColor)
-//                signupViewModel.selectAddress = ""
+
                 isNextPage = false
             }
         }

@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                         navController.navigateUp()
                     }
                 }
-                R.id.myRecordDetail -> {
+                R.id.myRecordDetail, R.id.pamphletDetailFragment -> {
                     binding.toolbar.visibility = View.GONE
                 }
 
@@ -190,6 +190,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    /**
+     * View.GONE 되었던 toolbar를 원래대로 되돌려 놓는 함수
+     */
+    fun setOriginToolbar() {
+        binding.toolbar.visibility = View.VISIBLE
     }
 
     private fun setFirebase(){

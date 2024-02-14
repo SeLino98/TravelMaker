@@ -283,8 +283,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         val zoomLevel = 15.0f // 줌 레벨을 조정하세요. 값이 클수록 더 가까워집니다.
 
         val marker = mMap.addMarker(MarkerOptions().position(location).title(title))!!
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
 
         return marker
     }
@@ -403,9 +403,11 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             }  // 있다면
             else {
                 for (marker in markerPosition) {
-                    val location = LatLng(marker.latitude, marker.longitude)
-                    val googleMarker = setMarker(location, "title")
 
+                    val location = LatLng(marker.latitude, marker.longitude)
+                    Log.d(TAG, "observeLivaData: $location")
+                    val googleMarker = setMarker(location, "title")
+                    setMyLocation(LatLng(mainViewModel.currentLatitude, mainViewModel.currentLongitude))
                     googleMarker.tag = marker
                 }
             }
@@ -463,13 +465,21 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
                     filterCategories.add(chipMap.getValue(category.text.toString()))
                 }
             }
-
+            Log.d(TAG, "selectCategory: $filterCategories")
             // TODO 여기서 서버 통신으로 필터링
             val markerCategoryPositionDTO = MarkerCategoryPositionRequestDTO(
                 mainViewModel.currentLatitude, mainViewModel.currentLongitude, 3.0, filterCategories
             )
+            clearMarkers()
             mainViewModel.getCategoryMarkers(markerCategoryPositionDTO)
         }
+    }
+
+    /**
+     * 마커를 전부 제거하는 함수
+     */
+    private fun clearMarkers() {
+        mMap.clear() // 현재 그려진 모든 마커를 제거합니다.
     }
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 100

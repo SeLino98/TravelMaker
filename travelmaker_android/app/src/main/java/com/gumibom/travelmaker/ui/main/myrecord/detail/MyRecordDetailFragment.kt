@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
@@ -21,6 +23,7 @@ import com.gumibom.travelmaker.databinding.FragmentMyRecordDetailBinding
 import com.gumibom.travelmaker.model.pamphlet.Record
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MyRecordDetail_싸피"
@@ -30,10 +33,12 @@ class MyRecordDetailFragment : Fragment() {
     private var _binding: FragmentMyRecordDetailBinding? = null
     private val binding get() = _binding!!
     private val myRecordDetailViewModel : MyRecordDetailViewModel by viewModels()
+    private val mainViewModel : MainViewModel by activityViewModels()
     private lateinit var activity: MainActivity
     private lateinit var adapter : MyRecordDetailAdapter
     private var pamphletId : Long = 0
     private var recordId : Long = 0
+    private lateinit var callback: OnBackPressedCallback
 
     private var playWhenReady = true
     private var currentWindow = 0
@@ -48,6 +53,17 @@ class MyRecordDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pamphletId = arguments?.getLong("pamphletId") ?: 0
+
+        // OnBackPressedCallback 인스턴스 생성 및 추가
+        callback = object : OnBackPressedCallback(true) { // true는 콜백을 활성화 상태로 만듭니다.
+            override fun handleOnBackPressed() {
+                Log.d(TAG, "handleOnBackPressed: 클릭")
+                activity.navigationPop()
+                activity.setOriginToolbar()
+            }
+        }
+        // OnBackPressedDispatcher에 콜백 추가
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreateView(
@@ -116,6 +132,11 @@ class MyRecordDetailFragment : Fragment() {
      */
     private fun setInit() {
         myRecordDetailViewModel.getMyAllRecord(pamphletId)
+
+        if (mainViewModel.isFinish) {
+            binding.ivMyRecordDetailEdit.visibility = View.GONE
+            binding.btnMyRecordDetailUpdate.visibility = View.GONE
+        }
     }
 
     /**
@@ -177,6 +198,8 @@ class MyRecordDetailFragment : Fragment() {
      */
     private fun deleteRecord() {
         binding.btnMyRecordDetailDelete.setOnClickListener {
+            Log.d(TAG, "recordId: $recordId")
+            Log.d(TAG, "pamphletId: $pamphletId")
             val deleteRecordRequestDTO = DeleteRecordRequestDTO(
                 pamphletId,
                 recordId
