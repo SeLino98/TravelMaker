@@ -58,6 +58,8 @@ class SignupGenderBirthdayFragment : Fragment(){
             activity.navigateToPreviousFragment()
         }
         btnSignupNext.setOnClickListener {
+            Log.d(TAG, "selectGender: ${signupViewModel.selectGender}")
+            Log.d(TAG, "selectBirthDate: ${signupViewModel.selectBirthDate}")
             activity.navigateToNextFragment()
         }
     }

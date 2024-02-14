@@ -82,6 +82,10 @@ class SignupLocationFragment : Fragment() {
         }
         binding.tvSignupLocationNext.setOnClickListener {
             if (signupViewModel.selectTown.isNotEmpty() && signupViewModel.selectNation.isNotEmpty()) {
+
+                Log.d(TAG, "loginId: ${signupViewModel.loginId}")
+                Log.d(TAG, "password: ${signupViewModel.password}")
+                Log.d(TAG, "nickname: ${signupViewModel.nickname}")
                 Log.d(TAG, "selectTown: ${signupViewModel.selectTown}")
                 Log.d(TAG, "selectNation: ${signupViewModel.selectNation}")
 

@@ -54,10 +54,16 @@ class SignupIdPwFragment : Fragment() {
         // D-1. pw_et가 비어 있으면 EditText에 error 표시 하기
         // D-2. pw_et 내용으로 valid check 돌리기 -> 1. 성공 or 2. 실패
         signupPwCheck()
+        isDupId()
     }
     private fun backAndNextNaviBtn() {
         binding.tvSignupIdpwNext.setOnClickListener {
-                activity.navigateToNextFragment()
+            signupViewModel.loginId = binding.etSignupId.text.toString()
+            signupViewModel.password = binding.etSignupPw.text.toString()
+
+            Log.d(TAG, "loginId: ${signupViewModel.loginId}")
+            Log.d(TAG, "password: ${signupViewModel.password}")
+            activity.navigateToNextFragment()
         }
     }
 
@@ -97,7 +103,7 @@ class SignupIdPwFragment : Fragment() {
                 } else {
                     binding.tilSignupId.error = null
                 }
-                isDupId()
+
                 // 해야할일: isDupId()에 값에 따라, tilSignupId.error 값도 결정되게 만들기. 근데 liveData에 연결되어서, 어케 해야할지..
                 setNextToggle()
 

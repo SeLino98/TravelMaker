@@ -112,8 +112,6 @@ class SignupPhoneFragment : Fragment() {
 
             // 정상 휴대폰 번호면 서버 통신
             if (phoneNumberError == null && phoneNumber.isNotEmpty()) {
-                Log.d(TAG, "getCertificationNumber: $phoneNumber")
-
                 val phoneNumberRequestDTO = PhoneNumberRequestDTO(phoneNumber, "")
                 signupViewModel.sendPhoneNumber(phoneNumberRequestDTO)
             }

@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -40,12 +41,21 @@ class SignupProfileFragment : Fragment() {
     private var _binding : FragmentSignupProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var signupActivity: SignupActivity
-    private val signupViewModel: SignupViewModel by viewModels()
+    private val signupViewModel: SignupViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach:11 ")
         //Activity 연결
         signupActivity = context as SignupActivity
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSignupProfileBinding.inflate(inflater, container, false)
+        return binding.root
+        //inflater.inflate(R.layout.fragment_profile_signup, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,11 +74,9 @@ class SignupProfileFragment : Fragment() {
         binding.tvSignupProfilePrevious.setOnClickListener {
             signupActivity.navigateToPreviousFragment()
         }
+
         binding.tvSignupProfileNext.setOnClickListener {//완료 버튼 눌렀을 때
 
-            signupViewModel.saveUserInfoSaveProfileCategory("MultiImage로 변환하기 ",selectedChipName)
-            signupViewModel.saveUserInfoAllData()//DTO 통신
-            //서버에 정상적으로 저장이 되면 ObserViewModel에서 isSignup값이 전환되고 자동으로 페이지가 넘어간다.
         }
     }
     private fun observeViewModel() {
@@ -101,11 +109,7 @@ class SignupProfileFragment : Fragment() {
                     2 -> deletePhotoFromProfile()
                 }
             }
-            if (profileFlag){
-                binding.tvSignupProfileNext.isEnabled = true
-            }else{
-                binding.tvSignupProfileNext.isEnabled = false
-            }
+            binding.tvSignupProfileNext.isEnabled = profileFlag
 
             //권한 체크
             Log.d(TAG, "selectPicture: GHDGDG")
@@ -251,14 +255,6 @@ class SignupProfileFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentSignupProfileBinding.inflate(inflater, container, false)
-        return binding.root
-        //inflater.inflate(R.layout.fragment_profile_signup, container, false)
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding= null
