@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
 
@@ -27,9 +28,11 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
     private final Key key;
+    private final MyUserDetailsService userDetailsService;
 
     // application.yml에서 secret 값 가져와서 key에 저장
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, MyUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -54,6 +57,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
                 .setExpiration(new Date(now + 1209600000)) // 2주
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -126,15 +130,23 @@ public class JwtTokenProvider {
     // refresh token으로 새 accessToken 생성
     public JwtToken generateTokenFromRefreshToken(String refreshToken) {
         // refresh token의 claim 검증, 추출
-        Claims claims = parseClaims(refreshToken);
+        Claims claims = parseRefreshToken(refreshToken);
+
         if (claims == null) {
             throw new SecurityException("리프레시 토큰이 유효하지 않습니다.");
         }
 
         String username = claims.getSubject();
 
-        // 새로운 access token 생성
-        Authentication authentication = getAuthentication(username);
+
+        // UserDetailsService를 사용하여 데이터베이스에서 사용자 정보를 조회
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        // UserDetails를 바탕으로 Authentication 객체 생성
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+        // SecurityContext에 Authentication 객체 설정 (선택적)
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return generateToken(authentication);
     }
@@ -149,5 +161,37 @@ public class JwtTokenProvider {
             return false;
         }
     }
+
+    private Claims parseRefreshToken(String refreshToken) {
+        try {
+            // 리프레시 토큰의 형식과 서명을 검증하고, 클레임을 추출합니다.
+            return Jwts.parserBuilder()
+                    .setSigningKey(key) // 토큰 서명 검증에 사용할 키 설정
+                    .build()
+                    .parseClaimsJws(refreshToken) // JWT 파싱 및 검증
+                    .getBody(); // 검증된 JWT의 클레임 반환
+        } catch (ExpiredJwtException e) {
+            // 토큰이 만료된 경우
+            log.info("Expired refresh token", e);
+            throw new SecurityException("Expired refresh token.", e);
+        } catch (UnsupportedJwtException e) {
+            // 지원되지 않는 JWT 형식인 경우
+            log.info("Unsupported JWT token", e);
+            throw new SecurityException("Unsupported JWT token.", e);
+        } catch (MalformedJwtException e) {
+            // JWT 형식이 잘못된 경우
+            log.info("Invalid JWT token", e);
+            throw new SecurityException("Invalid JWT token.", e);
+        } catch (SignatureException e) {
+            // JWT 서명 검증 실패
+            log.info("Invalid JWT signature", e);
+            throw new SecurityException("Invalid JWT signature.", e);
+        } catch (IllegalArgumentException e) {
+            // refreshToken 인자가 잘못된 경우 (null 또는 빈 문자열 등)
+            log.info("JWT token compact of handler are invalid.", e);
+            throw new SecurityException("JWT token compact of handler are invalid.", e);
+        }
+    }
+
 
 }

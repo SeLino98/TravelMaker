@@ -69,7 +69,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 //                        .requestMatchers("/**").permitAll()
-                        .requestMatchers("/login", "/", "/join", "/join/**").permitAll()
+                        .requestMatchers("/login", "/", "/join", "/join/**", "/refresh-token").permitAll()
                         .requestMatchers("/sms-certification/send", "/sms-certification/confirm", "/sms-certification").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()) // 그 외 인증 없이 접근X
@@ -87,6 +87,9 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
+                // 만료 토큰 핸들링
+                .exceptionHandling(handler -> handler.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
 
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
