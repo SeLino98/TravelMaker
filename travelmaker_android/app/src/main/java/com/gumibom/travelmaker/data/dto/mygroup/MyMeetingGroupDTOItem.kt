@@ -1,6 +1,7 @@
 package com.gumibom.travelmaker.data.dto.mygroup
 
 data class MyMeetingGroupDTOItem(
+    val postId : Long,
     val categories: List<String>,
     val dday: Int,
     val headId: Int,

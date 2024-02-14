@@ -45,7 +45,11 @@ class MainMyPageFragment:Fragment() {
     private lateinit var activity : MainActivity
     lateinit var getResult: ActivityResultLauncher<Intent>
     private var filePath = ""
+
     private val myPageViewModel : MyPageViewModel by viewModels()
+
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

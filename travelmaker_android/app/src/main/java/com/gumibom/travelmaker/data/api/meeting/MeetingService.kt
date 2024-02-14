@@ -3,12 +3,14 @@ package com.gumibom.travelmaker.data.api.meeting
 import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -30,12 +32,14 @@ interface MeetingService {
 
 
 
-    @GET("meeting-post/list/{userId}")
+    @GET("meeting-post/list/{userId}") //내가 속한 모임 글 전체 확인
     suspend fun getGroupList(
         @Path("userId") userId:Long
     ):Response<MutableList<MyMeetingGroupDTOItem>>
 
-
-
+    @PUT("meeting-post/post-finish/{meetingPostId}")
+    suspend fun putActiveChatting(
+        @Path("meetingPostId") meetingPostId : Long
+    ):Response<IsSuccessResponseDTO>
 
 }

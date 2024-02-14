@@ -32,6 +32,7 @@ import com.gumibom.travelmaker.domain.firebase.FirebaseRequestGroupUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMyMeetingGroupListUseCase
 import com.gumibom.travelmaker.domain.meeting.GetPostDetailUseCase
+import com.gumibom.travelmaker.domain.meeting.PutActiveChattingUseCase
 import com.gumibom.travelmaker.domain.mypage.GetAllUserUseCase
 import com.gumibom.travelmaker.domain.pamphlet.MakePamphletUseCase
 import com.gumibom.travelmaker.domain.signup.GetGoogleLocationUseCase
@@ -64,9 +65,20 @@ class MainViewModel @Inject constructor(
     private val firebaseFcmAcceptCrewUseCase: FirebaseAcceptCrewUseCase,
     private val firebaseRefuseCrewUseCase: FirebaseRefuseCrewUseCase,
     private val makePamphletUseCase: MakePamphletUseCase,
-    private val getMyMeetingGroupListUseCase: GetMyMeetingGroupListUseCase
+    private val getMyMeetingGroupListUseCase: GetMyMeetingGroupListUseCase,
+    private val putActiveChattingUseCase: PutActiveChattingUseCase
+
 
 ) : ViewModel(), CommonViewModel {
+
+    private val _isActiveChat = MutableLiveData<IsSuccessResponseDTO>()
+    val isActiveChat :LiveData<IsSuccessResponseDTO> = _isActiveChat
+
+    fun putActiveChatting(groupId:Long){
+        viewModelScope.launch {
+            _isActiveChat.value = putActiveChattingUseCase.putGroupChat(groupId)
+        }
+    }
 
     private val _myMeetingGroupList = MutableLiveData<List<MyMeetingGroupDTOItem>>()
     val myMeetingGroupList :LiveData<List<MyMeetingGroupDTOItem>> = _myMeetingGroupList

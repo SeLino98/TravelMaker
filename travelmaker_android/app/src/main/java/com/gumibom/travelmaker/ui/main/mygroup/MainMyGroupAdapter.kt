@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.ui.main.mygroup
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,20 +17,24 @@ import com.gumibom.travelmaker.databinding.ItemMygroupListBinding
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.notification.MainFcmNotifyAdapter
 
+private const val TAG = "MyGroupAdapter"
 class MainMyGroupAdapter(
     private val context: Context,
     private val viewModel: MainViewModel
 ) : ListAdapter<MyMeetingGroupDTOItem, MainMyGroupAdapter.GroupListViewHolder>(MainMyGroupDiffUtil()) {
 
 
+
+
     inner class GroupListViewHolder(private val binding: ItemMygroupListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         @SuppressLint("SetTextI18n")
         fun bind(item: MyMeetingGroupDTOItem) {
             with(binding) {
                 Glide.with(context).load(item.mainImgUrl).into(imageViewPhoto)
                 tvGroupTitle.text = item.postTitle
+                Log.d(TAG, "bind: ${item.numOfTraveler}")
+                Log.d(TAG, "bind: ${item.numOfNative}")
                 ivMyGroupLocalPersonCnt.text = item.numOfNative.toString()
                 ivMyGroupTripPersonCnt.text = item.numOfTraveler.toString()
                 ivMyGroupMaxPersonCnt.text = (item.numOfTraveler + item.numOfTraveler).toString()
@@ -37,15 +42,15 @@ class MainMyGroupAdapter(
                 tvStartDay.text = item.startDate.toString()
                 btnCancelGroup.setOnClickListener {
                     //모임 취소하기.
-
                 }
                 btnStartGroup.setOnClickListener {
                     if (item.headId == viewModel.user.value!!.userId.toInt()) {//내가 방장일 때
                         //isFinished 활성화 시키는 api통신 기능 구현
-
+                        viewModel.putActiveChatting(item.postId)
                     } else if (item.headId != viewModel.user.value!!.userId.toInt()) {//내가 방장이 아닐 때
                         if (item.isFinish) {
                             //그룹체팅 입장.
+                            //파이어베이스로 활용할 계획
 
                         }
                     }
