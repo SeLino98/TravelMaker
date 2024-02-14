@@ -75,13 +75,17 @@ public class MeetingPost {
         this.position = requestDTO.getPosition();
     }
 
-    public void addApplier(User user, Boolean isHead) {
+    public MeetingApplier addApplier(User user, Boolean isHead) {
         MeetingApplier meetingApplier = new MeetingApplier();
         meetingApplier.setUser(user);
         meetingApplier.setMeetingPost(this);
+
+        user.setMeetingApplier(meetingApplier);
         if(position != null) meetingApplier.setIsNative(this.position.getTown().equals(user.getTown()));
         meetingApplier.setIsHead(isHead);
         appliers.add(meetingApplier);
+
+        return meetingApplier;
     }
 
     public static MeetingPost createMeetingPost(

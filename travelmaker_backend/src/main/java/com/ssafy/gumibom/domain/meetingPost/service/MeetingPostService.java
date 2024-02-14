@@ -51,14 +51,14 @@ public class MeetingPostService {
         String subImgUrl = "";
         String thirdImgUrl = "";
 
-        if(mainImage!=null) mainImgUrl = s3Service.uploadS3(mainImage, "images");
-        if(mainImage!=null) subImgUrl = s3Service.uploadS3(subImage, "images");
-        if(mainImage!=null) thirdImgUrl = s3Service.uploadS3(thirdImage, "images");
+        if (mainImage != null) mainImgUrl = s3Service.uploadS3(mainImage, "images");
+        if (mainImage != null) subImgUrl = s3Service.uploadS3(subImage, "images");
+        if (mainImage != null) thirdImgUrl = s3Service.uploadS3(thirdImage, "images");
 
         MeetingPost meetingPost = MeetingPost.createMeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, writeMeetingPostRequestDTO, author);
-        log.info("게시글 제목: " +meetingPost.getTitle());
-        log.info("데드라인: " +meetingPost.getDeadline());
-        log.info("마감 날짜: " +meetingPost.getEndDate());
+        log.info("게시글 제목: " + meetingPost.getTitle());
+        log.info("데드라인: " + meetingPost.getDeadline());
+        log.info("마감 날짜: " + meetingPost.getEndDate());
 
         meetingApplierRepository.save(meetingPost.getAppliers().get(0)); // 모임장 db에 저장
         meetingPostRepository.save(meetingPost);
@@ -81,20 +81,20 @@ public class MeetingPostService {
 
     // 미팅 생성을 위해 필요한 데이터를 찾아서 DTO로 감쌈
     @Transactional
-    public DetailMeetingPostResForMeetingDto meetingPostDetailRead(Long id){
+    public DetailMeetingPostResForMeetingDto meetingPostDetailRead(Long id) {
         DetailMeetingPostResForMeetingDto responseDTO = new DetailMeetingPostResForMeetingDto(meetingPostRepository.findOne(id));
         return responseDTO;
     }
 
     @Transactional
-    public Boolean finishMeetingPost(Long meetingPostId){
+    public Boolean finishMeetingPost(Long meetingPostId) {
         MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
         meetingPost.updateMeetingPostStatus();
         return meetingPost.getIsFinish();
     }
 
     @Transactional
-    public Boolean finishMeeting(Long meetingPostId){
+    public Boolean finishMeeting(Long meetingPostId) {
         MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
         meetingPost.updateMeetingStatus();
         return meetingPost.getIsMeetingFinish();
@@ -121,9 +121,9 @@ public class MeetingPostService {
         String subImgUrl = "";
         String thirdImgUrl = "";
 
-        if(mainImage!=null) mainImgUrl = s3Service.uploadS3(mainImage, "images");
-        if(mainImage!=null) subImgUrl = s3Service.uploadS3(subImage, "images");
-        if(mainImage!=null) thirdImgUrl = s3Service.uploadS3(thirdImage, "images");
+        if (mainImage != null) mainImgUrl = s3Service.uploadS3(mainImage, "images");
+        if (mainImage != null) subImgUrl = s3Service.uploadS3(subImage, "images");
+        if (mainImage != null) thirdImgUrl = s3Service.uploadS3(thirdImage, "images");
 
         meetingPostRepository.save(originalMP.updateMeetingPost(mainImgUrl, subImgUrl, thirdImgUrl, requestDTO));
         return ResponseEntity.ok(new BaseResponseDto(true, "수정에 성공했습니다."));
@@ -138,6 +138,10 @@ public class MeetingPostService {
                 .filter(meetingPost -> meetingPost.getHead() != null)
                 .map(meetingPost -> new DetailOfMeetingPostResponseDTO(meetingPost.getHead(), meetingPost))
                 .collect(Collectors.toList());
+    }
+
+    public void leaveMeeting(){
+
     }
 
 

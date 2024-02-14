@@ -13,12 +13,12 @@ import java.util.List;
 
 @Getter
 public class DetailOfMeetingPostResponseDTO {
-
     private Long headId;
     private String headNickname;
     private Double headTrust;
     private String profileImgUrl;
 
+    private Long postId;
     private String postTitle;
     private String postContent;
     private String mainImgUrl;
@@ -37,12 +37,12 @@ public class DetailOfMeetingPostResponseDTO {
     private Long dDay;
 
     public DetailOfMeetingPostResponseDTO(User head, MeetingPost meetingPost) {
-
         this.headId = head.getId();
         this.headNickname = head.getNickname();
         this.headTrust = head.getTrust();
         this.profileImgUrl = head.getProfileImgURL();
 
+        this.postId = meetingPost.getId();
         this.postTitle = meetingPost.getTitle();
         this.postContent = meetingPost.getContent();
         this.mainImgUrl = meetingPost.getImgUrlMain();
