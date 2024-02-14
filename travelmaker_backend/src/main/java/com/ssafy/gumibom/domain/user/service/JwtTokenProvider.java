@@ -44,7 +44,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
+        Date accessTokenExpiresIn = new Date(now + 3600000); // 1시간
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
+                .setExpiration(new Date(now + 1209600000)) // 2주
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -117,6 +117,36 @@ public class JwtTokenProvider {
                     .getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
+        } catch (Exception e) {
+            log.info("토큰 파싱 중 오류 발생", e);
+            return null;
+        }
+    }
+
+    // refresh token으로 새 accessToken 생성
+    public JwtToken generateTokenFromRefreshToken(String refreshToken) {
+        // refresh token의 claim 검증, 추출
+        Claims claims = parseClaims(refreshToken);
+        if (claims == null) {
+            throw new SecurityException("리프레시 토큰이 유효하지 않습니다.");
+        }
+
+        String username = claims.getSubject();
+
+        // 새로운 access token 생성
+        Authentication authentication = getAuthentication(username);
+
+        return generateToken(authentication);
+    }
+
+    // 리프레시 토큰의 유효성 검증 메서드 추가 (예시)
+    public boolean validateRefreshToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            log.info("리프레시 토큰 유효성 검증 실패", e);
+            return false;
         }
     }
 
