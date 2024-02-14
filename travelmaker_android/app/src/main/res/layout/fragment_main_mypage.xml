@@ -57,38 +57,20 @@
                 android:src="@drawable/ic_picture_add" />
         </FrameLayout>
 
-        <EditText
-            android:id="@+id/et_mypage_email"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:hint=""
-            android:textColorHint="@color/black"
-            app:layout_constraintStart_toEndOf="@id/fl_mypage_profile_picture"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="40dp" />
-
-        <ImageView
-            android:id="@+id/iv_mypage_email_edit"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_profile_edit2"
-            android:clickable="true"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="44dp"
-            app:layout_constraintStart_toEndOf="@id/et_mypage_email" />
 
         <TextView
             android:id="@+id/tv_mypage_nickname"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/mypage_nickname"
-            android:textSize="20sp"
-            android:textColor="@color/light_gray"
-            app:layout_constraintTop_toBottomOf="@id/et_mypage_email"
-            app:layout_constraintStart_toEndOf="@id/fl_mypage_profile_picture"
             android:layout_marginTop="8dp"
-            />
-
+            android:paddingLeft="16dp"
+            android:text="@string/mypage_nickname"
+            android:textColor="@color/light_gray"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_mypage_logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fl_mypage_profile_picture"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_my_trustlevel"

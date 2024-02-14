@@ -30,6 +30,7 @@ import com.gumibom.travelmaker.databinding.FragmentMainMypageBinding
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.login.LoginActivity
 import com.gumibom.travelmaker.ui.main.MainActivity
+import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,17 +40,13 @@ private const val TAG = "MainMyPageFragment_싸피"
 class MainMyPageFragment:Fragment() {
 
     private val trustPoint = 800
-
     private var _binding:FragmentMainMypageBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity : MainActivity
     lateinit var getResult: ActivityResultLauncher<Intent>
     private var filePath = ""
 
-    private val myPageViewModel : MyPageViewModel by viewModels()
-
-
-
+    private val myPageViewModel : MainViewModel by viewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,6 +66,8 @@ class MainMyPageFragment:Fragment() {
                 myPageViewModel.updateProfilePicture(filePath)
             }
         }
+
+
     }
 
     override fun onCreateView(
@@ -85,19 +84,22 @@ class MainMyPageFragment:Fragment() {
         goToEditMyInfo()
         observePicture() // 1. observePicture(): ok
         selectMypagePicture() // 2. 프로필사진 변경 로직: ok
-        editMyEmail() // 3. 이메일 변경 -> edittext 를 눌러서 고침 (liveData)
         // 4. 회원정보 수정 버튼 클릭 -> 회원정보 수정할 다이얼로그 뜸
         logoutMyAccount() // 5. 로그아웃 버튼 클릭 -> 로그인 상태에서 로그아웃 되는 로직: ok
         showMyTrustLevel() // 7. 신뢰도 수준 보여주는 함수 <- 신뢰도 점수 구간에 맞게 drawable에서 img_trust_n 사진을 찾아서 그려줌: ok
+        myPageViewModel.getAllUser()
+        myPageViewModel.user.observe(viewLifecycleOwner){
+            binding.tvMypageNickname.text = myPageViewModel.user.value!!.nickname
+            Glide.with(activity).load(myPageViewModel.user.value!!.profileImgURL).into(binding.ivMypageProfileImg)
+        }
     }
+
 
     private fun goToEditMyInfo(){
         val btnGoToEditMyInfo = binding.btnMyinfoEdit
         btnGoToEditMyInfo.setOnClickListener{
             Navigation.findNavController(it).navigate(R.id.action_mainMyPageFragment_to_dialogMainMypageEditMyinfo)
         }
-
-
     }
     /*
     신뢰도 확인 버튼을 누르고 자신의 신뢰도를 그림으로 확인하는 로직
@@ -214,18 +216,7 @@ class MainMyPageFragment:Fragment() {
     이메일et를 새로 치고, 이메일 수정 버튼을 누름
     */
 
-    private fun editMyEmail(){
-        val emailContent = binding.etMypageEmail
-        val btnEmailEdit = binding.ivMypageEmailEdit
-        // 수정 함수 이므로, 유효성 검사 필요
-        emailContent.setText("i_am_ddong_dog")
-        emailContent.setSelection(emailContent.text.length)
 
-        btnEmailEdit.setOnClickListener{
-            emailContent.setSelection(emailContent.text.length)
-            validateEmail(emailContent.toString())
-        }
-    }
     // 이메일이 비어있는지 확인하는 로직
     private fun validateEmail(email:String): Boolean{
         if (email.isBlank()){

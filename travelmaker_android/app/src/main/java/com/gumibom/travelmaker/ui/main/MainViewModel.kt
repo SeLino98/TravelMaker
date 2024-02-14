@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
+import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
 import com.gumibom.travelmaker.constant.KAKAO_API_KEY
 import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
@@ -210,6 +211,28 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private val _urlLiveData = MutableLiveData<String>()
+    val urlLiveData : LiveData<String> = _urlLiveData
+    private var _trustLevelImageId = MutableLiveData<Int>()
+    val trustLevelImageId : LiveData<Int> = _trustLevelImageId
+    fun updateProfilePicture(filePath:String){
+        _urlLiveData.value = filePath
+    }
+
+
+    fun updateAndGetTrustLevelImageId(trustPoint: Int): Int {
+        return when (trustPoint) {
+            in 0..199 -> R.drawable.img_trust_1
+            in 200..299 -> R.drawable.img_trust_2
+            in 300..399 -> R.drawable.img_trust_3
+            in 400..499 -> R.drawable.img_trust_4
+            in 500..599 -> R.drawable.img_trust_5
+            in 600..699 -> R.drawable.img_trust_6
+            in 700..799 -> R.drawable.img_trust_7
+            in 800..899 -> R.drawable.img_trust_8
+            else -> R.drawable.img_trust_9  // 900점 이상인 경우와 그 외 모든 경우
+        }
+    }
     fun userSelectAddress(address : Address) {
         _selectAddress.value = address
         Log.d(TAG, "userSelectAddress: $address")
