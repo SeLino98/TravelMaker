@@ -42,8 +42,11 @@ class MainMyPageFragment:Fragment() {
     private val trustPoint = 800
     private var _binding:FragmentMainMypageBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var activity : MainActivity
+
     lateinit var getResult: ActivityResultLauncher<Intent>
+
     private var filePath = ""
 
     private val myPageViewModel : MainViewModel by viewModels()
