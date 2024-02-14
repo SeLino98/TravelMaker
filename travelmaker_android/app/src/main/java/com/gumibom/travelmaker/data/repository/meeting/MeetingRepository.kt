@@ -9,7 +9,8 @@ import retrofit2.Response
 
 interface MeetingRepository {
 
-    suspend fun getGroupList(id:Long):Response<MutableList<MyMeetingGroupDTOItem>>
+    suspend fun getGroupList(id:Long)
+    :Response<MutableList<MyMeetingGroupDTOItem>>
 
     suspend fun getPostDetail(id:Long):Response<MeetingPostDTO>
 

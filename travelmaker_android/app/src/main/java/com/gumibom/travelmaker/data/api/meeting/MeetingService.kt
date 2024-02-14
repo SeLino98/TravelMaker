@@ -30,7 +30,7 @@ interface MeetingService {
 
 
 
-    @POST("meeting/list/{userId}")
+    @GET("meeting-post/list/{userId}")
     suspend fun getGroupList(
         @Path("userId") userId:Long
     ):Response<MutableList<MyMeetingGroupDTOItem>>

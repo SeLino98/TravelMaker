@@ -5,7 +5,7 @@ data class MyMeetingGroupDTOItem(
     val dday: Int,
     val headId: Int,
     val headNickname: String,
-    val headTrust: Int,
+    val headTrust: Double,
     val isFinish: Boolean,
     val isMeetingFinish: Boolean,
     val mainImgUrl: String,

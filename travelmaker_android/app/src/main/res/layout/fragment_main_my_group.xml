@@ -12,6 +12,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_my_group_list"
             android:layout_width="match_parent"
+            tools:listitem="@layout/item_mygroup_list"
             android:layout_height="match_parent"/>
 
     </LinearLayout>

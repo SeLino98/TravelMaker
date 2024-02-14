@@ -74,6 +74,7 @@ class MainViewModel @Inject constructor(
     fun getMyMeetingGroupList(userId: Long){
         viewModelScope.launch {
             _myMeetingGroupList.value = getMyMeetingGroupListUseCase.getMyGroupList(userId)
+            Log.d(TAG, "GroupList: ${myMeetingGroupList.value.toString()}")
         }
     }
 

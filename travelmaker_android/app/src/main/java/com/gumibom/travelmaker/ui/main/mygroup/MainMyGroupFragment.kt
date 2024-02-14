@@ -35,7 +35,6 @@ class MainMyGroupFragment : Fragment() {
         sharedPreferencesUtil = SharedPreferencesUtil(activity)
 
 
-
     }
     private lateinit var meetingGroupListAdapter : MainMyGroupAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +70,7 @@ class MainMyGroupFragment : Fragment() {
     private fun observeLiveData(){
         viewModel.myMeetingGroupList.observe(viewLifecycleOwner){
             Log.d(TAG, "observeLiveData: 1")
-            if (it.isNullOrEmpty()){
+            if (!it.isNullOrEmpty()){
                 //리사이클러 뷰 갱신
                 Log.d(TAG, "observeLiveData: 2")
                 setRecyclerView(it)
@@ -80,6 +79,7 @@ class MainMyGroupFragment : Fragment() {
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
