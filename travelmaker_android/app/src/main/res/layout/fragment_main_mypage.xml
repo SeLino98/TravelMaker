@@ -38,8 +38,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_empty_profile_circle"
-            />
+            android:src="@drawable/ic_empty_profile_circle" />
 
         <ImageView
             android:id="@+id/iv_mypage_profile_img"

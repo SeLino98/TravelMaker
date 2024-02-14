@@ -32,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_look_for_mate"
         android:layout_width="160dp"
@@ -70,11 +71,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="50dp"
         android:text="내 여행 \n시작하기"
         android:textSize="24dp"
         android:textStyle="bold"
+
         app:layout_constraintBottom_toBottomOf="@+id/btn_create_my_pamphlet"
         app:layout_constraintEnd_toEndOf="@+id/button3"
         app:layout_constraintStart_toEndOf="@+id/btn_look_for_mate" />
@@ -95,7 +97,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="    나의 \n   모임 그룹"
+        android:text="   나의 \n   모임 그룹"
         android:textSize="24dp"
         android:textStyle="bold"
         android:elevation="2dp"
@@ -134,7 +136,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="12dp"
-        android:text="다른 모임 크루들이 만든 팜플렛을 \n 확인할 수 있어요! "
+        android:text="다른 모임 크루들이 생성한\n팜플렛을 여기서 확인할 수 있어요"
         app:layout_constraintBottom_toBottomOf="@+id/btn_look_around_pamphlet"
         app:layout_constraintEnd_toStartOf="@id/iv_look_for_pam"
         app:layout_constraintStart_toStartOf="@id/btn_look_around_pamphlet"
@@ -187,7 +189,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="12dp"
-        android:text="팜플렛으로 기록했던 나의 모임을 볼 수 있어요!"
+        android:text="팜플렛으로 기록했던\n나의 모임을 여기서 볼 수 있어요"
         app:layout_constraintBottom_toBottomOf="@+id/btn_read_my_record"
         app:layout_constraintEnd_toStartOf="@id/iv_my_record"
         app:layout_constraintStart_toStartOf="@id/btn_read_my_record"
