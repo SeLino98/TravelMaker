@@ -33,7 +33,6 @@ pipeline {
                         sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@$EC2_SERVER_IP "sudo sh deploy2.sh"'
                         sh 'pwd'
-                        sh ''
                     }
                 }
 			}
