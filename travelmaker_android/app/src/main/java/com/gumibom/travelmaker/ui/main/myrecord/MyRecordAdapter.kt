@@ -20,8 +20,6 @@ private const val TAG = "MyRecordAdapter_싸피"
 class MyRecordAdapter(private val context : Context, private val myRecordViewModel: MyRecordViewModel) : ListAdapter<PamphletItem, MyRecordAdapter.MyRecordViewHolder>(MyRecordDiffUtil()) {
     var itemClickListener: ItemClickListener? = null
     inner class MyRecordViewHolder(private val binding : ItemMyRecordBinding) : RecyclerView.ViewHolder(binding.root) {
-
-
         fun bind(item : PamphletItem) {
             // 여행 중인 경우
             if (!item.isFinish) {

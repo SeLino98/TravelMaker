@@ -33,12 +33,12 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/background_location_edittext"
         android:hint="주소를 입력해주세요."
-        android:inputType="text"
         android:paddingStart="25dp"
         android:paddingEnd="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:imeOptions="actionSearch"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@id/tv_signup_location_title2" />
 
     <ImageView

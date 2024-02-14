@@ -53,5 +53,19 @@
         tools:listitem="@layout/item_my_record"
         app:layout_constraintTop_toBottomOf="@id/tv_my_record_description" />
 
+    <TextView
+        android:id="@+id/tv_no_record"
+        style="@style/Text.Input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="기록 중인 팜플렛이 없습니다."
+        android:visibility="invisible"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

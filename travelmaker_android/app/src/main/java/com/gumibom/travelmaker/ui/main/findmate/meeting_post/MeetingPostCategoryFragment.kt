@@ -39,6 +39,11 @@ class MeetingPostCategoryFragment : Fragment() {
     private lateinit var spinnerMinTraveler : Spinner
     private lateinit var spinnerMinNative : Spinner
 
+
+    private var maxMember = 0
+    private var isNextPage = false
+    private var initFlag = false
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as MeetingPostActivity
@@ -95,7 +100,8 @@ class MeetingPostCategoryFragment : Fragment() {
     private fun setSpinner() {
         val items = arrayOf("선택", "1", "2", "3", "4", "5", "6")
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, items)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
         spinnerMaxMember.adapter = adapter
         spinnerMinTraveler.adapter = adapter
@@ -108,6 +114,8 @@ class MeetingPostCategoryFragment : Fragment() {
 
                 if (!isInitSpinner(value)) {
                     meetingPostViewModel.maxMember = value.toInt()
+                    maxMember = value.toInt()
+                    initFlag = true
                 }
             }
 
@@ -121,8 +129,19 @@ class MeetingPostCategoryFragment : Fragment() {
                 // 기본 형태는 toString()으로 치환되므로 toString() -> toInt() 작업 필요
                 val value = parent.getItemAtPosition(position).toString()
 
-                if (!isInitSpinner(value)) {
+                if (maxMember == 0 && initFlag) {
+                    Toast.makeText(requireContext(), "모집 인원을 정해주세요.", Toast.LENGTH_SHORT).show()
+                    spinnerMinTraveler.setSelection(0)
+                }
+
+                if (!isInitSpinner(value) && value.toInt() < maxMember) {
                     meetingPostViewModel.minTraveler = value.toInt()
+                    isNextPage = true
+                } else if (!isInitSpinner(value) && value.toInt() > maxMember) {
+                    isNextPage = false
+                    Toast.makeText(requireContext(), "모임 최대 인원을 넘을 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    // 여기에서 스피너의 선택을 첫 번째 아이템으로 설정
+                    spinnerMinTraveler.setSelection(0)
                 }
             }
 
@@ -136,8 +155,19 @@ class MeetingPostCategoryFragment : Fragment() {
                 // 기본 형태는 toString()으로 치환되므로 toString() -> toInt() 작업 필요
                 val value = parent.getItemAtPosition(position).toString()
 
-                if (!isInitSpinner(value)) {
+                if (maxMember == 0 && initFlag) {
+                    Toast.makeText(requireContext(), "모집 인원을 정해주세요.", Toast.LENGTH_SHORT).show()
+                    spinnerMinNative.setSelection(0)
+                }
+
+                if (!isInitSpinner(value) && value.toInt() < maxMember) {
                     meetingPostViewModel.minNative = value.toInt()
+                    isNextPage = true
+                } else if (!isInitSpinner(value) && value.toInt() > maxMember){
+                    isNextPage = false
+                    Toast.makeText(requireContext(), "모임 최대 인원을 넘을 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    // 여기에서 스피너의 선택을 첫 번째 아이템으로 설정
+                    spinnerMinNative.setSelection(0)
                 }
             }
 
@@ -200,7 +230,8 @@ class MeetingPostCategoryFragment : Fragment() {
                 meetingPostViewModel.categoryList.isNotEmpty() &&
                 meetingPostViewModel.maxMember != 0 &&
                 meetingPostViewModel.minNative != 0 &&
-                meetingPostViewModel.minTraveler != 0 ) {
+                meetingPostViewModel.minTraveler != 0 &&
+                isNextPage ) {
                 // 모두 입력되었으면 서버에 통신
                 meetingPostViewModel.username = ApplicationClass.sharedPreferencesUtil.getLoginId()
 
