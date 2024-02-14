@@ -66,10 +66,6 @@ class MainActivity : AppCompatActivity() {
         }//노티피케이션으로 프래그먼트를 이동시킨다.
 
 
-        /**
-         * TODO Token을 가지고 서버에 User data를 전부받아서 저장
-         */
-
         Log.d(TAG, "onCreate: ${sharedPreferencesUtil.getToken()}")
 
         setFirebase()
@@ -235,6 +231,10 @@ class MainActivity : AppCompatActivity() {
     }
     fun navigationToLookAroundPam(){
         navController.navigate(R.id.action_mainFragment_to_mainLookPamphletsFragment)
+    }
+
+    fun navigationToGroupChattingRoom(){
+        navController.navigate(R.id.action_mainMyGroupFragment_to_mainGroupChattingFragment)
     }
 
     fun navigationPop() {

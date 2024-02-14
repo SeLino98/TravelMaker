@@ -14,12 +14,13 @@ import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
 import com.gumibom.travelmaker.data.dto.request.ReceivedRequest
 import com.gumibom.travelmaker.databinding.ItemFcmNotifyReceivedListBinding
 import com.gumibom.travelmaker.databinding.ItemMygroupListBinding
+import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.ui.main.notification.MainFcmNotifyAdapter
 
 private const val TAG = "MyGroupAdapter"
 class MainMyGroupAdapter(
-    private val context: Context,
+    private val context: MainActivity,
     private val viewModel: MainViewModel
 ) : ListAdapter<MyMeetingGroupDTOItem, MainMyGroupAdapter.GroupListViewHolder>(MainMyGroupDiffUtil()) {
 
@@ -51,7 +52,8 @@ class MainMyGroupAdapter(
                         if (item.isFinish) {
                             //그룹체팅 입장.
                             //파이어베이스로 활용할 계획
-
+                            context.navigationToGroupChattingRoom()
+//                            //navigationToGroupChattingRoom()
                         }
                     }
                 }

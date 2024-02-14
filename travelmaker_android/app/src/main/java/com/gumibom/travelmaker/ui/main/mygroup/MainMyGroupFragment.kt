@@ -20,7 +20,6 @@ import com.gumibom.travelmaker.util.SharedPreferencesUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
-
 private const val TAG = "MainMyGroupFragment"
 @AndroidEntryPoint
 class MainMyGroupFragment : Fragment() {
@@ -34,7 +33,6 @@ class MainMyGroupFragment : Fragment() {
         Log.d(TAG, "onCreate: 1")
         activity = context as MainActivity
         sharedPreferencesUtil = SharedPreferencesUtil(activity)
-
 
     }
     private lateinit var meetingGroupListAdapter : MainMyGroupAdapter
@@ -55,7 +53,9 @@ class MainMyGroupFragment : Fragment() {
                 Toast.makeText(activity,"모임 취소가 되지 않았습니다. ", Toast.LENGTH_SHORT).show()
             }
         }
-
+        binding.btnChatGroupTest.setOnClickListener {
+            activity.navigationToGroupChattingRoom()
+        }
         //여기서ㅂㅈㄷㄷㅂㄷㅈㅂ ㅈㄱ ㄷㅈㅂ가 ㅓㅈㅂ기ㅏ ㅅ더ㅏ지
         //서버에 요청을 날린다.
         //데이터를 받아왔다면? 그룹 리사이클러 뷰에 뿌려준다.
