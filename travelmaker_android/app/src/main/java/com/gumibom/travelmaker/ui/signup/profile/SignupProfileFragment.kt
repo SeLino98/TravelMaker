@@ -35,7 +35,6 @@ private const val TAG = "SignupProfileFragment"
 @AndroidEntryPoint
 class SignupProfileFragment : Fragment() {
     private val imagePickCode = 1000
-    private val permissionCode = 1001
     private val cameraRequestCode = 1002
     private var profileFlag = false;
     private var _binding : FragmentSignupProfileBinding? = null

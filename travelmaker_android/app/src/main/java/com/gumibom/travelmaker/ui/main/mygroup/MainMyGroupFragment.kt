@@ -63,8 +63,6 @@ class MainMyGroupFragment : Fragment() {
         binding.rcMyGroupList.adapter = meetingGroupListAdapter
         binding.rcMyGroupList.layoutManager = LinearLayoutManager(activity)
         meetingGroupListAdapter.submitList(it)
-
-//        if ()
     }
 
     private fun observeLiveData(){

@@ -10,6 +10,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.gumibom.travelmaker.constant.NO_RECORD
 import com.gumibom.travelmaker.databinding.FragmentPamphletBinding
@@ -29,6 +31,7 @@ class PamphletDetailFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback
 
     private lateinit var adapter : PamphletDetailAdapter
+    private lateinit var recyclerView: RecyclerView
 
     private val myRecordDetailViewModel : MyRecordDetailViewModel by viewModels()
 
@@ -67,12 +70,19 @@ class PamphletDetailFragment : Fragment() {
 
         setAdapter()
         observeLiveData()
-        eventRecyclerView()
+        recyclerViewEvent()
     }
 
     private fun setAdapter() {
         adapter = PamphletDetailAdapter(requireContext(), myRecordDetailViewModel)
-        binding.rvPamphletDetail.adapter = adapter
+        recyclerView = binding.rvPamphletDetail
+        recyclerView.adapter = adapter
+
+        /**
+         * 리싸이클러뷰 슬라이딩을 페이지 고정처럼 설정
+         */
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(recyclerView)
 
         myRecordDetailViewModel.getMyAllRecord(pamphletId)
     }
@@ -83,21 +93,38 @@ class PamphletDetailFragment : Fragment() {
         }
     }
 
-    private fun eventRecyclerView() {
-        binding.rvPamphletDetail.addOnChildAttachStateChangeListener(object : RecyclerView.OnChildAttachStateChangeListener {
-            override fun onChildViewAttachedToWindow(view: View) {
-                // 아이템이 화면에 나타날 때 호출됩니다.
-                Log.d(TAG, "$view")
+    /**
+     * 리싸이클러뷰 아이템이 나타나고 사라짐을 감지하는 이벤트
+     */
+    private fun recyclerViewEvent() {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
 
-            }
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val visiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                    val item = adapter.getItemAtPosition(visiblePosition)
 
-            override fun onChildViewDetachedFromWindow(view: View) {
-                // 아이템이 화면에서 사라질 때 호출됩니다.
-                Log.d(TAG, "$view")
-                // 여기에서 필요한 작업을 수행하세요.
+
+                    if (visiblePosition != RecyclerView.NO_POSITION) {
+                        val visibleHolder = recyclerView.findViewHolderForAdapterPosition(visiblePosition) as? PamphletDetailAdapter.PamphletDetailViewHolder
+
+                        visibleHolder?.initializePlayer(item!!.videoUrl)
+
+                        // 다른 아이템의 ExoPlayer를 정지합니다.
+                        for (i in 0 until recyclerView.childCount) {
+                            val child = recyclerView.getChildAt(i)
+                            val holder = recyclerView.getChildViewHolder(child)
+                            if (holder is PamphletDetailAdapter.PamphletDetailViewHolder && holder != visibleHolder) {
+                                holder.releasePlayer()
+                            }
+                        }
+
+                    }
+                }
             }
         })
-
     }
 
     override fun onDestroyView() {

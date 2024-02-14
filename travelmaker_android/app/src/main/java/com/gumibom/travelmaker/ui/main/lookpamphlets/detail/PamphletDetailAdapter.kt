@@ -20,6 +20,8 @@ import com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetailViewModel
 
 class PamphletDetailAdapter(private val context : Context, private val viewModel : MyRecordDetailViewModel) : ListAdapter<Record, PamphletDetailAdapter.PamphletDetailViewHolder>(MyRecordDetailDiffUtil()) {
 
+    private val items: List<Record>
+        get() = currentList
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
@@ -28,7 +30,6 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
     inner class PamphletDetailViewHolder(private val binding : ItemPamphletDetailBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: Record, position : Int, listSize : Int) {
-            releasePlayer()
             // 이미지 일 경우
             if (item.imgUrl.isNotEmpty() && item.videoUrl.isEmpty()) {
                 binding.playerViewPamphlet.visibility = View.INVISIBLE
@@ -63,7 +64,7 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
         /**
          * 여기부터  Exoplayer 설정 함수
          */
-        private fun initializePlayer(uri: String) {
+        fun initializePlayer(uri: String) {
             player = SimpleExoPlayer.Builder(context)
                 .build()
                 .also { exoPlayer ->
@@ -79,11 +80,15 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
                 }
         }
 
-        private fun releasePlayer() {
+        fun releasePlayer() {
             player?.run {
-                playbackPosition = this.currentPosition
-                currentWindow = this.currentWindowIndex
-                playWhenReady = this.playWhenReady
+//                playbackPosition = this.currentPosition
+//                currentWindow = this.currentWindowIndex
+//                playWhenReady = this.playWhenReady
+                stop() // 플레이어를 정지합니다.
+                seekTo(0) // 재생 위치를 0으로 설정합니다.
+                playbackPosition = 0 // 재생 위치 변수를 0으로 재설정합니다.
+                currentWindow = 0 // 현재 윈도우 인덱스를 0으로 재설정합니다.
                 release()
             }
             player = null
@@ -100,6 +105,12 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
         holder.bind(getItem(position), position, itemCount)
     }
 
+    override fun onViewRecycled(holder: PamphletDetailViewHolder) {
+        super.onViewRecycled(holder)
+        holder.releasePlayer()
+    }
+
+    fun getItemAtPosition(position: Int): Record? = items.getOrNull(position)
 
 
     companion object {
