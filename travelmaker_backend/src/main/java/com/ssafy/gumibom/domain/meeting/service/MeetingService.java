@@ -61,28 +61,8 @@ public class MeetingService {
                 .id(meetingMember.getId())
                 .isNative(meetingMember.getIsNative())
                 .isHead(meetingMember.getIsHead())
-                .user(convertToUserDto(meetingMember.getUser())) // 이 변환 메소드를 구현해야 합니다.
-                // .meeting() 여기에서 meeting을 설정하지 않는 것이 좋습니다. 순환 참조를 피하기 위해
                 .build();
     }
-
-    private UserDto convertToUserDto(User user) {
-        return UserDto.builder()
-                .userId(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .nickname(user.getNickname())
-                .gender(user.getGender()) // Gender는 enum 타입으로, User 엔티티와 동일하게 매핑 가정
-                .birth(user.getBirth())
-                .phone(user.getPhone())
-                .profileImgURL(user.getProfileImgURL())
-                .trust(user.getTrust())
-                .town(user.getTown())
-                .nation(user.getNation())
-                .categories(user.getCategories())
-                .build();
-    }
-
 
 
     // 여행객 최소인원과 신청한 여행객 인원을 비교하고 현지인 최소인원과 신청한 현지인 인원을 비교하여

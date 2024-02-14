@@ -28,5 +28,9 @@ public class MeetingApplierRepository {
                 .getResultList();
     }
 
+    public void leaveMeetingByUserIdAndMeetingPostId(MeetingApplier applier) {
+        em.remove(applier);
+    }
+
 
 }

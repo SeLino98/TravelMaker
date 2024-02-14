@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Tag(name = "Meeting Post", description = "모임글 관련 api")
@@ -113,5 +114,34 @@ public class MeetingPostController {
     @GetMapping("/all-request/{userId}")
     public @ResponseBody ShowAllJoinRequestResponseDto showAllJoinRequest(@PathVariable("userId") Long userId) {
         return meetingRequestService.showAllJoinRequest(userId);
+    }
+
+
+    @Operation(summary = "모집글 종료 api")
+    @PutMapping("/post-finish/{meetingPostId}")
+    public ResponseEntity<BaseResponseDto> finishMeetingPost(@PathVariable("meetingPostId") Long meetingPostId){
+        meetingPostService.finishMeetingPost(meetingPostId);
+        return ResponseEntity.ok(new BaseResponseDto(true, "모집글 종료"));
+    }
+
+    @Operation(summary = "모임 리스트 조회 api")
+    @GetMapping("/list/{userId}")
+    public ResponseEntity<List<DetailOfMeetingPostResponseDTO>> getMyMeeting(@PathVariable Long userId){
+        List<DetailOfMeetingPostResponseDTO> meetingPostResponseDTOs = meetingPostService.getMeetingPostByUserId(userId);
+        return ResponseEntity.ok(meetingPostResponseDTOs);
+    }
+
+    @Operation(summary = "모임 종료 api")
+    @PutMapping("/meeting-finish/{meetingPostId}")
+    public ResponseEntity<BaseResponseDto> finishMeeting(@PathVariable("meetingPostId") Long meetingPostId){
+        meetingPostService.finishMeeting(meetingPostId);
+        return ResponseEntity.ok(new BaseResponseDto(true, "모임 종료"));
+    }
+
+    @Operation(summary = "모임 신청 취소 api")
+    @DeleteMapping("/delete/{userId}/{meetingPostId}")
+    public ResponseEntity<BaseResponseDto> leaveMeeting(@PathVariable("userId") Long userId, @PathVariable("meetingPostId") Long meetingPostId){
+        meetingPostService.leaveMeeting(userId, meetingPostId);
+        return ResponseEntity.ok(new BaseResponseDto(true, "모임 신청이 취소되었습니다."));
     }
 }

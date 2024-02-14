@@ -5,8 +5,10 @@ import com.ssafy.gumibom.domain.meetingPost.dto.request.ResAboutReqJoinMeetingRe
 import com.ssafy.gumibom.domain.meetingPost.dto.response.ReceivedRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.SentRequestResponseDto;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.ShowAllJoinRequestResponseDto;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingRequest;
+import com.ssafy.gumibom.domain.meetingPost.repository.MeetingApplierRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingPostRepository;
 import com.ssafy.gumibom.domain.meetingPost.repository.MeetingRequestRepository;
 import com.ssafy.gumibom.domain.user.entity.User;
@@ -32,6 +34,7 @@ public class MeetingRequestService {
     private final UserRepository userRepository;
     private final MeetingPostRepository meetingPostRepository;
     private final MeetingRequestRepository meetingRequestRepository;
+    private final MeetingApplierRepository meetingApplierRepository;
 
     private final FcmService fcmService;
 
@@ -85,7 +88,10 @@ public class MeetingRequestService {
             return ResponseEntity.ok(new BaseResponseDto(false, "이미 승낙/거절 응답을 받은 모임 요청입니다. "));
         }
 
-        if(isAccept) meetingPost.addApplier(requestor, false); // 게시글에 meetingApplier로 추가
+        if(isAccept) {
+            MeetingApplier applier = meetingPost.addApplier(requestor, false); // 게시글에 meetingApplier로 추가
+            meetingApplierRepository.save(applier);
+        }
 
         request.getResponse();
         meetingRequestRepository.delete(request);

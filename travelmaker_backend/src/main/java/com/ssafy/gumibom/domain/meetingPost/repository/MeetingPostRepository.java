@@ -1,5 +1,6 @@
 package com.ssafy.gumibom.domain.meetingPost.repository;
 
+import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.FindByGeoResponseDTO;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
 import jakarta.persistence.EntityManager;
@@ -48,6 +49,16 @@ public class MeetingPostRepository {
                 .setParameter("categories", categories)
                 .getResultList();
 
+    }
+
+    // userId로 MeetingPost 리스트 조회
+    public List<MeetingPost> findByUserId(Long userId) {
+        return em.createQuery(
+                        "SELECT m FROM MeetingPost m " +
+                                "JOIN FETCH m.appliers ma " +
+                                "WHERE ma.user.id = :userId", MeetingPost.class)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 
 
