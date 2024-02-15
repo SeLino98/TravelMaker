@@ -2,12 +2,15 @@ package com.ssafy.gumibom.domain.meetingPost.repository;
 
 import com.ssafy.gumibom.domain.meeting.entity.Meeting;
 import com.ssafy.gumibom.domain.meetingPost.dto.response.FindByGeoResponseDTO;
+import com.ssafy.gumibom.domain.meetingPost.entity.MeetingApplier;
 import com.ssafy.gumibom.domain.meetingPost.entity.MeetingPost;
+import com.ssafy.gumibom.domain.user.entity.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.TypedQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -53,19 +56,22 @@ public class MeetingPostRepository {
 
     // userId로 MeetingPost 리스트 조회
     public List<MeetingPost> findByUserId(Long userId) {
-        return em.createQuery(
-                        "SELECT m FROM MeetingPost m " +
-                                "JOIN FETCH m.appliers ma " +
-                                "WHERE ma.user.id = :userId", MeetingPost.class)
-                .setParameter("userId", userId)
-                .getResultList();
+//        List<MeetingPost> lists =  em.createQuery(
+//                        "SELECT m FROM MeetingPost m " +
+//                                "JOIN FETCH m.appliers ma " +
+//                                "WHERE ma.user.id = :userId", MeetingPost.class)
+//                .setParameter("userId", userId)
+//                .getResultList();
+        List<MeetingPost> lists = new ArrayList<>();
+        List<MeetingApplier> appliers = em.find(User.class, userId).getMeetingAppliers();
+
+        for(MeetingApplier applier: appliers) {
+            lists.add(applier.getMeetingPost());
+        }
+
+        return lists;
     }
 
-
-//    public List<DetailOfMeetingPostResponseDTO> inquiryMyMeetingPostList(Long userId) {
-//
-//        em.createQuery("select m, ")
-//    }
 
     public void deleteById(Long id) {
         em.remove(findOne(id));
