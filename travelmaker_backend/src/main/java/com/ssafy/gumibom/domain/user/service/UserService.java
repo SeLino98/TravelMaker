@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -101,11 +102,11 @@ public class UserService {
         return userRepository.existUsersByLoginID(loginID);
     }
 
-    public String findLoginIDByPhoneNum(String phoneNum) {
+    public Optional<User> findLoginIDByPhoneNum(String phoneNum) {
 
-        boolean check = checkPhoneNumExists(phoneNum);
-        if (!check) throw new IllegalArgumentException("가입되지 않은 전화번호입니다.");
-        return userRepository.findByPhoneNum(phoneNum).getUsername();
+//        boolean check = checkPhoneNumExists(phoneNum);
+//        if (!check) throw new IllegalArgumentException("가입되지 않은 전화번호입니다.");
+        return userRepository.findByPhoneNum(phoneNum);
     }
 
     @Transactional

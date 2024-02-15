@@ -66,7 +66,9 @@ public class UserController {
     @Operation(summary = "전화 번호로 아이디 찾기")
     @GetMapping("/user/find-login-id/{phoneNum}")
     public ResponseEntity<?> findLoginID(@PathVariable String phoneNum) {
-        return ResponseEntity.ok(userService.findLoginIDByPhoneNum(phoneNum));
+        return userService.findLoginIDByPhoneNum(phoneNum)
+                .map(user -> ResponseEntity.ok().body(user.getUsername()))
+                .orElse(ResponseEntity.noContent().build()); // 전화번호에 해당하는 사용자가 없는 경우 204 No Content 반환
     }
 
     @Operation(summary = "비밀번호 변경(/send, /confirm 을 거쳐 본인인증이 되고 나면 비밀번호 변경하는 창이 활성화되어 오는 곳입니다...")

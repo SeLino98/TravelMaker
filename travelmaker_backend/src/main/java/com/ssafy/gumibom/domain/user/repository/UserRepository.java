@@ -7,6 +7,8 @@ import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
@@ -40,13 +42,14 @@ public class UserRepository {
         }
     }
 
-    public User findByPhoneNum(String phoneNum) {
+    public Optional<User> findByPhoneNum(String phoneNum) {
         try {
-            return em.createQuery("select u from User u where u.phone = :phoneNum", User.class)
+            User user =  em.createQuery("select u from User u where u.phone = :phoneNum", User.class)
                     .setParameter("phoneNum", phoneNum)
                     .getSingleResult();
+            return Optional.of(user);
         } catch (NoResultException e) {
-            return null;
+            return Optional.empty();
         } catch (NonUniqueResultException e) {
             throw new IllegalStateException("중복된 전화 번호가 있습니다.");
         }
