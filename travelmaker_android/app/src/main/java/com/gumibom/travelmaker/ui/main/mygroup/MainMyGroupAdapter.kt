@@ -45,7 +45,7 @@ class MainMyGroupAdapter(
                 }
                 btnStartGroupChatting.setOnClickListener {
                     //그룹 체팅 입장하기.
-                    binding.btnStartGroupChatting.text = "체팅 입장"
+                    binding.btnStartGroupChatting.text = "채팅 입장"
                     context.navigationToGroupChattingRoom(item.postId)
                 }
                 btnStartGroup.setOnClickListener {
@@ -54,7 +54,7 @@ class MainMyGroupAdapter(
                         //시작을 누를 수 있다.
                         viewModel.putActiveChatting(item.postId)
                         //그룹 체팅방 입장 로직 담기/
-                        binding.btnStartGroupChatting.text = "체팅 입장"
+                        binding.btnStartGroupChatting.text = "채팅 입장"
                         binding.btnStartGroup.visibility = View.INVISIBLE
                         btnStartGroupChatting.visibility = View.VISIBLE
                     } else if (item.headId != viewModel.user.value!!.userId.toInt()) {//내가 방장이 아닐 때
@@ -72,7 +72,7 @@ class MainMyGroupAdapter(
                     binding.btnStartGroup.text = "모임 시작"
                 } else {
                     binding.btnStartGroup.text = "모임 종료"
-                    binding.btnStartGroupChatting.text = "체팅 입장"
+                    binding.btnStartGroupChatting.text = "채팅 입장"
                     binding.btnStartGroup.isEnabled = false
                     binding.btnStartGroup.visibility = View.INVISIBLE
                     binding.btnStartGroupChatting.visibility = View.VISIBLE
@@ -87,7 +87,7 @@ class MainMyGroupAdapter(
                     binding.btnStartGroup.visibility = View.GONE
                     binding.btnStartGroup.visibility = View.INVISIBLE
                     binding.btnStartGroupChatting.visibility = View.VISIBLE
-                    binding.btnStartGroupChatting.text = "체팅 입장"
+                    binding.btnStartGroupChatting.text = "채팅 입장"
                 }
             }
 

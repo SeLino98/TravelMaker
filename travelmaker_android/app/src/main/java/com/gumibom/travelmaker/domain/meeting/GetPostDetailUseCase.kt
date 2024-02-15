@@ -30,6 +30,7 @@ class GetPostDetailUseCase @Inject constructor(
         return PostDetail(
             categories = body.categories!!,
             dday = body.dday?:0,
+            headNickname =body.headNickname,
             headId = body.headId?:0,
             mainImgUrl = body.mainImgUrl?:"", // String 필드는 null이 아니라고 가정
             numOfNative = body.numOfNative ?: 0, // numOfNative가 null이면 0을 사용

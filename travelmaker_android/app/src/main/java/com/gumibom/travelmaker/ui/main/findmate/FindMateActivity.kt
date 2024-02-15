@@ -125,12 +125,17 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.bts.ivHeadProfile.setOnClickListener {
             val alertDialog = ClickEventProflleDialog(this@FindMateActivity)
             Log.d(TAG, "settingBottomSheetUI: gdgd")
-            alertDialog.setTitle(sharedPreferencesUtil.getLoginId())
+
+
+            /**asdffffffffffffffff*/
+            alertDialog.setTitle(postDetail.headNickname)
+            /**asdffffffffffffffff*/
+
             alertDialog.setMessage("")
             alertDialog.clickDialogShow()
             Log.d(TAG, "settingBottomSheetUI: g123d")
         }
-
+1
         //리사이클러 뷰 이미지와 카테고리 이미지를 어뎁터에 올리고 띄운다.
         binding.bts.apply {
             tvRecruitTitle.text = postDetail.postTitle
