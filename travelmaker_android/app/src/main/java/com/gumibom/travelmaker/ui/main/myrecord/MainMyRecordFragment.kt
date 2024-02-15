@@ -71,7 +71,7 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
         binding.rvMyRecord.adapter = adapter
 
         myRecordViewModel.getMyRecord(mainViewModel.user.value!!.userId)
-        
+
         myRecordViewModel.myRecordIng.observe(viewLifecycleOwner) { pamphletList ->
             if (!isFinish) {
                 adapter.submitList(pamphletList.toMutableList())
