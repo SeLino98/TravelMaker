@@ -106,12 +106,16 @@ class SignupIdPwFragment : Fragment() {
                 val idContent = binding.etSignupId.text.toString()
                 if (idContent.isEmpty()){
                     binding.tilSignupId.error = "ID를 입력 해주세요"
+                    isNextPage = false
                 } else {
+                    isNextPage = true
                     binding.tilSignupId.error = null
                 }
                 if (!isValidateId(idContent)) {
                     binding.tilSignupId.error = "영문, 숫자 포함 6자리 이상"
+                    isNextPage = false
                 } else {
+                    isNextPage = true
                     binding.tilSignupId.error = null
                 }
             }
@@ -162,12 +166,16 @@ class SignupIdPwFragment : Fragment() {
                 val pwContent = binding.etSignupPw.text.toString()
                 if (pwContent.isEmpty()){
                     binding.tilSignupPw.error = "PW를 입력 해주세요"
+                    isNextPage = false
                 } else {
+                    isNextPage = true
                     binding.tilSignupPw.error = null
                 }
                 if (!isValidatePw(pwContent)) {
                     binding.tilSignupPw.error = "영문, 숫자 포함 8자리 이상"
+                    isNextPage = false
                 } else {
+                    isNextPage = true
                     binding.tilSignupPw.error = null
                 }
             }
