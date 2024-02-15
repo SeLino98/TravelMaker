@@ -87,7 +87,7 @@
 
 
     <!-- 내 기록 페이지 -->
-    <string name="myRecord_title">내 기록</string>
+    <string name="myRecord_title">나의 팜플렛</string>
 
     <!-- 팜플렛 만들기 -->
     <string name="makePamphlet_title">팜플렛 만들기</string>
