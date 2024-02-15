@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -29,8 +30,9 @@ import java.util.Calendar
 import java.util.Locale
 
 
-class MainGroupChattingFragment : Fragment() {
-    var id = ""
+class MainGroupChattingFragment(): Fragment() {
+
+    var id  = ""
     private var _binding : FragmentMainGroupChattingBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity :MainActivity
@@ -46,6 +48,9 @@ class MainGroupChattingFragment : Fragment() {
             id = viewModel.user.value!!.nickname
             initView()
         }
+
+
+
     }
     fun getCurrentDateTime(): String {
         val currentTimeMillis = System.currentTimeMillis()
@@ -57,6 +62,11 @@ class MainGroupChattingFragment : Fragment() {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
         return dateFormat.format(calendar.time)
+    }
+    private fun hideKeyboard() {
+        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        binding.editText.clearFocus() // editText의 Focus를 잃게 한다.
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
     private fun initView() {
         val listview: ListView = binding.list
@@ -70,31 +80,29 @@ class MainGroupChattingFragment : Fragment() {
 
 //      val myRef: DatabaseReference = database.getReference("message").child(hry)
 
-        val myRef: DatabaseReference = database.getReference("message")
-        button.setOnClickListener { view: View? ->
 
+        val groupId = arguments?.getLong("groupId",1)
+
+        //여기서 bundle의 그룹아이디 값을 빼와서 그 쪽으로 넘어간다.
+        val myRef: DatabaseReference = database.getReference("message").child(groupId.toString()+"No_Group")
+        button.setOnClickListener { view: View? ->
             //시간으로 변환하는 로직
             val currentTime = getCurrentDateTime()
             val data = ChatData(id,viewModel.user.value!!.nickname,editText.text.toString(),currentTime )
             myRef.push().setValue(data)
             binding.editText.text.clear()
+            hideKeyboard()
+
         }
         myRef.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 adapter.add(snapshot.getValue(ChatData::class.java))
                 listview.smoothScrollToPosition(adapter.getCount())
             }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 

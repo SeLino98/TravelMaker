@@ -52,6 +52,7 @@ import com.gumibom.travelmaker.ui.main.findmate.bottomsheet.chipAdapter
 import com.gumibom.travelmaker.ui.main.findmate.meeting_post.MeetingPostActivity
 import com.gumibom.travelmaker.ui.main.findmate.search.FindMateSearchFragment
 import com.gumibom.travelmaker.util.PermissionChecker
+import com.gumibom.travelmaker.util.SharedPreferencesUtil
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.notifyAll
 import java.time.LocalDateTime
@@ -67,6 +68,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient // 효율적으로 위치정보를 제공
     private lateinit var locationCallback: LocationCallback
     private lateinit var permissionChecker: PermissionChecker
+    private lateinit var sharedPreferencesUtil: SharedPreferencesUtil
     private lateinit var findMateSearchFragment : FindMateSearchFragment
     private val mainViewModel : MainViewModel by viewModels()
     private var meetingId:Long =0;
@@ -95,10 +97,12 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             true
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedPreferencesUtil = SharedPreferencesUtil(this@FindMateActivity)
         permissionChecker = PermissionChecker(this) // 퍼미션 체커 객체 생성
         findMateSearchFragment = FindMateSearchFragment(mainViewModel)
         googleMapInit()
@@ -121,7 +125,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.bts.ivHeadProfile.setOnClickListener {
             val alertDialog = ClickEventProflleDialog(this@FindMateActivity)
             Log.d(TAG, "settingBottomSheetUI: gdgd")
-            alertDialog.setTitle("김인호")
+            alertDialog.setTitle(sharedPreferencesUtil.getLoginId())
             alertDialog.setMessage("")
             alertDialog.clickDialogShow()
             Log.d(TAG, "settingBottomSheetUI: g123d")

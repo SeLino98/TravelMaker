@@ -262,8 +262,11 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.action_mainFragment_to_mainLookPamphletsFragment)
     }
 
-    fun navigationToGroupChattingRoom(){
-        navController.navigate(R.id.action_mainMyGroupFragment_to_mainGroupChattingFragment)
+    fun navigationToGroupChattingRoom(groupId: Long){
+        val bundle = Bundle().apply {
+            putLong("groupId", groupId)
+        }
+        navController.navigate(R.id.action_mainMyGroupFragment_to_mainGroupChattingFragment,bundle)
     }
 
     fun navigationPop() {
