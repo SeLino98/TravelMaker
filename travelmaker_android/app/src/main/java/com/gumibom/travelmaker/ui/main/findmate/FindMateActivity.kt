@@ -19,6 +19,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -136,7 +139,12 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             tvTripDay.text = formattedDate
             tvDetailPostContent.text = postDetail.postContent.toString()
             tvDetailPlaceTitle.text = postDetail.position.town+postDetail.position.name
-            Glide.with(this@FindMateActivity).load(postDetail.profileImgUrl).into(ivHeadProfile)
+            //Glide.with(this@FindMateActivity).load(postDetail.profileImgUrl).into(ivHeadProfile)
+            Glide.with(this@FindMateActivity)
+                .load(postDetail.profileImgUrl)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
+                .transform(CenterCrop())
+                .into(ivHeadProfile)
         }
 
         val userId:Int =mainViewModel.user.value!!.userId.toInt();
@@ -189,6 +197,8 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             layoutManager = LinearLayoutManager(this@FindMateActivity, LinearLayoutManager.HORIZONTAL, false)
         }
     }
+
+
     private fun setBottomSheet(){
         Log.d(TAG, "setBottomSheet: HIHIHISETBOTTOMSHEET!!")
         var isFirstClick:Boolean = true; 
@@ -317,28 +327,42 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     private fun createLocationCallback() {
         Log.d(TAG, "createLocationCallback: 콜백이 왜 안되지?")
+        //          00:00:00
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 locationResult.lastLocation?.let{
-                    Log.d(TAG, "onLocationResult: $it")
+                    Log.d(TAG, "onResult: $it")
                     updateLocation(it.latitude, it.longitude)
                 }
             }
         }
     }
-    fun formatStartDateWithRegex(startDateStr: String): String {
-        // Define a regex pattern to match the date format
-        val regexPattern = """(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):\d{2}\.\d{3}""".toRegex()
 
-        // Find a match for the regex in the input string
-        val matchResult = regexPattern.find(startDateStr)
+    fun formatStartDateWithRegex(input: String): String {
+        val regex = """(\d{4})-(\d{2})-(\d{2})T(\d{2}:\d{2})""".toRegex()
 
-        // Extract the matched groups: Year, Month, Day, Hour, Minute
-        val (year, month, day, hour, minute) = matchResult?.destructured ?: return "Invalid Date Format"
+        val matchResult = regex.find(input) ?: throw IllegalArgumentException("Invalid input format")
+        val (year, month, day, time) = matchResult.destructured
 
-        // Format the extracted parts into the desired string format
-        return "Year: $year, Month: $month, Day: $day, Hour: $hour, Minute: $minute"
+        val shortYear = year.takeLast(2)
+        val monthInt = month.toInt()
+        val dayInt = day.toInt()
+
+        val timeValueList:List<String> = time.split(":")
+        Log.d(TAG, "${timeValueList[0]}+ ${timeValueList[1]}")
+        val timeInt=timeValueList[0].toInt()
+
+        val suffix = when (dayInt) {
+            1, 21, 31 -> "st"
+            2, 22 -> "nd"
+            3, 23 -> "rd"
+            else -> "th"
+        }
+
+        // Format and return the final string
+        return " ${shortYear}년 ${monthInt}월 ${dayInt}일 ${timeInt}시"
     }
+
     private fun requestLocationUpdates() {
         val locationRequest = LocationRequest()
         locationRequest.interval = TimeUnit.MINUTES.toMillis(1) // 30분마다

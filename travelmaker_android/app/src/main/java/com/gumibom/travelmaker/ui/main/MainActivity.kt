@@ -233,8 +233,8 @@ class MainActivity : AppCompatActivity() {
             // token log 남기기
             Log.d(TAG, "token: ${task.result?:"task.result is null"}")
             if(task.result != null){
-                Log.d(TAG, "setFirebase: ${task.result}")
-                viewModel.uploadToken(FcmTokenRequestDTO("wnddnjs823",task.result!!) )
+                Log.d(TAG, "setFirebase: ${task.result}")//viewModel.user.value!!.username
+                viewModel.uploadToken(FcmTokenRequestDTO(sharedPreferencesUtil.getLoginId(),task.result!!) )
                 Log.d(TAG, "setFirebase: end")
             }
         })

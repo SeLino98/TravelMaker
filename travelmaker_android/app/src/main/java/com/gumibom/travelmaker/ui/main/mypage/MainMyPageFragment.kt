@@ -93,7 +93,15 @@ class MainMyPageFragment:Fragment() {
         myPageViewModel.getAllUser()
         myPageViewModel.user.observe(viewLifecycleOwner){
             binding.tvMypageNickname.text = myPageViewModel.user.value!!.nickname
-            Glide.with(activity).load(myPageViewModel.user.value!!.profileImgURL).into(binding.ivMypageProfileImg)
+            Glide.with(activity)
+                .load(myPageViewModel.user.value!!.profileImgURL)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
+                .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+                .into(binding.ivMypageProfileImg)
+
+
+
+
         }
     }
 
@@ -117,7 +125,9 @@ class MainMyPageFragment:Fragment() {
             // 그 이미지 리소스 ID에 해당하는 이미지를 화면의 특정한 곳에 뿌려줌
             binding.ivEmptyTrustLevelImg.setImageResource(trustLevelImageId)
             binding.ivEmptyTrustLevelImg.visibility = View.VISIBLE
+            binding.btnMypageCheckMyTrustlevel.visibility = View.INVISIBLE
         }
+
     }
 
     /*
