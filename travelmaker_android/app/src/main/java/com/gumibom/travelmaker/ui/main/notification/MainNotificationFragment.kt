@@ -69,8 +69,10 @@ class MainNotificationFragment : Fragment() {
             }
         }else{//알림을 요청보낸 리스트를 띄운다.
             binding.rcNotifyList.adapter = mainFcmNotifyAdapter
+//            binding.rcNotifyList.layoutManager = LinearLayoutManager(context).apply { reverseLayout = true }
             binding.rcNotifyList.layoutManager = LinearLayoutManager(context)
             if (getNotifyList.receivedRequests != null){
+
                 mainFcmNotifyAdapter.submitList(getNotifyList.receivedRequests)
             }
         }

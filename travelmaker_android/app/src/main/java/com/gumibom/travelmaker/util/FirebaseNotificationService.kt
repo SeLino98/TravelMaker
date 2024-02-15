@@ -65,7 +65,7 @@ class FirebaseNotificationService : FirebaseMessagingService() {
         //FlagImmutable은 intent 변경이 안되게
 
         val builder = NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(android.R.drawable.sym_def_app_icon)
             .setContentTitle(messageTitle)
             .setContentText(messageContent)
             .setAutoCancel(true)

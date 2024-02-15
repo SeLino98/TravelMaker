@@ -15,7 +15,6 @@ class MainFcmNotifySentAdapter
     :ListAdapter<SentRequest,MainFcmNotifySentAdapter.SentViewHolder>(MainNotifySentDiffUtil()){
 
 
-
     inner class SentViewHolder(private val binding : ItemFcmNotifyRequireListBinding):
     RecyclerView.ViewHolder(binding.root){
         fun bind(item:SentRequest){

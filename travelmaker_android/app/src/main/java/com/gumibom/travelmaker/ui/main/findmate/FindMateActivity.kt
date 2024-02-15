@@ -124,16 +124,9 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.bts.ivHeadProfile.setOnClickListener {
             val alertDialog = ClickEventProflleDialog(this@FindMateActivity)
-            Log.d(TAG, "settingBottomSheetUI: gdgd")
-
-
-            /**asdffffffffffffffff*/
             alertDialog.setTitle(postDetail.headNickname)
-            /**asdffffffffffffffff*/
-
             alertDialog.setMessage("")
             alertDialog.clickDialogShow()
-            Log.d(TAG, "settingBottomSheetUI: g123d")
         }
 1
         //리사이클러 뷰 이미지와 카테고리 이미지를 어뎁터에 올리고 띄운다.
@@ -175,7 +168,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
             alertDialog.setPositiveBtnTitle("신청")
             alertDialog.setPositiveButtonListener {
                 mainViewModel.requestGroup(FcmRequestGroupDTO(mainViewModel.user.value!!.userId,meetingId))
-                Log.d(TAG, "setApplyGroup: 2")
+                Log.d(TAG, "setApplyGroup: ${mainViewModel.user.value!!.userId}")
                 alertDialog.clickDialogDissMiss()
             }
             alertDialog.setNegativeBtnTitle("취소")
