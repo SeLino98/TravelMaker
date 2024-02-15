@@ -80,13 +80,6 @@ public class MeetingPostService {
         return ResponseEntity.ok(responseDTO);
     }
 
-    // 미팅 생성을 위해 필요한 데이터를 찾아서 DTO로 감쌈
-    @Transactional
-    public DetailMeetingPostResForMeetingDto meetingPostDetailRead(Long id) {
-        DetailMeetingPostResForMeetingDto responseDTO = new DetailMeetingPostResForMeetingDto(meetingPostRepository.findOne(id));
-        return responseDTO;
-    }
-
     @Transactional
     public Boolean finishMeetingPost(Long meetingPostId) {
         MeetingPost meetingPost = meetingPostRepository.findOne(meetingPostId);
@@ -133,12 +126,13 @@ public class MeetingPostService {
     // 사용자 ID로 MeetingPost를 조회하고 DetailOfMeetingPostResponseDTO로 변환하는 메소드
     public List<DetailOfMeetingPostResponseDTO> getMeetingPostByUserId(Long userId) {
         List<MeetingPost> meetingPosts = meetingPostRepository.findByUserId(userId);
-
         return meetingPosts.stream()
                 .map(meetingPost -> new DetailOfMeetingPostResponseDTO(meetingPost.getHead(), meetingPost))
                 .collect(Collectors.toList());
     }
 
+
+    //신청한 meetingPostId와 userId로 meetingApplier에서 해당 신청삭제
     @Transactional
     public void leaveMeeting(Long userId, Long meetingPostId){
         User findUser = userRepository.findOne(userId);
