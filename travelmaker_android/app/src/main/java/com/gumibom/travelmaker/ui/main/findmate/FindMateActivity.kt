@@ -492,12 +492,22 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
             Log.d(TAG, "selectCategory: $filterCategories")
-            // TODO 여기서 서버 통신으로 필터링
-            val markerCategoryPositionDTO = MarkerCategoryPositionRequestDTO(
-                mainViewModel.currentLatitude, mainViewModel.currentLongitude, 3.0, filterCategories
-            )
-            clearMarkers()
-            mainViewModel.getCategoryMarkers(markerCategoryPositionDTO)
+
+            if (filterCategories.isEmpty()) {
+                val markerPositionRequestDTO = MarkerPositionRequestDTO(
+                    mainViewModel.currentLatitude, mainViewModel.currentLongitude, 3.0
+                )
+                clearMarkers()
+                mainViewModel.getMarkers(markerPositionRequestDTO)
+            } else {
+                // TODO 여기서 서버 통신으로 필터링
+                val markerCategoryPositionDTO = MarkerCategoryPositionRequestDTO(
+                    mainViewModel.currentLatitude, mainViewModel.currentLongitude, 3.0, filterCategories
+                )
+                clearMarkers()
+                mainViewModel.getCategoryMarkers(markerCategoryPositionDTO)
+            }
+
         }
     }
 
