@@ -260,7 +260,7 @@ class FindMateActivity : AppCompatActivity(), OnMapReadyCallback {
         uiSettings.isZoomControlsEnabled = true
 
         // 줌 컨트롤러 위치 변경
-        googleMap.setPadding(0, 0, 0, 250)
+        googleMap.setPadding(0, 360, 0, 250)
 
         openMeetingDialog()
 

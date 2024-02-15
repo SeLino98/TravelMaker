@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.gumibom.travelmaker.R
+import com.gumibom.travelmaker.constant.AFTER_DATE
 import com.gumibom.travelmaker.constant.BEFORE_DATE
 import com.gumibom.travelmaker.constant.NOT_ENOUGH_INPUT
 import com.gumibom.travelmaker.constant.WRONG_DATE
@@ -117,6 +118,14 @@ class MeetingPostDateFragment : Fragment() {
                 // 빈 String이 아니면 text 추가
                 if (dateString.isNotEmpty()){
                     binding.tvMeetingEndDate.text = dateString
+                    
+                    val isCompareDate = compareDate(dateString, binding.tvMeetingStartDate.text.toString()) ?: false
+                    
+                    if (!isCompareDate) {
+                        binding.tvMeetingEndDate.text = dateString
+                    } else {
+                        Toast.makeText(requireContext(), BEFORE_DATE, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -130,7 +139,7 @@ class MeetingPostDateFragment : Fragment() {
                     if (isCompareDate) {
                         binding.tvMeetingDeadlineDate.text = dateString
                     } else {
-                        Toast.makeText(requireContext(), BEFORE_DATE, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), AFTER_DATE, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

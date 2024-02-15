@@ -46,6 +46,7 @@ const val DENIED_LOCATION_PERMISSION = "위치 권한이 필요합니다. 지도
 const val NO_DATE = "현재 날짜 이전은 선택할 수 없습니다."
 const val WRONG_DATE = "잘못된 날짜 형식입니다."
 const val BEFORE_DATE = "모임 시작 날짜보다\n이전 날짜를 선택해주세요."
+const val AFTER_DATE = "모임 시작 날짜 이후를 선택해주세요."
 
 // 모임 생성 메시지
 const val NOT_ENOUGH_INPUT = "빠진 입력이 있어요\n다시 한번 확인해주세요."
