@@ -32,6 +32,7 @@ import com.gumibom.travelmaker.data.dto.request.RecordRequestDTO
 import com.gumibom.travelmaker.databinding.FragmentMakeMyRecordPictureBinding
 import com.gumibom.travelmaker.databinding.FragmentMakeMyRecordVideoBinding
 import com.gumibom.travelmaker.model.pamphlet.Emoji
+import com.gumibom.travelmaker.ui.common.DialogLoading
 import com.gumibom.travelmaker.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -54,6 +55,8 @@ class MakeMyRecordVideoFragment : Fragment() {
     private var thumbnailImagePath = ""
     private var filePath = ""
     private lateinit var activity: MainActivity
+
+    private lateinit var dialogLoading: DialogLoading
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -102,6 +105,7 @@ class MakeMyRecordVideoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialogLoading = DialogLoading(requireContext())
 
         setEmojiAdapter()
         openGallery()
@@ -109,8 +113,18 @@ class MakeMyRecordVideoFragment : Fragment() {
         observeLiveData()
     }
 
+    private fun loadingVideo() {
+        dialogLoading.show()
+    }
+
+    private fun dismissDialog() {
+        dialogLoading.dismiss()
+    }
+
     private fun observeLiveData() {
         makeMyRecordViewModel.isSuccessMessage.observe(viewLifecycleOwner) { messaage ->
+            dismissDialog()
+
             Toast.makeText(requireContext(), messaage, Toast.LENGTH_SHORT).show()
             activity.backToNavigation()
         }
@@ -125,6 +139,7 @@ class MakeMyRecordVideoFragment : Fragment() {
 
             if (filePath.isNotEmpty() && text.isNotEmpty() && makeMyRecordViewModel.emojiText.isNotEmpty()) {
                 makeMyRecord()
+                loadingVideo()
             }
         }
 
@@ -142,6 +157,8 @@ class MakeMyRecordVideoFragment : Fragment() {
         )
 
         makeMyRecordViewModel.makeImageRecord(thumbnailImagePath, filePath, recordRequestDTO)
+
+
     }
 
 
