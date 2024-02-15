@@ -69,7 +69,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth)->auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 //                        .requestMatchers("/**").permitAll()
-                        .requestMatchers("/login", "/", "/join", "/join/**", "/user/find-login-id/**", "/refresh-token").permitAll()
+                        .requestMatchers("/index.html","/login", "/", "/join", "/join/**", "/user/find-login-id/**", "/refresh-token").permitAll()
                         .requestMatchers("/sms-certification/send", "/sms-certification/confirm", "/sms-certification").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()) // 그 외 인증 없이 접근X
