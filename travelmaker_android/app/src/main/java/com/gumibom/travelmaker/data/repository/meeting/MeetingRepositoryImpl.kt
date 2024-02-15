@@ -4,6 +4,7 @@ import com.gumibom.travelmaker.data.datasource.meeting.MeetingRemoteDataSource
 import com.gumibom.travelmaker.data.dto.mygroup.MyMeetingGroupDTOItem
 import com.gumibom.travelmaker.data.dto.request.MarkerCategoryPositionRequestDTO
 import com.gumibom.travelmaker.data.dto.request.MarkerPositionRequestDTO
+import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MarkerPositionResponseDTO
 import com.gumibom.travelmaker.data.dto.response.MeetingPostDTO
 import com.gumibom.travelmaker.data.repository.login.LoginRepositoryImpl
@@ -27,5 +28,9 @@ class MeetingRepositoryImpl @Inject constructor(
 
     override suspend fun getMarkerCategoryPositions(markerCategoryPositionRequestDTO: MarkerCategoryPositionRequestDTO): Response<MutableList<MarkerPositionResponseDTO>> {
         return meetingRemoteDataSourceImpl.getMarkerCategoryPositions(markerCategoryPositionRequestDTO)
+    }
+
+    override suspend fun putActiveChat(groupId: Long): Response<IsSuccessResponseDTO> {
+        return meetingRemoteDataSourceImpl.putActiveChat(groupId)
     }
 }

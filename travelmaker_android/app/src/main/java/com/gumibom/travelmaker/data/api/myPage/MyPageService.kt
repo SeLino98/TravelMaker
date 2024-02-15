@@ -12,4 +12,9 @@ interface MyPageService {
 
     @DELETE("/user/withdrawal")
     suspend fun deleteMyInfo()
+
+
+
+
+
 }

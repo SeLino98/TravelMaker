@@ -3,6 +3,7 @@ package com.gumibom.travelmaker.di.usecase.meeting
 import com.gumibom.travelmaker.data.repository.meeting.MeetingRepository
 import com.gumibom.travelmaker.domain.meeting.GetMarkerPositionsUseCase
 import com.gumibom.travelmaker.domain.meeting.GetMyMeetingGroupListUseCase
+import com.gumibom.travelmaker.domain.meeting.PutActiveChattingUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +28,10 @@ class MeetingUseCaseModule {
         return GetMyMeetingGroupListUseCase(meetingRepository)
     }
 
-
+    @Singleton
+    @Provides
+    fun providePutActiveChatting(meetingRepository: MeetingRepository): PutActiveChattingUseCase{
+        return PutActiveChattingUseCase(meetingRepository)
+    }
 
 }

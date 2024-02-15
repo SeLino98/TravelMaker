@@ -66,10 +66,6 @@ class MainActivity : AppCompatActivity() {
         }//노티피케이션으로 프래그먼트를 이동시킨다.
 
 
-        /**
-         * TODO Token을 가지고 서버에 User data를 전부받아서 저장
-         */
-
         Log.d(TAG, "onCreate: ${sharedPreferencesUtil.getToken()}")
 
         setFirebase()
@@ -123,13 +119,35 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "setNavigationMenuToolbar: 1")
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.inflateMenu(R.menu.menu_main) // 새 메뉴 설정
-                    binding.toolbar.title = "메인 페이지"
                     binding.toolbar.navigationIcon = null
+                    binding.toolbar.title =""
+                    binding.linearAppIcon.visibility = View.VISIBLE
                     initToolbar()
                     observeLiveData()
                     Log.d(TAG, "setNavigationMenuToolbar: 2")
                 }
-                R.id.mainGoTravelFragment,R.id.mainFindMateDetailFragment,
+                R.id.mainGoTravelFragment->{
+                    binding.toolbar.menu.clear() // 기존 메뉴 제거
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = "내 여행 시작"
+                    binding.toolbar.setNavigationOnClickListener {
+                        Log.d(TAG, "setNavigationMenuToolbar: ")
+                        navController.navigateUp()
+                    }
+                    binding.linearAppIcon.visibility = View.GONE
+                    binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
+                }
+                R.id.mainFindMateDetailFragment->{
+                    binding.toolbar.menu.clear() // 기존 메뉴 제거
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
+                    binding.toolbar.title = "여행 메이트 찾기"
+                    binding.toolbar.setNavigationOnClickListener {
+                        Log.d(TAG, "setNavigationMenuToolbar: ")
+                        navController.navigateUp()
+                    }
+                    binding.linearAppIcon.visibility = View.GONE
+                    binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
+                }
                 R.id.mainNotificationFragment-> {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
@@ -138,12 +156,14 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "setNavigationMenuToolbar: ")
                         navController.navigateUp()
                     }
+                    binding.linearAppIcon.visibility = View.GONE
                     binding.toolbar.inflateMenu(R.menu.detail_menu_main) // 새 메뉴 설정
                 }
                 R.id.mainMyGroupFragment -> {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.my_group)
+                    binding.linearAppIcon.visibility = View.GONE
                     binding.toolbar.setNavigationOnClickListener {
                         Log.d(TAG, "setNavigationMenuToolbar: ")
                         navController.navigateUp()
@@ -154,6 +174,7 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.menu.clear() // 기존 메뉴 제거
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.mypage_title)
+                    binding.linearAppIcon.visibility = View.GONE
                     binding.toolbar.setNavigationOnClickListener {
                         Log.d(TAG, "setNavigationMenuToolbar: ")
                         navController.navigateUp()
@@ -164,6 +185,7 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.menu.clear()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.myRecord_title)
+                    binding.linearAppIcon.visibility = View.GONE
                     binding.toolbar.setNavigationOnClickListener {
                         navController.navigateUp()
                     }
@@ -172,16 +194,19 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.menu.clear()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.makePamphlet_title)
+                    binding.linearAppIcon.visibility = View.GONE
                     binding.toolbar.setNavigationOnClickListener {
                         navController.navigateUp()
                     }
                 }
                 R.id.myRecordDetail, R.id.pamphletDetailFragment -> {
                     binding.toolbar.visibility = View.GONE
+                    binding.linearAppIcon.visibility = View.GONE
                 }
 
                 R.id.mainLookPamphletsFragment -> {
                     binding.toolbar.menu.clear()
+                    binding.linearAppIcon.visibility = View.GONE
                     binding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_24)
                     binding.toolbar.title = getString(R.string.lookPamphlet_title)
                     binding.toolbar.setNavigationOnClickListener {
@@ -235,6 +260,10 @@ class MainActivity : AppCompatActivity() {
     }
     fun navigationToLookAroundPam(){
         navController.navigate(R.id.action_mainFragment_to_mainLookPamphletsFragment)
+    }
+
+    fun navigationToGroupChattingRoom(){
+        navController.navigate(R.id.action_mainMyGroupFragment_to_mainGroupChattingFragment)
     }
 
     fun navigationPop() {
