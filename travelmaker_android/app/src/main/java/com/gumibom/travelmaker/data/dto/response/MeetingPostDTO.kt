@@ -2,6 +2,7 @@ package com.gumibom.travelmaker.data.dto.response
 
 data class MeetingPostDTO(
     val categories: List<String> = emptyList(),
+    val headNickname:String = "",
     val dday: Int = 0,
     val headId: Int = 0,
     val mainImgUrl: String = "",
