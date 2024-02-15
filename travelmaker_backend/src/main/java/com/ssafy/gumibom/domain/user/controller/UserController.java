@@ -7,6 +7,10 @@ import com.ssafy.gumibom.global.base.BaseResponseDto;
 import com.ssafy.gumibom.global.base.BooleanResponseDto;
 import com.ssafy.gumibom.global.base.JwtTokenResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -63,8 +67,14 @@ public class UserController {
         return ResponseEntity.ok(new BooleanResponseDto(true, "아이디 중복 체크 성공", userService.checkLoginIDExists(loginID)));
     }
 
-    @Operation(summary = "전화 번호로 아이디 찾기")
+    @Operation(summary = "전화 번호로 아이디 찾기", description = "제공된 전화번호에 해당하는 사용자의 로그인 아이디를 찾습니다.")
     @GetMapping("/user/find-login-id/{phoneNum}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User login ID found successfully", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "204", description = "No content, user not found for the provided phone number", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid phone number format", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     public ResponseEntity<?> findLoginID(@PathVariable String phoneNum) {
         return userService.findLoginIDByPhoneNum(phoneNum)
                 .map(user -> ResponseEntity.ok().body(user.getUsername()))
@@ -73,6 +83,12 @@ public class UserController {
 
     @Operation(summary = "비밀번호 변경(/join/check/id-exists/{loginID} 을 거쳐 true 떠서 유효한 사용자인지 확인되고 나면 \n비밀번호 변경하는 창이 활성화되어 오는 곳입니다...")
     @PostMapping("/user/change-password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Password changed successfully", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid user or bad request", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, login required", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequestDto request) {
         boolean success = userService.changePassword(request);
 
@@ -85,6 +101,12 @@ public class UserController {
 
     // 회원 탈퇴 API
     @Operation(summary = "회원 탈퇴")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted successfully", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request or user not found", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, login required", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @DeleteMapping("/user/withdrawal")
     public ResponseEntity<?> deleteUser(Principal principal) {
         String username = principal.getName(); // 현재 인증된 사용자의 사용자명을 가져옵니다.
