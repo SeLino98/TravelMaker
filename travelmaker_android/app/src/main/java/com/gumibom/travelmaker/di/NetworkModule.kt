@@ -14,6 +14,8 @@ import com.gumibom.travelmaker.data.api.naver.NaverLocationSearchService
 import com.gumibom.travelmaker.data.api.pamphlet.PamphletService
 
 import com.gumibom.travelmaker.data.api.signup.SignupService
+import com.gumibom.travelmaker.data.api.token.TokenService
+import com.gumibom.travelmaker.data.repository.login.LoginRepository
 import com.gumibom.travelmaker.util.AccessTokenInterceptor
 import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.Module
@@ -225,5 +227,11 @@ class NetworkModule {
     @Singleton
     fun providePamphletService(@MainRetrofit retrofit : Retrofit) : PamphletService {
         return retrofit.create(PamphletService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenService(@MainRetrofit retrofit : Retrofit) : TokenService {
+        return retrofit.create(TokenService::class.java)
     }
 }

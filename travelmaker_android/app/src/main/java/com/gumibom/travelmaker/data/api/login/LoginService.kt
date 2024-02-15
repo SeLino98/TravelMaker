@@ -6,6 +6,7 @@ import com.gumibom.travelmaker.data.dto.response.LoginResponseDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -18,7 +19,4 @@ interface LoginService {
 
     @POST("/user/change-password")
     suspend fun findPassword(@Body newPassword : String) : Response<String>
-
-    @POST("/refresh-token")
-    suspend fun getNewAccessToken()
 }

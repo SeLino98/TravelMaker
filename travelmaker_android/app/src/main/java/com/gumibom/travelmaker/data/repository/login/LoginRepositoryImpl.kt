@@ -18,10 +18,4 @@ class LoginRepositoryImpl @Inject constructor(
     override suspend fun findId(phoneNum: String): Response<String> {
         return loginRemoteDataSourceImpl.findId(phoneNum)
     }
-
-    override suspend fun getNewAccessToken() {
-        /**
-         * 여기서 token
-         */
-    }
 }

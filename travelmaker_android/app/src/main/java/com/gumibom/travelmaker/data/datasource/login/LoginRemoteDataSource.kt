@@ -9,6 +9,4 @@ interface LoginRemoteDataSource {
     suspend fun login(loginRequestDTO: LoginRequestDTO) : Response<LoginResponseDTO>
 
     suspend fun findId(phoneNum : String) : Response<String>
-
-    suspend fun getNewAccessToken()
 }
