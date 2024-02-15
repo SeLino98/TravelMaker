@@ -53,11 +53,7 @@ class FindIdPwFragment : Fragment() {
         viewPager.adapter = adapter
         setTabLayout(viewPager, tabLayout)
 
-        // 아이디 찾기를 눌렀을 때 바로 아이디 찾기로 가고
-        // 비밀번호 재성성을 눌렀을 때 바로 비밀번호 재성성으로 간다.
-        if (idOrPassword.isNotEmpty()) {
-            viewPager.currentItem = idOrPassword.toInt()
-        }
+
 
     }
 
@@ -69,6 +65,12 @@ class FindIdPwFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager){tab,position->
             tab.text = tabLayoutTextArray[position]
         }.attach()
+
+        // 아이디 찾기를 눌렀을 때 바로 아이디 찾기로 가고
+        // 비밀번호 재성성을 눌렀을 때 바로 비밀번호 재성성으로 간다.
+        viewPager.post {
+            viewPager.currentItem = idOrPassword.toIntOrNull() ?: 0
+        }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

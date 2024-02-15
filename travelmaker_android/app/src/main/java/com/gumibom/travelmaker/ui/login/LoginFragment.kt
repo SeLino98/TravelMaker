@@ -136,6 +136,8 @@ class LoginFragment  : Fragment(){
                 // 여기서 Jwt Token 저장
                 ApplicationClass.sharedPreferencesUtil.addToken(jwtToken.accessToken)
                 ApplicationClass.sharedPreferencesUtil.addLoginId(binding.tieLoginId.text.toString())
+
+                // TODO refressh 토큰 저장
                 activity.moveMainActivity()
             }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.gumibom.travelmaker.domain.pamphlet.FinishTravelPamphletUseCase
 import com.gumibom.travelmaker.domain.pamphlet.GetMyRecordUseCase
 import com.gumibom.travelmaker.model.pamphlet.PamphletItem
+import com.gumibom.travelmaker.ui.common.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
