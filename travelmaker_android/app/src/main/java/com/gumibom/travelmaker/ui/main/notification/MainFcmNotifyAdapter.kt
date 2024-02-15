@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.gumibom.travelmaker.data.dto.request.FirebaseResponseRefuseAcceptDTO
 import com.gumibom.travelmaker.data.dto.request.ReceivedRequest
 import com.gumibom.travelmaker.databinding.ItemFcmNotifyReceivedListBinding
@@ -21,7 +24,14 @@ class MainFcmNotifyAdapter( private val context : Context,
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ReceivedRequest) {
             with(binding) {
-                Glide.with(context).load(item.requestorImg).into(imageView)
+
+//                Glide.with(context).load(item.requestorImg).into(imageView)
+                Glide.with(context)
+                    .load(item.requestorImg)
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
+                    .transform(CenterCrop())
+                    .into(imageView)
+
 //               ivRequesterTrust.setImageResource(item.requestorBelief)
                 //신뢰도에 따라서 이미지를 매칭시켜야 됨.
                 //신뢰도에 따른 이미지 매칭 메소드 구현

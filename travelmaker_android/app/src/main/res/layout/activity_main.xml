@@ -22,6 +22,20 @@
             android:focusable="true"
             app:menu="@menu/menu_main"
             app:titleTextColor="@color/black" >
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/linear_app_icon"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="60dp">
+                <ImageView
+                    android:id="@+id/my_custom_icon"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="70dp"
+                    android:src="@drawable/toolbar_app_icon" />
+            </LinearLayout>
+
+
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

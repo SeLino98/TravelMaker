@@ -53,8 +53,17 @@ class MainMyRecordFragment : Fragment(), ItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setInit()
         setAdapterInit()
         togglePamphlet()
+    }
+
+    /**
+     * viewModel isFinish 초기화
+     */
+    private fun setInit() {
+        isFinish = false
+        mainViewModel.isFinish = false
     }
 
 

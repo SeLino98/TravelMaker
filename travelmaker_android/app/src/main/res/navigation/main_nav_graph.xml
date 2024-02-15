@@ -40,7 +40,11 @@
         android:id="@+id/mainMyGroupFragment"
         android:name="com.gumibom.travelmaker.ui.main.mygroup.MainMyGroupFragment"
         android:label="fragment_main_my_group"
-        tools:layout="@layout/fragment_main_my_group" />
+        tools:layout="@layout/fragment_main_my_group" >
+        <action
+            android:id="@+id/action_mainMyGroupFragment_to_mainGroupChattingFragment"
+            app:destination="@id/mainGroupChattingFragment" />
+    </fragment>
     <fragment
 
         android:id="@+id/mainMyRecordFragment"
@@ -126,4 +130,9 @@
         android:id="@+id/pamphletDetailFragment"
         android:name="com.gumibom.travelmaker.ui.main.lookpamphlets.detail.PamphletDetailFragment"
         android:label="PamphletDetailFragment" />
+    <fragment
+        android:id="@+id/mainGroupChattingFragment"
+        android:name="com.gumibom.travelmaker.ui.main.mygroup.MainGroupChattingFragment"
+        android:label="fragment_main_group_chatting"
+        tools:layout="@layout/fragment_main_group_chatting" />
 </navigation>

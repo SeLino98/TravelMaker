@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gumibom.travelmaker.R
@@ -18,7 +19,6 @@ import com.gumibom.travelmaker.ui.main.MainViewModel
 import com.gumibom.travelmaker.util.SharedPreferencesUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
-
 
 private const val TAG = "MainMyGroupFragment"
 @AndroidEntryPoint
@@ -34,19 +34,25 @@ class MainMyGroupFragment : Fragment() {
         activity = context as MainActivity
         sharedPreferencesUtil = SharedPreferencesUtil(activity)
 
-
     }
     private lateinit var meetingGroupListAdapter : MainMyGroupAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //viewmodel에 내 아이디 값을 보낸다.
+        //ViewModel에 내 아이디 값을 보낸다.
         val userId = viewModel.user.value!!.userId
         Log.d(TAG, "UserId: ${userId}")
-//        viewModel.getNotifyList(userId)
+        //ViewModel.getNotifyList(userId)
         viewModel.getMyMeetingGroupList(userId)
         observeLiveData()
         //리스트를 받으면 그대로 리사이클러 뷰에 뿌려준다.
         meetingGroupListAdapter = MainMyGroupAdapter(activity,viewModel)
+        viewModel.isActiveChat.observe(viewLifecycleOwner){
+            if (it.isSuccess){
+                Toast.makeText(activity,"모임이 취소 됐습니다.", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(activity,"모임 취소가 되지 않았습니다. ", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         //여기서ㅂㅈㄷㄷㅂㄷㅈㅂ ㅈㄱ ㄷㅈㅂ가 ㅓㅈㅂ기ㅏ ㅅ더ㅏ지
         //서버에 요청을 날린다.

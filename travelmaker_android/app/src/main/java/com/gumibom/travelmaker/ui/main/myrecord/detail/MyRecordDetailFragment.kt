@@ -135,7 +135,6 @@ class MyRecordDetailFragment : Fragment() {
 
         if (mainViewModel.isFinish) {
             binding.ivMyRecordDetailEdit.visibility = View.GONE
-            binding.btnMyRecordDetailUpdate.visibility = View.GONE
         }
     }
 

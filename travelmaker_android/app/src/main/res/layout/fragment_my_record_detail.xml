@@ -108,15 +108,6 @@
         app:layout_constraintTop_toBottomOf="@id/iv_my_record_detail"
         tools:text="아름다운 바다에서 한 컷" />
 
-    <Button
-        android:id="@+id/btn_my_record_detail_update"
-        style="@style/custom_material_textButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="수정"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_my_record_detail_delete" />
 
     <Button
         android:id="@+id/btn_my_record_detail_delete"
