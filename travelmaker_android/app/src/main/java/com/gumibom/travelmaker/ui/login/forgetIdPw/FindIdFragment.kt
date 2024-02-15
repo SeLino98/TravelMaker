@@ -54,9 +54,9 @@ class FindIdFragment : Fragment() {
             val message = event.getContentIfNotHandled() ?: ""
 
             if (message.isNotEmpty()) {
-                val dialog = ClickEventDialog(requireContext())
-
-                dialog.setTitle(message)
+                showUserId(message)
+            } else {
+                Toast.makeText(requireContext(), "전화번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -68,7 +68,7 @@ class FindIdFragment : Fragment() {
         binding.btnLoginFindIdId.setOnClickListener {
             val phoneNumber = binding.tieLoginFindIdPhone.text.toString()
 
-            if (phoneNumber.isNotEmpty()) {
+            if (phoneNumber.isEmpty()) {
                 Toast.makeText(requireContext(), "전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
                 findIdPwViewModel.findId(phoneNumber)
