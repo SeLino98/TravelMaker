@@ -14,8 +14,8 @@ interface LoginService {
     suspend fun login(@Body loginRequestDTO: LoginRequestDTO) : Response<LoginResponseDTO>
 
     @GET("/user/find-login-id/{phoneNum}")
-    suspend fun findId(@Path("phoneNum") phoneNum : String)
+    suspend fun findId(@Path("phoneNum") phoneNum : String) : Response<String>
 
     @POST("/user/change-password")
-    suspend fun findPassword(@Body newPassword : String)
+    suspend fun findPassword(@Body newPassword : String) : Response<String>
 }

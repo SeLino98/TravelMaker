@@ -11,8 +11,11 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.gumibom.travelmaker.databinding.FragmentLoginFindIdPwBinding
 import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "FindIdPwFragment_싸피"
+
+@AndroidEntryPoint
 class FindIdPwFragment : Fragment() {
 
     private var _binding : FragmentLoginFindIdPwBinding? = null
