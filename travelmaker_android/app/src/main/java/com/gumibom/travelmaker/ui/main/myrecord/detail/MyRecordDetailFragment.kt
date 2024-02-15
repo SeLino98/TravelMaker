@@ -135,7 +135,6 @@ class MyRecordDetailFragment : Fragment() {
 
         if (mainViewModel.isFinish) {
             binding.ivMyRecordDetailEdit.visibility = View.GONE
-            binding.btnMyRecordDetailUpdate.visibility = View.GONE
         }
     }
 
@@ -198,6 +197,8 @@ class MyRecordDetailFragment : Fragment() {
      */
     private fun deleteRecord() {
         binding.btnMyRecordDetailDelete.setOnClickListener {
+            Log.d(TAG, "recordId: $recordId")
+            Log.d(TAG, "pamphletId: $pamphletId")
             val deleteRecordRequestDTO = DeleteRecordRequestDTO(
                 pamphletId,
                 recordId

@@ -63,12 +63,10 @@ class LoginFragment  : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        testClickEvent()
         autoLogin()
         signup()
         moveFindIdPwFragment()
         login()
-        googleLogin()
         observeLoginData()
 
     }
@@ -87,12 +85,6 @@ class LoginFragment  : Fragment(){
         }
     }
 
-    private fun testClickEvent(){
-        binding.btnTest.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-        }
-    }
 
     // 회원가입 버튼 클릭 시 signupActivity로 넘어가는 함수
     private fun signup() {
@@ -134,13 +126,6 @@ class LoginFragment  : Fragment(){
             }
         }
     }
-
-    private fun googleLogin() {
-        binding.btnGoogleLogin.setOnClickListener {
-            activity.googleLogin()
-        }
-    }
-
 
     // LiveData를 관찰하여 로그인 성공 실패 여부를 확인하는 함수
     private fun observeLoginData() {

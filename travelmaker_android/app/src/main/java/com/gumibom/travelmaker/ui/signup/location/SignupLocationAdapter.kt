@@ -63,7 +63,7 @@ class SignupLocationAdapter(private val context : Context,
                         viewModel.selectTown = item.address
 
                         // 주소가 한국이면
-                        if (isMatchingPattern(item.title, KOREAN_PATTERN)) {
+                        if (isMatchingPattern(item.address, KOREAN_PATTERN)) {
                             viewModel.setAddress(item.address)
                             viewModel.selectNation = "Korea"
                         } else {
@@ -84,10 +84,6 @@ class SignupLocationAdapter(private val context : Context,
                         viewModel.selectNation = ""
                     }
                 }
-
-                Log.d(TAG, "bind position: $position")
-                Log.d(TAG, "bind selectPosition: $selectItemPosition")
-//                Log.d(TAG, "bind: ${viewModel.address}")
             }
 
             // 배경색을 설정합니다. 선택된 아이템이면 다른 색으로 설정합니다.

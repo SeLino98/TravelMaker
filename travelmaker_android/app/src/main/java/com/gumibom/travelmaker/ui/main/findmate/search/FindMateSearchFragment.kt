@@ -5,11 +5,13 @@ import android.content.Context
 import android.location.Address
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -23,6 +25,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.ENGLISH
 import com.gumibom.travelmaker.constant.ENGLISH_PATTERN
+import com.gumibom.travelmaker.constant.GOOGLE_API_KEY
+import com.gumibom.travelmaker.constant.KAKAO_API_KEY
 import com.gumibom.travelmaker.constant.KOREAN
 import com.gumibom.travelmaker.constant.KOREAN_PATTERN
 import com.gumibom.travelmaker.constant.NO_SEARCH_LOCATION
@@ -126,7 +130,9 @@ class FindMateSearchFragment(private val commonViewModel: CommonViewModel) : Dia
      */
     private fun searchPlaces() {
         // 반짝이는 애니메이션 정의
-        val animation: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.blink_animation)
+        val animation: Animation =
+            AnimationUtils.loadAnimation(requireContext(), R.anim.blink_animation)
+        val editText = binding.etFindMateSearch
 
         binding.ivFindMateLocationSearch.setOnClickListener {
             val location = binding.etFindMateSearch.text.toString()
@@ -138,9 +144,11 @@ class FindMateSearchFragment(private val commonViewModel: CommonViewModel) : Dia
                 KOREAN -> {
                     mainViewModel.getKakaoLatLng(location)
                 }
+
                 ENGLISH -> {
                     mainViewModel.getGoogleLatLng(location)
                 }
+
                 else -> {
                     // 둘다 아니면 토스트 메시지 띄움
                     Toast.makeText(requireContext(), language, Toast.LENGTH_SHORT).show()
@@ -152,8 +160,38 @@ class FindMateSearchFragment(private val commonViewModel: CommonViewModel) : Dia
             // 키보드를 숨기는 함수
             hideKeyboard()
         }
-    }
 
+        editText.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                keyEvent?.action == KeyEvent.ACTION_DOWN &&
+                keyEvent.keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                val location = binding.etFindMateSearch.text.toString()
+
+                val language = selectKoreanEnglish(location)
+                Log.d(TAG, "searchLocation: $location")
+                // 한국어면 네이버 api, 영어면 구글 api 호출
+                when (language) {
+                    KOREAN -> {
+                        mainViewModel.getKakaoLatLng(location)
+                    }
+
+                    ENGLISH -> {
+                        mainViewModel.getGoogleLatLng(location)
+                    }
+
+                    else -> {
+                        // 둘다 아니면 토스트 메시지 띄움
+                        Toast.makeText(requireContext(), language, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                hideKeyboard()
+                true
+            } else {
+                false
+            }
+        }
+    }
     // 한국어인지 영어인지 구분하는 함수 (정규식 이용)
     private fun selectKoreanEnglish(location : String) : String {
         val koreanRegex = Regex(KOREAN_PATTERN)

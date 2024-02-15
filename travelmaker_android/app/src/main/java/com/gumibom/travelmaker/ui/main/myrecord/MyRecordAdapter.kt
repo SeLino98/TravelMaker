@@ -20,21 +20,18 @@ private const val TAG = "MyRecordAdapter_싸피"
 class MyRecordAdapter(private val context : Context, private val myRecordViewModel: MyRecordViewModel) : ListAdapter<PamphletItem, MyRecordAdapter.MyRecordViewHolder>(MyRecordDiffUtil()) {
     var itemClickListener: ItemClickListener? = null
     inner class MyRecordViewHolder(private val binding : ItemMyRecordBinding) : RecyclerView.ViewHolder(binding.root) {
-
-
         fun bind(item : PamphletItem) {
-            Log.d(TAG, "bind: 다시 만드니?")
             // 여행 중인 경우
             if (!item.isFinish) {
                 setItem(item)
-                Log.d(TAG, "bind: 여행중")
+
                 binding.tvItemMyRecordCreateTime.visibility = View.VISIBLE
                 binding.btnMyRecordComplte.visibility = View.VISIBLE
             }
             // 여행 완료 인 경우
             else {
                 setItem(item)
-                Log.d(TAG, "bind: 여행완료")
+
                 binding.tvItemMyRecordCreateTime.visibility = View.VISIBLE
                 binding.btnMyRecordComplte.visibility = View.GONE
             }
@@ -44,7 +41,6 @@ class MyRecordAdapter(private val context : Context, private val myRecordViewMod
             }
 
             binding.ivMyRecordPamphlet.setOnClickListener {
-                Log.d(TAG, "클릭: ")
                 moveDetailFragment(item.pamphletId)
             }
         }

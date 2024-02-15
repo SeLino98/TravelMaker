@@ -3,11 +3,13 @@ package com.gumibom.travelmaker.ui.signup.location
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -63,7 +65,6 @@ class SignupLocationFragment : Fragment() {
         setInit()
         setAdapter()
         searchLocation()
-        setNextTextToggle()
         openNextPage()
         backAndNextNaviBtn()
     }
@@ -82,6 +83,10 @@ class SignupLocationFragment : Fragment() {
         }
         binding.tvSignupLocationNext.setOnClickListener {
             if (signupViewModel.selectTown.isNotEmpty() && signupViewModel.selectNation.isNotEmpty()) {
+
+                Log.d(TAG, "loginId: ${signupViewModel.loginId}")
+                Log.d(TAG, "password: ${signupViewModel.password}")
+                Log.d(TAG, "nickname: ${signupViewModel.nickname}")
                 Log.d(TAG, "selectTown: ${signupViewModel.selectTown}")
                 Log.d(TAG, "selectNation: ${signupViewModel.selectNation}")
 
@@ -125,6 +130,7 @@ class SignupLocationFragment : Fragment() {
     private fun searchLocation() {
         // 반짝이는 애니메이션 정의
         val animation: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.blink_animation)
+        val editText = binding.etSignupLocation
 
         binding.ivSignupLocationSearch.setOnClickListener {
             val location = binding.etSignupLocation.text.toString()
@@ -150,26 +156,38 @@ class SignupLocationFragment : Fragment() {
             // 키보드를 숨기는 함수
             hideKeyboard()
         }
-    }
 
-    // 다음 Text가 활성화 되는 함수
-    private fun setNextTextToggle() {
-        val activeColor = ContextCompat.getColor(requireContext(), R.color.black)
-        val notActiveColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-        signupViewModel.address.observe(viewLifecycleOwner) { address ->
-            // 주소를 선택했으면 색깔을 검정색으로 바꾸고 isNextPage => true, viewModel address에 저장
-            if (address.isNotEmpty()) {
+        editText.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                keyEvent?.action == KeyEvent.ACTION_DOWN &&
+                keyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
+                val location = binding.etSignupLocation.text.toString()
 
-                binding.tvSignupLocationNext.setTextColor(activeColor)
-
-                isNextPage = true
+                val language = selectKoreanEnglish(location)
+                Log.d(TAG, "searchLocation: $location")
+                // 한국어면 네이버 api, 영어면 구글 api 호출
+                when (language) {
+                    KOREAN -> {
+                        signupViewModel.getKakaoLocation(KAKAO_API_KEY, location)
+                    }
+                    ENGLISH -> {
+                        signupViewModel.getGoogleLocation(location, GOOGLE_API_KEY)
+                    }
+                    else -> {
+                        // 둘다 아니면 토스트 메시지 띄움
+                        Toast.makeText(requireContext(), language, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                hideKeyboard()
+                true
             } else {
-                binding.tvSignupLocationNext.setTextColor(notActiveColor)
-
-                isNextPage = false
+                false
             }
         }
     }
+
+    // 다음 Text가 활성화 되는 함수
+
 
     // 다음 버튼이 활성화 되어있을 시 페이지 전환하는 함수
     private fun openNextPage() {

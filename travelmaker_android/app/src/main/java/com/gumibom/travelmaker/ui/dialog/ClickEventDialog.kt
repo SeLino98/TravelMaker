@@ -30,7 +30,7 @@ class ClickEventDialog(context: Context):AlertDialog.Builder(context){
         dialog.setContentView(view)
         val x = 900.toInt()
         val y = 750.toInt()
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.window?.setLayout(x,y);
         dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_click_event_backgound)
 

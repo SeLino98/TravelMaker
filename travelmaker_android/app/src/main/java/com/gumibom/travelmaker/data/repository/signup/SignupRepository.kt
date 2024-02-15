@@ -20,8 +20,7 @@ interface SignupRepository {
 
 
     //유저 데이터 저장 하는 로직
-    suspend fun saveUserData(profileImage: MultipartBody.Part?, userInfo: RequestBody):Response<IsSuccessResponseDTO> //회원가입 데이터 저장
-
+    suspend fun saveUserData(userInfo: RequestBody, profileImage: MultipartBody.Part):Response<IsSuccessResponseDTO> //회원가입 데이터 저장
 
     suspend fun isCertificationNumber(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) : Response<IsSuccessResponseDTO>
 }

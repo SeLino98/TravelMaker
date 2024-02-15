@@ -144,6 +144,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    fun backToLoginFragment() {
+        navController.navigateUp()
+    }
+
+
     // 메인 화면으로 넘어가는 함수
     fun moveMainActivity() {
         val intent = Intent(this, MainActivity::class.java).apply {

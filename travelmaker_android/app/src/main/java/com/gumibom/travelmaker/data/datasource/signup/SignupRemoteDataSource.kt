@@ -19,7 +19,7 @@ interface SignupRemoteDataSource {
     suspend fun checkDuplicatedId(id:String): Response<SignInResponseDTO>
 
     suspend fun checkDuplicateNickname(nickname:String):Response<SignInResponseDTO>
-    suspend fun saveUserData(imageProfile: MultipartBody.Part?,userInfo: RequestBody) :Response<IsSuccessResponseDTO> //회원가입 데이터 저장
+    suspend fun saveUserData(userInfo: RequestBody, imageProfile: MultipartBody.Part) :Response<IsSuccessResponseDTO> //회원가입 데이터 저장
 
     suspend fun isCertificationNumber(phoneCertificationRequestDTO : PhoneCertificationRequestDTO) : Response<IsSuccessResponseDTO>
 

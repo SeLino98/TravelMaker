@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.login.forgetIdPw
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,11 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gumibom.travelmaker.databinding.FragmentLoginFindPwBinding
+import com.gumibom.travelmaker.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindPwFragment : Fragment() {
 
     private var _binding : FragmentLoginFindPwBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

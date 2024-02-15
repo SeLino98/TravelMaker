@@ -76,7 +76,6 @@ class MakeMyRecordVideoFragment : Fragment() {
                     filePath = getVideoPathUri(uri)
                 }
             }
-
         }
 
     }

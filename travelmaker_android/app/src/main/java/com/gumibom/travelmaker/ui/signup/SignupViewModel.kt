@@ -27,6 +27,7 @@ import com.gumibom.travelmaker.domain.signup.SendPhoneNumberUseCase
 import com.gumibom.travelmaker.model.Address
 import com.gumibom.travelmaker.model.BooleanResponse
 import com.gumibom.travelmaker.model.GoogleUser
+import com.gumibom.travelmaker.model.RequestUserData
 import com.gumibom.travelmaker.model.SignInUserDataRequest
 import com.gumibom.travelmaker.ui.common.CommonViewModel
 import com.gumibom.travelmaker.ui.common.Event
@@ -49,62 +50,6 @@ class SignupViewModel @Inject constructor(
     private val checkCertificationUseCase: CheckCertificationUseCase
 ) : ViewModel(), CommonViewModel {
 
-
-    //모임 데이터들을 저장하는 유저데이터dto
-    private val _userDTO = MutableLiveData<SignInUserDataRequest>()
-    val userDTO :LiveData<SignInUserDataRequest> = _userDTO
-
-    //서버로 보낼 데이터
-    private val _userRequestDTO = MutableLiveData<SignInUserDataRequestDTO>()
-    val userRequestDTO : LiveData<SignInUserDataRequestDTO> = _userRequestDTO
-    fun saveUserInfoIDPW(userId:String,userPassword:String){
-        _userDTO.value!!.requestDto.username = userId; //로그인 시 필요한 아이디
-        _userDTO.value!!.requestDto.password = userPassword
-    }//page 1
-    fun saveUserInfoNick(nickName:String){
-        _userDTO.value!!.requestDto.nickname = nickName
-    }//page 2
-    fun saveUserInfoAddress(address:String){
-        //나눠서 저장 town이랑 address
-        _userDTO.value!!.requestDto.town = address
-
-        //스플릿?
-
-        _userDTO.value!!.requestDto.nation = address
-    }//page 3
-    fun saveUserInfoGenderBirth(gender : String, birth:String ){
-        _userDTO.value!!.requestDto.gender = gender
-        _userDTO.value!!.requestDto.birth = birth
-    }//page 4
-    fun saveUserInfoSavePhoneNum(phone:String){
-        Log.d(TAG, "saveUserInfoSavePhoneNum: $phone")
-        _userDTO.value!!.requestDto.phone = phone
-    }//page 5
-    fun saveUserInfoSaveProfileCategory(profileImage:String, categoryList : List<String>){
-        _userDTO.value!!.image = profileImage //멀티 파트로 저장.
-        _userDTO.value!!.requestDto.categories = categoryList
-    }//page 6
-    fun saveUserInfoAllData(){
-
-        _userRequestDTO.value = SignInUserDataRequestDTO(userDTO.value!!.image,
-            (RequestDto(birth = userDTO.value!!.requestDto.birth,
-                userDTO.value!!.requestDto.categories,
-                userDTO.value!!.requestDto.email,
-                userDTO.value!!.requestDto.gender,
-                userDTO.value!!.requestDto.nation,
-                userDTO.value!!.requestDto.nickname,
-                userDTO.value!!.requestDto.password,
-                userDTO.value!!.requestDto.phone,
-                userDTO.value!!.requestDto.town,
-                userDTO.value!!.requestDto.username)))//val /var
-        viewModelScope.launch{
-            //여따 LoginRequsetDTO 정보를 다 담아야 됨.
-            // setUserDataToUserDTO() //데이터 정상으로 받으면 ㅡ<수정하기>ㅡ
-                isSignup.value = saveUserInfoUseCase.saveUserInfo(userRequestDTO.value!!)
-                Log.d(TAG, "saveToUserDTO: ")
-        }
-
-    }
     /*
         변수 사용하는 공간 시작
      */
@@ -116,15 +61,17 @@ class SignupViewModel @Inject constructor(
     var bundle : Bundle? = null
     // 가변형 변수 자리
 
-    var loginId : String? = null
-    var password : String? = null
-    var nickname : String? = null
+    var loginId : String = ""
+    var password : String = ""
+    var nickname : String = ""
     var email : String? = null
     var phoneNumber = ""
     var selectNation = ""
     var selectTown = ""
     var selectGender = ""
     var selectBirthDate = ""
+    var profileImage = ""
+    var categoryList = mutableListOf<String>()
 
     // 가변형 변수 자리
     // 가변형 변수 자리
@@ -138,7 +85,7 @@ class SignupViewModel @Inject constructor(
 
 
     private val _isSignup = MutableLiveData<IsSuccessResponseDTO>()
-            val isSignup = _isSignup
+    val isSignup : LiveData<IsSuccessResponseDTO> = _isSignup
 
 
     private val _isDupNick = MutableLiveData<SignInResponseDTO>()
@@ -178,9 +125,6 @@ class SignupViewModel @Inject constructor(
     // 지원
 
 
-    private val _isDuplicatedNickname = MutableLiveData<Boolean>()
-    val isDuplicatedNickname : LiveData<Boolean> = _isDuplicatedNickname
-
     // 인호
 
     /*
@@ -214,23 +158,18 @@ class SignupViewModel @Inject constructor(
         _address.value = address
         Log.d(TAG, "setAddress: ${_address.value}")
     }
-
-    // TODO UseCase 주입 받아서 번호 인증 로직 구현하기, 이쪽은 서버가 되면 그냥 하자
     fun sendPhoneNumber(phoneNumberRequestDTO : PhoneNumberRequestDTO) {
         viewModelScope.launch {
             val event = Event(sendPhoneNumberUseCase.sendPhoneNumber(phoneNumberRequestDTO))
             _isSendPhoneSuccess.value = event
         }
     }
-
-    // TODO 문자인증을 받고 번호가 맞는지 검증하는 함수
     fun isCertification(phoneCertificationRequestDTO: PhoneCertificationRequestDTO) {
         viewModelScope.launch {
             val event = Event(checkCertificationUseCase.isCertificationNumber(phoneCertificationRequestDTO))
             _isCertificationSuccess.value = event
         }
     }
-
 
     // 코루틴으로 3분 타이머를 동작하는 함수
     fun startTimer(textView : TextView) {
@@ -258,16 +197,8 @@ class SignupViewModel @Inject constructor(
         timerText.text = timeFormat
     }
 
-    fun setIdPassword() {
-        val googleUser = bundle?.getBundle("googleUser")
-//        loginId = googleUser.e
-    }
-
-
-
     private val _isDuplicatedId = MutableLiveData<SignInResponseDTO>()
     val isDuplicatedId : LiveData<SignInResponseDTO> = _isDuplicatedId
-
 
     // 지원
     fun checkId(id: String) {
@@ -278,13 +209,11 @@ class SignupViewModel @Inject constructor(
             _isDuplicatedId.value = checkDuplicatedIdUseCase.checkDuplicatedId(id)
         }
     }
-    fun checkNickname(nickname: String) {
+
+    fun signup(requestUserData: RequestUserData) {
         viewModelScope.launch {
-        // '중복된 닉네임'여부의 기본값 = false ==> '중복이 아닌 닉네임' 입니다.
-            _isDuplicatedNickname.value = false
+            _isSignup.value = saveUserInfoUseCase.saveUserInfo(requestUserData, profileImage)
         }
     }
-
-// 인호
 }
 
