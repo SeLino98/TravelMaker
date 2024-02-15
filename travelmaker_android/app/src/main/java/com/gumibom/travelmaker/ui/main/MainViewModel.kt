@@ -46,6 +46,7 @@ import com.gumibom.travelmaker.model.RequestUserData
 import com.gumibom.travelmaker.model.SignInUserDataRequest
 import com.gumibom.travelmaker.model.User
 import com.gumibom.travelmaker.ui.common.CommonViewModel
+import com.gumibom.travelmaker.ui.common.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -72,12 +73,13 @@ class MainViewModel @Inject constructor(
 
 ) : ViewModel(), CommonViewModel {
 
-    private val _isActiveChat = MutableLiveData<IsSuccessResponseDTO>()
-    val isActiveChat :LiveData<IsSuccessResponseDTO> = _isActiveChat
+    private val _isActiveChat = MutableLiveData<Event<Boolean>>()
+    val isActiveChat :LiveData<Event<Boolean>> = _isActiveChat
 
     fun putActiveChatting(groupId:Long){
         viewModelScope.launch {
-            _isActiveChat.value = putActiveChattingUseCase.putGroupChat(groupId)
+            val dto = putActiveChattingUseCase.putGroupChat(groupId)
+            _isActiveChat.value = Event(dto.isSuccess)
         }
     }
 
@@ -101,19 +103,21 @@ class MainViewModel @Inject constructor(
         }
     }
     //모임 요청 수락에 대한 로직
-    private val _isRequestAcceptCrew = MutableLiveData<BooleanResponse>()
-    val isRequestAcceptCrew : LiveData<BooleanResponse> = _isRequestAcceptCrew
+    private val _isRequestAcceptCrew = MutableLiveData<Event<Boolean>>()
+    val isRequestAcceptCrew : LiveData<Event<Boolean>> = _isRequestAcceptCrew
     fun acceptCrew(firebaseAcceptDTO: FirebaseResponseRefuseAcceptDTO){
         viewModelScope.launch {
-            _isRequestAcceptCrew.value = firebaseFcmAcceptCrewUseCase.acceptCrew(firebaseAcceptDTO)
+            val isRequest = firebaseFcmAcceptCrewUseCase.acceptCrew(firebaseAcceptDTO)
+            _isRequestAcceptCrew.value = Event(isRequest.isSuccess)
         }
     }
     //모임 요청 거절에 대한 로직
-    private val _isRequestRefuseCrew = MutableLiveData<BooleanResponse>()
-    val isRequestRefuseCrew :LiveData<BooleanResponse> = _isRequestRefuseCrew;
+    private val _isRequestRefuseCrew = MutableLiveData<Event<Boolean>>()
+    val isRequestRefuseCrew :LiveData<Event<Boolean>> = _isRequestRefuseCrew;
     fun refuseCrew(firebaseRefuseDTO:FirebaseResponseRefuseAcceptDTO){
         viewModelScope.launch {
-            _isRequestAcceptCrew.value = firebaseRefuseCrewUseCase.refuseCrew(firebaseRefuseDTO)
+            val isRequest = firebaseRefuseCrewUseCase.refuseCrew(firebaseRefuseDTO)
+            _isRequestRefuseCrew.value = Event(isRequest.isSuccess)
         }
     }
     //모임 요청에 대한 로직

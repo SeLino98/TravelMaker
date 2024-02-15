@@ -135,6 +135,7 @@ class LoginFragment  : Fragment(){
                 Toast.makeText(requireContext(), SUCCESS_LOGIN, Toast.LENGTH_SHORT).show()
                 // 여기서 Jwt Token 저장
                 ApplicationClass.sharedPreferencesUtil.addToken(jwtToken.accessToken)
+                ApplicationClass.sharedPreferencesUtil.addRefreshToken(jwtToken.refreshToken)
                 ApplicationClass.sharedPreferencesUtil.addLoginId(binding.tieLoginId.text.toString())
 
                 // TODO refressh 토큰 저장

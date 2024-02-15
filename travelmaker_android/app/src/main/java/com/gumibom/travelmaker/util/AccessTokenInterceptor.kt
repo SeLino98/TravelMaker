@@ -16,6 +16,16 @@ class AccessTokenInterceptor : Interceptor {
 
         val response = chain.proceed(request)
 
+        /**
+         * 만약 accessToken이 만료된다면
+         */
+        if (response.code == 401) {
+
+        }
         return response
+    }
+
+    private fun getNewAccessToken() : String {
+        return ""
     }
 }

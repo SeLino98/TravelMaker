@@ -2,14 +2,17 @@ package com.gumibom.travelmaker.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentMainBinding
+import com.gumibom.travelmaker.util.ApplicationClass
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "MainFragment_싸피"
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     private var _binding :FragmentMainBinding? = null
@@ -23,6 +26,9 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initButtonClickListener()
+
+        Log.d(TAG, "accessToken: ${ApplicationClass.sharedPreferencesUtil.getToken()}")
+        Log.d(TAG, "RefreshToken: ${ApplicationClass.sharedPreferencesUtil.getRefreshToken()}")
     }
     private fun initButtonClickListener(){
         binding.btnLookForMate.setOnClickListener {

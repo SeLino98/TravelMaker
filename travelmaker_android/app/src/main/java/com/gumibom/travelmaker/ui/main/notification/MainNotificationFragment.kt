@@ -79,17 +79,22 @@ class MainNotificationFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner){
             viewModel.getNotifyList(it.userId)
         }
-        viewModel.isRequestAcceptCrew.observe(viewLifecycleOwner){
-            if (it.isSuccess){
+        viewModel.isRequestAcceptCrew.observe(viewLifecycleOwner){ event ->
+            val isSuccess = event.getContentIfNotHandled()
+
+            if (isSuccess != null && isSuccess){
                 Toast.makeText(activity, "참여요청을 수락했습니다.", Toast.LENGTH_SHORT).show()
-            }else{
+            }else if (isSuccess != null && !isSuccess){
                 Toast.makeText(activity, "서버와 통신을 실패했습니다", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.isRequestRefuseCrew.observe(viewLifecycleOwner){
-            if (it.isSuccess){
+        viewModel.isRequestRefuseCrew.observe(viewLifecycleOwner){ event ->
+            val isSuccess = event.getContentIfNotHandled()
+
+            Log.d(TAG, "observeLiveData: $isSuccess")
+            if (isSuccess != null && isSuccess){
                 Toast.makeText(activity, "참여요청을 거절했습니다.", Toast.LENGTH_SHORT).show()
-            }else{
+            }else if (isSuccess != null && !isSuccess){
                 Toast.makeText(activity, "서버와 통신을 실패했습니다", Toast.LENGTH_SHORT).show()
             }
         }

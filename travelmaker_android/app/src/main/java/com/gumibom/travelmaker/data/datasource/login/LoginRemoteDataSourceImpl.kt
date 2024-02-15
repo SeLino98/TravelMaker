@@ -17,4 +17,8 @@ class LoginRemoteDataSourceImpl @Inject constructor(
     override suspend fun findId(phoneNum: String): Response<String> {
         return loginService.findId(phoneNum)
     }
+
+    override suspend fun getNewAccessToken() {
+
+    }
 }

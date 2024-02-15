@@ -18,4 +18,7 @@ interface LoginService {
 
     @POST("/user/change-password")
     suspend fun findPassword(@Body newPassword : String) : Response<String>
+
+    @POST("/refresh-token")
+    suspend fun getNewAccessToken()
 }

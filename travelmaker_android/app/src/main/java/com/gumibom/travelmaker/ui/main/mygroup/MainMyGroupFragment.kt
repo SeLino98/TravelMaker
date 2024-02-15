@@ -46,10 +46,12 @@ class MainMyGroupFragment : Fragment() {
         observeLiveData()
         //리스트를 받으면 그대로 리사이클러 뷰에 뿌려준다.
         meetingGroupListAdapter = MainMyGroupAdapter(activity,viewModel)
-        viewModel.isActiveChat.observe(viewLifecycleOwner){
-            if (it.isSuccess){
+
+        viewModel.isActiveChat.observe(viewLifecycleOwner){ event ->
+            val isSuccess = event.getContentIfNotHandled()
+            if (isSuccess != null && isSuccess){
                 Toast.makeText(activity,"모임이 취소 됐습니다.", Toast.LENGTH_SHORT).show()
-            }else{
+            }else if (isSuccess != null && !isSuccess){
                 Toast.makeText(activity,"모임 취소가 되지 않았습니다. ", Toast.LENGTH_SHORT).show()
             }
         }
