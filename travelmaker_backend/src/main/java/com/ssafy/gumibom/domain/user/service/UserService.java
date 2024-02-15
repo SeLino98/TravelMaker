@@ -1,9 +1,6 @@
 package com.ssafy.gumibom.domain.user.service;
 
-import com.ssafy.gumibom.domain.user.dto.AccountModifyRequestDTO;
-import com.ssafy.gumibom.domain.user.dto.JwtToken;
-import com.ssafy.gumibom.domain.user.dto.MyPageResponseDTO;
-import com.ssafy.gumibom.domain.user.dto.SignupRequestDto;
+import com.ssafy.gumibom.domain.user.dto.*;
 import com.ssafy.gumibom.domain.user.entity.User;
 import com.ssafy.gumibom.domain.user.repository.UserRepository;
 import com.ssafy.gumibom.global.service.S3Service;
@@ -110,17 +107,18 @@ public class UserService {
     }
 
     @Transactional
-    public Boolean changePassword(String newPassword) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
+    public Boolean changePassword(PasswordChangeRequestDto requestDto) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentUserName = authentication.getName();
 
-        User user = userRepository.findByUsername(currentUserName);
+        User user = userRepository.findByUsername(requestDto.getUserLoginId());
 
         if (user != null) {
-            user.setPassword(encoder.encode(newPassword));
+            user.setPassword(encoder.encode(requestDto.getNewPassword()));
             userRepository.save(user);
             return true;
         }
+
         return false;
     }
 

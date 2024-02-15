@@ -71,10 +71,10 @@ public class UserController {
                 .orElse(ResponseEntity.noContent().build()); // 전화번호에 해당하는 사용자가 없는 경우 204 No Content 반환
     }
 
-    @Operation(summary = "비밀번호 변경(/send, /confirm 을 거쳐 본인인증이 되고 나면 비밀번호 변경하는 창이 활성화되어 오는 곳입니다...")
+    @Operation(summary = "비밀번호 변경(/join/check/id-exists/{loginID} 을 거쳐 true 떠서 유효한 사용자인지 확인되고 나면 \n비밀번호 변경하는 창이 활성화되어 오는 곳입니다...")
     @PostMapping("/user/change-password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequestDto request) {
-        boolean success = userService.changePassword(request.getNewPassword());
+        boolean success = userService.changePassword(request);
 
         if (success) {
             return ResponseEntity.ok().body("Password changed successfully");
