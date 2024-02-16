@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/tv_signup_location_title1"
@@ -24,6 +25,7 @@
         app:layout_constraintStart_toStartOf="@id/tv_signup_location_title1"
         app:layout_constraintTop_toBottomOf="@id/tv_signup_location_title1" />
 
+
     <EditText
         android:id="@+id/et_signup_location"
         android:layout_width="371dp"
@@ -35,14 +37,18 @@
         android:paddingEnd="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@id/tv_signup_location_title2" />
 
     <ImageView
         android:id="@+id/iv_signup_location_search"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_margin="15dp"
         android:src="@drawable/ic_location_search"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="@id/et_signup_location"
         app:layout_constraintTop_toTopOf="@id/et_signup_location" />
 
@@ -55,12 +61,14 @@
         app:layout_constraintTop_toBottomOf="@id/iv_signup_location_search" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_location_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/tv_signup_location_previous"
-        app:layout_constraintTop_toBottomOf="@id/view_signup_seperate" />
+        app:layout_constraintTop_toBottomOf="@id/view_signup_seperate"
+        tools:listitem="@layout/item_location_list"/>
 
     <TextView
         android:id="@+id/tv_signup_location_previous"
@@ -69,17 +77,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="18dp"
+        android:background="@drawable/btn_ripple_effect"
         android:text="@string/signup_previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_signup_location_next"
-        style="@style/Text.Regular20.gray"
+        style="@style/Text.Regular20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
+        android:background="@drawable/btn_ripple_effect"
         android:text="@string/signup_next"
+        android:layout_marginEnd="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_signup_location_previous" />
 
