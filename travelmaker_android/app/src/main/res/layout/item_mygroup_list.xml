@@ -43,7 +43,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/ic_location_my_group_maker"
-               app:layout_constraintEnd_toStartOf="@+id/tv_place_address"
+                app:layout_constraintEnd_toStartOf="@+id/tv_place_address"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPhoto"
                 app:layout_constraintTop_toTopOf="parent" />

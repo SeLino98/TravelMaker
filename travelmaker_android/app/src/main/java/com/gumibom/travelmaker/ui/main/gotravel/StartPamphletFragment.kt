@@ -100,7 +100,7 @@ class StartPamphletFragment : Fragment() {
         binding.btnPersonalPamphlet.setOnClickListener {
             lifecycleScope.launch {
                 val toastMessage = mainViewModel.makePamphlet()
-
+                Log.d(TAG, "makePamphlet: ${mainViewModel.pamphletCategory}")
                 Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show()
                 Navigation.findNavController(it).navigate(R.id.action_startPamphletFragment_to_mainMyRecordFragment)
             }
