@@ -50,9 +50,9 @@ class MainMyGroupFragment : Fragment() {
         viewModel.isActiveChat.observe(viewLifecycleOwner){ event ->
             val isSuccess = event.getContentIfNotHandled()
             if (isSuccess != null && isSuccess){
-                Toast.makeText(activity,"모임이 취소 됐습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,"채팅방이 생성되었습니다.", Toast.LENGTH_SHORT).show()
             }else if (isSuccess != null && !isSuccess){
-                Toast.makeText(activity,"모임 취소가 되지 않았습니다. ", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(activity,"모임 취소가 되지 않았습니다. ", Toast.LENGTH_SHORT).show()
             }
         }
 
