@@ -5,6 +5,7 @@ import com.gumibom.travelmaker.data.api.token.TokenService
 import com.gumibom.travelmaker.data.repository.login.LoginRepository
 import com.gumibom.travelmaker.model.JwtToken
 import kotlinx.coroutines.runBlocking
+import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

@@ -80,7 +80,6 @@ class MakeMyRecordVideoFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun setThumbnailImage(bitmap: Bitmap?) {
@@ -168,7 +167,6 @@ class MakeMyRecordVideoFragment : Fragment() {
                 val videoIntent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
                 getResult.launch(videoIntent)
             }
-
         }
 
         binding.ivPictureAdd.setOnClickListener {
@@ -225,7 +223,6 @@ class MakeMyRecordVideoFragment : Fragment() {
                         android.Manifest.permission.READ_MEDIA_VIDEO),
                     1
                 )
-                Log.d(TAG, "permissionGallery: 여기니?")
                 true
             } else {
                 false
@@ -242,7 +239,6 @@ class MakeMyRecordVideoFragment : Fragment() {
                         android.Manifest.permission.READ_EXTERNAL_STORAGE),
                     1
                 )
-                Log.d(TAG, "permissionGallery: 여기니?")
                 true
             } else {
                 false
