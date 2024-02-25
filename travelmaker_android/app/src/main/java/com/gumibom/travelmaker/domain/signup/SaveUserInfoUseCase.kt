@@ -7,6 +7,7 @@ import com.gumibom.travelmaker.data.dto.request.SignInUserDataRequestDTO
 import com.gumibom.travelmaker.data.dto.response.IsSuccessResponseDTO
 import com.gumibom.travelmaker.data.repository.signup.SignupRepository
 import com.gumibom.travelmaker.model.RequestUserData
+import com.gumibom.travelmaker.ui.common.MultiPartHandler
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,10 +20,16 @@ private const val TAG = "SaveUserInfoUseCase_싸피"
 class SaveUserInfoUseCase @Inject constructor(
     private val repository: SignupRepository //레포에 있는 값을 받는다
 ) {
+
+    private var multiPartHandler: MultiPartHandler = MultiPartHandler()
+
     //코루틴 통신
     suspend fun saveUserInfo(requestUserData: RequestUserData, profileImage: String): IsSuccessResponseDTO?{
-        val requestBody = createRequestBody(requestUserData)
-        val profileImage2 = convertImageMultiPart(profileImage)
+//        val requestBody = createRequestBody(requestUserData)
+//        val profileImage2 = convertImageMultiPart(profileImage)
+
+        val requestBody = multiPartHandler.createRequestBody(requestUserData)
+        val profileImage2 = multiPartHandler.convertMultiPart(profileImage, "image")
 
         val response = repository.saveUserData(requestBody, profileImage2)
 

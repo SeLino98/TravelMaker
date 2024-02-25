@@ -29,6 +29,7 @@ import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
 import com.gumibom.travelmaker.model.RequestUserData
 import com.gumibom.travelmaker.ui.common.CustomGlide
+import com.gumibom.travelmaker.ui.common.IntentResultHandler
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
@@ -62,6 +63,8 @@ class SignupProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val intentResultHandler = IntentResultHandler()
         glide = CustomGlide(requireContext())
 
         // intent 결과를 받음
@@ -69,7 +72,10 @@ class SignupProfileFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
                 data?.data?.let { uri ->
-                    filePath = getFilePathUri(uri)
+//                    filePath = getFilePathUri(uri)
+                    filePath = intentResultHandler.getFilePathUri(requireActivity(), uri)
+                    Log.d(TAG, "onCreate: $filePath")
+
                     signupViewModel.profileImage = filePath
 
 //                    Glide.with(this)
@@ -211,27 +217,6 @@ class SignupProfileFragment : Fragment() {
         fos.close()
 
         return thumbnailFile.absolutePath
-    }
-
-    //빼올 떄?
-
-    private fun getFilePathUri(uri: Uri) : String{ //URI를 String으로
-        val buildName = Build.MANUFACTURER
-
-        // 샤오미 폰은 바로 경로 반환 가능
-        if (buildName.equals("Xiaomi")) {
-            return uri.path.toString()
-        }
-
-        var columnIndex = 0
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        var cursor = requireActivity().contentResolver.query(uri, proj, null, null, null)
-
-        if (cursor!!.moveToFirst()){
-            columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        }
-
-        return cursor.getString(columnIndex)
     }
 
     /**
