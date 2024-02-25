@@ -1,5 +1,6 @@
 package com.gumibom.travelmaker.ui.common
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -21,7 +22,7 @@ class IntentResultHandler {
     /**
      * Uri를 휴대폰 FilePath로 변환하는 함수
      */
-    fun getFilePathUri(fragmentActivity: FragmentActivity, uri : Uri) : String {
+    fun getFilePathUri(activity: Activity, uri : Uri) : String {
         val buildName = Build.MANUFACTURER
 
         // 샤오미 폰은 바로 경로 반환 가능
@@ -31,7 +32,7 @@ class IntentResultHandler {
 
         var columnIndex = 0
         val proj = arrayOf(MediaStore.Images.Media.DATA)
-        var cursor = fragmentActivity.contentResolver.query(uri, proj, null, null, null)
+        var cursor = activity.contentResolver.query(uri, proj, null, null, null)
 
         if (cursor!!.moveToFirst()){
             columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
