@@ -21,6 +21,8 @@ import com.gumibom.travelmaker.constant.NO_RECORD
 import com.gumibom.travelmaker.data.dto.request.DeleteRecordRequestDTO
 import com.gumibom.travelmaker.databinding.FragmentMyRecordDetailBinding
 import com.gumibom.travelmaker.model.pamphlet.Record
+import com.gumibom.travelmaker.ui.common.CustomGlide
+import com.gumibom.travelmaker.ui.common.EmojiDrawableId
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.main.MainActivity
 import com.gumibom.travelmaker.ui.main.MainViewModel
@@ -40,6 +42,8 @@ class MyRecordDetailFragment : Fragment() {
     private var recordId : Long = 0
     private lateinit var callback: OnBackPressedCallback
 
+    private lateinit var glide : CustomGlide
+
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
@@ -53,6 +57,7 @@ class MyRecordDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pamphletId = arguments?.getLong("pamphletId") ?: 0
+        glide = CustomGlide(requireContext())
 
         // OnBackPressedCallback 인스턴스 생성 및 추가
         callback = object : OnBackPressedCallback(true) { // true는 콜백을 활성화 상태로 만듭니다.
@@ -149,14 +154,16 @@ class MyRecordDetailFragment : Fragment() {
             binding.playerView.visibility = View.GONE
             binding.ivMyRecordDetail.visibility = View.VISIBLE
 
-            Glide.with(this)
-                .load(record.imgUrl)
-                .into(binding.ivMyRecordDetail)
+//            Glide.with(this)
+//                .load(record.imgUrl)
+//                .into(binding.ivMyRecordDetail)
+//
+//            Glide.with(this)
+//                .load(emojiDrawableId[record.emoji])
+//                .into(binding.ivMyRecordDetailEmoji)
 
-            Glide.with(this)
-                .load(emojiDrawableId[record.emoji])
-                .into(binding.ivMyRecordDetailEmoji)
-
+            glide.uploadUriImage(record.imgUrl, binding.ivMyRecordDetail)
+            glide.uploadDrawableImage(EmojiDrawableId.emojiDrawableId[record.emoji], binding.ivMyRecordDetailEmoji)
 
         }
         // 비디오일 경우

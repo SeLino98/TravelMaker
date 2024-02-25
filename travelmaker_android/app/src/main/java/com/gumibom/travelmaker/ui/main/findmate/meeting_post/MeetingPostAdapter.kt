@@ -1,19 +1,26 @@
 package com.gumibom.travelmaker.ui.main.findmate.meeting_post
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gumibom.travelmaker.databinding.ItemMeetingPostPictureBinding
+import com.gumibom.travelmaker.ui.common.CustomGlide
 
-class MeetingPostAdapter : ListAdapter<String, MeetingPostAdapter.MeetingPostViewHolder>(MeetingPostDiffUtil()) {
+class MeetingPostAdapter(private val context : Context) : ListAdapter<String, MeetingPostAdapter.MeetingPostViewHolder>(MeetingPostDiffUtil()) {
 
-    class MeetingPostViewHolder(private val binding : ItemMeetingPostPictureBinding) : RecyclerView.ViewHolder(binding.root) {
+    private lateinit var glide : CustomGlide
+    inner class MeetingPostViewHolder(private val binding : ItemMeetingPostPictureBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(urlString : String) {
-            Glide.with(binding.ivMeetingPostPicture)
-                .load(urlString)
-                .into(binding.ivMeetingPostPicture)
+            glide = CustomGlide(context)
+
+//            Glide.with(binding.ivMeetingPostPicture)
+//                .load(urlString)
+//                .into(binding.ivMeetingPostPicture)
+
+            glide.uploadUriImage(urlString, binding.ivMeetingPostPicture)
         }
     }
 

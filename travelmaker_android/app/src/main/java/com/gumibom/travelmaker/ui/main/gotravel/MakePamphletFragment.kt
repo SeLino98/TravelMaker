@@ -27,6 +27,7 @@ import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.constant.NOT_ALLOW_TITLE
 import com.gumibom.travelmaker.databinding.FragmentMakePamphletBinding
 import com.gumibom.travelmaker.databinding.FragmentPamphletWelcomeBinding
+import com.gumibom.travelmaker.ui.common.CustomGlide
 import com.gumibom.travelmaker.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +37,9 @@ class MakePamphletFragment : Fragment() {
 
     private var _binding: FragmentMakePamphletBinding? = null
     private val binding get() = _binding!!
-    lateinit var getResult: ActivityResultLauncher<Intent>
+    private lateinit var getResult: ActivityResultLauncher<Intent>
+    private lateinit var glide : CustomGlide
+
     private var filePath = ""
     private val mainViewModel : MainViewModel by activityViewModels()
 
@@ -76,9 +79,10 @@ class MakePamphletFragment : Fragment() {
     private fun observeLiveData() {
         mainViewModel.pamphletThumbnail.observe(viewLifecycleOwner) { imageUrl ->
             binding.ivPictureAdd.visibility = View.GONE
-            Glide.with(this)
-                .load(imageUrl)
-                .into(binding.btnPictureAdd)
+//            Glide.with(this)
+//                .load(imageUrl)
+//                .into(binding.btnPictureAdd)
+            glide.uploadUriImage(imageUrl, binding.btnPictureAdd)
         }
     }
 

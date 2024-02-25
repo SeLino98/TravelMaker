@@ -14,6 +14,8 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.ItemPamphletDetailBinding
 import com.gumibom.travelmaker.model.pamphlet.Record
+import com.gumibom.travelmaker.ui.common.CustomGlide
+import com.gumibom.travelmaker.ui.common.EmojiDrawableId
 import com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetailDiffUtil
 import com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetailFragment
 import com.gumibom.travelmaker.ui.main.myrecord.detail.MyRecordDetailViewModel
@@ -26,10 +28,12 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var player : SimpleExoPlayer? = null
+    private lateinit var glide : CustomGlide
 
     inner class PamphletDetailViewHolder(private val binding : ItemPamphletDetailBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: Record, position : Int, listSize : Int) {
+            glide = CustomGlide(context)
             // 이미지 일 경우
             if (item.imgUrl.isNotEmpty() && item.videoUrl.isEmpty()) {
                 binding.playerViewPamphlet.visibility = View.INVISIBLE
@@ -51,13 +55,16 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
          * 이미지를 렌더링 하는 함수
          */
         private fun setImageItem(record : Record) {
-            Glide.with(context)
-                .load(record.imgUrl)
-                .into(binding.ivPamphletDetail)
+//            Glide.with(context)
+//                .load(record.imgUrl)
+//                .into(binding.ivPamphletDetail)
+//
+//            Glide.with(context)
+//                .load(MyRecordDetailFragment.emojiDrawableId[record.emoji])
+//                .into(binding.ivPamphletDetailEmoji)
 
-            Glide.with(context)
-                .load(MyRecordDetailFragment.emojiDrawableId[record.emoji])
-                .into(binding.ivPamphletDetailEmoji)
+            glide.uploadUriImage(record.imgUrl, binding.ivPamphletDetail)
+            glide.uploadDrawableImage(EmojiDrawableId.emojiDrawableId[record.emoji], binding.ivPamphletDetailEmoji)
 
         }
 
@@ -109,12 +116,5 @@ class PamphletDetailAdapter(private val context : Context, private val viewModel
         super.onViewRecycled(holder)
         holder.releasePlayer()
     }
-
     fun getItemAtPosition(position: Int): Record? = items.getOrNull(position)
-
-
-    companion object {
-        val emojiDrawableId = mapOf<String, Int>("HAPPY" to R.drawable.happy, "SMILE" to R.drawable.smile, "SOSO" to R.drawable.soso,
-            "SAD" to R.drawable.sad, "ANGRY" to R.drawable.angry)
-    }
 }

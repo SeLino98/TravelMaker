@@ -98,7 +98,7 @@ class MeetingPostPictureFragment : Fragment() {
      * 이미지 리싸이클러뷰 초기화 하는 함수
      */
     private fun setAdapter() {
-        val adapter = MeetingPostAdapter()
+        val adapter = MeetingPostAdapter(requireContext())
         binding.rvMeetingPostPicture.adapter = adapter
 
         meetingPostViewModel.urlLiveData.observe(viewLifecycleOwner) { list ->

@@ -28,6 +28,7 @@ import com.google.android.material.chip.ChipGroup
 import com.gumibom.travelmaker.R
 import com.gumibom.travelmaker.databinding.FragmentSignupProfileBinding
 import com.gumibom.travelmaker.model.RequestUserData
+import com.gumibom.travelmaker.ui.common.CustomGlide
 import com.gumibom.travelmaker.ui.dialog.ClickEventDialog
 import com.gumibom.travelmaker.ui.signup.SignupActivity
 import com.gumibom.travelmaker.ui.signup.SignupViewModel
@@ -48,6 +49,8 @@ class SignupProfileFragment : Fragment() {
     private lateinit var getImageResult : ActivityResultLauncher<Intent>
     private lateinit var getCameraResult : ActivityResultLauncher<Intent>
 
+    private lateinit var glide : CustomGlide
+
     private var filePath = ""
     private var cameraPath = ""
     override fun onAttach(context: Context) {
@@ -59,6 +62,7 @@ class SignupProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        glide = CustomGlide(requireContext())
 
         // intent 결과를 받음
         getImageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -68,11 +72,11 @@ class SignupProfileFragment : Fragment() {
                     filePath = getFilePathUri(uri)
                     signupViewModel.profileImage = filePath
 
-                    Glide.with(this)
-                        .load(uri)
-                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
-                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
-                        .into(binding.ivProfile)
+//                    Glide.with(this)
+//                        .load(uri)
+//                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+//                        .into(binding.ivProfile)
+                    glide.uploadUriImage(uri, binding.ivProfile)
                 }
             }
         }
@@ -86,11 +90,12 @@ class SignupProfileFragment : Fragment() {
                     cameraPath = getAbsolute(bitmap)
                     signupViewModel.profileImage = cameraPath
 
-                    Glide.with(this)
-                        .load(bitmap)
-                        .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
-                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
-                        .into(binding.ivProfile)
+//                    Glide.with(this)
+//                        .load(bitmap)
+//                        .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
+//                        .transform(CenterCrop()) // Apply center crop to maintain aspect ratio
+//                        .into(binding.ivProfile)
+                    glide.uploadBitmapImage(bitmap, binding.ivProfile)
                 }
             }
         }
