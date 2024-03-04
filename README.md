@@ -36,6 +36,28 @@ Target SDK : 33
 |Kakao Local API|2.44 ver||
 
 
+### 🖥️ BackEnd 개발 환경
+
+IDE: IntelliJ IDEA 2023.2.5
+
+JDK: Jbr 17 
+
+Spring Boot: 3.2.1
+
+### 📖 BackEnd 라이브러리 및 외부 API 사용
+|Name|Version|License|
+|------|---|---|
+|Jasypt|3.0.4 ver|Apache License 2.0|
+|Json Web Token|0.11.5 ver|CDDL License 1.0|
+|AWS Cloud|2.2.6 ver|Apache License 2.0|
+|Firebase Admin|9.2.0 ver|Apache License 2.0|
+|Nurigo API|4.3.0 ver|Apache License 2.0|
+|Spring Doc|2.0.2 ver|Apache License 2.0|
+|Spring Security|6.2.2 ver|Apache License 2.0|
+|Redis|3.2.3 ver|Apache License 2.0|
+|Lombok|1.18.30 ver|MIT License|
+
+
 ### ERD
 ![image.png](./Readme_Image/image.png)
 
