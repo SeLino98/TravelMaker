@@ -24,7 +24,7 @@ Target SDK : 33
 ### 📖 Android 라이브러리 및 외부 API 사용
 |Name|Version|License|
 |------|---|---|
-|Android Jetpack|테스트2|Apache License 2.0|
+|Android Jetpack||Apache License 2.0|
 |Retrofit2|2.9.0 ver|Apache License 2.0|
 |Hilt|2.44 ver|Apache License 2.0|
 |Glide|4.12.0 ver|Apache License 2.0|
